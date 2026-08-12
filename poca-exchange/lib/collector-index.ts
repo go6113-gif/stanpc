@@ -131,7 +131,7 @@ export async function persistCollectorIndex(
 
   await prisma.user.update({
     where: { id: userId },
-    data: { collector_index: breakdown.total },
+    data: { collectorIndex: breakdown.total },
   });
 
   return breakdown;

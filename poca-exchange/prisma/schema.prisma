@@ -46,17 +46,12 @@ model User {
   // because the leaderboard and profile header read it on every request and
   // recounting binder rows per view does not scale.
   //
-  // `manner_score` is the 당근마켓-style trust temperature: starts at body
+  // `mannerScore` is the 당근마켓-style trust temperature: starts at body
   // temperature 36.5 and moves with trade conduct. It is deliberately separate
   // from `reputationScore` (0-100 abuse/report counter) — one measures how
   // pleasant a trade was, the other whether the account is in good standing.
-  //
-  // Deviates from the surrounding camelCase on purpose: CLAUDE.md pins these
-  // two identifiers as `User.collector_index` / `User.manner_score`, and every
-  // field added in this migration follows that snake_case spec so the Stage-1
-  // block reads consistently.
-  collector_index Int   @default(0)
-  manner_score    Float @default(36.5)
+  collectorIndex Int   @default(0) @map("collector_index")
+  mannerScore    Float @default(36.5) @map("manner_score")
 
   accounts Account[]
   sessions Session[]
@@ -242,6 +237,11 @@ model PhotoCard {
   // WTT — cards put on the table inside a trade room. Inactive in the MVP.
   tradeItems TradeItem[]
 
+  // Affiliate link routing: third-party marketplace URLs injected with
+  // partner parameters (eBay/Buyee/DKShop). One per partner, allowing each
+  // marketplace to get its own tracked link.
+  affiliateLinks AffiliateLink[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -264,6 +264,63 @@ model OutboundClick {
   @@index([cardId])
   @@index([market])
   @@map("outbound_clicks")
+}
+
+// -----------------------------------------------------------------------------
+// Affiliate Link Router — Third-party marketplace partner URLs
+// One row per card+partner combination: the affiliate link that forwards a
+// user to (eBay / Buyee / DK Shop) with partner-specific parameters for
+// commission tracking and revenue share.
+//
+// Separate from OutboundClick: OutboundClick is anonymous and raw (no partner
+// affiliation); AffiliateLink is the parameterised router. A user can click
+// either the native market link (OutboundClick) or a partner link (AffiliateLink).
+// Both get logged independently.
+// -----------------------------------------------------------------------------
+model AffiliatePartner {
+  id String @id @default(cuid())
+
+  slug String @unique // "ebay", "buyee", "dk-shop", etc.
+  name String // Display name: "eBay Affiliate", "Buyee Partner", etc.
+
+  baseUrl String // Base URL for this partner (e.g., https://ebay.com, https://buyee.jp)
+
+  // URL parameter template for injecting commission IDs. Null if not yet configured.
+  // E.g. "?utm_source=stanpc&utm_medium=affiliate&aff_id=<PARTNER_ID>"
+  paramTemplate String?
+
+  // Partner-specific reference ID or app key for tracking.
+  refId String?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  affiliateLinks AffiliateLink[]
+
+  @@map("affiliate_partners")
+}
+
+model AffiliateLink {
+  id String @id @default(cuid())
+
+  cardId String
+  card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  partnerId String
+  partner   AffiliatePartner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+
+  // The full affiliate URL, pre-computed when the link is created. Cached here
+  // so a redirect does not need to regenerate or interpolate it.
+  affiliateUrl String
+
+  createdAt DateTime @default(now())
+
+  @@unique([cardId, partnerId])
+  @@index([cardId])
+  @@index([partnerId])
+  @@map("affiliate_links")
 }
 
 // Anonymous user tip for a TBA card's real-world price. Reviewed manually —
@@ -368,13 +425,13 @@ model UserBinderCard {
 // User.collector_index for why this block departs from the camelCase above.
 // -----------------------------------------------------------------------------
 model Badge {
-  badge_id    String  @id @default(cuid())
-  badge_name  String  @unique // stable key, e.g. "first_binder_complete"
-  badge_icon  String? // emoji or asset path; null renders the default medal
+  badgeId     String  @id @default(cuid()) @map("badge_id")
+  badgeName   String  @unique @map("badge_name") // stable key, e.g. "first_binder_complete"
+  badgeIcon   String? @map("badge_icon") // emoji or asset path; null renders the default medal
   description String? // Korean UI copy shown in the badge tooltip
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   users UserBadge[]
 
@@ -384,18 +441,18 @@ model Badge {
 model UserBadge {
   id String @id @default(cuid())
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  badge_id String
-  badge    Badge  @relation(fields: [badge_id], references: [badge_id], onDelete: Cascade)
+  badgeId String @map("badge_id")
+  badge   Badge  @relation(fields: [badgeId], references: [badgeId], onDelete: Cascade)
 
-  acquired_at DateTime @default(now())
+  acquiredAt DateTime @default(now()) @map("acquired_at")
 
   // A badge is earned once. Re-awarding is a no-op upsert, not a second row.
-  @@unique([user_id, badge_id])
-  @@index([user_id])
-  @@index([badge_id])
+  @@unique([userId, badgeId])
+  @@index([userId])
+  @@index([badgeId])
   @@map("user_badges")
 }
 
@@ -432,25 +489,25 @@ model Reaction {
   id   String       @id @default(cuid())
   type ReactionType
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  target_type ReactionTargetType @default(VAULT_CARD)
+  targetType ReactionTargetType @default(VAULT_CARD) @map("target_type")
 
   // Nullable FK rather than a generic (target_type, target_id) pair: the one
   // target that exists today gets real referential integrity and cascade
   // deletes, and the POST column can be added next to it later.
-  vault_card_id String?
-  vaultCard     UserBinderCard? @relation(fields: [vault_card_id], references: [id], onDelete: Cascade)
+  vaultCardId String?         @map("vault_card_id")
+  vaultCard   UserBinderCard? @relation(fields: [vaultCardId], references: [id], onDelete: Cascade)
 
-  created_at DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
 
   // "유저별 중복 리액션 방지" — one row per (user, target, emotion). A user may
   // still leave two different emotions on the same card; tighten this to
-  // [user_id, vault_card_id] if the feed should allow only one.
-  @@unique([user_id, vault_card_id, type])
-  @@index([vault_card_id])
-  @@index([user_id])
+  // [userId, vaultCardId] if the feed should allow only one.
+  @@unique([userId, vaultCardId, type])
+  @@index([vaultCardId])
+  @@index([userId])
   @@index([type])
   @@map("reactions")
 }
@@ -473,8 +530,8 @@ enum NotificationType {
 model Notification {
   id String @id @default(cuid())
 
-  user_id String
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   type  NotificationType
   title String
@@ -482,14 +539,14 @@ model Notification {
 
   payload Json? @db.JsonB
 
-  is_read Boolean   @default(false)
-  read_at DateTime?
+  isRead Boolean   @default(false) @map("is_read")
+  readAt DateTime? @map("read_at")
 
-  created_at DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
 
   // Backs the unread badge and the reverse-chronological notification list.
-  @@index([user_id, is_read])
-  @@index([user_id, created_at])
+  @@index([userId, isRead])
+  @@index([userId, createdAt])
   @@index([type])
   @@map("notifications")
 }
@@ -527,30 +584,30 @@ enum TradeRoomStatus {
 model BundleMatch {
   id String @id @default(cuid())
 
-  // Pair is stored ordered (user_a_id < user_b_id) by the matcher so the unique
+  // Pair is stored ordered (userAId < userBId) by the matcher so the unique
   // constraint below cannot be defeated by swapping the two sides.
-  user_a_id String
-  userA     User   @relation("BundleMatchUserA", fields: [user_a_id], references: [id], onDelete: Cascade)
+  userAId String @map("user_a_id")
+  userA   User   @relation("BundleMatchUserA", fields: [userAId], references: [id], onDelete: Cascade)
 
-  user_b_id String
-  userB     User   @relation("BundleMatchUserB", fields: [user_b_id], references: [id], onDelete: Cascade)
+  userBId String @map("user_b_id")
+  userB   User   @relation("BundleMatchUserB", fields: [userBId], references: [id], onDelete: Cascade)
 
   // Cards each side can hand over. Both must be >= MIN_BUNDLE_MATCH_CARDS.
-  a_to_b_count Int
-  b_to_a_count Int
+  aToBCount Int @map("a_to_b_count")
+  bToACount Int @map("b_to_a_count")
 
   // Ranking hint for the match list — recomputed, never user-editable.
-  match_score Float @default(0)
+  matchScore Float @default(0) @map("match_score")
 
   status BundleMatchStatus @default(PENDING)
 
   tradeRooms TradeRoom[]
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@unique([user_a_id, user_b_id])
-  @@index([user_b_id])
+  @@unique([userAId, userBId])
+  @@index([userBId])
   @@index([status])
   @@map("bundle_matches")
 }
@@ -559,26 +616,26 @@ model TradeRoom {
   id String @id @default(cuid())
 
   // SetNull, not Cascade: a room outlives the recomputed match that spawned it.
-  bundle_match_id String?
-  bundleMatch     BundleMatch? @relation(fields: [bundle_match_id], references: [id], onDelete: SetNull)
+  bundleMatchId String?      @map("bundle_match_id")
+  bundleMatch   BundleMatch? @relation(fields: [bundleMatchId], references: [id], onDelete: SetNull)
 
-  user_a_id String
-  userA     User   @relation("TradeRoomUserA", fields: [user_a_id], references: [id], onDelete: Cascade)
+  userAId String @map("user_a_id")
+  userA   User   @relation("TradeRoomUserA", fields: [userAId], references: [id], onDelete: Cascade)
 
-  user_b_id String
-  userB     User   @relation("TradeRoomUserB", fields: [user_b_id], references: [id], onDelete: Cascade)
+  userBId String @map("user_b_id")
+  userB   User   @relation("TradeRoomUserB", fields: [userBId], references: [id], onDelete: Cascade)
 
   status TradeRoomStatus @default(OPEN)
 
   items TradeItem[]
 
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  closed_at  DateTime?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  closedAt  DateTime? @map("closed_at")
 
-  @@index([user_a_id])
-  @@index([user_b_id])
-  @@index([bundle_match_id])
+  @@index([userAId])
+  @@index([userBId])
+  @@index([bundleMatchId])
   @@index([status])
   @@map("trade_rooms")
 }
@@ -586,30 +643,30 @@ model TradeRoom {
 model TradeItem {
   id String @id @default(cuid())
 
-  trade_room_id String
-  tradeRoom     TradeRoom @relation(fields: [trade_room_id], references: [id], onDelete: Cascade)
+  tradeRoomId String    @map("trade_room_id")
+  tradeRoom   TradeRoom @relation(fields: [tradeRoomId], references: [id], onDelete: Cascade)
 
-  card_id String
-  card    PhotoCard @relation(fields: [card_id], references: [id], onDelete: Cascade)
+  cardId String    @map("card_id")
+  card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
 
   // Which side is giving this card away.
-  offered_by_user_id String
-  offeredBy          User   @relation("TradeItemOfferedBy", fields: [offered_by_user_id], references: [id], onDelete: Cascade)
+  offeredByUserId String @map("offered_by_user_id")
+  offeredBy       User   @relation("TradeItemOfferedBy", fields: [offeredByUserId], references: [id], onDelete: Cascade)
 
   // "상단 고정 교환 포카 목록" — the room header pins an ordered strip of the
   // bundle so both sides always see what is on the table without scrolling the
   // chat. `position` orders the pinned strip; unpinned items fall back to
-  // created_at.
-  is_pinned Boolean @default(false)
-  position  Int     @default(0)
+  // createdAt.
+  isPinned Boolean @default(false) @map("is_pinned")
+  position Int     @default(0)
 
-  created_at DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
 
   // The same card can appear once per side (both users owning a duplicate of
   // the same card is normal), but not twice from the same side.
-  @@unique([trade_room_id, card_id, offered_by_user_id])
-  @@index([trade_room_id])
-  @@index([card_id])
-  @@index([offered_by_user_id])
+  @@unique([tradeRoomId, cardId, offeredByUserId])
+  @@index([tradeRoomId])
+  @@index([cardId])
+  @@index([offeredByUserId])
   @@map("trade_items")
 }

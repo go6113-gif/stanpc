@@ -91,10 +91,10 @@ const MARKET_DISPLAY_NAMES: Record<string, string> = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const slug = params.id;
+    const slug = (await params).id;
 
     // Get price history
     const priceHistory = MOCK_PRICE_HISTORY[slug] || [];
