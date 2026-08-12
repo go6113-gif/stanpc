@@ -1,0 +1,13 @@
+프로젝트 전체의 브랜드명 및 도메인을 새로 확정한 'stanpc'로 일괄 변경해 줘.
+최종도메인 www.stanpc.com
+[변경 내역]
+1. 기존 도메인/브랜드명 (poca-exchange, pocaexchange 등 프로젝트 내 사용된 이전 이름 전체) -> stanpc / stanpc.com 으로 변경
+2. 패키지 파일, 환경 변수, Config 파일 체크:
+   - package.json (name, repository, homepage 등)
+   - .env / .env.example (API BASE URL, DOMAIN, NEXT_PUBLIC_SITE_URL 등)
+   - site.config.ts / metadata 설정 파일 (title, description, og:image, canonical URL 등)
+3. 소스 코드 내 하드코딩된 텍스트 및 주석:
+   - Header/Footer 브랜드 로고 텍스트, 이메일 주소(e.g., support@stanpc.com)
+   - README.md 및 문서 파일
+
+코드베이스 전체를 검색해서 빠짐없이 안전하게 리팩터링해 줘.

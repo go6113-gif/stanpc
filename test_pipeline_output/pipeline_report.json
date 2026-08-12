@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-08-11T11:42:28.099652",
+  "summary": {
+    "total_processed": 2,
+    "successful": 1,
+    "failed": 1,
+    "success_rate": "50.0%"
+  },
+  "results": [
+    {
+      "index": 1,
+      "image_path": "test_pipeline_output\\images\\001_bts_rm_20260811_114226.png",
+      "metadata_path": "test_pipeline_output\\metadata\\001_bts_rm_20260811_114226.json",
+      "status": "success",
+      "timestamp": "20260811_114226"
+    }
+  ],
+  "errors": [
+    {
+      "url": "https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=800",
+      "error": "404 Client Error: Not Found for url: https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=800",
+      "stage": "download"
+    }
+  ]
+}

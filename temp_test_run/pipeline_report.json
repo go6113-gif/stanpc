@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-08-11T14:25:01.949478",
+  "summary": {
+    "total_processed": 8,
+    "successful": 2,
+    "needs_manual_review": 6,
+    "failed": 0,
+    "success_rate": "25.0%"
+  },
+  "results": [
+    {
+      "index": 1,
+      "image_path": "temp_test_run\\images\\001_stray_kids_unknown_20260811_142451.png",
+      "metadata_path": "temp_test_run\\metadata\\001_stray_kids_unknown_20260811_142451.json",
+      "status": "success",
+      "timestamp": "20260811_142451",
+      "card_type": "individual"
+    },
+    {
+      "index": 1,
+      "image_path": "temp_test_run\\images\\001_stray_kids_jin_20260811_142454.png",
+      "metadata_path": "temp_test_run\\metadata\\001_stray_kids_jin_20260811_142454.json",
+      "status": "success",
+      "timestamp": "20260811_142454",
+      "card_type": "unit"
+    }
+  ],
+  "review_queue": [
+    {
+      "index": 2,
+      "image_path": "temp_test_run\\review_queue\\002_review_20260811_142452_original.png",
+      "metadata_path": "temp_test_run\\review_queue\\002_review_20260811_142452_metadata.json",
+      "status": "needs_manual_review",
+      "reason": "many_small_faces_grid_layout",
+      "timestamp": "20260811_142452"
+    },
+    {
+      "index": 2,
+      "image_path": "temp_test_run\\review_queue\\002_review_20260811_142455_original.png",
+      "metadata_path": "temp_test_run\\review_queue\\002_review_20260811_142455_metadata.json",
+      "status": "needs_manual_review",
+      "reason": "many_small_faces_grid_layout",
+      "timestamp": "20260811_142455"
+    },
+    {
+      "index": 1,
+      "image_path": "temp_test_run\\review_queue\\001_review_20260811_142457_original.png",
+      "metadata_path": "temp_test_run\\review_queue\\001_review_20260811_142457_metadata.json",
+      "status": "needs_manual_review",
+      "reason": "many_small_faces_grid_layout",
+      "timestamp": "20260811_142457"
+    },
+    {
+      "index": 2,
+      "image_path": "temp_test_run\\review_queue\\002_review_20260811_142458_original.png",
+      "metadata_path": "temp_test_run\\review_queue\\002_review_20260811_142458_metadata.json",
+      "status": "needs_manual_review",
+      "reason": "many_small_faces_grid_layout",
+      "timestamp": "20260811_142458"
+    },
+    {
+      "index": 1,
+      "image_path": "temp_test_run\\review_queue\\001_review_20260811_142500_original.png",
+      "metadata_path": "temp_test_run\\review_queue\\001_review_20260811_142500_metadata.json",
+      "status": "needs_manual_review",
+      "reason": "many_small_faces_grid_layout",
+      "timestamp": "20260811_142500"
+    },
+    {
+      "index": 2,
+      "image_path": "temp_test_run\\review_queue\\002_review_20260811_142501_original.png",
+      "metadata_path": "temp_test_run\\review_queue\\002_review_20260811_142501_metadata.json",
+      "status": "needs_manual_review",
+      "reason": "many_small_faces_grid_layout",
+      "timestamp": "20260811_142501"
+    }
+  ],
+  "errors": []
+}

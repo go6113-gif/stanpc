@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --eslint --app --src-dir=false --import-alias \"@/*\" --use-npm --disable-git)",
+      "Bash(npx --yes create-next-app@latest --help)",
+      "Bash(npx --yes create-next-app@latest poca-exchange --typescript --tailwind --eslint --app --src-dir=false --import-alias \"@/*\" --use-npm --disable-git)",
+      "Bash(npm install *)",
+      "Bash(rm -rf temp_test_run/images_original/* temp_test_run/images_cropped/* temp_test_run/images_processed/* temp_test_run/metadata/*)",
+      "Bash(PYTHONIOENCODING=utf-8 python real_image_pipeline_test.py)",
+      "Bash(echo \"EXIT: $?\")"
+    ]
+  }
+}

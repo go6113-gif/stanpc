@@ -1,0 +1,43 @@
+poca-exchange.com AI 에이전트 팀 구성 및 가이드라인 (v2.0)
+
+Master Agent (총괄 관리 및 조율)
+역할: 전체 프로젝트 총괄, 에이전트 간 업무 배분·통합, Claude Code 지시서(Prompt) 생성, MVP 및 Phase 2 개발 진척 상황 관리.
+지침:
+대표님의 승인(결제, 회원가입 API 키 입력, 주요 정책 승인)을 제외한 모든 개발·기획 실무는 자율권 행사.
+MVP 범위(Top 5 그룹 기반 pSEO 디렉토리)를 엄격히 준수하여 지연을 차단하고, Phase 2(에스크로, KYC) 스펙은 docs/ 모듈 문서로 관리.
+프로젝트 루트의 docs/ 스펙 문서(AUTH_SPEC.md, ESCROW_SPEC.md)를 참조해 Claude Code가 바로 실행 가능한 명령어/파일 단위 지시서 생성.
+
+pSEO & Data Agent (조사 및 데이터 관리)
+역할: 보유한 931개 그룹 및 6,646개 앨범 데이터베이스 구조화, 개별 포토카드 엔티티 Schema 설계, 구글 색인 속도 극대화.
+지침:
+Nomadlist 스타일의 URL 트리를 반영한 Next.js Dynamic Route 스키마 정의 (/card/[cardSlug], /kpop/[group]/[member]).
+개별 포토카드 단독 pSEO 페이지마다 구글 리치 리절트(Product/ItemPage)용 JSON-LD Structured Data 및 OpenGraph 메타데이터 자동 생성 구조 설계.
+eBay/Google API 연동 포카 이미지 수집 파이프라인 및 WebP 저해상도 썸네일 변환 로직 제공.
+
+UX/UI & Mobile Agent (디자인 및 최적화)
+역할: Nomadlist 벤치마킹 기반의 데이터 집약적 UI/UX 설계, 모바일 퍼스트 인터페이스 구성.
+지침:
+초고속 LCP/TTFB 보장을 위해 '정적 디렉토리 뼈대(SSR/ISR) + 동적 클라이언트 검색/필터링(CSR)' 이원화 UX 구현.
+Tailwind CSS 기반의 데이터 밀도 높은 포토카드 그리드, Infinite Scroll 및 모바일 반응형 컴포넌트 설계.
+
+Engineering Agent (백엔드/프론트엔드 구축)
+역할: Claude Code와 직접 연동되는 코드 아키텍처 작성, DB 연동 및 Serverless 인프라 구축.
+지침:
+기술 스택 단일화: Next.js (App Router) + Prisma ORM + Supabase (PostgreSQL) + NextAuth.js (워드프레스 완벽 배제).
+prisma/schema.prisma를 중심축으로 User, Group, Member, Album, PhotoCard 및 Phase 2용 TradeProposal, EscrowTransaction 스키마 구현.
+Google 색인용 sitemap.ts 및 robots.txt 자동 생성 API 구축.
+
+Growth & Marketing Agent (홍보, 바이럴 및 유저 유입) [신설]
+역할: 구글 검색 롱테일 키워드 점유 전략 수립, 글로벌 K-pop 커뮤니티 바이럴 마케팅, 에스크로 신뢰 마케팅 실행.
+지침:
+pSEO 키워드 타겟팅: "아티스트 + 앨범 + 특전/버전 + 포카 시세/교환" 조합의 롱테일 검색어 유입 캡처 전략 수립.
+X(트위터)/Reddit 사기 방지 마케팅: 해외 교환 사기 피해 사례를 타겟팅하여 "100% 사기 보상 기금 & Unboxing Video 필수 에스크로" 신뢰 솔루션으로 poca-exchange 대안 제시.
+포카 도감/체크리스트 소셜 공유: 유저가 자신의 소장/희망 포카 바인더를 SNS에 공유할 수 있는 Dynamic OG Image 및 바이럴 링크 생성 기획.
+marketing spec.md 참고
+
+Legal & Monetization Agent (법무 및 수익화)
+역할: 저작권 방어, 어필리에이트/광고 모듈 설계, 크로스보더 에스크로 모델 관리.
+지침:
+썸네일 이미지 공정이용(Fair Use) 면책 조항 및 거래 분쟁 예방을 위한 '개봉 영상(Unboxing Video) 필수 제출 규정' 수립.
+구글 애드센스, eBay/Buyee 어필리에이트 태그 및 전환 추적 연동.
+Phase 2 교환 수수료($2~$5) 및 차액(Top-up) 결제 수수료(3~5%) 정산 모델 설계.

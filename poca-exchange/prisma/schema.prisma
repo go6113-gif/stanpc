@@ -1,0 +1,316 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------------------------------
+// User & Auth
+// Source: docs/AUTH_SPEC.md — MVP social auth (NextAuth/Auth.js), KYC fields
+// are reserved for Phase 2 (Stripe Identity / PASS) and stay nullable for now.
+//
+// Deviates from the AUTH_SPEC.md snippet in two ways, both required to wire
+// up @auth/prisma-adapter's standard contract:
+//  - `provider`/`providerAccountId` moved off User and onto Account, so a
+//    user can link more than one OAuth provider instead of being pinned to
+//    the one they first signed up with.
+//  - `email` is nullable: Kakao only returns an email once the app passes
+//    Kakao's business verification, so a required unique email would break
+//    account creation for Kakao sign-ins until that's done.
+// -----------------------------------------------------------------------------
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+
+  isVerified      Boolean   @default(false)
+  verifiedAt      DateTime?
+  phoneNumber     String?
+  countryCode     String? // KR, US, JP, etc.
+  reputationScore Int       @default(100)
+
+  accounts Account[]
+  sessions Session[]
+
+  // Virtual binder: User → many BinderCards (through many-to-many)
+  binderCards UserBinderCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// Standard @auth/prisma-adapter shape: https://authjs.dev/reference/adapter/prisma
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String // google, twitter, kakao
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// -----------------------------------------------------------------------------
+// pSEO directory content
+// Group -> Member -> PhotoCard, Group -> Album -> PhotoCard
+// `slug` fields back the Dynamic Route structure:
+//   /[group]                 -> Group.slug
+//   /[group]/[member]        -> Member.slug (scoped to its group)
+//   /card/[cardSlug]         -> PhotoCard.slug (globally unique)
+// -----------------------------------------------------------------------------
+model Group {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  nameEn    String
+  nameKr    String?
+  aliases   String[]  @default([])
+  agency    String?
+  debutDate DateTime?
+  imageUrl  String?
+
+  members    Member[]
+  albums     Album[]
+  photoCards PhotoCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("groups")
+}
+
+model Member {
+  id       String  @id @default(cuid())
+  slug     String
+  nameEn   String
+  nameKr   String?
+  imageUrl String?
+  position String?
+
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  photoCards PhotoCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([groupId, slug])
+  @@index([groupId])
+  @@map("members")
+}
+
+model Album {
+  id            String    @id @default(cuid())
+  slug          String
+  title         String
+  coverImageUrl String?
+  releaseDate   DateTime?
+
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  photoCards PhotoCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([groupId, slug])
+  @@index([groupId])
+  @@map("albums")
+}
+
+model PhotoCard {
+  id             String  @id @default(cuid())
+  slug           String  @unique // pSEO URL slug used by /card/[cardSlug]
+  cardName       String?
+  version        String? // e.g. "Photobook Ver.", "Weverse MD", "POB"
+  imageUrl       String? // Original_Image_URL
+  thumbImagePath String? // Local_Thumb_Path (optimized WebP thumbnail)
+
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  memberId String?
+  member   Member? @relation(fields: [memberId], references: [id], onDelete: SetNull)
+
+  albumId String?
+  album   Album?  @relation(fields: [albumId], references: [id], onDelete: SetNull)
+
+  // Sprint 01 — pSEO directory MVP (no escrow/P2P): market signal fields
+  // shown on the card tile/detail page. Est. price and badge are editorial
+  // and stay null ("TBA") until priced; want/have/view counts are simple
+  // aggregate counters, not per-user relations.
+  estimatedPrice Float?
+  wantCount      Int     @default(0)
+  haveCount      Int     @default(0)
+  viewCount      Int     @default(0)
+  badge          String?
+
+  // Outbound eBay/Buyee click tracking: clickCount is the quick aggregate
+  // shown/used for sorting; outboundClicks is the per-event log (market +
+  // timestamp) recorded by POST /api/tracking/outbound.
+  clickCount     Int             @default(0)
+  outboundClicks OutboundClick[]
+
+  // User-submitted "시세 제보" (price tip) queue for TBA cards — editorial
+  // review folds a report into `estimatedPrice` manually; submitting one
+  // never writes `estimatedPrice` directly.
+  priceReports PriceReport[]
+
+  // Time-series price history for trend analysis
+  priceHistory PriceHistory[]
+
+  // Multi-market SKU/URL mapping for cross-platform price comparison
+  skuMappings GlobalSKUMapping[]
+
+  // User virtual binder entries (collections, wishlists, etc.)
+  userBinders UserBinderCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([groupId])
+  @@index([memberId])
+  @@index([albumId])
+  @@map("photo_cards")
+}
+
+// One row per outbound eBay/Buyee click. Anonymous by design — no user
+// relation — since the site has no auth-gated buying flow yet.
+model OutboundClick {
+  id        String   @id @default(cuid())
+  market    String // "ebay" | "buyee"
+  createdAt DateTime @default(now())
+
+  cardId String
+  card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@index([cardId])
+  @@index([market])
+  @@map("outbound_clicks")
+}
+
+// Anonymous user tip for a TBA card's real-world price. Reviewed manually —
+// nothing here writes to PhotoCard.estimatedPrice automatically.
+model PriceReport {
+  id              String   @id @default(cuid())
+  reportedPrice   Int
+  sourceUrl       String?
+  reporterComment String?
+  createdAt       DateTime @default(now())
+
+  cardId String
+  card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@index([cardId])
+  @@map("price_reports")
+}
+
+// -----------------------------------------------------------------------------
+// Price History - Time series price tracking (for market trend analysis)
+// Each entry records the estimated price snapshot at a point in time,
+// sourced from eBay, Mercari, Buyee, etc. Used to compute price trends.
+// -----------------------------------------------------------------------------
+model PriceHistory {
+  id        String   @id @default(cuid())
+  price     Float // Stored price in primary currency (USD or KRW base)
+  currency  String   @default("USD") // "USD", "KRW", "JPY", etc.
+  market    String // "ebay", "mercari", "buyee", "banzai", "wts", etc.
+  sourceUrl String? // Reference URL if scraped from market
+  createdAt DateTime @default(now())
+
+  cardId String
+  card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@index([cardId])
+  @@index([market])
+  @@index([createdAt])
+  @@map("price_history")
+}
+
+// -----------------------------------------------------------------------------
+// Global SKU Mapping - Multi-market product identifier linking
+// One PhotoCard may have different SKUs/URLs across eBay, Mercari, Buyee, etc.
+// Enables cross-market price comparison and direct outbound linking.
+// -----------------------------------------------------------------------------
+model GlobalSKUMapping {
+  id          String    @id @default(cuid())
+  market      String // "ebay", "mercari", "buyee", "banzai", "wts", etc.
+  sku         String // Product ID in that market (eBay itemId, Mercari id, etc.)
+  skuUrl      String? // Direct link to product on that market
+  lastChecked DateTime? // Last time we verified this SKU still exists on market
+  isActive    Boolean   @default(true) // Soft-delete for delisted items
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  cardId String
+  card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([cardId, market, sku])
+  @@index([cardId])
+  @@index([market])
+  @@map("global_sku_mapping")
+}
+
+// -----------------------------------------------------------------------------
+// User Virtual Binder - Many-to-many relationship between User and PhotoCard
+// with status tags: "In Hand", "ISO" (In Search Of), "#드볼중" (Seeking to buy),
+// etc. Acts as a user collection/wishlist system.
+// -----------------------------------------------------------------------------
+model UserBinderCard {
+  id        String   @id @default(cuid())
+  tags      String[] @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
+  note      String? // User's personal note about this card
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  cardId String
+  card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cardId])
+  @@index([userId])
+  @@index([cardId])
+  @@map("user_binder_cards")
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "platform": "DCInside",
+    "source": "search:포카",
+    "raw_length": 43450,
+    "note": "DCInside 검색 결과 페이지 수집 완료"
+  },
+  {
+    "platform": "DCInside",
+    "source": "search:포토카드",
+    "raw_length": 43423,
+    "note": "DCInside 검색 결과 페이지 수집 완료"
+  },
+  {
+    "platform": "DCInside",
+    "source": "search:바인더",
+    "raw_length": 43508,
+    "note": "DCInside 검색 결과 페이지 수집 완료"
+  },
+  {
+    "platform": "Naver",
+    "source": "blog:포토카드 바인더",
+    "keyword": "포토카드 바인더",
+    "status": "Targeted keyword registered"
+  },
+  {
+    "platform": "Naver",
+    "source": "blog:포카 수집",
+    "keyword": "포카 수집",
+    "status": "Targeted keyword registered"
+  },
+  {
+    "platform": "Naver",
+    "source": "blog:포카 교환",
+    "keyword": "포카 교환",
+    "status": "Targeted keyword registered"
+  },
+  {
+    "platform": "Naver",
+    "source": "blog:포카 덕질",
+    "keyword": "포카 덕질",
+    "status": "Targeted keyword registered"
+  }
+]

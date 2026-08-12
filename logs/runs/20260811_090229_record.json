@@ -1,0 +1,87 @@
+{
+  "run_id": "20260811_090229",
+  "start_time": "2026-08-11T09:02:29.482041",
+  "end_time": "2026-08-11T09:02:30.223508",
+  "duration_seconds": 0.741467,
+  "overall_status": "partial_success",
+  "steps": [
+    {
+      "name": "collect_ebay_data",
+      "start_time": "2026-08-11T09:02:29.482762",
+      "end_time": "2026-08-11T09:02:29.483514",
+      "duration_seconds": 0.000752,
+      "status": "partial_success",
+      "error": null,
+      "records_count": 0,
+      "details": {}
+    },
+    {
+      "name": "collect_bungle_data",
+      "start_time": "2026-08-11T09:02:29.483696",
+      "end_time": "2026-08-11T09:02:30.214818",
+      "duration_seconds": 0.731122,
+      "status": "partial_success",
+      "error": null,
+      "records_count": 0,
+      "details": {}
+    },
+    {
+      "name": "process_images",
+      "start_time": "2026-08-11T09:02:30.215203",
+      "end_time": "2026-08-11T09:02:30.216005",
+      "duration_seconds": 0.000802,
+      "status": "partial_success",
+      "error": null,
+      "records_count": 0,
+      "details": {
+        "total_images": 0,
+        "cards_detected": 0,
+        "cards_saved": 0
+      }
+    },
+    {
+      "name": "analyze_prices",
+      "start_time": "2026-08-11T09:02:30.216329",
+      "end_time": "2026-08-11T09:02:30.216416",
+      "duration_seconds": 8.7e-05,
+      "status": "partial_success",
+      "error": null,
+      "records_count": 0,
+      "details": {
+        "analyzed_cards": 0
+      }
+    },
+    {
+      "name": "save_seed_data",
+      "start_time": "2026-08-11T09:02:30.216664",
+      "end_time": "2026-08-11T09:02:30.217459",
+      "duration_seconds": 0.000795,
+      "status": "success",
+      "error": null,
+      "records_count": 0,
+      "details": {
+        "seed_file": "D:\\StanPC\\scripts\\seed_data\\seed_data.json",
+        "price_history_count": 0,
+        "sku_mapping_count": 0
+      }
+    },
+    {
+      "name": "db_seed",
+      "start_time": "2026-08-11T09:02:30.217701",
+      "end_time": "2026-08-11T09:02:30.223238",
+      "duration_seconds": 0.005537,
+      "status": "skipped",
+      "error": "npm not found (ensure Node.js is installed)",
+      "records_count": null,
+      "details": {}
+    }
+  ],
+  "summary": {
+    "total_steps": 6,
+    "successful_steps": 1,
+    "partial_steps": 4,
+    "skipped_steps": 1,
+    "failed_steps": 0,
+    "total_duration_seconds": 0.741467
+  }
+}

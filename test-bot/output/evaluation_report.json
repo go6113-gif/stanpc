@@ -1,0 +1,46 @@
+{
+  "best_image_index": 4,
+  "best_score": 96.86991194925213,
+  "all_scores": {
+    "image_1": {
+      "overall": 55.28916695959681,
+      "sharpness": 0.04884190783344017,
+      "aspect_ratio": 99.71499999999999,
+      "resolution": 99.65384615384616,
+      "noise": 30.0,
+      "brightness": 72.67163437651705
+    },
+    "image_2": {
+      "overall": 84.13136486295868,
+      "sharpness": 60.09004826254826,
+      "aspect_ratio": 99.71499999999999,
+      "resolution": 99.65384615384616,
+      "noise": 100.0,
+      "brightness": 74.87054102283314
+    },
+    "image_3": {
+      "overall": 57.53137687764712,
+      "sharpness": 8.727714285714287,
+      "aspect_ratio": 99.71499999999999,
+      "resolution": 99.65384615384616,
+      "noise": 30.0,
+      "brightness": 70.2619557410907
+    },
+    "image_4": {
+      "overall": 96.86991194925213,
+      "sharpness": 100.0,
+      "aspect_ratio": 99.71499999999999,
+      "resolution": 99.65384615384616,
+      "noise": 100.0,
+      "brightness": 79.97428478988598
+    },
+    "image_5": {
+      "overall": 53.903439552078844,
+      "sharpness": 0.26868339768339766,
+      "aspect_ratio": 99.71499999999999,
+      "resolution": 99.65384615384616,
+      "noise": 30.0,
+      "brightness": 62.99376868003061
+    }
+  }
+}

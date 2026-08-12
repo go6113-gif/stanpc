@@ -1,0 +1,1210 @@
+{
+  "ebay": {
+    "meta": {
+      "api_requested": "finding",
+      "api_used": "browse",
+      "finding_api_note": "HTTPError: HTTP Error 418: I'm a teapot",
+      "collected_at": "2026-08-12T03:43:55+00:00",
+      "raw_count": 11266,
+      "unique_count": 9643,
+      "marketplace_totals": {
+        "kpop photocard": 82828,
+        "bts photocard": 46743,
+        "stray kids photocard": 37901,
+        "seventeen photocard": 19514,
+        "twice photocard": 24143,
+        "newjeans photocard": 5690,
+        "blackpink photocard": 10867,
+        "ateez photocard": 23345,
+        "enhypen photocard": 14873,
+        "txt photocard": 10150,
+        "le sserafim photocard": 8095,
+        "ive photocard": 8692,
+        "aespa photocard": 11788,
+        "photocard binder": 2588,
+        "kpop photocard album": 30503,
+        "photocard collect book": 11868,
+        "photocard storage case": 367,
+        "photocard holder": 4846,
+        "photocard sleeves": 5192,
+        "photocard toploader": 761,
+        "photocard protector": 761,
+        "penny sleeves photocard": 21,
+        "photocard deco": 1045,
+        "photocard keyring": 2573,
+        "photocard frame display": 201,
+        "photocard sticker deco": 252,
+        "kpop photocard lot": 7954,
+        "rare photocard kpop": 1138,
+        "photocard bundle kpop": 8006,
+        "official photocard sealed": 1938
+      }
+    },
+    "listings": 9643,
+    "price": {
+      "n": 9643,
+      "min": 0.99,
+      "p25": 6.99,
+      "median": 12.99,
+      "mean": 30.41,
+      "p75": 25.64,
+      "p90": 64.99,
+      "p99": 299.99,
+      "max": 2600.0
+    },
+    "price_bands": {
+      "~$5": 1377,
+      "$5-10": 2437,
+      "$10-20": 2703,
+      "$20-50": 1856,
+      "$50-100": 746,
+      "$100+": 524
+    },
+    "price_bands_pct": {
+      "~$5": 14.3,
+      "$5-10": 25.3,
+      "$10-20": 28.0,
+      "$20-50": 19.2,
+      "$50-100": 7.7,
+      "$100+": 5.4
+    },
+    "shipping": {
+      "with_shipping_value": 7912,
+      "free_shipping": 3905,
+      "free_shipping_pct": 49.4,
+      "paid_shipping_median": 8.0,
+      "paid_shipping_mean": 8.64,
+      "calculated_type": 1608,
+      "calculated_pct": 16.7,
+      "fixed_type": 7894,
+      "shipping_to_price_ratio_median_pct": 40.9
+    },
+    "groups": {
+      "artist_photocard": {
+        "listings": 4898,
+        "share_pct": 50.8,
+        "price": {
+          "n": 4898,
+          "min": 0.99,
+          "p25": 5.95,
+          "median": 9.99,
+          "mean": 26.28,
+          "p75": 19.99,
+          "p90": 59.99,
+          "p99": 249.99,
+          "max": 2000.0
+        },
+        "shipping_median": 1.36,
+        "free_shipping_pct": 46.3
+      },
+      "deco_display": {
+        "listings": 1067,
+        "share_pct": 11.1,
+        "price": {
+          "n": 1067,
+          "min": 0.99,
+          "p25": 9.95,
+          "median": 18.64,
+          "mean": 31.46,
+          "p75": 34.99,
+          "p90": 69.99,
+          "p99": 224.78,
+          "max": 500.0
+        },
+        "shipping_median": 4.0,
+        "free_shipping_pct": 37.1
+      },
+      "protect_sleeve": {
+        "listings": 822,
+        "share_pct": 8.5,
+        "price": {
+          "n": 822,
+          "min": 0.99,
+          "p25": 8.43,
+          "median": 12.97,
+          "mean": 17.07,
+          "p75": 19.33,
+          "p90": 26.96,
+          "p99": 75.72,
+          "max": 550.0
+        },
+        "shipping_median": 0.0,
+        "free_shipping_pct": 64.4
+      },
+      "storage_binder": {
+        "listings": 1636,
+        "share_pct": 17.0,
+        "price": {
+          "n": 1636,
+          "min": 0.99,
+          "p25": 9.44,
+          "median": 15.0,
+          "mean": 26.45,
+          "p75": 26.32,
+          "p90": 47.26,
+          "p99": 200.62,
+          "max": 2600.0
+        },
+        "shipping_median": 0.0,
+        "free_shipping_pct": 62.0
+      },
+      "trade_market": {
+        "listings": 1220,
+        "share_pct": 12.7,
+        "price": {
+          "n": 1220,
+          "min": 1.5,
+          "p25": 9.99,
+          "median": 20.26,
+          "mean": 60.37,
+          "p75": 58.74,
+          "p90": 139.98,
+          "p99": 589.49,
+          "max": 1500.0
+        },
+        "shipping_median": 5.0,
+        "free_shipping_pct": 43.4
+      }
+    },
+    "lot_vs_single": {
+      "lot_listings": 857,
+      "lot_pct": 8.9,
+      "lot_price_median": 20.0,
+      "single_price_median": 12.0
+    },
+    "condition": [
+      [
+        "Unspecified",
+        6923
+      ],
+      [
+        "New",
+        1431
+      ],
+      [
+        "Ungraded",
+        508
+      ],
+      [
+        "Used",
+        212
+      ],
+      [
+        "Brand New",
+        174
+      ],
+      [
+        "New with tags",
+        112
+      ],
+      [
+        "Like New",
+        106
+      ],
+      [
+        "Very Good",
+        61
+      ]
+    ],
+    "buying_options": [
+      [
+        "FIXED_PRICE",
+        6180
+      ],
+      [
+        "FIXED_PRICE,BEST_OFFER",
+        3443
+      ],
+      [
+        "FIXED_PRICE,AUCTION",
+        20
+      ]
+    ],
+    "top_categories": [
+      [
+        "Other Music Memorabilia",
+        6938
+      ],
+      [
+        "Trading Card Singles",
+        530
+      ],
+      [
+        "CDs",
+        278
+      ],
+      [
+        "Card Toploaders & Holders",
+        268
+      ],
+      [
+        "Vinyl Records",
+        135
+      ],
+      [
+        "Frames",
+        113
+      ],
+      [
+        "Photo Albums & Boxes",
+        101
+      ],
+      [
+        "CCG Albums, Binders & Pages",
+        94
+      ],
+      [
+        "Binders & Supplies",
+        90
+      ],
+      [
+        "Other Non-Sport Trading Card Merchandise",
+        72
+      ]
+    ],
+    "seller_concentration": {
+      "unique_sellers": 2419,
+      "top10_share_pct": 28.8,
+      "top_sellers": [
+        [
+          "h.h.imports",
+          805
+        ],
+        [
+          "bestbuyersteve",
+          416
+        ],
+        [
+          "amazingk_kr",
+          334
+        ],
+        [
+          "grapemusiccd",
+          334
+        ],
+        [
+          "kpop-seoulcity",
+          280
+        ],
+        [
+          "cochocards",
+          146
+        ],
+        [
+          "daves_k-pop_store",
+          132
+        ],
+        [
+          "goods-store01",
+          112
+        ],
+        [
+          "photocardtoday",
+          108
+        ],
+        [
+          "dailyfood",
+          106
+        ]
+      ]
+    },
+    "title_needs": {
+      "binder_storage": 3559,
+      "sleeve_protect": 965,
+      "size_spec": 1656,
+      "deco_display": 1119,
+      "trade_matching": 370,
+      "authenticity": 4013
+    },
+    "title_needs_pct": {
+      "binder_storage": 36.9,
+      "sleeve_protect": 10.0,
+      "size_spec": 17.2,
+      "deco_display": 11.6,
+      "trade_matching": 3.8,
+      "authenticity": 41.6
+    },
+    "top_title_tokens": [
+      [
+        "album",
+        2475
+      ],
+      [
+        "ver",
+        1137
+      ],
+      [
+        "mini",
+        1024
+      ],
+      [
+        "holder",
+        926
+      ],
+      [
+        "bts",
+        842
+      ],
+      [
+        "binder",
+        745
+      ],
+      [
+        "pob",
+        742
+      ],
+      [
+        "pop",
+        714
+      ],
+      [
+        "sleeves",
+        707
+      ],
+      [
+        "stray",
+        705
+      ],
+      [
+        "kids",
+        670
+      ],
+      [
+        "twice",
+        635
+      ],
+      [
+        "korea",
+        606
+      ],
+      [
+        "cute",
+        552
+      ],
+      [
+        "ive",
+        548
+      ],
+      [
+        "ateez",
+        541
+      ],
+      [
+        "book",
+        528
+      ],
+      [
+        "aespa",
+        515
+      ],
+      [
+        "gift",
+        513
+      ],
+      [
+        "txt",
+        502
+      ],
+      [
+        "deco",
+        500
+      ],
+      [
+        "blackpink",
+        469
+      ],
+      [
+        "sserafim",
+        458
+      ],
+      [
+        "enhypen",
+        458
+      ],
+      [
+        "seventeen",
+        452
+      ],
+      [
+        "sealed",
+        442
+      ],
+      [
+        "weverse",
+        438
+      ],
+      [
+        "rare",
+        432
+      ],
+      [
+        "girl",
+        424
+      ],
+      [
+        "version",
+        422
+      ],
+      [
+        "trading",
+        366
+      ],
+      [
+        "newjeans",
+        365
+      ],
+      [
+        "lucky",
+        348
+      ],
+      [
+        "special",
+        337
+      ],
+      [
+        "part",
+        331
+      ],
+      [
+        "keyring",
+        326
+      ],
+      [
+        "draw",
+        322
+      ],
+      [
+        "sexy",
+        308
+      ],
+      [
+        "hour",
+        299
+      ],
+      [
+        "golden",
+        293
+      ]
+    ],
+    "classification_pct": {
+      "trade": 100.0,
+      "collect": 0.0,
+      "other": 0.0
+    }
+  },
+  "naver": {
+    "posts": 6707,
+    "classification": {
+      "collect": 3119,
+      "trade": 3251,
+      "other": 337
+    },
+    "classification_pct": {
+      "collect": 46.5,
+      "trade": 48.5,
+      "other": 5.0
+    },
+    "collect_pct": 46.5,
+    "trade_pct": 48.5,
+    "other_pct": 5.0,
+    "needs": {
+      "binder_storage": 2565,
+      "sleeve_protect": 383,
+      "size_spec": 339,
+      "deco_display": 760,
+      "trade_matching": 1449,
+      "authenticity": 177
+    },
+    "needs_pct": {
+      "binder_storage": 38.2,
+      "sleeve_protect": 5.7,
+      "size_spec": 5.1,
+      "deco_display": 11.3,
+      "trade_matching": 21.6,
+      "authenticity": 2.6
+    },
+    "top_tokens": [
+      [
+        "바인더",
+        1349
+      ],
+      [
+        "카드",
+        1188
+      ],
+      [
+        "교환",
+        1110
+      ],
+      [
+        "앨범",
+        991
+      ],
+      [
+        "굿즈",
+        917
+      ],
+      [
+        "상품",
+        799
+      ],
+      [
+        "판매",
+        643
+      ],
+      [
+        "덕질",
+        614
+      ],
+      [
+        "있는",
+        589
+      ],
+      [
+        "아이돌",
+        572
+      ],
+      [
+        "가격",
+        536
+      ],
+      [
+        "포토",
+        496
+      ],
+      [
+        "구매",
+        471
+      ],
+      [
+        "있습니다",
+        441
+      ],
+      [
+        "다른",
+        434
+      ],
+      [
+        "쿠팡에서",
+        428
+      ],
+      [
+        "캐릭터",
+        427
+      ],
+      [
+        "정보",
+        411
+      ],
+      [
+        "포토카드를",
+        396
+      ],
+      [
+        "함께",
+        381
+      ],
+      [
+        "사진",
+        374
+      ],
+      [
+        "제가",
+        371
+      ],
+      [
+        "바로",
+        363
+      ],
+      [
+        "스티커",
+        358
+      ],
+      [
+        "세트",
+        356
+      ],
+      [
+        "거래",
+        350
+      ],
+      [
+        "아크릴",
+        336
+      ],
+      [
+        "다양한",
+        334
+      ],
+      [
+        "너무",
+        321
+      ],
+      [
+        "있다",
+        311
+      ]
+    ],
+    "keywords_used": [
+      [
+        "포카 수집",
+        1434
+      ],
+      [
+        "포토카드 교환",
+        1412
+      ],
+      [
+        "포토카드 바인더",
+        1410
+      ],
+      [
+        "포토카드 판매",
+        1245
+      ],
+      [
+        "포카 덕질",
+        1206
+      ]
+    ]
+  },
+  "bluesky": {
+    "posts": 2372,
+    "classification": {
+      "other": 1280,
+      "collect": 567,
+      "trade": 525
+    },
+    "classification_pct": {
+      "other": 54.0,
+      "collect": 23.9,
+      "trade": 22.1
+    },
+    "collect_pct": 23.9,
+    "trade_pct": 22.1,
+    "other_pct": 54.0,
+    "needs": {
+      "binder_storage": 625,
+      "sleeve_protect": 83,
+      "size_spec": 84,
+      "deco_display": 79,
+      "trade_matching": 84,
+      "authenticity": 181
+    },
+    "needs_pct": {
+      "binder_storage": 26.3,
+      "sleeve_protect": 3.5,
+      "size_spec": 3.5,
+      "deco_display": 3.3,
+      "trade_matching": 3.5,
+      "authenticity": 7.6
+    },
+    "top_tokens": [
+      [
+        "sale",
+        437
+      ],
+      [
+        "binder",
+        436
+      ],
+      [
+        "com",
+        414
+      ],
+      [
+        "que",
+        322
+      ],
+      [
+        "pokemon",
+        248
+      ],
+      [
+        "you",
+        229
+      ],
+      [
+        "collection",
+        178
+      ],
+      [
+        "but",
+        177
+      ],
+      [
+        "have",
+        177
+      ],
+      [
+        "like",
+        175
+      ],
+      [
+        "venda",
+        155
+      ],
+      [
+        "one",
+        149
+      ],
+      [
+        "sealed",
+        147
+      ],
+      [
+        "album",
+        141
+      ],
+      [
+        "just",
+        131
+      ],
+      [
+        "pra",
+        130
+      ],
+      [
+        "collector",
+        127
+      ],
+      [
+        "vendo",
+        126
+      ],
+      [
+        "got",
+        125
+      ],
+      [
+        "tcg",
+        121
+      ],
+      [
+        "bts",
+        116
+      ],
+      [
+        "out",
+        116
+      ],
+      [
+        "all",
+        114
+      ],
+      [
+        "now",
+        108
+      ],
+      [
+        "get",
+        106
+      ],
+      [
+        "www",
+        106
+      ],
+      [
+        "some",
+        104
+      ],
+      [
+        "your",
+        103
+      ],
+      [
+        "pok",
+        102
+      ],
+      [
+        "uma",
+        97
+      ]
+    ],
+    "keywords_used": [
+      [
+        "kpop photocard",
+        1313
+      ],
+      [
+        "#photocard",
+        584
+      ],
+      [
+        "binder sale",
+        446
+      ],
+      [
+        "#kpopcollection",
+        26
+      ],
+      [
+        "#wtsphotocard",
+        2
+      ],
+      [
+        "#kpoptrade",
+        1
+      ]
+    ]
+  },
+  "tumblr": {
+    "posts": 604,
+    "classification": {
+      "other": 294,
+      "trade": 140,
+      "collect": 170
+    },
+    "classification_pct": {
+      "other": 48.7,
+      "trade": 23.2,
+      "collect": 28.1
+    },
+    "collect_pct": 28.1,
+    "trade_pct": 23.2,
+    "other_pct": 48.7,
+    "needs": {
+      "binder_storage": 127,
+      "sleeve_protect": 36,
+      "size_spec": 13,
+      "deco_display": 32,
+      "trade_matching": 97,
+      "authenticity": 24
+    },
+    "needs_pct": {
+      "binder_storage": 21.0,
+      "sleeve_protect": 6.0,
+      "size_spec": 2.2,
+      "deco_display": 5.3,
+      "trade_matching": 16.1,
+      "authenticity": 4.0
+    },
+    "top_tokens": [
+      [
+        "you",
+        305
+      ],
+      [
+        "trade",
+        262
+      ],
+      [
+        "sale",
+        227
+      ],
+      [
+        "album",
+        158
+      ],
+      [
+        "have",
+        151
+      ],
+      [
+        "com",
+        122
+      ],
+      [
+        "exo",
+        119
+      ],
+      [
+        "bts",
+        117
+      ],
+      [
+        "ateez",
+        117
+      ],
+      [
+        "one",
+        114
+      ],
+      [
+        "twice",
+        111
+      ],
+      [
+        "mdash",
+        105
+      ],
+      [
+        "but",
+        103
+      ],
+      [
+        "nct",
+        96
+      ],
+      [
+        "usd",
+        93
+      ],
+      [
+        "got",
+        87
+      ],
+      [
+        "amp",
+        87
+      ],
+      [
+        "monsta",
+        84
+      ],
+      [
+        "will",
+        81
+      ],
+      [
+        "can",
+        79
+      ],
+      [
+        "https",
+        79
+      ],
+      [
+        "art",
+        77
+      ],
+      [
+        "collection",
+        76
+      ],
+      [
+        "all",
+        71
+      ],
+      [
+        "merch",
+        68
+      ],
+      [
+        "selling",
+        67
+      ],
+      [
+        "want",
+        66
+      ],
+      [
+        "seventeen",
+        66
+      ],
+      [
+        "group",
+        65
+      ],
+      [
+        "ver",
+        64
+      ]
+    ],
+    "keywords_used": [
+      [
+        "photocard",
+        300
+      ],
+      [
+        "kpop photocard",
+        294
+      ],
+      [
+        "photocard template",
+        7
+      ],
+      [
+        "kpop binder",
+        3
+      ]
+    ]
+  },
+  "dcinside": {
+    "posts": 60,
+    "classification": {
+      "other": 41,
+      "collect": 16,
+      "trade": 3
+    },
+    "classification_pct": {
+      "other": 68.3,
+      "collect": 26.7,
+      "trade": 5.0
+    },
+    "collect_pct": 26.7,
+    "trade_pct": 5.0,
+    "other_pct": 68.3,
+    "needs": {
+      "binder_storage": 10,
+      "sleeve_protect": 0,
+      "size_spec": 1,
+      "deco_display": 3,
+      "trade_matching": 0,
+      "authenticity": 0
+    },
+    "needs_pct": {
+      "binder_storage": 16.7,
+      "sleeve_protect": 0.0,
+      "size_spec": 1.7,
+      "deco_display": 5.0,
+      "trade_matching": 0.0,
+      "authenticity": 0.0
+    },
+    "top_tokens": [
+      [
+        "바인더",
+        4
+      ],
+      [
+        "언제",
+        2
+      ],
+      [
+        "진짜",
+        2
+      ],
+      [
+        "먹고",
+        2
+      ],
+      [
+        "이거",
+        2
+      ],
+      [
+        "후기",
+        2
+      ],
+      [
+        "이호준",
+        2
+      ],
+      [
+        "다꾸",
+        2
+      ],
+      [
+        "작가",
+        2
+      ],
+      [
+        "사는",
+        2
+      ],
+      [
+        "온냐",
+        2
+      ],
+      [
+        "있어",
+        2
+      ],
+      [
+        "챗터링",
+        2
+      ],
+      [
+        "엠플",
+        1
+      ],
+      [
+        "엠픽카드왔다",
+        1
+      ],
+      [
+        "헌이",
+        1
+      ],
+      [
+        "샴푸",
+        1
+      ],
+      [
+        "오는",
+        1
+      ],
+      [
+        "거지흠냐링",
+        1
+      ],
+      [
+        "영세",
+        1
+      ],
+      [
+        "아리에티",
+        1
+      ],
+      [
+        "넘쳐남",
+        1
+      ],
+      [
+        "코난",
+        1
+      ],
+      [
+        "두개는",
+        1
+      ],
+      [
+        "마음아프네",
+        1
+      ],
+      [
+        "찐막으로",
+        1
+      ],
+      [
+        "포카깡",
+        1
+      ],
+      [
+        "앨범",
+        1
+      ],
+      [
+        "주문",
+        1
+      ],
+      [
+        "아우어",
+        1
+      ]
+    ],
+    "keywords_used": [
+      [
+        "포카",
+        20
+      ],
+      [
+        "포토카드",
+        20
+      ],
+      [
+        "바인더",
+        20
+      ]
+    ]
+  },
+  "cross_platform": {
+    "total_records": 19386,
+    "need_mentions": {
+      "binder_storage": 6886,
+      "sleeve_protect": 1467,
+      "size_spec": 2093,
+      "deco_display": 1993,
+      "trade_matching": 2000,
+      "authenticity": 4395
+    },
+    "need_mentions_pct": {
+      "binder_storage": 35.5,
+      "sleeve_protect": 7.6,
+      "size_spec": 10.8,
+      "deco_display": 10.3,
+      "trade_matching": 10.3,
+      "authenticity": 22.7
+    }
+  }
+}

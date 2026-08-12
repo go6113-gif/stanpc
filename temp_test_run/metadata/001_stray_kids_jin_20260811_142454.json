@@ -1,0 +1,91 @@
+{
+  "group": "Stray Kids",
+  "member": "Jin",
+  "search_query": "Stray Kids Hyunjin and Felix This & That Unit Photocard",
+  "processing": {
+    "original": {
+      "width": 1200,
+      "height": 1600,
+      "ratio": 0.75
+    },
+    "processed": {
+      "width": 259,
+      "height": 400,
+      "ratio": 0.647
+    },
+    "padding": {
+      "current_ratio": 0.75,
+      "target_ratio": 0.649,
+      "needs_padding": true,
+      "pad_top": 124,
+      "pad_bottom": 124,
+      "pad_left": 0,
+      "pad_right": 0,
+      "direction": "vertical",
+      "new_width": 1200,
+      "new_height": 1848
+    },
+    "validation": {
+      "is_valid": true,
+      "current_ratio": 0.647,
+      "target_ratio": 0.649,
+      "deviation": 0.002,
+      "tolerance": 0.05
+    },
+    "status": "member_detected",
+    "confidence": 0.9288061857223511
+  },
+  "source": {
+    "platform": "eBay",
+    "listing_id": "v1|800486720745|0",
+    "listing_title": "Stray Kids Hyunjin and Felix This & That Unit Photocard",
+    "seller": "kpop_store4",
+    "price": 20.0,
+    "currency": "USD",
+    "condition": "Unknown",
+    "collection_timestamp": "2026-08-11T14:24:54.384282"
+  },
+  "processing_status": {
+    "member_detected": true,
+    "aspect_ratio_corrected": true,
+    "face_detection_confidence": 0.9288061857223511,
+    "padding_applied": true
+  },
+  "quality": {
+    "original_dimensions": {
+      "width": 1200,
+      "height": 1600,
+      "ratio": 0.75
+    },
+    "processed_dimensions": {
+      "width": 259,
+      "height": 400,
+      "ratio": 0.647
+    },
+    "aspect_ratio": 0.647
+  },
+  "tier": {
+    "level": "Tier 1",
+    "collection_frequency": "24h (daily automation)",
+    "priority": "High"
+  },
+  "tags": [
+    "kpop",
+    "photocard",
+    "padded",
+    "group:stray kids",
+    "tier-1",
+    "member-detected",
+    "member:jin",
+    "aspect-ratio-corrected"
+  ],
+  "schema_version": "1.0",
+  "generated_at": "2026-08-11T14:24:54.384299",
+  "card_classification": {
+    "is_multi_card_listing": false,
+    "card_type": "unit",
+    "member_count": 2,
+    "boundary_source": "no_card_boundary_detected_assumed_single_full_frame",
+    "num_geometric_boundaries": 0
+  }
+}

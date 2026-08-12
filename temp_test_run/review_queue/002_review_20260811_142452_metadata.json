@@ -1,0 +1,21 @@
+{
+  "status": "NEEDS_MANUAL_REVIEW",
+  "is_multi_card_listing": true,
+  "reason": "many_small_faces_grid_layout",
+  "num_geometric_boundaries": 0,
+  "geometric_boundaries": [],
+  "face_count": 8,
+  "largest_face_fraction": 0.0219,
+  "source": {
+    "platform": "eBay",
+    "listing_id": "v1|404020462641|673903467785",
+    "listing_title": "Stray Kids Japan 1st Single TOP Official Photocard Photo Card PC skz",
+    "seller": "mj_kr_japan",
+    "price": 29.99,
+    "currency": "USD",
+    "image_url": "https://i.ebayimg.com/images/g/RE8AAOSw1gljhBai/s-l1200.jpg",
+    "listing_url": "https://www.ebay.com/itm/404020462641?_skw=Stray+Kids+Felix+individual+photocard&hash=item5e117f0431:g:RE8AAOSw1gljhBai&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGaCajkBI%2BA3pj2q6bwfmaqm4I1Wh9DOgl9C%2FX8JxexVckW39UbIGaN%2BaAWzDT%2BwVCoJU%2FVcyaoJkUOxWXsF8Z3pRM49D%2B8ZFRrd74Hj03VdvbD2mVRTKZLrKNbo3Qap2Q88lTKd6ECM6RjfheQiwW0mzbWH0UsnsKExx02Fy74CbftCxwXpUMa1OFPrDo2xPrQrS2w75wWwLW6ucgg%2FWtMvWGDZYd4bLjwMisWLgTHUE9XnQ5XzmVd0IWU81of4%2B%2FWNF2y95PWEvL2dkudtbjEUCjytIMpdu70oSPeRwqrwOj4bJfenvtTjgXv7VO6EPvM%3D",
+    "collection_timestamp": "2026-08-11T14:24:52.186839"
+  },
+  "generated_at": "2026-08-11T14:24:52.186854"
+}

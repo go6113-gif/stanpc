@@ -1,0 +1,29 @@
+{
+  "project_id": "stanpc-supabase",
+  "description": "StanPC (poca-exchange.com) Supabase Database Configuration",
+  "database": {
+    "provider": "postgresql",
+    "version": "15",
+    "connection": {
+      "host": "db.prisma.io",
+      "port": 5432,
+      "database": "postgres",
+      "ssl_mode": "require"
+    }
+  },
+  "tables": {
+    "users": "User authentication and profile data",
+    "accounts": "OAuth provider account linking (NextAuth adapter)",
+    "sessions": "Session management (NextAuth adapter)",
+    "verification_tokens": "Email verification tokens (NextAuth adapter)",
+    "groups": "K-Pop group master data (pSEO directory)",
+    "members": "Group member data (pSEO directory)",
+    "albums": "Album master data (pSEO directory)",
+    "photo_cards": "Individual photocards with market signals",
+    "outbound_clicks": "eBay/Buyee outbound click tracking",
+    "price_reports": "User-submitted price reports (editorial queue)",
+    "price_history": "Time-series price snapshots for trend analysis",
+    "global_sku_mapping": "Multi-market SKU/URL mapping for cross-platform tracking",
+    "user_binder_cards": "User virtual binder entries with tags and notes"
+  }
+}

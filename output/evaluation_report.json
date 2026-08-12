@@ -1,0 +1,38 @@
+{
+  "best_image_index": 1,
+  "best_score": 98.82951759634446,
+  "all_scores": {
+    "image_1": {
+      "overall": 98.82951759634446,
+      "sharpness": 100.0,
+      "aspect_ratio": 96.82,
+      "resolution": 100.0,
+      "noise": 100.0,
+      "brightness": 96.43678397562967
+    },
+    "image_2": {
+      "overall": 78.63080981011876,
+      "sharpness": 98.58142878752514,
+      "aspect_ratio": 0.0,
+      "resolution": 100.0,
+      "noise": 100.0,
+      "brightness": 93.70920782574152
+    },
+    "image_3": {
+      "overall": 97.83122598544035,
+      "sharpness": 100.0,
+      "aspect_ratio": 89.89,
+      "resolution": 100.0,
+      "noise": 100.0,
+      "brightness": 99.02150656960228
+    },
+    "image_4": {
+      "overall": 79.45146859678337,
+      "sharpness": 100.0,
+      "aspect_ratio": 0.0,
+      "resolution": 100.0,
+      "noise": 100.0,
+      "brightness": 96.34312397855587
+    }
+  }
+}

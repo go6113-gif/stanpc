@@ -1,0 +1,21 @@
+import requests
+
+# 방금 만든 poca-test3의 API 키를 넣어주세요.
+new_api_key = "AIzaSyC7kz7QOD5IHojC4O2pQ2cYhvb0cnmqscg"
+cx = "9437debcb6659454a"
+
+params = {
+    'key': new_api_key,
+    'cx': cx,
+    'q': 'BTS포카',
+    'searchType': 'image'
+}
+
+res = requests.get('https://www.googleapis.com/customsearch/v1', params=params).json()
+
+if 'items' in res:
+    print("=== 포카 이미지 검색 최종 성공! ===")
+    for item in res['items'][:3]:
+        print("이미지 URL:", item['link'])
+else:
+    print("오류 내용:", res)

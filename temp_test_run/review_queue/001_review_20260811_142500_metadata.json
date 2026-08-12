@@ -1,0 +1,21 @@
+{
+  "status": "NEEDS_MANUAL_REVIEW",
+  "is_multi_card_listing": true,
+  "reason": "many_small_faces_grid_layout",
+  "num_geometric_boundaries": 0,
+  "geometric_boundaries": [],
+  "face_count": 55,
+  "largest_face_fraction": 0.0058,
+  "source": {
+    "platform": "eBay",
+    "listing_id": "v1|257644794490|558231787720",
+    "listing_title": "4 Pcs/set AESPA KISS N TELL NINGNING KARINA WINTER GISELLE Special Photocard",
+    "seller": "pinganchangjiu2602",
+    "price": 12.99,
+    "currency": "USD",
+    "image_url": "https://i.ebayimg.com/images/g/mSsAAeSwrBNqZyRD/s-l1200.jpg",
+    "listing_url": "https://www.ebay.com/itm/257644794490?_skw=AESPA+photocard&hash=item3bfcd3927a:g:mSsAAeSwrBNqZyRD",
+    "collection_timestamp": "2026-08-11T14:25:00.842369"
+  },
+  "generated_at": "2026-08-11T14:25:00.842392"
+}

@@ -1,0 +1,4 @@
+poca-exchange/
+├── docs/
+│   ├── AUTH_SPEC.md      <-- [MVP 및 Phase 2] 로그인 및 본인인증(KYC) 설계서
+│   └── ESCROW_SPEC.md    <-- [Phase 2] 크로스보더 1:1 맞교환 & 에스크로 비즈니스 설계서

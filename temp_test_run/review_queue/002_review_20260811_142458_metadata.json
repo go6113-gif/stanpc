@@ -1,0 +1,21 @@
+{
+  "status": "NEEDS_MANUAL_REVIEW",
+  "is_multi_card_listing": true,
+  "reason": "many_small_faces_grid_layout",
+  "num_geometric_boundaries": 0,
+  "geometric_boundaries": [],
+  "face_count": 56,
+  "largest_face_fraction": 0.0055,
+  "source": {
+    "platform": "eBay",
+    "listing_id": "v1|307084476718|606916031816",
+    "listing_title": "PRE Stray Kids THIS & THAT LUCKY DRAW POB JAPAN Photocard JYP  HMV SONY TOWER.R",
+    "seller": "bts_japan_limited",
+    "price": 77.99,
+    "currency": "USD",
+    "image_url": "https://i.ebayimg.com/images/g/5fMAAeSw~bxqedXx/s-l1200.jpg",
+    "listing_url": "https://www.ebay.com/itm/307084476718?_skw=Stray+Kids+photocard&hash=item477fa9412e:g:5fMAAeSw~bxqedXx&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGY0Bw24dY9J5gm5VZ7GYt6COVFfL5VQ1%2Bqhl%2FEtde54q13iOj7yVv3zwvgVYkKb69ZLLLLo%2BBTTrEJ%2Bm%2B%2FPQtWKBIMP3Ze1%2BvQqAqBf8rJ1GxQQ6wgN5vRS64haEUNl2mF79eHoRx0oMPLK7%2Fx44c7Unjsff%2BbkGj7FhqA3viFYdP5MKsBmLdPR0EPBsJGMB%2Bq6vRwzVacqo6pMFfTwVEYMTCADgliwIF9mdc07e4BlOA%2BDTWlzSZFzloKd34EBWo04z3buwnpWT4mqGQT8kLTccXcX3b2J2N43vqoDcNAsxg%3D%3D",
+    "collection_timestamp": "2026-08-11T14:24:58.472267"
+  },
+  "generated_at": "2026-08-11T14:24:58.472353"
+}

@@ -1,0 +1,90 @@
+{
+  "group": "Stray Kids",
+  "member": "Unknown",
+  "search_query": "Felix 5-Star Stray Kids Photocard",
+  "processing": {
+    "original": {
+      "width": 626,
+      "height": 736,
+      "ratio": 0.851
+    },
+    "processed": {
+      "width": 259,
+      "height": 400,
+      "ratio": 0.647
+    },
+    "padding": {
+      "current_ratio": 0.851,
+      "target_ratio": 0.649,
+      "needs_padding": true,
+      "pad_top": 114,
+      "pad_bottom": 114,
+      "pad_left": 0,
+      "pad_right": 0,
+      "direction": "vertical",
+      "new_width": 626,
+      "new_height": 964
+    },
+    "validation": {
+      "is_valid": true,
+      "current_ratio": 0.647,
+      "target_ratio": 0.649,
+      "deviation": 0.002,
+      "tolerance": 0.05
+    },
+    "status": "member_detected",
+    "confidence": 0.9113652110099792
+  },
+  "source": {
+    "platform": "eBay",
+    "listing_id": "v1|398267902559|0",
+    "listing_title": "Felix 5-Star Stray Kids Photocard",
+    "seller": "siimpl_80",
+    "price": 5.0,
+    "currency": "USD",
+    "condition": "Used",
+    "collection_timestamp": "2026-08-11T14:24:51.034143"
+  },
+  "processing_status": {
+    "member_detected": true,
+    "aspect_ratio_corrected": true,
+    "face_detection_confidence": 0.9113652110099792,
+    "padding_applied": true
+  },
+  "quality": {
+    "original_dimensions": {
+      "width": 626,
+      "height": 736,
+      "ratio": 0.851
+    },
+    "processed_dimensions": {
+      "width": 259,
+      "height": 400,
+      "ratio": 0.647
+    },
+    "aspect_ratio": 0.647
+  },
+  "tier": {
+    "level": "Tier 1",
+    "collection_frequency": "24h (daily automation)",
+    "priority": "High"
+  },
+  "tags": [
+    "kpop",
+    "photocard",
+    "padded",
+    "group:stray kids",
+    "tier-1",
+    "member-detected",
+    "aspect-ratio-corrected"
+  ],
+  "schema_version": "1.0",
+  "generated_at": "2026-08-11T14:24:51.034161",
+  "card_classification": {
+    "is_multi_card_listing": false,
+    "card_type": "individual",
+    "member_count": 1,
+    "boundary_source": "no_card_boundary_detected_assumed_single_full_frame",
+    "num_geometric_boundaries": 0
+  }
+}

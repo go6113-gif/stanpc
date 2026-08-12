@@ -1,0 +1,35 @@
+{
+  "group": "BTS",
+  "member": "RM",
+  "search_query": "BTS RM Official Photocard BTS RM photocard",
+  "processing": {
+    "original": {
+      "width": 280,
+      "height": 420,
+      "ratio": 0.667
+    },
+    "processed": {
+      "width": 259,
+      "height": 400,
+      "ratio": 0.647
+    },
+    "padding": {
+      "current_ratio": 0.667,
+      "target_ratio": 0.649,
+      "needs_padding": false,
+      "pad_top": 5,
+      "pad_bottom": 6,
+      "pad_left": 0,
+      "pad_right": 0,
+      "direction": "vertical",
+      "new_width": 280,
+      "new_height": 431
+    },
+    "validation": {
+      "is_valid": true,
+      "current_ratio": 0.647,
+      "target_ratio": 0.649,
+      "deviation": 0.002,
+      "tolerance": 0.05
+    },
+    "image": 

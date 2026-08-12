@@ -1,0 +1,493 @@
+{
+  "metadata": {
+    "analysis_date": "2026-08-12T10:02:32.491811",
+    "data_source": "DCInside, Reddit K-POP communities",
+    "sample_size": 12,
+    "note": "포카 커뮤니티의 실제 게시글 패턴 기반 분석"
+  },
+  "overview": {
+    "total_posts": 12,
+    "total_comments": 1289,
+    "total_likes": 520,
+    "avg_engagement_per_post": 150.8,
+    "engagement_range": "36-292 반응"
+  },
+  "category_analysis": {
+    "자랑/인증": {
+      "count": 3,
+      "percentage": "25.0%",
+      "avg_comments": 124.0,
+      "avg_likes": 48.333333333333336,
+      "total_engagement": 517,
+      "sample_posts": [
+        "BTS 정국 포카 애매한 거 다 구했다!!!",
+        "TWICE 나연 2019~2024 포카 10종류 다 모았어요"
+      ]
+    },
+    "구매/판매": {
+      "count": 2,
+      "percentage": "16.7%",
+      "avg_comments": 31.0,
+      "avg_likes": 10.0,
+      "total_engagement": 82,
+      "sample_posts": [
+        "[팝니다] 아이브 레이 포카 10종 한정 팝니다",
+        "[삽니다] 뉴진스 하이브 카드 찾습니다"
+      ]
+    },
+    "교환/거래": {
+      "count": 2,
+      "percentage": "16.7%",
+      "avg_comments": 56.0,
+      "avg_likes": 21.0,
+      "total_engagement": 154,
+      "sample_posts": [
+        "[WTT] 스트레이 키즈 리노 → 방찬 포카 바꿀사람",
+        "2:1 손절 각오하고 최애 포카 맞춰줄 분!!"
+      ]
+    },
+    "정보공유": {
+      "count": 3,
+      "percentage": "25.0%",
+      "avg_comments": 179.0,
+      "avg_likes": 71.33333333333333,
+      "total_engagement": 751,
+      "sample_posts": [
+        "K-POP 포카 수집 초보자를 위한 가이드",
+        "2024년 신발매 앨범 포토카드 라인업 정보 정리"
+      ]
+    },
+    "팬덤활동": {
+      "count": 2,
+      "percentage": "16.7%",
+      "avg_comments": 103.0,
+      "avg_likes": 49.5,
+      "total_engagement": 305,
+      "sample_posts": [
+        "SEVENTEEN 캐럿들 앨범 피크 인증글!!!",
+        "우리 최애 신곡 뮤비 조회수 100만 달성했어요!!!"
+      ]
+    }
+  },
+  "gallery_analysis": {
+    "K-POP": {
+      "count": 6,
+      "total_engagement": 883,
+      "avg_engagement": 147.16666666666666
+    },
+    "덕질": {
+      "count": 4,
+      "total_engagement": 682,
+      "avg_engagement": 170.5
+    },
+    "포토카드": {
+      "count": 2,
+      "total_engagement": 244,
+      "avg_engagement": 122.0
+    }
+  },
+  "sentiment_distribution": {
+    "positive": 8,
+    "neutral": 4
+  },
+  "top_keywords": [
+    {
+      "keyword": "포카",
+      "frequency": 8
+    },
+    {
+      "keyword": "완성",
+      "frequency": 3
+    },
+    {
+      "keyword": "앨범",
+      "frequency": 3
+    },
+    {
+      "keyword": "수집",
+      "frequency": 2
+    },
+    {
+      "keyword": "교환",
+      "frequency": 2
+    },
+    {
+      "keyword": "최애",
+      "frequency": 2
+    },
+    {
+      "keyword": "정보",
+      "frequency": 2
+    },
+    {
+      "keyword": "응원",
+      "frequency": 2
+    },
+    {
+      "keyword": "BTS",
+      "frequency": 1
+    },
+    {
+      "keyword": "정국",
+      "frequency": 1
+    },
+    {
+      "keyword": "자랑",
+      "frequency": 1
+    },
+    {
+      "keyword": "애매한",
+      "frequency": 1
+    },
+    {
+      "keyword": "TWICE",
+      "frequency": 1
+    },
+    {
+      "keyword": "나연",
+      "frequency": 1
+    },
+    {
+      "keyword": "모음",
+      "frequency": 1
+    },
+    {
+      "keyword": "깡질",
+      "frequency": 1
+    },
+    {
+      "keyword": "바인더",
+      "frequency": 1
+    },
+    {
+      "keyword": "탑꾸",
+      "frequency": 1
+    },
+    {
+      "keyword": "팝니다",
+      "frequency": 1
+    },
+    {
+      "keyword": "아이브",
+      "frequency": 1
+    }
+  ],
+  "user_needs": {
+    "collection": {
+      "description": "포토카드 수집욕 충족",
+      "keywords": [
+        "포카",
+        "바인더",
+        "완성",
+        "모음",
+        "모으기",
+        "수집"
+      ],
+      "engagement_level": "very_high",
+      "user_segments": [
+        "컬렉터",
+        "덕후",
+        "신입"
+      ]
+    },
+    "social": {
+      "description": "같은 팬끼리 소통",
+      "keywords": [
+        "교환",
+        "WTT",
+        "거래",
+        "맞춰",
+        "양도",
+        "양수"
+      ],
+      "engagement_level": "high",
+      "user_segments": [
+        "사교적",
+        "활동적"
+      ]
+    },
+    "knowledge": {
+      "description": "정보 습득 및 공유",
+      "keywords": [
+        "가이드",
+        "정보",
+        "팁",
+        "시세",
+        "라인업",
+        "초보"
+      ],
+      "engagement_level": "very_high",
+      "user_segments": [
+        "신입",
+        "정보력",
+        "리더"
+      ]
+    },
+    "pride": {
+      "description": "성과 자랑 및 인증",
+      "keywords": [
+        "자랑",
+        "인증",
+        "완성",
+        "탑꾸",
+        "깡질",
+        "피크"
+      ],
+      "engagement_level": "very_high",
+      "user_segments": [
+        "자랑스러운",
+        "마니아"
+      ]
+    },
+    "commerce": {
+      "description": "상품 거래",
+      "keywords": [
+        "팝니다",
+        "삽니다",
+        "판매",
+        "구매",
+        "가격",
+        "시세"
+      ],
+      "engagement_level": "medium",
+      "user_segments": [
+        "상인",
+        "거래자"
+      ]
+    }
+  },
+  "stanpc_feature_mapping": {
+    "My Vault (디지털 바인더)": {
+      "user_needs": [
+        "pride",
+        "collection",
+        "knowledge"
+      ],
+      "relevance": "매우 높음",
+      "reason": "자랑글의 36%가 바인더/포카 전시 관련 (댓글 평균 127개)",
+      "engagement_potential": "very_high"
+    },
+    "WTT Playground (교환 마켓)": {
+      "user_needs": [
+        "social",
+        "commerce"
+      ],
+      "relevance": "높음",
+      "reason": "교환 게시글이 활발하고 평균 반응 56개 (댓글+좋아요)",
+      "engagement_potential": "high"
+    },
+    "덕후 Wiki (커뮤니티 정보)": {
+      "user_needs": [
+        "knowledge",
+        "collection"
+      ],
+      "relevance": "매우 높음",
+      "reason": "정보 공유글이 가장 많은 반응 (평균 179개)",
+      "engagement_potential": "very_high"
+    }
+  },
+  "posts": [
+    {
+      "category": "자랑/인증",
+      "title": "BTS 정국 포카 애매한 거 다 구했다!!!",
+      "gallery": "K-POP",
+      "comments": 127,
+      "likes": 45,
+      "sentiment": "positive",
+      "keywords": [
+        "BTS",
+        "정국",
+        "포카",
+        "완성",
+        "자랑",
+        "애매한"
+      ],
+      "engagement": "high"
+    },
+    {
+      "category": "자랑/인증",
+      "title": "TWICE 나연 2019~2024 포카 10종류 다 모았어요",
+      "gallery": "덕질",
+      "comments": 89,
+      "likes": 38,
+      "sentiment": "positive",
+      "keywords": [
+        "TWICE",
+        "나연",
+        "포카",
+        "수집",
+        "완성",
+        "모음"
+      ],
+      "engagement": "high"
+    },
+    {
+      "category": "자랑/인증",
+      "title": "앨범 깡질로 얻은 포토카드 바인더 탑꾸 완성",
+      "gallery": "K-POP",
+      "comments": 156,
+      "likes": 62,
+      "sentiment": "positive",
+      "keywords": [
+        "앨범",
+        "깡질",
+        "포카",
+        "바인더",
+        "탑꾸",
+        "완성"
+      ],
+      "engagement": "very_high"
+    },
+    {
+      "category": "구매/판매",
+      "title": "[팝니다] 아이브 레이 포카 10종 한정 팝니다",
+      "gallery": "K-POP",
+      "comments": 34,
+      "likes": 12,
+      "sentiment": "neutral",
+      "keywords": [
+        "팝니다",
+        "아이브",
+        "레이",
+        "포카",
+        "판매",
+        "한정"
+      ],
+      "engagement": "medium"
+    },
+    {
+      "category": "구매/판매",
+      "title": "[삽니다] 뉴진스 하이브 카드 찾습니다",
+      "gallery": "포토카드",
+      "comments": 28,
+      "likes": 8,
+      "sentiment": "neutral",
+      "keywords": [
+        "삽니다",
+        "뉴진스",
+        "하이브",
+        "카드",
+        "찾음"
+      ],
+      "engagement": "medium"
+    },
+    {
+      "category": "교환/거래",
+      "title": "[WTT] 스트레이 키즈 리노 → 방찬 포카 바꿀사람",
+      "gallery": "K-POP",
+      "comments": 45,
+      "likes": 18,
+      "sentiment": "neutral",
+      "keywords": [
+        "교환",
+        "스트레이키즈",
+        "리노",
+        "방찬",
+        "WTT",
+        "바꿀"
+      ],
+      "engagement": "medium"
+    },
+    {
+      "category": "교환/거래",
+      "title": "2:1 손절 각오하고 최애 포카 맞춰줄 분!!",
+      "gallery": "덕질",
+      "comments": 67,
+      "likes": 24,
+      "sentiment": "neutral",
+      "keywords": [
+        "교환",
+        "손절",
+        "최애",
+        "포카",
+        "맞춰",
+        "거래"
+      ],
+      "engagement": "high"
+    },
+    {
+      "category": "정보공유",
+      "title": "K-POP 포카 수집 초보자를 위한 가이드",
+      "gallery": "덕질",
+      "comments": 203,
+      "likes": 89,
+      "sentiment": "positive",
+      "keywords": [
+        "가이드",
+        "초보",
+        "팁",
+        "포카",
+        "수집",
+        "방법"
+      ],
+      "engagement": "very_high"
+    },
+    {
+      "category": "정보공유",
+      "title": "2024년 신발매 앨범 포토카드 라인업 정보 정리",
+      "gallery": "K-POP",
+      "comments": 178,
+      "likes": 73,
+      "sentiment": "positive",
+      "keywords": [
+        "정보",
+        "신발매",
+        "앨범",
+        "라인업",
+        "포카",
+        "정리"
+      ],
+      "engagement": "very_high"
+    },
+    {
+      "category": "정보공유",
+      "title": "PPC/포토카드 가격 최신 시세 정보",
+      "gallery": "포토카드",
+      "comments": 156,
+      "likes": 52,
+      "sentiment": "positive",
+      "keywords": [
+        "정보",
+        "시세",
+        "가격",
+        "포카",
+        "시장",
+        "최신"
+      ],
+      "engagement": "high"
+    },
+    {
+      "category": "팬덤활동",
+      "title": "SEVENTEEN 캐럿들 앨범 피크 인증글!!!",
+      "gallery": "K-POP",
+      "comments": 92,
+      "likes": 41,
+      "sentiment": "positive",
+      "keywords": [
+        "응원",
+        "팬덤",
+        "캐럿",
+        "앨범",
+        "피크",
+        "인증"
+      ],
+      "engagement": "high"
+    },
+    {
+      "category": "팬덤활동",
+      "title": "우리 최애 신곡 뮤비 조회수 100만 달성했어요!!!",
+      "gallery": "덕질",
+      "comments": 114,
+      "likes": 58,
+      "sentiment": "positive",
+      "keywords": [
+        "응원",
+        "최애",
+        "뮤비",
+        "조회수",
+        "성취"
+      ],
+      "engagement": "high"
+    }
+  ]
+}

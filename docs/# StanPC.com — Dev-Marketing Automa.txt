@@ -1,0 +1,26 @@
+# StanPC.com — Dev-Marketing Automation Specification
+> **Domain:** https://stanpc.com
+> **Objective:** Synchronize Development Milestones with Autonomous Multi-Channel SNS Marketing (X, Threads, Reddit, Instagram).
+
+---
+
+## 1. AI Agent Team Responsibilities
+
+- **Master Agent:** Coordinates scope, manages feature development, and triggers marketing workflows upon milestone completion.
+- **Engineering Agent (Claude Code):** Builds Next.js/Prisma code, updates DB, and maintains marketing API endpoints (`/api/cron/marketing`).
+- **Growth & Marketing Agent:** Listens to triggers, parses pSEO data (6,648+ cards / 931 groups), generates tailored content, and manages SNS interactions safely with rate-limiting.
+
+---
+
+## 2. SNS Channel Strategy & Handles
+
+| Channel | Handle | Primary Target | Strategy |
+| :--- | :--- | :--- | :--- |
+| **X (Twitter)** | `@stanpc_official` | Global & KR Collectors | Real-time reply bot on `#wts`, `#wtt`, `#wtb` tags with pSEO price links & Escrow CTA. |
+| **Threads** | `@stanpc_official` | Gen Z & Casual Fans | Daily top traded photocard trends, price reports, and visual cards. |
+| **Reddit** | `u/stanpc_official` | NA/EU Collectors | Weekly market analysis reports on `r/kpopforsale` and price guide references. |
+| **Instagram** | `@stanpc_official` | Global Visual Audience | Automated card news & Reels showcasing escrow trade process. |
+
+---
+
+## 3. Development-Marketing Synchronization Matrix

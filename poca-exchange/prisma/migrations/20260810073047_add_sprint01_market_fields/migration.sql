@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "photo_cards" ADD COLUMN     "badge" TEXT,
+ADD COLUMN     "estimatedPrice" DOUBLE PRECISION,
+ADD COLUMN     "haveCount" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "viewCount" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "wantCount" INTEGER NOT NULL DEFAULT 0;
