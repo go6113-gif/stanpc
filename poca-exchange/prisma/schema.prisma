@@ -1,8 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Prisma 7 generator. `output` is mandatory for the `prisma-client` provider —
+// it no longer writes into node_modules. The path is fixed at
+// app/generated/prisma so `@/app/generated/prisma/client` resolves through the
+// existing tsconfig "@/*" alias; the directory is gitignored.
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
 }
 
 datasource db {
@@ -36,11 +41,40 @@ model User {
   countryCode     String? // KR, US, JP, etc.
   reputationScore Int       @default(100)
 
+  // Collector Index ("덕력 포인트") — cached aggregate recomputed by
+  // lib/collector-index.ts, never written by hand. Kept denormalised on User
+  // because the leaderboard and profile header read it on every request and
+  // recounting binder rows per view does not scale.
+  //
+  // `manner_score` is the 당근마켓-style trust temperature: starts at body
+  // temperature 36.5 and moves with trade conduct. It is deliberately separate
+  // from `reputationScore` (0-100 abuse/report counter) — one measures how
+  // pleasant a trade was, the other whether the account is in good standing.
+  //
+  // Deviates from the surrounding camelCase on purpose: CLAUDE.md pins these
+  // two identifiers as `User.collector_index` / `User.manner_score`, and every
+  // field added in this migration follows that snake_case spec so the Stage-1
+  // block reads consistently.
+  collector_index Int   @default(0)
+  manner_score    Float @default(36.5)
+
   accounts Account[]
   sessions Session[]
 
   // Virtual binder: User → many BinderCards (through many-to-many)
   binderCards UserBinderCard[]
+
+  // Collector Index / gamification
+  badges        UserBadge[]
+  reactions     Reaction[]
+  notifications Notification[]
+
+  // WTT (Want To Trade) — tables exist but stay unused in the MVP.
+  bundleMatchesAsA  BundleMatch[] @relation("BundleMatchUserA")
+  bundleMatchesAsB  BundleMatch[] @relation("BundleMatchUserB")
+  tradeRoomsAsA     TradeRoom[]   @relation("TradeRoomUserA")
+  tradeRoomsAsB     TradeRoom[]   @relation("TradeRoomUserB")
+  tradeItemsOffered TradeItem[]   @relation("TradeItemOfferedBy")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -205,6 +239,9 @@ model PhotoCard {
   // User virtual binder entries (collections, wishlists, etc.)
   userBinders UserBinderCard[]
 
+  // WTT — cards put on the table inside a trade room. Inactive in the MVP.
+  tradeItems TradeItem[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -309,8 +346,270 @@ model UserBinderCard {
   cardId String
   card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
 
+  // A binder entry doubles as the "자랑" (show-off) unit other users react to.
+  reactions Reaction[]
+
   @@unique([userId, cardId])
   @@index([userId])
   @@index([cardId])
   @@map("user_binder_cards")
+}
+
+// -----------------------------------------------------------------------------
+// Collector Index — Badges
+// Badges are the visible half of the Collector Index: the index itself is a
+// single number on User, badges are the milestones that number crosses.
+//
+// Badge is a seeded catalogue row rather than a hardcoded enum because the
+// badge list is editorial (new ones ship with events/comebacks) and adding an
+// enum value would mean a migration every time. UserBadge is the join.
+//
+// Field names are snake_case per the Stage-1 spec — see the note on
+// User.collector_index for why this block departs from the camelCase above.
+// -----------------------------------------------------------------------------
+model Badge {
+  badge_id    String  @id @default(cuid())
+  badge_name  String  @unique // stable key, e.g. "first_binder_complete"
+  badge_icon  String? // emoji or asset path; null renders the default medal
+  description String? // Korean UI copy shown in the badge tooltip
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users UserBadge[]
+
+  @@map("badges")
+}
+
+model UserBadge {
+  id String @id @default(cuid())
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  badge_id String
+  badge    Badge  @relation(fields: [badge_id], references: [badge_id], onDelete: Cascade)
+
+  acquired_at DateTime @default(now())
+
+  // A badge is earned once. Re-awarding is a no-op upsert, not a second row.
+  @@unique([user_id, badge_id])
+  @@index([user_id])
+  @@index([badge_id])
+  @@map("user_badges")
+}
+
+// -----------------------------------------------------------------------------
+// Reactions — the 6 fixed emotion reactions
+// The set and its order are frozen by CLAUDE.md. Identifiers are ASCII so the
+// generated TypeScript stays i18n-friendly; `@map` pins the Korean label as the
+// stored Postgres enum value so the DB representation matches the spec exactly.
+// Display copy lives in lib/reactions.ts, keyed off this enum — no bare Korean
+// string literals in components.
+// -----------------------------------------------------------------------------
+enum ReactionType {
+  ENVY     @map("부럽다")
+  LEGEND   @map("레전드")
+  RADIANT  @map("영롱하다")
+  INSANE   @map("미쳤다")
+  RESPECT  @map("리스펙")
+  WANT_TOO @map("나도갖고싶다")
+
+  @@map("reaction_type")
+}
+
+// What a Reaction points at. Only VAULT_CARD is reachable in the MVP; POST is
+// reserved so a future feed post can share this table instead of forcing a
+// second reactions table and a data migration.
+enum ReactionTargetType {
+  VAULT_CARD
+  POST
+
+  @@map("reaction_target_type")
+}
+
+model Reaction {
+  id   String       @id @default(cuid())
+  type ReactionType
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  target_type ReactionTargetType @default(VAULT_CARD)
+
+  // Nullable FK rather than a generic (target_type, target_id) pair: the one
+  // target that exists today gets real referential integrity and cascade
+  // deletes, and the POST column can be added next to it later.
+  vault_card_id String?
+  vaultCard     UserBinderCard? @relation(fields: [vault_card_id], references: [id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+
+  // "유저별 중복 리액션 방지" — one row per (user, target, emotion). A user may
+  // still leave two different emotions on the same card; tighten this to
+  // [user_id, vault_card_id] if the feed should allow only one.
+  @@unique([user_id, vault_card_id, type])
+  @@index([vault_card_id])
+  @@index([user_id])
+  @@index([type])
+  @@map("reactions")
+}
+
+// -----------------------------------------------------------------------------
+// Notifications
+// Only the three MVP triggers exist as enum values. `payload` carries the
+// type-specific ids (card slug, room id, reaction counts) as JSONB so adding a
+// notification type does not mean adding columns; `title`/`body` are rendered
+// Korean copy so a delivered notification never changes wording retroactively.
+// -----------------------------------------------------------------------------
+enum NotificationType {
+  HOF_EXPOSURE // 명예의 전당 노출
+  DAILY_REACTION_SUMMARY // 하루치 리액션 요약
+  TRADE_MATCH // WTT 번들 매칭 성사 (inactive in the MVP)
+
+  @@map("notification_type")
+}
+
+model Notification {
+  id String @id @default(cuid())
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  type  NotificationType
+  title String
+  body  String?
+
+  payload Json? @db.JsonB
+
+  is_read Boolean   @default(false)
+  read_at DateTime?
+
+  created_at DateTime @default(now())
+
+  // Backs the unread badge and the reverse-chronological notification list.
+  @@index([user_id, is_read])
+  @@index([user_id, created_at])
+  @@index([type])
+  @@map("notifications")
+}
+
+// -----------------------------------------------------------------------------
+// WTT (Want To Trade) — PRE-CREATED, DISABLED IN THE MVP
+// Per CLAUDE.md these three tables ship with the migration but get no UI and no
+// API route. They exist now so the P1 Vault and P2 Wiki work can be written
+// against their final shape instead of being retrofitted later.
+//
+// Matching rule the tables are shaped for: a pair only becomes a BundleMatch
+// when BOTH users hold at least 3 cards (MIN_BUNDLE_MATCH_CARDS in
+// lib/wtt-scope.ts) the other side has flagged as wanted — bundling amortises
+// the shipping cost that 40.9% of the surveyed posts complain about.
+// -----------------------------------------------------------------------------
+enum BundleMatchStatus {
+  PENDING // computed, not yet surfaced to either user
+  ROOM_OPENED // a TradeRoom was created from this match
+  DISMISSED // one side declined
+  EXPIRED // stale — one side has moved on
+
+  @@map("bundle_match_status")
+}
+
+enum TradeRoomStatus {
+  OPEN
+  AGREED
+  SHIPPED
+  COMPLETED
+  CANCELLED
+
+  @@map("trade_room_status")
+}
+
+model BundleMatch {
+  id String @id @default(cuid())
+
+  // Pair is stored ordered (user_a_id < user_b_id) by the matcher so the unique
+  // constraint below cannot be defeated by swapping the two sides.
+  user_a_id String
+  userA     User   @relation("BundleMatchUserA", fields: [user_a_id], references: [id], onDelete: Cascade)
+
+  user_b_id String
+  userB     User   @relation("BundleMatchUserB", fields: [user_b_id], references: [id], onDelete: Cascade)
+
+  // Cards each side can hand over. Both must be >= MIN_BUNDLE_MATCH_CARDS.
+  a_to_b_count Int
+  b_to_a_count Int
+
+  // Ranking hint for the match list — recomputed, never user-editable.
+  match_score Float @default(0)
+
+  status BundleMatchStatus @default(PENDING)
+
+  tradeRooms TradeRoom[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([user_a_id, user_b_id])
+  @@index([user_b_id])
+  @@index([status])
+  @@map("bundle_matches")
+}
+
+model TradeRoom {
+  id String @id @default(cuid())
+
+  // SetNull, not Cascade: a room outlives the recomputed match that spawned it.
+  bundle_match_id String?
+  bundleMatch     BundleMatch? @relation(fields: [bundle_match_id], references: [id], onDelete: SetNull)
+
+  user_a_id String
+  userA     User   @relation("TradeRoomUserA", fields: [user_a_id], references: [id], onDelete: Cascade)
+
+  user_b_id String
+  userB     User   @relation("TradeRoomUserB", fields: [user_b_id], references: [id], onDelete: Cascade)
+
+  status TradeRoomStatus @default(OPEN)
+
+  items TradeItem[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  closed_at  DateTime?
+
+  @@index([user_a_id])
+  @@index([user_b_id])
+  @@index([bundle_match_id])
+  @@index([status])
+  @@map("trade_rooms")
+}
+
+model TradeItem {
+  id String @id @default(cuid())
+
+  trade_room_id String
+  tradeRoom     TradeRoom @relation(fields: [trade_room_id], references: [id], onDelete: Cascade)
+
+  card_id String
+  card    PhotoCard @relation(fields: [card_id], references: [id], onDelete: Cascade)
+
+  // Which side is giving this card away.
+  offered_by_user_id String
+  offeredBy          User   @relation("TradeItemOfferedBy", fields: [offered_by_user_id], references: [id], onDelete: Cascade)
+
+  // "상단 고정 교환 포카 목록" — the room header pins an ordered strip of the
+  // bundle so both sides always see what is on the table without scrolling the
+  // chat. `position` orders the pinned strip; unpinned items fall back to
+  // created_at.
+  is_pinned Boolean @default(false)
+  position  Int     @default(0)
+
+  created_at DateTime @default(now())
+
+  // The same card can appear once per side (both users owning a duplicate of
+  // the same card is normal), but not twice from the same side.
+  @@unique([trade_room_id, card_id, offered_by_user_id])
+  @@index([trade_room_id])
+  @@index([card_id])
+  @@index([offered_by_user_id])
+  @@map("trade_items")
 }

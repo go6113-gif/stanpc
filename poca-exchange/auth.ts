@@ -4,6 +4,7 @@ import Twitter from "next-auth/providers/twitter";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import type { PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 // docs/AUTH_SPEC.md MVP phase: Google, X(Twitter), Kakao, Naver social login.
@@ -17,7 +18,12 @@ const providers = [
 ].filter((p) => p !== null);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  // @auth/prisma-adapter is typed against the `@prisma/client` PrismaClient,
+  // but Prisma 7 generates ours into app/generated/prisma — structurally the
+  // same client, nominally a different type. The adapter only touches the
+  // standard User/Account/Session/VerificationToken delegates, all of which
+  // exist here, so the cast is safe.
+  adapter: PrismaAdapter(prisma as unknown as PrismaClient),
   providers,
   session: { strategy: "database" },
   pages: {
