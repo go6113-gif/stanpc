@@ -210,7 +210,8 @@ async function seedPhotoCardsFromCSV() {
     const groupName = row["Group_Name"]?.trim() || "";
     const memberName = row["Member_Name"]?.trim() || "";
     const cardTitle = row["Card_Title"]?.trim() || "";
-    const imageUrl = row["Image_URL"]?.trim() || "";
+    // Use Album_Cover_URL if Image_URL is empty (fix for coverartarchive.org CDN)
+    const imageUrl = (row["Image_URL"]?.trim() || row["Album_Cover_URL"]?.trim()) || "";
     const usPrice = parseFloat(row["US_Market_Price"] || "0") || null;
 
     if (!skuId || !cardTitle) continue;
