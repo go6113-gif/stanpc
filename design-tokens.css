@@ -1,0 +1,138 @@
+/* ============================================
+   StanPC Design Tokens
+   Source: nomads.com 실측 (2026-08-12 audit)
+   주의: Claude Code는 이 파일에 없는 색상/radius/폰트 값을
+   임의로 새로 만들지 말 것. 없는 값이 필요하면 이 파일에
+   먼저 추가 요청할 것.
+   ============================================ */
+
+:root {
+  /* Color */
+  --color-primary: #FF4742;       /* Nomad Red - 활성 상태 전용 */
+  --color-bg: #FBFAF8;            /* body 배경 */
+  --color-bg-hero-dark: #0B0B0F;  /* 프로필/My Vault 히어로 배너 전용 */
+  --color-text: #1C1C1C;
+  --color-text-inverse: #FFFFFF;
+  --color-track: #F5F5F5;         /* 스코어바 등 배경 트랙 */
+  --color-border: #DDDDDD;
+  --color-status-good: #2BDE73;
+  --color-status-warn: #FFC924;
+  --color-status-bad: #FF4742;
+
+  /* Radius */
+  --radius-card: 12px;
+  --radius-chip: 12px;
+  --radius-pill: 50px;            /* 검색바, 메인 CTA 버튼 */
+
+  /* Typography */
+  --font-family: -apple-system, "system-ui", "Segoe UI", sans-serif;
+  --font-size-body: 16px;
+  --font-size-label: 14px;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --letter-spacing-heading: -0.4px;
+
+  /* Spacing */
+  --padding-chip: 9px 7px;
+  --padding-pill-btn: 12px 14px;
+  --padding-search: 8px 8px 8px 14px;
+
+  /* Elevation */
+  --shadow-card: 0 0 0 1px var(--color-border); /* box-shadow를 테두리처럼 사용 */
+}
+
+/* ============================================
+   컴포넌트 상태값 (재해석 금지 — 그대로 적용)
+   ============================================ */
+
+/* 필터 칩: 기본(비활성) */
+.chip {
+  background-color: #FFFFFF;
+  color: var(--color-text);
+  border-radius: var(--radius-chip);
+  padding: var(--padding-chip);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 필터 칩: 활성 (선택됨) */
+.chip.active {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+/* 메인 CTA / 필터 토글 버튼 (필 버튼) */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-pill);
+  padding: var(--padding-pill-btn);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 보조 액션 (텍스트 링크형, 배경 없음) */
+.btn-text {
+  background: none;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  border: none;
+}
+
+/* 카드 (갤러리 아이템) */
+.card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* 검색창 */
+.search-input {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-pill);
+  padding: var(--padding-search);
+  border: none;
+}
+
+/* ============================================
+   모바일 반응형 (실기기 스크린샷 실측, 2026-08-12)
+   원칙: 1열로 축소하지 않는다. 컬럼 수만 화면 폭에
+   맞춰 재계산해서 밀도를 유지한다.
+   ============================================ */
+@media (max-width: 480px) {
+  /* 갤러리 카드: 2열 그리드 유지 (1열 금지) */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  /* 필터 패널: 사이드바 → Filters 버튼 아래 드롭다운으로 전환.
+     하단 시트(bottom sheet) 아님 */
+  .filter-panel {
+    position: static;
+    width: 100%;
+  }
+  .filter-panel .apply-cta {
+    display: block;
+    width: 100%;
+    /* 상단에 항상 노출되는 전체너비 CTA */
+  }
+
+  /* 필터 칩: 라벨 길이에 따라 컬럼 수 다르게
+     - 짧은 라벨(카드상태 약어 등): 3~4열
+     - 긴 라벨(My Vault 옵션 등): 2열 */
+  .chip-group--short { grid-template-columns: repeat(3, 1fr); }
+  .chip-group--long  { grid-template-columns: repeat(2, 1fr); }
+
+  /* 프로필/My Vault 액션 버튼: 주요 액션 2개만 나란히,
+     나머지는 전체너비로 세로 스택 */
+  .profile-actions-primary {
+    display: flex;
+    gap: 8px; /* Follow + Like as friend 동급 2개 */
+  }
+  .profile-actions-secondary > * {
+    display: block;
+    width: 100%;
+    margin-top: 8px; /* Export, Edit profile 등 */
+  }
+
+  /* 다크 히어로 배너: 축소하지 않고 그대로 유지 */
+}

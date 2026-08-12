@@ -3,9 +3,9 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    const groupSlug = req.nextUrl.searchParams.get('groupSlug');
-    const memberSlug = req.nextUrl.searchParams.get('memberSlug');
-    const albumSlug = req.nextUrl.searchParams.get('albumSlug');
+    const groupSlug = req.nextUrl.searchParams.get('groupSlug')?.toLowerCase();
+    const memberSlug = req.nextUrl.searchParams.get('memberSlug')?.toLowerCase();
+    const albumSlug = req.nextUrl.searchParams.get('albumSlug')?.toLowerCase();
 
     if (!groupSlug || !memberSlug || !albumSlug) {
       return NextResponse.json(

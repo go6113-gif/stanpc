@@ -76,17 +76,22 @@ export async function generateMetadata(
   props: AlbumWikiPageProps
 ): Promise<Metadata> {
   const params = await props.params;
+  const normalizedParams = {
+    group: params.group.toLowerCase(),
+    member: params.member.toLowerCase(),
+    album: params.album.toLowerCase(),
+  };
   const data = await fetchAlbumWiki(
-    params.group,
-    params.member,
-    params.album
+    normalizedParams.group,
+    normalizedParams.member,
+    normalizedParams.album
   );
   if (!data) {
     return { title: 'Not Found' };
   }
 
   const memberName = data.member.nameKr || data.member.nameEn;
-  const groupName = params.group.toUpperCase();
+  const groupName = normalizedParams.group.toUpperCase();
   const albumName = data.album.title;
 
   const title = seoFormulas.albumTitle(memberName, groupName, albumName);
@@ -106,10 +111,15 @@ export async function generateMetadata(
 
 export default async function AlbumWikiPage(props: AlbumWikiPageProps) {
   const params = await props.params;
+  const normalizedParams = {
+    group: params.group.toLowerCase(),
+    member: params.member.toLowerCase(),
+    album: params.album.toLowerCase(),
+  };
   const data = await fetchAlbumWiki(
-    params.group,
-    params.member,
-    params.album
+    normalizedParams.group,
+    normalizedParams.member,
+    normalizedParams.album
   );
 
   if (!data) {

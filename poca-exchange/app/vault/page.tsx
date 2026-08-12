@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { VaultResponse, VaultCardItem } from '@/lib/api-types';
+import VaultAuthModal from '@/components/wiki/VaultAuthModal';
 
 interface FilterState {
   tags: string[];
@@ -15,6 +16,7 @@ export default function VaultPage() {
   const [vaultData, setVaultData] = useState<VaultResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isUnauthorized, setIsUnauthorized] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     tags: [],
     groups: [],
@@ -38,14 +40,22 @@ export default function VaultPage() {
 
         const response = await fetch(`/api/vault?${params.toString()}`);
         if (!response.ok) {
+          if (response.status === 401) {
+            setIsUnauthorized(true);
+            setError(null);
+            setVaultData(null);
+            return;
+          }
           throw new Error(`Failed to fetch vault: ${response.status}`);
         }
         const data: VaultResponse = await response.json();
         setVaultData(data);
         setError(null);
+        setIsUnauthorized(false);
       } catch (err) {
         console.error('Error fetching vault data:', err);
         setError(err instanceof Error ? err.message : 'Failed to load vault');
+        setIsUnauthorized(false);
       } finally {
         setLoading(false);
       }
@@ -334,7 +344,19 @@ export default function VaultPage() {
 
           {/* Right: Cards */}
           <div className="lg:col-span-3">
-            {error ? (
+            {isUnauthorized ? (
+              <div className="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950 p-8">
+                <div className="text-center">
+                  <h2 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-2">
+                    🔐 로그인이 필요한 서비스입니다
+                  </h2>
+                  <p className="text-sm text-blue-700 dark:text-blue-300 mb-6">
+                    100% 평생 무료 - My Vault에서 당신의 포토카드 컬렉션을 관리하고 자랑하세요
+                  </p>
+                  <VaultAuthModal isOpen={isUnauthorized} onClose={() => {}} />
+                </div>
+              </div>
+            ) : error ? (
               <div className="rounded-lg border-2 border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-950 p-6">
                 <p className="text-red-700 dark:text-red-300">
                   오류가 발생했습니다: {error}

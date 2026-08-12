@@ -1,0 +1,213 @@
+/* StanPC Design Tokens - P0 필터 및 언어 규칙 */
+
+:root {
+  /* Brand Colors */
+  --color-nomad-red: #FF4742;
+  --color-nomad-red-light: #FF6B68;
+  --color-nomad-red-dark: #CC3A35;
+
+  /* Filter States */
+  --color-filter-active: var(--color-nomad-red);
+  --color-filter-inactive: #D1D5DB;
+  --color-filter-hover: var(--color-nomad-red-light);
+
+  /* Card Condition Colors */
+  --color-condition-sealed: #10B981;      /* Sealed - 초록색 */
+  --color-condition-nm: #3B82F6;          /* Near Mint - 파랑색 */
+  --color-condition-lp: #F59E0B;          /* Light Play - 주황색 */
+  --color-condition-mp: #EF4444;          /* Moderate Play - 빨강색 */
+  --color-condition-hp: #991B1B;          /* Heavy Play - 다크레드 */
+
+  /* Vault Status Colors */
+  --color-vault-owned: #10B981;           /* 소유중 - 초록색 */
+  --color-vault-iso: #3B82F6;             /* 구하는 카드 - 파랑색 */
+  --color-vault-trade: var(--color-nomad-red); /* 교환 가능 - 빨강색 */
+  --color-vault-wishlist: #8B5CF6;        /* 위시리스트 - 보라색 */
+
+  /* Spacing - 필터 UI */
+  --spacing-filter-gap: 8px;
+  --spacing-filter-pill-x: 12px;
+  --spacing-filter-pill-y: 8px;
+
+  /* Typography - 필터 라벨 */
+  --font-filter-label: 13px;
+  --font-filter-label-weight: 600;
+  --font-filter-count: 11px;
+
+  /* Border Radius */
+  --radius-filter-pill: 20px;
+  --radius-filter-group: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-filter-inactive: #4B5563;
+  }
+}
+
+/* Filter Pill Component */
+.filter-pill {
+  padding: var(--spacing-filter-pill-y) var(--spacing-filter-pill-x);
+  border-radius: var(--radius-filter-pill);
+  font-size: var(--font-filter-label);
+  font-weight: var(--font-filter-label-weight);
+  border: 1px solid var(--color-filter-inactive);
+  background-color: white;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-pill:hover {
+  border-color: var(--color-filter-hover);
+  background-color: #FEF2F2;
+}
+
+.filter-pill.active {
+  background-color: var(--color-filter-active);
+  color: white;
+  border-color: var(--color-filter-active);
+}
+
+.filter-pill.active:hover {
+  background-color: var(--color-nomad-red-dark);
+  border-color: var(--color-nomad-red-dark);
+}
+
+/* Filter Group Container */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: #F9FAFB;
+  border-radius: var(--radius-filter-group);
+  border: 1px solid #E5E7EB;
+}
+
+.filter-group-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-group-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-filter-gap);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .filter-pill {
+    background-color: #1F2937;
+    color: #E5E7EB;
+    border-color: #4B5563;
+  }
+
+  .filter-pill:hover {
+    background-color: #374151;
+    border-color: var(--color-filter-hover);
+  }
+
+  .filter-pill.active {
+    background-color: var(--color-filter-active);
+  }
+
+  .filter-group {
+    background-color: #111827;
+    border-color: #374151;
+  }
+
+  .filter-group-label {
+    color: #F3F4F6;
+  }
+}
+
+/* Language Rule: UI 한글 + 용어 영문 */
+.filter-label-ko {
+  /* 필터명은 한국어로 표시 */
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.filter-term-en {
+  /* 고유 용어는 영문으로 표시 (ISO, POB, Near Mint 등) */
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  font-weight: 500;
+  color: #6B7280;
+  font-size: 0.85em;
+}
+
+/* Card Condition Indicator */
+.condition-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.condition-badge.sealed {
+  background-color: #ECFDF5;
+  color: var(--color-condition-sealed);
+  border: 1px solid var(--color-condition-sealed);
+}
+
+.condition-badge.nm {
+  background-color: #EFF6FF;
+  color: var(--color-condition-nm);
+  border: 1px solid var(--color-condition-nm);
+}
+
+.condition-badge.lp {
+  background-color: #FFFBEB;
+  color: var(--color-condition-lp);
+  border: 1px solid var(--color-condition-lp);
+}
+
+.condition-badge.mp {
+  background-color: #FEE2E2;
+  color: var(--color-condition-mp);
+  border: 1px solid var(--color-condition-mp);
+}
+
+.condition-badge.hp {
+  background-color: #FEE2E2;
+  color: var(--color-condition-hp);
+  border: 1px solid var(--color-condition-hp);
+}
+
+/* Vault Status Badge */
+.vault-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.vault-status-badge.owned {
+  background-color: #ECFDF5;
+  color: var(--color-vault-owned);
+}
+
+.vault-status-badge.iso {
+  background-color: #EFF6FF;
+  color: var(--color-vault-iso);
+}
+
+.vault-status-badge.trade {
+  background-color: #FEE2E2;
+  color: var(--color-vault-trade);
+}
+
+.vault-status-badge.wishlist {
+  background-color: #F3E8FF;
+  color: var(--color-vault-wishlist);
+}

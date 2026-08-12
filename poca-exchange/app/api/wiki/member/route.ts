@@ -3,8 +3,10 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    const groupSlug = req.nextUrl.searchParams.get('groupSlug');
-    const memberSlug = req.nextUrl.searchParams.get('memberSlug');
+    const groupSlug = req.nextUrl.searchParams.get('groupSlug')?.toLowerCase();
+    const memberSlug = req.nextUrl.searchParams.get('memberSlug')?.toLowerCase();
+    const condition = req.nextUrl.searchParams.get('condition'); // 'sealed' | 'nm' | 'lp' | 'mp-hp'
+    const vaultStatus = req.nextUrl.searchParams.get('vaultStatus'); // 'owned' | 'iso' | 'trade' | 'wishlist'
 
     if (!groupSlug || !memberSlug) {
       return NextResponse.json(
@@ -44,11 +46,24 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       );
     }
 
+    // 필터 조건 구성
+    const whereCondition: any = {
+      memberId: member.id,
+    };
+
+    // TODO: condition 필터 구현 (DB 스키마에 condition 컬럼 추가 후)
+    // if (condition && condition !== 'all') {
+    //   whereCondition.condition = condition;
+    // }
+
+    // TODO: vaultStatus 필터 구현 (UserBinderCard 관계 확인 후)
+    // if (vaultStatus && vaultStatus !== 'all') {
+    //   // vaultStatus에 따라 userBinders 관계 필터링
+    // }
+
     // 멤버의 카드 조회
     const cards = await prisma.photoCard.findMany({
-      where: {
-        memberId: member.id,
-      },
+      where: whereCondition,
       include: {
         group: { select: { slug: true, nameEn: true } },
         member: { select: { nameEn: true } },
