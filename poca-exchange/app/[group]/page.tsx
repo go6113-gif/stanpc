@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getAllGroupSlugs, getGroupBySlug } from "@/lib/queries";
 import { PhotoCardGrid } from "@/components/photo-card-grid";
 import { siteConfig } from "@/lib/site-config";
+import { generateGroupMetadata } from "@/lib/seo-generator";
 
 export async function generateStaticParams() {
   const groups = await getAllGroupSlugs();
@@ -17,27 +18,25 @@ export async function generateMetadata(
   const group = await getGroupBySlug(groupSlug);
   if (!group) return {};
 
-  const title = `${group.nameEn} 포토카드 전체 도감`;
-  const description = `${group.nameEn}${
-    group.nameKr ? ` (${group.nameKr})` : ""
-  } 멤버별 포토카드와 앨범 버전을 한눈에 확인하세요.`;
+  const cardCount = group.photoCards.length;
+  const seoData = generateGroupMetadata(group.nameEn, cardCount);
 
   return {
-    title,
-    description,
+    title: seoData.title,
+    description: seoData.description,
     alternates: { canonical: `/${group.slug}` },
     openGraph: {
       ...siteConfig.ogDefaults,
-      title,
-      description,
+      title: seoData.title,
+      description: seoData.description,
       url: `/${group.slug}`,
       type: "website",
       images: group.imageUrl ? [{ url: group.imageUrl }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: seoData.title,
+      description: seoData.description,
       images: group.imageUrl ? [group.imageUrl] : undefined,
     },
   };

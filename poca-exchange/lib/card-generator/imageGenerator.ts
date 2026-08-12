@@ -37,7 +37,6 @@ export const generateCardImage = async (
       windowWidth: cardSize.width,
       allowTaint: true,
       removeContainer: false,
-      async: true,
       foreignObjectRendering: true,
     }).catch((err) => {
       // If LAB color parsing fails, try without logging
@@ -53,7 +52,6 @@ export const generateCardImage = async (
         windowWidth: cardSize.width,
         allowTaint: true,
         removeContainer: false,
-        async: true,
       });
     });
 

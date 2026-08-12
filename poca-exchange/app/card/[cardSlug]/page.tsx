@@ -8,17 +8,11 @@ import { PriceReportButton } from "@/components/price-report-modal";
 import { EbayLiveListings } from "@/components/ebay-live-listings";
 import { siteConfig } from "@/lib/site-config";
 import { buildPhotocardSearchQuery } from "@/lib/search-query";
+import { generateCardMetadata } from "@/lib/seo-generator";
 
 export async function generateStaticParams() {
   const cards = await getAllCardSlugs();
   return cards.map((card) => ({ cardSlug: card.slug }));
-}
-
-function pseoTitle(card: NonNullable<Awaited<ReturnType<typeof getCardBySlug>>>) {
-  const memberName = card.member?.nameEn ?? card.group.nameEn;
-  const albumName = card.album?.title ?? card.cardName ?? "";
-  const badgePart = card.badge ? ` [${card.badge}]` : "";
-  return `${memberName}${albumName ? ` ${albumName}` : ""}${badgePart} Photocard Price & Buy - StanPC`;
 }
 
 export async function generateMetadata(
@@ -28,39 +22,25 @@ export async function generateMetadata(
   const card = await getCardBySlug(cardSlug);
   if (!card) return {};
 
-  const title = pseoTitle(card);
-  const description = [
-    card.group.nameEn,
-    card.member?.nameEn,
-    card.album?.title,
-    card.version,
-    card.estimatedPrice != null
-      ? `Est. $${card.estimatedPrice.toFixed(2)}`
-      : "Price: TBA",
-  ]
-    .filter(Boolean)
-    .join(" · ");
-  // Community-share preview (Twitter/X, KakaoTalk, DC 등) uses the dynamic
-  // OG route instead of the raw source image, so the price/badge/name are
-  // baked into the shared thumbnail itself.
   const ogImageUrl = `/api/og/photocard?cardSlug=${encodeURIComponent(card.slug)}`;
+  const metadata = generateCardMetadata(card, ogImageUrl);
 
   return {
-    title,
-    description,
-    alternates: { canonical: `/card/${card.slug}` },
+    title: metadata.title,
+    description: metadata.description,
+    alternates: { canonical: metadata.canonicalUrl },
     openGraph: {
       ...siteConfig.ogDefaults,
-      title,
-      description,
-      url: `/card/${card.slug}`,
+      title: metadata.title,
+      description: metadata.description,
+      url: metadata.canonicalUrl,
       type: "article",
       images: [{ url: ogImageUrl, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: metadata.title,
+      description: metadata.description,
       images: [ogImageUrl],
     },
   };
@@ -74,31 +54,14 @@ export default async function CardPage(props: PageProps<"/card/[cardSlug]">) {
   const image = card.imageUrl ?? card.thumbImagePath;
   const searchQuery = encodeURIComponent(buildPhotocardSearchQuery(card));
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: card.cardName ?? `${card.group.nameEn} 포토카드`,
-    image: image ? [image] : undefined,
-    brand: { "@type": "Brand", name: card.group.nameEn },
-    ...(card.member ? { category: card.member.nameEn } : {}),
-    ...(card.estimatedPrice != null
-      ? {
-          offers: {
-            "@type": "Offer",
-            priceCurrency: "USD",
-            price: card.estimatedPrice.toFixed(2),
-            availability: "https://schema.org/LimitedAvailability",
-            url: `https://www.stanpc.com/card/${card.slug}`,
-          },
-        }
-      : {}),
-  };
+  const ogImageUrl = `/api/og/photocard?cardSlug=${encodeURIComponent(card.slug)}`;
+  const metadata = generateCardMetadata(card, ogImageUrl);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata.jsonLd) }}
       />
 
       <nav className="mb-4 flex flex-wrap gap-x-2 text-sm text-neutral-500">

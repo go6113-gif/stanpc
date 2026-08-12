@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getAllMemberSlugs, getMemberBySlug } from "@/lib/queries";
 import { PhotoCardGrid } from "@/components/photo-card-grid";
 import { siteConfig } from "@/lib/site-config";
+import { generateMemberMetadata } from "@/lib/seo-generator";
 
 export async function generateStaticParams() {
   const members = await getAllMemberSlugs();
@@ -17,27 +18,29 @@ export async function generateMetadata(
   const member = await getMemberBySlug(groupSlug, memberSlug);
   if (!member) return {};
 
-  const title = `${member.nameEn} (${member.group.nameEn}) 포토카드 도감`;
-  const description = `${member.group.nameEn} ${member.nameEn}${
-    member.nameKr ? ` (${member.nameKr})` : ""
-  } 포토카드 전체 목록과 앨범별 버전을 확인하세요.`;
+  const cardCount = member.photoCards.length;
+  const seoData = generateMemberMetadata(
+    member.nameEn,
+    member.group.nameEn,
+    cardCount
+  );
 
   return {
-    title,
-    description,
+    title: seoData.title,
+    description: seoData.description,
     alternates: { canonical: `/${groupSlug}/${memberSlug}` },
     openGraph: {
       ...siteConfig.ogDefaults,
-      title,
-      description,
+      title: seoData.title,
+      description: seoData.description,
       url: `/${groupSlug}/${memberSlug}`,
       type: "profile",
       images: member.imageUrl ? [{ url: member.imageUrl }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: seoData.title,
+      description: seoData.description,
       images: member.imageUrl ? [member.imageUrl] : undefined,
     },
   };

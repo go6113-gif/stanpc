@@ -1,0 +1,96 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  try {
+    const groupSlug = req.nextUrl.searchParams.get('groupSlug');
+    const memberSlug = req.nextUrl.searchParams.get('memberSlug');
+
+    if (!groupSlug || !memberSlug) {
+      return NextResponse.json(
+        { error: 'groupSlug and memberSlug are required' },
+        { status: 400 }
+      );
+    }
+
+    // 그룹 조회
+    const group = await prisma.group.findUnique({
+      where: { slug: groupSlug },
+      select: { id: true, nameEn: true, nameKr: true, imageUrl: true },
+    });
+
+    if (!group) {
+      return NextResponse.json(
+        { error: 'Group not found' },
+        { status: 404 }
+      );
+    }
+
+    // 멤버 조회
+    const member = await prisma.member.findFirst({
+      where: {
+        slug: memberSlug,
+        groupId: group.id,
+      },
+      include: {
+        group: { select: { slug: true, nameEn: true } },
+      },
+    });
+
+    if (!member) {
+      return NextResponse.json(
+        { error: 'Member not found' },
+        { status: 404 }
+      );
+    }
+
+    // 멤버의 카드 조회
+    const cards = await prisma.photoCard.findMany({
+      where: {
+        memberId: member.id,
+      },
+      include: {
+        group: { select: { slug: true, nameEn: true } },
+        member: { select: { nameEn: true } },
+        album: { select: { slug: true, title: true } },
+        userBinders: {
+          select: { id: true },
+          take: 1,
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    // 통계 계산
+    const stats = {
+      totalCards: cards.length,
+      pricedCards: cards.filter((c) => c.estimatedPrice !== null).length,
+      avgPrice:
+        cards.reduce((sum, c) => sum + (c.estimatedPrice || 0), 0) /
+        (cards.filter((c) => c.estimatedPrice).length || 1),
+      totalHaveCount: cards.reduce((sum, c) => sum + c.haveCount, 0),
+      totalWantCount: cards.reduce((sum, c) => sum + c.wantCount, 0),
+      collectorCount: cards.reduce((sum, c) => sum + c.userBinders.length, 0),
+    };
+
+    return NextResponse.json({
+      member: {
+        id: member.id,
+        nameEn: member.nameEn,
+        nameKr: member.nameKr,
+        imageUrl: member.imageUrl,
+        position: member.position,
+        group: member.group,
+      },
+      cards,
+      stats,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error('Error fetching member wiki:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}

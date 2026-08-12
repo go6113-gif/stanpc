@@ -1,0 +1,46 @@
+﻿
+> stanpc@0.1.0 build
+> next build
+
+▲ Next.js 16.3.0 (Turbopack)
+- Environments: .env
+✓ Running next.config.ts took 34ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.5s
+  Running TypeScript ...
+app/api/card-generator/user-data/route.ts(62,15): error TS2339: Property 'estimatedPrice' does not exist on type '{ id: string; slug: string; cardName: string | null; group: { nameEn: string; }; member: { nameEn: string; } | null; }'.
+app/api/card-generator/user-data/route.ts(62,41): error TS2339: Property 'estimatedPrice' does not exist on type '{ id: string; slug: string; cardName: string | null; group: { nameEn: string; }; member: { nameEn: string; } | null; }'.
+app/api/card-generator/user-data/route.ts(68,31): error TS2551: Property 'groupId' does not exist on type '{ id: string; slug: string; cardName: string | null; group: { nameEn: string; }; member: { nameEn: string; } | null; }'. Did you mean 'group'?
+app/api/card-generator/user-data/route.ts(91,28): error TS2339: Property 'imageUrl' does not exist on type '{ id: string; slug: string; cardName: string | null; group: { nameEn: string; }; member: { nameEn: string; } | null; }'.
+app/api/og/vault/route.tsx(33,11): error TS2353: Object literal may only specify known properties, and 'photoCard' does not exist in type 'UserBinderCardInclude<DefaultArgs>'.
+app/api/og/vault/route.tsx(48,27): error TS2339: Property 'binderCards' does not exist on type '{ id: string; email: string | null; emailVerified: Date | null; name: string | null; image: string | null; isVerified: boolean; verifiedAt: Date | null; phoneNumber: string | null; ... 5 more ...; updatedAt: Date; }'.
+app/api/og/vault/route.tsx(49,25): error TS2339: Property 'binderCards' does not exist on type '{ id: string; email: string | null; emailVerified: Date | null; name: string | null; image: string | null; isVerified: boolean; verifiedAt: Date | null; phoneNumber: string | null; ... 5 more ...; updatedAt: Date; }'.
+app/api/og/vault/route.tsx(49,54): error TS7006: Parameter 'bc' implicitly has an 'any' type.
+app/api/og/vault/route.tsx(55,36): error TS2339: Property 'binderCards' does not exist on type '{ id: string; email: string | null; emailVerified: Date | null; name: string | null; image: string | null; isVerified: boolean; verifiedAt: Date | null; phoneNumber: string | null; ... 5 more ...; updatedAt: Date; }'.
+app/api/og/vault/route.tsx(56,6): error TS7006: Parameter 'sum' implicitly has an 'any' type.
+app/api/og/vault/route.tsx(56,11): error TS7006: Parameter 'bc' implicitly has an 'any' type.
+app/card-generator/page.tsx(107,15): error TS2322: Type 'RefObject<HTMLDivElement | null>' is not assignable to type 'RefObject<HTMLDivElement>'.
+  Type 'HTMLDivElement | null' is not assignable to type 'HTMLDivElement'.
+    Type 'null' is not assignable to type 'HTMLDivElement'.
+components/card-generator/CardTemplate.tsx(4,20): error TS7016: Could not find a declaration file for module 'qrcode'. 'D:/StanPC/poca-exchange/node_modules/qrcode/lib/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/qrcode` if it exists or add a new declaration (.d.ts) file containing `declare module 'qrcode';`
+components/wiki/AffiliateCardCell.tsx(118,43): error TS2322: Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+components/wiki/VaultAuthModal.tsx(35,19): error TS2339: Property 'error' does not exist on type 'never'.
+components/wiki/VaultAuthModal.tsx(36,48): error TS2339: Property 'error' does not exist on type 'never'.
+lib/card-generator/imageGenerator.ts(40,7): error TS2353: Object literal may only specify known properties, and 'async' does not exist in type 'Partial<Options>'.
+lib/card-generator/imageGenerator.ts(56,9): error TS2353: Object literal may only specify known properties, and 'async' does not exist in type 'Partial<Options>'.
+lib/seo-generator.ts(53,5): error TS2322: Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+lib/seo-generator.ts(56,5): error TS2322: Type 'number | null | undefined' is not assignable to type 'number | undefined'.
+  Type 'null' is not assignable to type 'number | undefined'.
+lib/seo-generator.ts(98,71): error TS2554: Expected 2 arguments, but got 3.
+node.exe : Failed to type check.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Failed to type check.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+

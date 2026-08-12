@@ -11,7 +11,7 @@ interface DownloadButtonProps {
   hashtags: string[];
   onCopySuccess?: () => void;
   onCopyError?: () => void;
-  previewRef?: React.RefObject<HTMLDivElement>;
+  previewRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function DownloadButton({

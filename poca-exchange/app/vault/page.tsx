@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { VaultResponse, VaultCardItem } from '@/lib/api-types';
-import { MOCK_VAULT_DATA } from '@/lib/mock-vault-data';
 
 interface FilterState {
   tags: string[];
@@ -13,7 +12,9 @@ interface FilterState {
 }
 
 export default function VaultPage() {
-  const [vaultData] = useState<VaultResponse>(MOCK_VAULT_DATA);
+  const [vaultData, setVaultData] = useState<VaultResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<FilterState>({
     tags: [],
     groups: [],
@@ -22,8 +23,40 @@ export default function VaultPage() {
   const [sortBy, setSortBy] = useState<'recent' | 'price-high' | 'price-low'>('recent');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
+  useEffect(() => {
+    const fetchVaultData = async () => {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams();
+        if (filters.tags.length > 0) {
+          filters.tags.forEach((tag) => params.append('filterTags', tag));
+        }
+        if (filters.groups.length > 0) {
+          filters.groups.forEach((group) => params.append('filterGroups', group));
+        }
+        params.set('sortBy', sortBy);
+
+        const response = await fetch(`/api/vault?${params.toString()}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch vault: ${response.status}`);
+        }
+        const data: VaultResponse = await response.json();
+        setVaultData(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching vault data:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load vault');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVaultData();
+  }, [filters, sortBy]);
+
   // 필터링 및 정렬
   const filteredCards = useMemo(() => {
+    if (!vaultData) return [];
     let result = [...vaultData.cards];
 
     // 태그 필터
@@ -67,7 +100,7 @@ export default function VaultPage() {
     }
 
     return result;
-  }, [vaultData.cards, filters, sortBy]);
+  }, [vaultData, filters, sortBy]);
 
   const handleTagToggle = (tag: string) => {
     setFilters((prev) => ({
@@ -110,48 +143,56 @@ export default function VaultPage() {
           </div>
 
           {/* Stats Bar */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5 mb-6">
-            <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
-              <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                전체 카드
-              </p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
-                {vaultData.stats.totalCards}
-              </p>
+          {loading ? (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-5 mb-6">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="rounded-lg bg-neutral-200 dark:bg-neutral-700 p-3 h-16 animate-pulse" />
+              ))}
             </div>
-            <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
-              <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                보유 중
-              </p>
-              <p className="text-2xl font-bold text-green-600">
-                {vaultData.stats.inHandCount}
-              </p>
+          ) : vaultData ? (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-5 mb-6">
+              <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                  전체 카드
+                </p>
+                <p className="text-2xl font-bold text-neutral-900 dark:text-white">
+                  {vaultData.stats.totalCards}
+                </p>
+              </div>
+              <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                  보유 중
+                </p>
+                <p className="text-2xl font-bold text-green-600">
+                  {vaultData.stats.inHandCount}
+                </p>
+              </div>
+              <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                  원함
+                </p>
+                <p className="text-2xl font-bold text-orange-600">
+                  {vaultData.stats.wishlistCount}
+                </p>
+              </div>
+              <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                  거래용
+                </p>
+                <p className="text-2xl font-bold text-purple-600">
+                  {vaultData.stats.tradeCount}
+                </p>
+              </div>
+              <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                  완성 세트
+                </p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {vaultData.stats.completeSetCount}
+                </p>
+              </div>
             </div>
-            <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
-              <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                원함
-              </p>
-              <p className="text-2xl font-bold text-orange-600">
-                {vaultData.stats.wishlistCount}
-              </p>
-            </div>
-            <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
-              <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                거래용
-              </p>
-              <p className="text-2xl font-bold text-purple-600">
-                {vaultData.stats.tradeCount}
-              </p>
-            </div>
-            <div className="rounded-lg bg-neutral-100 dark:bg-neutral-800 p-3">
-              <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                완성 세트
-              </p>
-              <p className="text-2xl font-bold text-blue-600">
-                {vaultData.stats.completeSetCount}
-              </p>
-            </div>
-          </div>
+          ) : null}
         </div>
       </header>
 
@@ -197,68 +238,72 @@ export default function VaultPage() {
             </div>
 
             {/* Tags */}
-            <div>
-              <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">
-                상태
-              </h3>
-              <div className="space-y-2">
-                {vaultData.filters.tags.map((tag) => (
-                  <label
-                    key={tag}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={filters.tags.includes(tag)}
-                      onChange={() => handleTagToggle(tag)}
-                      className="rounded"
-                    />
-                    <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                      {tag}
-                    </span>
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400 ml-auto">
-                      {
-                        vaultData.cards.filter((c) =>
-                          c.tags.includes(tag)
-                        ).length
-                      }
-                    </span>
-                  </label>
-                ))}
+            {vaultData && (
+              <div>
+                <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">
+                  상태
+                </h3>
+                <div className="space-y-2">
+                  {vaultData.filters.tags.map((tag) => (
+                    <label
+                      key={tag}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={filters.tags.includes(tag)}
+                        onChange={() => handleTagToggle(tag)}
+                        className="rounded"
+                      />
+                      <span className="text-sm text-neutral-700 dark:text-neutral-300">
+                        {tag}
+                      </span>
+                      <span className="text-xs text-neutral-500 dark:text-neutral-400 ml-auto">
+                        {
+                          vaultData.cards.filter((c) =>
+                            c.tags.includes(tag)
+                          ).length
+                        }
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Groups */}
-            <div>
-              <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">
-                그룹
-              </h3>
-              <div className="space-y-2">
-                {vaultData.filters.groups.map((group) => (
-                  <label
-                    key={group}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={filters.groups.includes(group)}
-                      onChange={() => handleGroupToggle(group)}
-                      className="rounded"
-                    />
-                    <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                      {group}
-                    </span>
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400 ml-auto">
-                      {
-                        vaultData.cards.filter(
-                          (c) => c.groupName === group
-                        ).length
-                      }
-                    </span>
-                  </label>
-                ))}
+            {vaultData && (
+              <div>
+                <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">
+                  그룹
+                </h3>
+                <div className="space-y-2">
+                  {vaultData.filters.groups.map((group) => (
+                    <label
+                      key={group}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={filters.groups.includes(group)}
+                        onChange={() => handleGroupToggle(group)}
+                        className="rounded"
+                      />
+                      <span className="text-sm text-neutral-700 dark:text-neutral-300">
+                        {group}
+                      </span>
+                      <span className="text-xs text-neutral-500 dark:text-neutral-400 ml-auto">
+                        {
+                          vaultData.cards.filter(
+                            (c) => c.groupName === group
+                          ).length
+                        }
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* View Mode Toggle */}
             <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700">
@@ -289,7 +334,25 @@ export default function VaultPage() {
 
           {/* Right: Cards */}
           <div className="lg:col-span-3">
-            {filteredCards.length === 0 ? (
+            {error ? (
+              <div className="rounded-lg border-2 border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-950 p-6">
+                <p className="text-red-700 dark:text-red-300">
+                  오류가 발생했습니다: {error}
+                </p>
+              </div>
+            ) : loading ? (
+              <div className="space-y-4">
+                <div className="h-8 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                  {[...Array(8)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="aspect-[56/87] bg-neutral-200 dark:bg-neutral-700 rounded-lg animate-pulse"
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : filteredCards.length === 0 ? (
               <div className="rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 p-12 text-center">
                 <p className="text-neutral-600 dark:text-neutral-400">
                   선택한 조건에 맞는 카드가 없습니다
@@ -418,9 +481,11 @@ function VaultListView({ cards }: { cards: VaultCardItem[] }) {
             <p className="text-xs text-neutral-600 dark:text-neutral-400">
               보유: {card.haveCount} | 원함: {card.wantCount}
             </p>
-            <div className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
-              규격: {card.dimensions.width}x{card.dimensions.height}mm
-            </div>
+            {card.dimensions && (
+              <div className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
+                규격: {card.dimensions.width}x{card.dimensions.height}mm
+              </div>
+            )}
           </div>
         </Link>
       ))}

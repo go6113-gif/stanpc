@@ -1,0 +1,12 @@
+# StanPC Robots.txt
+# Crawl rate and sitemap configuration
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.next/
+Disallow: /admin/
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://stanpc.com/api/sitemap/xml

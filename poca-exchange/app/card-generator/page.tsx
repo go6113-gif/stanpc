@@ -24,7 +24,7 @@ export default function CardGeneratorPage() {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [userData, setUserData] = useState<CardGeneratorUserData | null>(null);
   const [loading, setLoading] = useState(true);
-  const previewRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
 
   const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/card-generator`;
 

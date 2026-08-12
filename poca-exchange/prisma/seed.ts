@@ -3,446 +3,344 @@ import { PrismaClient } from "../app/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import * as fs from "fs";
 import * as path from "path";
+import * as readline from "readline";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL || "",
 });
 const prisma = new PrismaClient({ adapter });
 
-interface SeedDataFile {
-  priceHistory: Array<{
-    photocard_slug: string;
-    price: number;
-    currency: string;
-    market: string;
-    sourceUrl?: string;
-    createdAt: string;
-  }>;
-  globalSKUMapping: Array<{
-    photocard_slug: string;
-    market: string;
-    sku: string;
-    skuUrl?: string;
-    lastChecked: string;
-    isActive: boolean;
-  }>;
-  timestamp: string;
-  summary: {
-    priceHistoryCount: number;
-    skuMappingCount: number;
-  };
+// Helper: Parse CSV with quoted field support
+async function parseCSV(filePath: string): Promise<Record<string, string>[]> {
+  return new Promise((resolve, reject) => {
+    const rows: Record<string, string>[] = [];
+    let headers: string[] = [];
+    let isFirstLine = true;
+
+    const rl = readline.createInterface({
+      input: fs.createReadStream(filePath),
+      crlfDelay: Infinity,
+    });
+
+    rl.on("line", (line) => {
+      if (isFirstLine) {
+        headers = parseCSVLine(line);
+        isFirstLine = false;
+      } else {
+        const values = parseCSVLine(line);
+        const row: Record<string, string> = {};
+        headers.forEach((header, idx) => {
+          row[header] = values[idx] || "";
+        });
+        rows.push(row);
+      }
+    });
+
+    rl.on("close", () => resolve(rows));
+    rl.on("error", reject);
+  });
 }
 
-async function seedMarketData() {
-  console.log("🌱 Starting market data seeding...");
+// Parse CSV line respecting quoted fields
+function parseCSVLine(line: string): string[] {
+  const result: string[] = [];
+  let current = "";
+  let inQuotes = false;
 
-  // Read seed data from Python scraper output
-  const seedDataPath = path.join(
-    __dirname,
-    "../scripts/seed_data/seed_data.json"
-  );
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const nextChar = line[i + 1];
 
-  if (!fs.existsSync(seedDataPath)) {
-    console.warn(
-      `⚠️  Seed data file not found at: ${seedDataPath}`
-    );
-    console.warn(
-      "Run: python scripts/seed_market_data.py to generate seed data"
-    );
-    return;
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === "," && !inQuotes) {
+      result.push(current.trim());
+      current = "";
+    } else {
+      current += char;
+    }
   }
 
-  const seedData: SeedDataFile = JSON.parse(
-    fs.readFileSync(seedDataPath, "utf-8")
-  );
+  result.push(current.trim());
+  return result;
+}
 
-  console.log(`📊 Seed data loaded:`);
-  console.log(`  - PriceHistory records: ${seedData.summary.priceHistoryCount}`);
-  console.log(
-    `  - GlobalSKUMapping records: ${seedData.summary.skuMappingCount}`
-  );
+// Generate slug from name (e.g., "TWICE" -> "twice", "&TEAM" -> "and-team")
+function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
 
-  try {
-    // Process PriceHistory records
-    console.log("\n💰 Seeding PriceHistory...");
-    let priceHistorySeeded = 0;
-    for (const record of seedData.priceHistory) {
-      // Find photocard by slug
-      const photoCard = await prisma.photoCard.findUnique({
-        where: { slug: record.photocard_slug },
-      });
+async function seedGroupsFromCSV() {
+  console.log("📊 Phase 1: Seeding Groups from biasroom_groups_master.csv...");
 
-      if (!photoCard) {
-        console.warn(
-          `  ⚠️  PhotoCard not found for slug: ${record.photocard_slug}`
-        );
-        continue;
-      }
+  const csvPath = path.join("D:", "StanPC", "data", "biasroom_groups_master.csv");
+  const rows = await parseCSV(csvPath);
 
-      // Insert price history
-      await prisma.priceHistory.create({
-        data: {
-          price: record.price,
-          currency: record.currency,
-          market: record.market,
-          sourceUrl: record.sourceUrl,
-          cardId: photoCard.id,
-          createdAt: new Date(record.createdAt),
+  let created = 0;
+  for (const row of rows) {
+    const nameEn = row["Name_EN"]?.trim() || "";
+    const nameKr = row["Name_KR"]?.trim() || "";
+
+    if (!nameEn) continue;
+
+    const slug = generateSlug(nameEn);
+    const imageUrl = row["Image_URL"]?.trim() || null;
+
+    try {
+      await prisma.group.upsert({
+        where: { slug },
+        create: {
+          slug,
+          nameEn,
+          nameKr: nameKr || null,
+          imageUrl: imageUrl || null,
+        },
+        update: {
+          imageUrl: imageUrl || undefined,
         },
       });
-
-      priceHistorySeeded++;
-    }
-    console.log(`  ✅ Seeded ${priceHistorySeeded} PriceHistory records`);
-
-    // Process GlobalSKUMapping records
-    console.log("\n🔗 Seeding GlobalSKUMapping...");
-    let skuMappingSeeded = 0;
-    for (const record of seedData.globalSKUMapping) {
-      // Find photocard by slug
-      const photoCard = await prisma.photoCard.findUnique({
-        where: { slug: record.photocard_slug },
-      });
-
-      if (!photoCard) {
-        console.warn(
-          `  ⚠️  PhotoCard not found for slug: ${record.photocard_slug}`
-        );
-        continue;
+      created++;
+    } catch (e: any) {
+      if (!e.message.includes("Unique constraint")) {
+        console.error(`  ❌ Error creating group ${nameEn}:`, e.message);
       }
+    }
+  }
 
-      // Check if SKU mapping already exists (avoid duplicates)
-      const existing = await prisma.globalSKUMapping.findUnique({
+  console.log(`  ✅ Seeded ${created} groups from CSV`);
+  return rows.length;
+}
+
+async function seedAlbumsFromCSV() {
+  console.log("\n📀 Phase 2: Seeding Albums from biasroom_photocards_master.csv...");
+
+  const csvPath = path.join("D:", "StanPC", "data", "biasroom_photocards_master.csv");
+  const rows = await parseCSV(csvPath);
+
+  const albumMap = new Map<string, any>(); // Dedupe by groupName + albumTitle
+  let created = 0;
+
+  for (const row of rows) {
+    const groupName = row["Group_Name"]?.trim() || "";
+    const albumTitle = row["Album_Title"]?.trim() || "";
+    const versionName = row["Version_Name"]?.trim() || "";
+    const releaseDate = row["Release_Date"]?.trim() || "";
+    const imageUrl = row["Image_URL"]?.trim() || "";
+
+    if (!groupName || !albumTitle) continue;
+
+    const key = `${groupName}|${albumTitle}`;
+    if (!albumMap.has(key)) {
+      albumMap.set(key, {
+        groupName,
+        albumTitle,
+        versionName,
+        releaseDate,
+        imageUrl,
+      });
+    }
+  }
+
+  // Insert into DB
+  let idx = 0;
+  for (const [_, album] of albumMap) {
+
+    const group = await prisma.group.findFirst({
+      where: { nameEn: album.groupName },
+    });
+
+    if (!group) {
+      console.warn(`    ⚠️  Group not found: ${album.groupName}`);
+      continue;
+    }
+
+    const slug = generateSlug(`${album.groupName}-${album.albumTitle}`);
+    let parsedDate: Date | null = null;
+    if (album.releaseDate) {
+      const date = new Date(album.releaseDate);
+      parsedDate = isNaN(date.getTime()) ? null : date;
+    }
+
+    try {
+      await prisma.album.upsert({
+        where: { groupId_slug: { groupId: group.id, slug } },
+        create: {
+          slug,
+          title: album.albumTitle,
+          coverImageUrl: album.imageUrl || null,
+          releaseDate: parsedDate,
+          groupId: group.id,
+        },
+        update: {
+          coverImageUrl: album.imageUrl || undefined,
+          releaseDate: parsedDate || undefined,
+        },
+      });
+      created++;
+    } catch (e: any) {
+      console.error(`    ❌ Error creating album ${album.albumTitle}:`, e.message);
+    }
+
+    idx++;
+  }
+
+  console.log(`  ✅ Seeded ${created} albums from CSV (deduped)`);
+}
+
+async function seedPhotoCardsFromCSV() {
+  console.log("\n🎴 Phase 3: Seeding PhotoCards from poca_master_db_mb.csv...");
+
+  const csvPath = path.join("D:", "StanPC", "data", "poca_master_db_mb.csv");
+  const rows = await parseCSV(csvPath);
+
+  let created = 0;
+  let updated = 0;
+
+  for (const row of rows) {
+    const skuId = row["SKU_ID"]?.trim() || "";
+    const groupName = row["Group_Name"]?.trim() || "";
+    const memberName = row["Member_Name"]?.trim() || "";
+    const cardTitle = row["Card_Title"]?.trim() || "";
+    const imageUrl = row["Image_URL"]?.trim() || "";
+    const usPrice = parseFloat(row["US_Market_Price"] || "0") || null;
+
+    if (!skuId || !cardTitle) continue;
+
+    // Find group
+    const group = await prisma.group.findFirst({
+      where: { nameEn: groupName },
+    });
+
+    if (!group) continue;
+
+    // Find or create member
+    let member = null;
+    if (memberName && memberName !== "Unknown") {
+      const memberSlug = generateSlug(memberName);
+      member = await prisma.member.upsert({
         where: {
-          cardId_market_sku: {
-            cardId: photoCard.id,
-            market: record.market,
-            sku: record.sku,
+          groupId_slug: {
+            groupId: group.id,
+            slug: memberSlug,
           },
         },
+        create: {
+          slug: memberSlug,
+          nameEn: memberName,
+          groupId: group.id,
+        },
+        update: {
+          nameEn: memberName,
+        },
+      });
+    }
+
+    const slug = generateSlug(skuId);
+
+    try {
+      const existing = await prisma.photoCard.findUnique({
+        where: { slug },
       });
 
       if (existing) {
-        // Update lastChecked instead of creating duplicate
-        await prisma.globalSKUMapping.update({
-          where: { id: existing.id },
+        await prisma.photoCard.update({
+          where: { slug },
           data: {
-            lastChecked: new Date(record.lastChecked),
-            isActive: record.isActive,
+            estimatedPrice: usPrice || existing.estimatedPrice,
+            imageUrl: imageUrl || existing.imageUrl,
           },
         });
-        console.log(
-          `  📝 Updated existing SKU: ${record.market}/${record.sku}`
-        );
+        updated++;
       } else {
-        // Create new SKU mapping
-        await prisma.globalSKUMapping.create({
+        await prisma.photoCard.create({
           data: {
-            market: record.market,
-            sku: record.sku,
-            skuUrl: record.skuUrl,
-            lastChecked: new Date(record.lastChecked),
-            isActive: record.isActive,
-            cardId: photoCard.id,
+            slug,
+            cardName: cardTitle,
+            imageUrl: imageUrl || null,
+            estimatedPrice: usPrice,
+            groupId: group.id,
+            memberId: member?.id || null,
+            wantCount: Math.floor(Math.random() * 200),
+            haveCount: Math.floor(Math.random() * 50),
+            viewCount: Math.floor(Math.random() * 1000),
           },
         });
-        console.log(
-          `  ✅ Created new SKU: ${record.market}/${record.sku}`
-        );
+        created++;
       }
-
-      skuMappingSeeded++;
+    } catch (e: any) {
+      console.error(`    ❌ Error seeding card ${skuId}:`, e.message);
     }
-    console.log(`  ✅ Seeded ${skuMappingSeeded} GlobalSKUMapping records`);
-
-    console.log("\n✨ Market data seeding completed successfully!");
-  } catch (error) {
-    console.error("❌ Error during seeding:", error);
-    throw error;
   }
+
+  console.log(`  ✅ Created ${created} cards, Updated ${updated} cards from CSV`);
 }
 
-async function seedDirectoryContent() {
-  console.log("🌱 Starting directory content seeding...");
+async function seedPriceHistoryFromCSV() {
+  console.log("\n💰 Phase 4: Seeding PriceHistory from poca_master_db_mb.csv...");
 
-  // Seed Groups (K-pop groups)
-  const groups = await prisma.group.createMany({
-    data: [
-      {
-        slug: "twice",
-        nameEn: "TWICE",
-        nameKr: "트와이스",
-        agency: "JYP Entertainment",
-        debutDate: new Date("2015-10-20"),
-      },
-      {
-        slug: "blackpink",
-        nameEn: "BLACKPINK",
-        nameKr: "블랙핑크",
-        agency: "YG Entertainment",
-        debutDate: new Date("2016-08-08"),
-      },
-      {
-        slug: "exo",
-        nameEn: "EXO",
-        nameKr: "엑소",
-        agency: "SM Entertainment",
-        debutDate: new Date("2012-04-08"),
-      },
-      {
-        slug: "stray-kids",
-        nameEn: "Stray Kids",
-        nameKr: "스트레이 키즈",
-        agency: "JYP Entertainment",
-        debutDate: new Date("2018-03-25"),
-      },
-      {
-        slug: "seventeen",
-        nameEn: "SEVENTEEN",
-        nameKr: "세븐틴",
-        agency: "Pledis Entertainment",
-        debutDate: new Date("2015-05-26"),
-      },
-      {
-        slug: "red-velvet",
-        nameEn: "Red Velvet",
-        nameKr: "레드벨벳",
-        agency: "SM Entertainment",
-        debutDate: new Date("2014-03-17"),
-      },
-      {
-        slug: "txt",
-        nameEn: "TXT",
-        nameKr: "투모로우엑스투게더",
-        agency: "HYBE",
-        debutDate: new Date("2019-03-04"),
-      },
-      {
-        slug: "aespa",
-        nameEn: "aespa",
-        nameKr: "에스파",
-        agency: "SM Entertainment",
-        debutDate: new Date("2020-11-17"),
-      },
-      {
-        slug: "nct-dream",
-        nameEn: "NCT Dream",
-        nameKr: "엔씨티 드림",
-        agency: "SM Entertainment",
-        debutDate: new Date("2016-08-02"),
-      },
-      {
-        slug: "newjeans",
-        nameEn: "NewJeans",
-        nameKr: "뉴진스",
-        agency: "HYBE",
-        debutDate: new Date("2022-08-01"),
-      },
-      {
-        slug: "ive",
-        nameEn: "IVE",
-        nameKr: "아이브",
-        agency: "Starship Entertainment",
-        debutDate: new Date("2021-12-01"),
-      },
-    ],
-    skipDuplicates: true,
-  });
-  console.log(`✅ Seeded ${groups.count} groups`);
+  const csvPath = path.join("D:", "StanPC", "data", "poca_master_db_mb.csv");
+  const rows = await parseCSV(csvPath);
 
-  // Seed Members
-  const memberPairs = [
-    { group: "twice", name: "TZUYU", nameKr: "쯔위" },
-    { group: "twice", name: "SANA", nameKr: "사나" },
-    { group: "blackpink", name: "JENNIE", nameKr: "제니" },
-    { group: "exo", name: "SEHUN", nameKr: "세훈" },
-    { group: "stray-kids", name: "FELIX", nameKr: "펠릭스" },
-    { group: "seventeen", name: "JOSHUA", nameKr: "조슈아" },
-    { group: "red-velvet", name: "JOY", nameKr: "조이" },
-    { group: "txt", name: "YEONJUN", nameKr: "연준" },
-    { group: "aespa", name: "KARINA", nameKr: "카리나" },
-    { group: "nct-dream", name: "MARK", nameKr: "마크" },
-    { group: "newjeans", name: "HANNI", nameKr: "하니" },
-    { group: "ive", name: "WONYOUNG", nameKr: "원영" },
-  ];
+  let seeded = 0;
 
-  for (const pair of memberPairs) {
-    const group = await prisma.group.findUnique({
-      where: { slug: pair.group },
-    });
+  for (const row of rows) {
+    const skuId = row["SKU_ID"]?.trim() || "";
+    const usPrice = parseFloat(row["US_Market_Price"] || "0");
 
-    if (group) {
-      await prisma.member.upsert({
-        where: {
-          groupId_slug: {
-            groupId: group.id,
-            slug: pair.name.toLowerCase(),
-          },
+    if (!skuId || !usPrice || usPrice === 0) continue;
+
+    const slug = generateSlug(skuId);
+    const card = await prisma.photoCard.findUnique({ where: { slug } });
+
+    if (!card) continue;
+
+    try {
+      await prisma.priceHistory.create({
+        data: {
+          price: usPrice,
+          currency: "USD",
+          market: "ebay",
+          cardId: card.id,
+          createdAt: new Date(),
         },
-        create: {
-          slug: pair.name.toLowerCase(),
-          nameEn: pair.name,
-          nameKr: pair.nameKr,
-          groupId: group.id,
-        },
-        update: {},
       });
+      seeded++;
+    } catch (e: any) {
+      if (!e.message.includes("constraint")) {
+        console.error(`    ❌ Error: ${e.message}`);
+      }
     }
   }
-  console.log(`✅ Seeded members`);
 
-  // Seed PhotoCards
-  const photoCardPairs = [
-    {
-      slug: "twice-tzuyu-Feel-Special",
-      name: "TZUYU - Feel Special",
-      groupSlug: "twice",
-      memberName: "TZUYU",
-      estimatedPrice: 45.99,
-      badge: "Hologram",
-    },
-    {
-      slug: "blackpink-jennie-aptober",
-      name: "JENNIE - APTOBER",
-      groupSlug: "blackpink",
-      memberName: "JENNIE",
-      estimatedPrice: 89.5,
-      badge: "Signed",
-    },
-    {
-      slug: "exo-sehun-obsession",
-      name: "SEHUN - Obsession",
-      groupSlug: "exo",
-      memberName: "SEHUN",
-      estimatedPrice: 35.0,
-      badge: null,
-    },
-    {
-      slug: "stray-kids-felix-noeasy",
-      name: "FELIX - NOEASY",
-      groupSlug: "stray-kids",
-      memberName: "FELIX",
-      estimatedPrice: 12.99,
-      badge: "Rare",
-    },
-    {
-      slug: "seventeen-joshua-sector17",
-      name: "JOSHUA - Sector17",
-      groupSlug: "seventeen",
-      memberName: "JOSHUA",
-      estimatedPrice: 22.5,
-      badge: null,
-    },
-    {
-      slug: "red-velvet-joy-feel-good",
-      name: "JOY - Feel Good",
-      groupSlug: "red-velvet",
-      memberName: "JOY",
-      estimatedPrice: 67.0,
-      badge: "Limited",
-    },
-    {
-      slug: "txt-yeonjun-chaos",
-      name: "YEONJUN - Chaos",
-      groupSlug: "txt",
-      memberName: "YEONJUN",
-      estimatedPrice: 18.99,
-      badge: null,
-    },
-    {
-      slug: "aespa-karina-spicy",
-      name: "KARINA - Spicy",
-      groupSlug: "aespa",
-      memberName: "KARINA",
-      estimatedPrice: 55.0,
-      badge: "Hologram",
-    },
-    {
-      slug: "nct-dream-mark-hello-future",
-      name: "MARK - Hello Future",
-      groupSlug: "nct-dream",
-      memberName: "MARK",
-      estimatedPrice: 28.5,
-      badge: null,
-    },
-    {
-      slug: "twice-sana-scientist",
-      name: "SANA - Scientist",
-      groupSlug: "twice",
-      memberName: "SANA",
-      estimatedPrice: 42.0,
-      badge: "Signed",
-    },
-    {
-      slug: "newjeans-hanni-attention",
-      name: "HANNI - Attention",
-      groupSlug: "newjeans",
-      memberName: "HANNI",
-      estimatedPrice: 15.99,
-      badge: null,
-    },
-    {
-      slug: "ive-wonyoung-either-or",
-      name: "WONYOUNG - Either Or",
-      groupSlug: "ive",
-      memberName: "WONYOUNG",
-      estimatedPrice: 77.5,
-      badge: "Limited",
-    },
-  ];
-
-  for (const card of photoCardPairs) {
-    const group = await prisma.group.findUnique({
-      where: { slug: card.groupSlug },
-    });
-
-    if (group) {
-      const member = await prisma.member.findUnique({
-        where: {
-          groupId_slug: {
-            groupId: group.id,
-            slug: card.memberName.toLowerCase(),
-          },
-        },
-      });
-
-      await prisma.photoCard.upsert({
-        where: { slug: card.slug },
-        create: {
-          slug: card.slug,
-          cardName: card.name,
-          groupId: group.id,
-          memberId: member?.id,
-          estimatedPrice: card.estimatedPrice,
-          badge: card.badge,
-          wantCount: Math.floor(Math.random() * 3000),
-          haveCount: Math.floor(Math.random() * 500),
-          viewCount: Math.floor(Math.random() * 10000),
-        },
-        update: {},
-      });
-    }
-  }
-  console.log(`✅ Seeded photo cards`);
+  console.log(`  ✅ Seeded ${seeded} price history records`);
 }
 
 async function main() {
   try {
     console.log("\n" + "=".repeat(60));
-    console.log("STANPC DATABASE SEEDING");
+    console.log("STANPC MASTER DATA SEEDING");
     console.log("=".repeat(60) + "\n");
 
-    // First, seed directory content (Groups, Members, PhotoCards)
-    await seedDirectoryContent();
-
-    // Then, seed market data (PriceHistory, GlobalSKUMapping)
-    await seedMarketData();
+    // Phase 1-4: Seed from CSV files
+    await seedGroupsFromCSV();
+    await seedAlbumsFromCSV();
+    await seedPhotoCardsFromCSV();
+    await seedPriceHistoryFromCSV();
 
     console.log("\n" + "=".repeat(60));
     console.log("✨ All seeding completed successfully!");
     console.log("=".repeat(60) + "\n");
   } catch (error) {
-    console.error(error);
+    console.error("❌ Seeding error:", error);
     process.exit(1);
   } finally {
     await prisma.$disconnect();
