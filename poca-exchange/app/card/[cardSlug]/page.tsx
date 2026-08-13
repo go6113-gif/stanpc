@@ -1,164 +1,194 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { Metadata } from "next";
-import { getAllCardSlugs, getCardBySlug } from "@/lib/queries";
-import { HaveWantToggle } from "@/components/have-want-toggle";
-import { OutboundLink } from "@/components/outbound-link";
-import { PriceReportButton } from "@/components/price-report-modal";
-import { EbayLiveListings } from "@/components/ebay-live-listings";
-import { siteConfig } from "@/lib/site-config";
-import { buildPhotocardSearchQuery } from "@/lib/search-query";
-import { generateCardMetadata } from "@/lib/seo-generator";
+import { auth } from "@/auth";
+import { getCardDetail, getUserCardStatus } from "@/lib/queries-card-detail";
+import { CardTabs } from "@/components/card-detail/card-tabs";
+import { CardWantButton } from "@/components/card-detail/card-want-button";
+import { formatMultiCurrency } from "@/lib/format";
 
-export async function generateStaticParams() {
-  const cards = await getAllCardSlugs();
-  return cards.map((card) => ({ cardSlug: card.slug }));
+interface CardDetailPageProps {
+  params: Promise<{ cardSlug: string }>;
 }
 
-export async function generateMetadata(
-  props: PageProps<"/card/[cardSlug]">
-): Promise<Metadata> {
-  const { cardSlug } = await props.params;
-  const card = await getCardBySlug(cardSlug);
-  if (!card) return {};
+export async function generateMetadata({
+  params,
+}: CardDetailPageProps) {
+  const { cardSlug } = await params;
+  const card = await getCardDetail(cardSlug);
 
-  const ogImageUrl = `/api/og/photocard?cardSlug=${encodeURIComponent(card.slug)}`;
-  const metadata = generateCardMetadata(card, ogImageUrl);
+  if (!card) {
+    return { title: "포토카드 찾을 수 없음" };
+  }
 
   return {
-    title: metadata.title,
-    description: metadata.description,
-    alternates: { canonical: metadata.canonicalUrl },
-    openGraph: {
-      ...siteConfig.ogDefaults,
-      title: metadata.title,
-      description: metadata.description,
-      url: metadata.canonicalUrl,
-      type: "article",
-      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: metadata.title,
-      description: metadata.description,
-      images: [ogImageUrl],
-    },
+    title: `${card.cardName || "포토카드"} - ${card.group.nameKr || card.group.nameEn}`,
+    description: `${card.member?.nameKr || card.member?.nameEn || ""} 포토카드. 원하는 수: ${card.wantCount}, 소유한 수: ${card.haveCount}`,
   };
 }
 
-export default async function CardPage(props: PageProps<"/card/[cardSlug]">) {
-  const { cardSlug } = await props.params;
-  const card = await getCardBySlug(cardSlug);
-  if (!card) notFound();
+export default async function CardDetailPage({
+  params,
+}: CardDetailPageProps) {
+  const { cardSlug } = await params;
+  const session = await auth();
 
-  const image = card.imageUrl ?? card.thumbImagePath;
-  const searchQuery = encodeURIComponent(buildPhotocardSearchQuery(card));
+  const card = await getCardDetail(cardSlug);
+  if (!card) {
+    notFound();
+  }
 
-  const ogImageUrl = `/api/og/photocard?cardSlug=${encodeURIComponent(card.slug)}`;
-  const metadata = generateCardMetadata(card, ogImageUrl);
+  let isWanted = false;
+  if (session?.user?.id) {
+    const userCard = await getUserCardStatus(session.user.id, card.id);
+    isWanted = userCard?.status === "ISO";
+  }
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(metadata.jsonLd) }}
-      />
+    <main className="w-full min-h-screen bg-neutral-950 text-neutral-100 px-4 md:px-8 py-8">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold">{card.cardName || "포토카드"}</h1>
+        <p className="text-neutral-400 mt-2">
+          {card.group.nameKr || card.group.nameEn}
+          {card.member && ` · ${card.member.nameKr || card.member.nameEn}`}
+        </p>
+      </div>
 
-      <nav className="mb-4 flex flex-wrap gap-x-2 text-sm text-neutral-500">
-        <Link href={`/${card.group.slug}`} className="hover:underline">
-          {card.group.nameEn}
-        </Link>
-        {card.member && (
-          <>
-            <span>/</span>
-            <Link
-              href={`/${card.group.slug}/${card.member.slug}`}
-              className="hover:underline"
-            >
-              {card.member.nameEn}
-            </Link>
-          </>
-        )}
-      </nav>
+      {/* Main Content - Responsive Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        {/* Image Section - Full width on mobile, 1/3 on desktop */}
+        <div className="lg:col-span-1">
+          <div className="aspect-[2.5/3.5] bg-neutral-900 rounded-lg overflow-hidden border border-neutral-800">
+            {card.thumbImagePath || card.imageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={(card.thumbImagePath || card.imageUrl) as string}
+                alt={card.cardName || "포토카드"}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900 flex items-center justify-center">
+                <span className="text-neutral-500">이미지 없음</span>
+              </div>
+            )}
+          </div>
+        </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="aspect-[5/7] w-full overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-900">
-          {image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={image}
-              alt={card.cardName ?? `${card.group.nameEn} 포토카드`}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-sm text-neutral-400">
-              No Image
+        {/* Info Section - 2/3 on desktop */}
+        <div className="lg:col-span-2">
+          {/* Stats Header */}
+          <div className="flex items-start justify-between mb-8">
+            <div className="space-y-4">
+              {card.badge && (
+                <span className="inline-block px-3 py-1 bg-[#FF4742] text-white text-xs font-bold rounded-full">
+                  {card.badge}
+                </span>
+              )}
+
+              {card.estimatedPrice && (
+                <div>
+                  <p className="text-sm text-neutral-500 mb-1">추정가</p>
+                  <p className="text-3xl font-bold text-white">
+                    {formatMultiCurrency(card.estimatedPrice)}
+                  </p>
+                </div>
+              )}
+
+              {card.version && (
+                <div>
+                  <p className="text-sm text-neutral-500 mb-1">버전</p>
+                  <p className="text-base font-semibold text-white">
+                    {card.version}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Want Button - Top Right */}
+            <CardWantButton cardId={card.id} isInitiallyWanted={isWanted} />
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 gap-4 p-4 bg-neutral-900 rounded-lg border border-neutral-800 mb-8">
+            <div>
+              <p className="text-xs text-neutral-500 mb-2">원하는 수</p>
+              <p className="text-2xl font-bold text-white">♡ {card.wantCount}</p>
+            </div>
+            <div>
+              <p className="text-xs text-neutral-500 mb-2">소유한 수</p>
+              <p className="text-2xl font-bold text-white">◆ {card.haveCount}</p>
+            </div>
+            {card.viewCount > 0 && (
+              <div>
+                <p className="text-xs text-neutral-500 mb-2">조회수</p>
+                <p className="text-lg font-semibold text-white">
+                  {card.viewCount.toLocaleString()}
+                </p>
+              </div>
+            )}
+            {card.clickCount > 0 && (
+              <div>
+                <p className="text-xs text-neutral-500 mb-2">클릭</p>
+                <p className="text-lg font-semibold text-white">
+                  {card.clickCount.toLocaleString()}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Album Info */}
+          {card.album && (
+            <div className="p-4 bg-neutral-900 rounded-lg border border-neutral-800">
+              <p className="text-sm text-neutral-500 mb-2">앨범</p>
+              <p className="text-base font-semibold text-white">
+                {card.album.title}
+              </p>
+              {card.album.releaseDate && (
+                <p className="text-xs text-neutral-400 mt-1">
+                  {new Date(card.album.releaseDate).toLocaleDateString("ko-KR")}
+                </p>
+              )}
             </div>
           )}
         </div>
-
-        <div>
-          {card.badge && (
-            <span className="mb-2 inline-block rounded-full bg-neutral-900 px-2.5 py-0.5 text-xs font-semibold text-white dark:bg-neutral-100 dark:text-neutral-900">
-              {card.badge}
-            </span>
-          )}
-          <h1 className="text-xl font-bold sm:text-2xl">
-            {card.cardName ?? `${card.group.nameEn} 포토카드`}
-          </h1>
-          <p className="mt-1 text-lg font-semibold text-neutral-700 dark:text-neutral-300">
-            {card.estimatedPrice != null
-              ? `Est. $${card.estimatedPrice.toFixed(2)}`
-              : "Price: TBA"}
-          </p>
-          <PriceReportButton cardId={card.id} />
-
-          <dl className="mt-4 space-y-2 text-sm">
-            <Row label="그룹" value={card.group.nameEn} />
-            {card.member && <Row label="멤버" value={card.member.nameEn} />}
-            {card.album && <Row label="앨범" value={card.album.title} />}
-            {card.version && <Row label="버전" value={card.version} />}
-          </dl>
-
-          <div className="mt-5">
-            <HaveWantToggle
-              cardSlug={card.slug}
-              initialHaveCount={card.haveCount}
-              initialWantCount={card.wantCount}
-            />
-          </div>
-
-          <div className="mt-3 flex gap-2">
-            <OutboundLink
-              href={`https://www.ebay.com/sch/i.html?_nkw=${searchQuery}`}
-              cardId={card.id}
-              market="ebay"
-              className="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-center text-sm font-medium text-neutral-700 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300"
-            >
-              View on eBay
-            </OutboundLink>
-            <OutboundLink
-              href={`https://buyee.jp/item/search/query/${searchQuery}`}
-              cardId={card.id}
-              market="buyee"
-              className="flex-1 rounded-lg border border-neutral-200 px-3 py-2 text-center text-sm font-medium text-neutral-700 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300"
-            >
-              Search on Buyee
-            </OutboundLink>
-          </div>
-
-          <EbayLiveListings cardId={card.id} cardSlug={card.slug} />
-        </div>
       </div>
-    </main>
-  );
-}
 
-function Row({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex gap-2">
-      <dt className="w-14 shrink-0 text-neutral-500">{label}</dt>
-      <dd className="font-medium">{value}</dd>
-    </div>
+      {/* Tabs Section */}
+      <div className="border-t border-neutral-800 pt-8">
+        <CardTabs
+          cardData={{
+            cardName: card.cardName,
+            version: card.version,
+            estimatedPrice: card.estimatedPrice,
+            wantCount: card.wantCount,
+            haveCount: card.haveCount,
+          }}
+        />
+      </div>
+
+      {/* SKU Mappings (Multi-market) */}
+      {card.skuMappings.length > 0 && (
+        <div className="border-t border-neutral-800 mt-12 pt-8">
+          <h2 className="text-xl font-bold mb-6">시장별 가격</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {card.skuMappings.map((sku) => (
+              <a
+                key={sku.id}
+                href={sku.skuUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-neutral-900 rounded-lg border border-neutral-800 hover:border-neutral-700 transition-colors"
+              >
+                <p className="text-sm text-neutral-500 mb-2 capitalize">
+                  {sku.market}
+                </p>
+                <p className="font-semibold text-white break-all text-sm">
+                  {sku.sku}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </main>
   );
 }

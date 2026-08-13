@@ -79,6 +79,18 @@ function generateSlug(name: string): string {
     .replace(/[^a-z0-9-]/g, "");
 }
 
+// biasroom exports Name_KR as a Python-list-literal string, e.g.
+// "['Bangtan Boys', 'Bangtan']" — regex-based (not JSON.parse, which breaks
+// on names containing an apostrophe) so it matches prisma/import-csv.ts's
+// parser exactly.
+function parsePyListLiteral(raw: string): string[] {
+  const trimmed = raw.trim();
+  if (!trimmed || trimmed === "[]") return [];
+  return [...trimmed.matchAll(/'([^']*)'|"([^"]*)"/g)]
+    .map((m) => (m[1] ?? m[2] ?? "").trim())
+    .filter(Boolean);
+}
+
 async function seedGroupsFromCSV() {
   console.log("📊 Phase 1: Seeding Groups from biasroom_groups_master.csv...");
 
@@ -88,9 +100,14 @@ async function seedGroupsFromCSV() {
   let created = 0;
   for (const row of rows) {
     const nameEn = row["Name_EN"]?.trim() || "";
-    const nameKr = row["Name_KR"]?.trim() || "";
+    const nameKrRaw = row["Name_KR"]?.trim() || "";
 
     if (!nameEn) continue;
+
+    // Name_KR is a list literal — first element is the display name,
+    // the full list backs Group.aliases for search.
+    const aliases = parsePyListLiteral(nameKrRaw);
+    const nameKr = aliases.length > 0 ? aliases[0] : null;
 
     const slug = generateSlug(nameEn);
     const imageUrl = row["Image_URL"]?.trim() || null;
@@ -101,10 +118,16 @@ async function seedGroupsFromCSV() {
         create: {
           slug,
           nameEn,
-          nameKr: nameKr || null,
+          nameKr,
+          aliases,
           imageUrl: imageUrl || null,
         },
         update: {
+          // Re-derives nameKr/aliases on every run so a bad historical value
+          // (e.g. the unparsed list literal itself) self-heals instead of
+          // being permanently skipped by upsert's update branch.
+          nameKr,
+          aliases,
           imageUrl: imageUrl || undefined,
         },
       });

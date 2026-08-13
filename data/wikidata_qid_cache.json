@@ -1,0 +1,2650 @@
+{
+ "&TEAM": {
+  "qid": "Q112834233",
+  "kind": "GROUP"
+ },
+ "100%": {
+  "qid": "Q307482",
+  "kind": "GROUP"
+ },
+ "10cm": {
+  "qid": "Q493329",
+  "kind": "GROUP"
+ },
+ "13Found": {
+  "qid": null,
+  "kind": null
+ },
+ "14U": {
+  "qid": "Q50374980",
+  "kind": "GROUP"
+ },
+ "15&": {
+  "qid": "Q491777",
+  "kind": "GROUP"
+ },
+ "1NB": {
+  "qid": "Q50865638",
+  "kind": "GROUP"
+ },
+ "1TEAM": {
+  "qid": "Q63724459",
+  "kind": "GROUP"
+ },
+ "1the9": {
+  "qid": "Q61652710",
+  "kind": "GROUP"
+ },
+ "1TYM": {
+  "qid": "Q485884",
+  "kind": "GROUP"
+ },
+ "1Verse": {
+  "qid": "Q132861244",
+  "kind": "GROUP"
+ },
+ "24K+": {
+  "qid": "Q125200751",
+  "kind": "GROUP"
+ },
+ "257": {
+  "qid": null,
+  "kind": null
+ },
+ "2AM": {
+  "qid": "Q498701",
+  "kind": "GROUP"
+ },
+ "2EYES": {
+  "qid": "Q14298828",
+  "kind": "GROUP"
+ },
+ "2NE1": {
+  "qid": "Q171885",
+  "kind": "GROUP"
+ },
+ "2PM": {
+  "qid": "Q222760",
+  "kind": "GROUP"
+ },
+ "2Z": {
+  "qid": "Q25474648",
+  "kind": "GROUP"
+ },
+ "3YE": {
+  "qid": "Q65269682",
+  "kind": "GROUP"
+ },
+ "4Minute": {
+  "qid": "Q39682",
+  "kind": "GROUP"
+ },
+ "4TEN": {
+  "qid": "Q18733995",
+  "kind": "GROUP"
+ },
+ "82Major": {
+  "qid": "Q125200744",
+  "kind": "GROUP"
+ },
+ "87dance": {
+  "qid": null,
+  "kind": null
+ },
+ "8TURN": {
+  "qid": "Q116813012",
+  "kind": "GROUP"
+ },
+ "9MUSES": {
+  "qid": "Q498385",
+  "kind": "GROUP"
+ },
+ "A-JAX": {
+  "qid": "Q492271",
+  "kind": "GROUP"
+ },
+ "A.C.E": {
+  "qid": "Q30236860",
+  "kind": "GROUP"
+ },
+ "A.De": {
+  "qid": "Q22773985",
+  "kind": "GROUP"
+ },
+ "A.KOR": {
+  "qid": "Q18550945",
+  "kind": "GROUP"
+ },
+ "A2O May": {
+  "qid": null,
+  "kind": null
+ },
+ "AB6IX": {
+  "qid": "Q63852480",
+  "kind": "GROUP"
+ },
+ "ADORA": {
+  "qid": null,
+  "kind": null
+ },
+ "ADYA": {
+  "qid": "Q357684",
+  "kind": "GROUP"
+ },
+ "AEN": {
+  "qid": "Q4754136",
+  "kind": "GROUP"
+ },
+ "AEONIT": {
+  "qid": null,
+  "kind": null
+ },
+ "aespa": {
+  "qid": "Q100877982",
+  "kind": "GROUP"
+ },
+ "After School": {
+  "qid": "Q389067",
+  "kind": "GROUP"
+ },
+ "Ahn Yeeun": {
+  "qid": null,
+  "kind": null
+ },
+ "AHOF": {
+  "qid": "Q135181578",
+  "kind": "GROUP"
+ },
+ "Ailee": {
+  "qid": "Q487391",
+  "kind": "SOLO"
+ },
+ "AIMERS": {
+  "qid": "Q117435403",
+  "kind": "GROUP"
+ },
+ "AKMU": {
+  "qid": "Q10728972",
+  "kind": "GROUP"
+ },
+ "Alice": {
+  "qid": "Q30036738",
+  "kind": "GROUP"
+ },
+ "ALL'N": {
+  "qid": null,
+  "kind": null
+ },
+ "ALL(H)OURS": {
+  "qid": "Q125201025",
+  "kind": "GROUP"
+ },
+ "ALLDAY PROJECT": {
+  "qid": "Q134986635",
+  "kind": "GROUP"
+ },
+ "ALPHA DRIVE ONE": {
+  "qid": "Q136378026",
+  "kind": "GROUP"
+ },
+ "AM8IC": {
+  "qid": "Q136771620",
+  "kind": "GROUP"
+ },
+ "AmbiO": {
+  "qid": null,
+  "kind": null
+ },
+ "AMPERS&ONE": {
+  "qid": "Q123458788",
+  "kind": "GROUP"
+ },
+ "AND2BLE": {
+  "qid": "Q138948755",
+  "kind": "GROUP"
+ },
+ "ANS": {
+  "qid": "Q73795501",
+  "kind": "GROUP"
+ },
+ "AOA": {
+  "qid": "Q492035",
+  "kind": "GROUP"
+ },
+ "Apink": {
+  "qid": "Q483286",
+  "kind": "GROUP"
+ },
+ "APRIL": {
+  "qid": "Q20858387",
+  "kind": "GROUP"
+ },
+ "ARGON": {
+  "qid": null,
+  "kind": null
+ },
+ "ARIAZ": {
+  "qid": "Q24834268",
+  "kind": "GROUP"
+ },
+ "ARISE": {
+  "qid": "Q4790885",
+  "kind": "GROUP"
+ },
+ "ARrC": {
+  "qid": "Q129599223",
+  "kind": "GROUP"
+ },
+ "ARTBEAT v": {
+  "qid": "Q116796576",
+  "kind": "GROUP"
+ },
+ "ARTMS": {
+  "qid": "Q119692734",
+  "kind": "GROUP"
+ },
+ "Asc2nt": {
+  "qid": "Q125200754",
+  "kind": "GROUP"
+ },
+ "ASH ISLAND": {
+  "qid": "Q34645433",
+  "kind": "GROUP"
+ },
+ "ASTRO": {
+  "qid": "Q4811480",
+  "kind": "GROUP"
+ },
+ "ATBO": {
+  "qid": "Q112972232",
+  "kind": "GROUP"
+ },
+ "ATEEZ": {
+  "qid": "Q59793088",
+  "kind": "GROUP"
+ },
+ "AtHeart": {
+  "qid": "Q28700294",
+  "kind": "GROUP"
+ },
+ "AWU": {
+  "qid": null,
+  "kind": null
+ },
+ "AxMxP": {
+  "qid": "Q133873333",
+  "kind": "GROUP"
+ },
+ "B.D.U": {
+  "qid": "Q125230505",
+  "kind": "GROUP"
+ },
+ "B.I": {
+  "qid": "Q20049012",
+  "kind": "GROUP"
+ },
+ "B.O.Y.": {
+  "qid": "Q15939696",
+  "kind": "SOLO"
+ },
+ "B1A4": {
+  "qid": "Q483751",
+  "kind": "GROUP"
+ },
+ "Baby DONT Cry": {
+  "qid": "Q135904079",
+  "kind": "GROUP"
+ },
+ "Baby V.O.X": {
+  "qid": "Q490213",
+  "kind": "GROUP"
+ },
+ "BABYMONSTER": {
+  "qid": "Q115967938",
+  "kind": "GROUP"
+ },
+ "BADKIZ": {
+  "qid": "Q17487159",
+  "kind": "GROUP"
+ },
+ "BADVILLAIN": {
+  "qid": "Q126365908",
+  "kind": "GROUP"
+ },
+ "Bae Jinyoung": {
+  "qid": null,
+  "kind": null
+ },
+ "BAE173": {
+  "qid": "Q99610002",
+  "kind": "GROUP"
+ },
+ "Baek A Yeon": {
+  "qid": "Q497735",
+  "kind": "SOLO"
+ },
+ "Baekho": {
+  "qid": "Q30014972",
+  "kind": "SOLO"
+ },
+ "Bang Yedam": {
+  "qid": null,
+  "kind": null
+ },
+ "BANG&JUNG&YOO&MOON": {
+  "qid": "Q2883643",
+  "kind": "GROUP"
+ },
+ "BASTTIE": {
+  "qid": null,
+  "kind": null
+ },
+ "BBGIRLS": {
+  "qid": "Q492721",
+  "kind": "GROUP"
+ },
+ "BDC": {
+  "qid": "Q74065772",
+  "kind": "GROUP"
+ },
+ "BE BOYS": {
+  "qid": "Q137595113",
+  "kind": "GROUP"
+ },
+ "BE:MAX": {
+  "qid": null,
+  "kind": null
+ },
+ "Be'O": {
+  "qid": "Q110268956",
+  "kind": "SOLO"
+ },
+ "Berry Good": {
+  "qid": "Q18381082",
+  "kind": "GROUP"
+ },
+ "BESTie": {
+  "qid": "Q13813305",
+  "kind": "GROUP"
+ },
+ "BEWAVE": {
+  "qid": "Q131768107",
+  "kind": "GROUP"
+ },
+ "BIBI": {
+  "qid": "Q65060693",
+  "kind": "SOLO"
+ },
+ "Big Mama": {
+  "qid": "Q482875",
+  "kind": "GROUP"
+ },
+ "BIG NAUGHTY": {
+  "qid": "Q85980101",
+  "kind": "SOLO"
+ },
+ "Big Ocean": {
+  "qid": "Q125100381",
+  "kind": "GROUP"
+ },
+ "BIGBANG": {
+  "qid": "Q282104",
+  "kind": "GROUP"
+ },
+ "BIGFLO": {
+  "qid": "Q18328761",
+  "kind": "GROUP"
+ },
+ "Billlie": {
+  "qid": "Q108888399",
+  "kind": "GROUP"
+ },
+ "BLACKPINK": {
+  "qid": "Q25056945",
+  "kind": "GROUP"
+ },
+ "BLACKSWAN": {
+  "qid": "Q97477974",
+  "kind": "GROUP"
+ },
+ "Blady": {
+  "qid": "Q19839916",
+  "kind": "GROUP"
+ },
+ "Blah Blah": {
+  "qid": null,
+  "kind": null
+ },
+ "BLANK2Y": {
+  "qid": "Q112861213",
+  "kind": "GROUP"
+ },
+ "BlingBling": {
+  "qid": "Q102157906",
+  "kind": "GROUP"
+ },
+ "BLINGONE": {
+  "qid": "Q127432217",
+  "kind": "GROUP"
+ },
+ "BLITZERS": {
+  "qid": "Q106945617",
+  "kind": "GROUP"
+ },
+ "Block B": {
+  "qid": "Q498326",
+  "kind": "GROUP"
+ },
+ "BLOO": {
+  "qid": "Q85980027",
+  "kind": "SOLO"
+ },
+ "BoA": {
+  "qid": "Q232449",
+  "kind": "SOLO"
+ },
+ "Bolbbalgan4": {
+  "qid": "Q26960605",
+  "kind": "GROUP"
+ },
+ "Botopass": {
+  "qid": "Q99198776",
+  "kind": "GROUP"
+ },
+ "Boy Story": {
+  "qid": "Q57653434",
+  "kind": "GROUP"
+ },
+ "BOYFRIEND": {
+  "qid": "Q307457",
+  "kind": "GROUP"
+ },
+ "BOYNEXTDOOR": {
+  "qid": "Q118178306",
+  "kind": "GROUP"
+ },
+ "Boys Republic": {
+  "qid": "Q16097371",
+  "kind": "GROUP"
+ },
+ "Brown Eyed Girls": {
+  "qid": "Q483253",
+  "kind": "GROUP"
+ },
+ "BTOB": {
+  "qid": "Q491067",
+  "kind": "GROUP"
+ },
+ "BTS": {
+  "qid": "Q13580495",
+  "kind": "GROUP"
+ },
+ "bugAboo": {
+  "qid": "Q108378903",
+  "kind": "GROUP"
+ },
+ "Burvey": {
+  "qid": null,
+  "kind": null
+ },
+ "BUS": {
+  "qid": "Q207",
+  "kind": "GROUP"
+ },
+ "Busters": {
+  "qid": "Q48258503",
+  "kind": "GROUP"
+ },
+ "BVNDIT": {
+  "qid": "Q62070469",
+  "kind": "GROUP"
+ },
+ "BXB": {
+  "qid": "Q117435404",
+  "kind": "GROUP"
+ },
+ "C-Clown": {
+  "qid": "Q491944",
+  "kind": "GROUP"
+ },
+ "C-REAL": {
+  "qid": "Q492466",
+  "kind": "GROUP"
+ },
+ "can’t be blue": {
+  "qid": null,
+  "kind": null
+ },
+ "Candy Shop": {
+  "qid": "Q125171778",
+  "kind": "GROUP"
+ },
+ "CATCH THE YOUNG": {
+  "qid": "Q127856659",
+  "kind": "GROUP"
+ },
+ "Chakra": {
+  "qid": "Q623822",
+  "kind": "GROUP"
+ },
+ "Cheeze": {
+  "qid": "Q22975142",
+  "kind": "GROUP"
+ },
+ "Cherry Bullet": {
+  "qid": "Q59325270",
+  "kind": "GROUP"
+ },
+ "CHI CHI": {
+  "qid": "Q5011177",
+  "kind": "GROUP"
+ },
+ "ChoColat": {
+  "qid": "Q492251",
+  "kind": "GROUP"
+ },
+ "Choi Yoojung": {
+  "qid": "Q26710983",
+  "kind": "SOLO"
+ },
+ "ChRocktikal": {
+  "qid": null,
+  "kind": null
+ },
+ "Chung Ha": {
+  "qid": "Q26214034",
+  "kind": "SOLO"
+ },
+ "Chuu": {
+  "qid": "Q56816551",
+  "kind": "SOLO"
+ },
+ "cignature": {
+  "qid": "Q84311821",
+  "kind": "GROUP"
+ },
+ "Ciipher": {
+  "qid": "Q105622929",
+  "kind": "GROUP"
+ },
+ "CIX": {
+  "qid": "Q63790991",
+  "kind": "GROUP"
+ },
+ "CLASSy": {
+  "qid": "Q111103138",
+  "kind": "GROUP"
+ },
+ "CLC": {
+  "qid": "Q19626731",
+  "kind": "GROUP"
+ },
+ "CLOSE YOUR EYES": {
+  "qid": "Q131689681",
+  "kind": "GROUP"
+ },
+ "CMDM": {
+  "qid": "Q118977954",
+  "kind": "GROUP"
+ },
+ "CNBLUE": {
+  "qid": "Q483172",
+  "kind": "GROUP"
+ },
+ "Co-ed School": {
+  "qid": "Q483806",
+  "kind": "GROUP"
+ },
+ "CocoSori": {
+  "qid": "Q27019538",
+  "kind": "GROUP"
+ },
+ "CORTIS": {
+  "qid": "Q135668928",
+  "kind": "GROUP"
+ },
+ "Cosmosy": {
+  "qid": null,
+  "kind": null
+ },
+ "CRAVITY": {
+  "qid": "Q90628571",
+  "kind": "GROUP"
+ },
+ "Craxy": {
+  "qid": "Q109413585",
+  "kind": "GROUP"
+ },
+ "Crayon Pop": {
+  "qid": "Q60157",
+  "kind": "GROUP"
+ },
+ "Cross Gene": {
+  "qid": "Q307621",
+  "kind": "GROUP"
+ },
+ "Crush": {
+  "qid": "Q16187868",
+  "kind": "GROUP"
+ },
+ "CSR": {
+  "qid": "Q113240443",
+  "kind": "GROUP"
+ },
+ "Cutie Street": {
+  "qid": "Q130260884",
+  "kind": "GROUP"
+ },
+ "D-CRUNCH": {
+  "qid": "Q56520850",
+  "kind": "GROUP"
+ },
+ "D.Holic": {
+  "qid": "Q27450232",
+  "kind": "GROUP"
+ },
+ "D1CE": {
+  "qid": "Q63137883",
+  "kind": "GROUP"
+ },
+ "DAILY:DIRECTION": {
+  "qid": "Q137883875",
+  "kind": "GROUP"
+ },
+ "Dal★Shabet": {
+  "qid": "Q492146",
+  "kind": "GROUP"
+ },
+ "Davichi": {
+  "qid": "Q483209",
+  "kind": "GROUP"
+ },
+ "DAY6": {
+  "qid": "Q20898046",
+  "kind": "GROUP"
+ },
+ "Daychild": {
+  "qid": "Q49890026",
+  "kind": "GROUP"
+ },
+ "DEAN": {
+  "qid": "Q723682",
+  "kind": "GROUP"
+ },
+ "DearAlice": {
+  "qid": "Q132200349",
+  "kind": "GROUP"
+ },
+ "DeVita": {
+  "qid": null,
+  "kind": null
+ },
+ "DIA": {
+  "qid": "Q20733515",
+  "kind": "GROUP"
+ },
+ "DIGNITY": {
+  "qid": null,
+  "kind": null
+ },
+ "DKB": {
+  "qid": "Q85825168",
+  "kind": "GROUP"
+ },
+ "DKZ": {
+  "qid": "Q65051964",
+  "kind": "GROUP"
+ },
+ "DMTN": {
+  "qid": "Q486946",
+  "kind": "GROUP"
+ },
+ "Double 0ne": {
+  "qid": null,
+  "kind": null
+ },
+ "DPR": {
+  "qid": null,
+  "kind": null
+ },
+ "Dragon Pony": {
+  "qid": "Q130381446",
+  "kind": "GROUP"
+ },
+ "Dreamcatcher": {
+  "qid": "Q20684822",
+  "kind": "GROUP"
+ },
+ "DreamNote": {
+  "qid": "Q60175858",
+  "kind": "GROUP"
+ },
+ "DRIPPIN": {
+  "qid": "Q101529768",
+  "kind": "GROUP"
+ },
+ "DXMON": {
+  "qid": "Q125200753",
+  "kind": "GROUP"
+ },
+ "DXTEEN": {
+  "qid": "Q116770778",
+  "kind": "GROUP"
+ },
+ "Dynamic Duo": {
+  "qid": "Q5318904",
+  "kind": "GROUP"
+ },
+ "E’LAST": {
+  "qid": "Q96418352",
+  "kind": "GROUP"
+ },
+ "Eddy Kim": {
+  "qid": "Q101826228",
+  "kind": "SOLO"
+ },
+ "EL7Z UP": {
+  "qid": "Q121501677",
+  "kind": "GROUP"
+ },
+ "EMOTI:M": {
+  "qid": null,
+  "kind": null
+ },
+ "ENHYPEN": {
+  "qid": "Q99479445",
+  "kind": "GROUP"
+ },
+ "EPEX": {
+  "qid": "Q107387899",
+  "kind": "GROUP"
+ },
+ "Epik High": {
+  "qid": "Q18788",
+  "kind": "GROUP"
+ },
+ "Eric Nam": {
+  "qid": "Q12606686",
+  "kind": "SOLO"
+ },
+ "EVERGLOW": {
+  "qid": "Q62067345",
+  "kind": "GROUP"
+ },
+ "EVNNE": {
+  "qid": "Q121493651",
+  "kind": "GROUP"
+ },
+ "EvoL": {
+  "qid": "Q5418536",
+  "kind": "GROUP"
+ },
+ "EXID": {
+  "qid": "Q492381",
+  "kind": "GROUP"
+ },
+ "EXO": {
+  "qid": "Q494717",
+  "kind": "GROUP"
+ },
+ "F-ve Dolls": {
+  "qid": "Q486683",
+  "kind": "GROUP"
+ },
+ "F.T. Island": {
+  "qid": "Q483248",
+  "kind": "GROUP"
+ },
+ "f(x)": {
+  "qid": "Q344286",
+  "kind": "GROUP"
+ },
+ "FANATICS": {
+  "qid": "Q60643800",
+  "kind": "GROUP"
+ },
+ "FANTASY BOYS": {
+  "qid": "Q120354264",
+  "kind": "GROUP"
+ },
+ "FAVORITE": {
+  "qid": "Q1398928",
+  "kind": "SOLO"
+ },
+ "Feverse": {
+  "qid": null,
+  "kind": null
+ },
+ "FIESTAR": {
+  "qid": "Q492076",
+  "kind": "GROUP"
+ },
+ "FIFTY FIFTY": {
+  "qid": "Q116731010",
+  "kind": "GROUP"
+ },
+ "Fin.K.L": {
+  "qid": "Q484082",
+  "kind": "GROUP"
+ },
+ "FLARE U": {
+  "qid": "Q140385777",
+  "kind": "GROUP"
+ },
+ "FlaShe": {
+  "qid": "Q18551369",
+  "kind": "GROUP"
+ },
+ "For The More": {
+  "qid": null,
+  "kind": null
+ },
+ "Forestella": {
+  "qid": "Q43206739",
+  "kind": "GROUP"
+ },
+ "From20": {
+  "qid": "Q16766877",
+  "kind": "SOLO"
+ },
+ "fromis_9": {
+  "qid": "Q41398331",
+  "kind": "GROUP"
+ },
+ "G-Dragon": {
+  "qid": "Q495577",
+  "kind": "GROUP"
+ },
+ "G-reyish": {
+  "qid": "Q73795597",
+  "kind": "GROUP"
+ },
+ "g.o.d": {
+  "qid": "Q482380",
+  "kind": "GROUP"
+ },
+ "Gain": {
+  "qid": "Q651051",
+  "kind": "GROUP"
+ },
+ "Gavy NJ": {
+  "qid": "Q623577",
+  "kind": "GROUP"
+ },
+ "Geenius": {
+  "qid": "Q124162611",
+  "kind": "GROUP"
+ },
+ "GENBLUE": {
+  "qid": "Q124445564",
+  "kind": "GROUP"
+ },
+ "GFRIEND": {
+  "qid": "Q18733030",
+  "kind": "GROUP"
+ },
+ "GHOST9": {
+  "qid": "Q99902508",
+  "kind": "GROUP"
+ },
+ "Girl's Day": {
+  "qid": "Q497325",
+  "kind": "GROUP"
+ },
+ "Girls' Generation": {
+  "qid": "Q20153",
+  "kind": "GROUP"
+ },
+ "GIRLSET": {
+  "qid": "Q122763643",
+  "kind": "GROUP"
+ },
+ "Gitim": {
+  "qid": null,
+  "kind": null
+ },
+ "GLAM": {
+  "qid": "Q6874568",
+  "kind": "GROUP"
+ },
+ "Golden Child": {
+  "qid": "Q30007238",
+  "kind": "GROUP"
+ },
+ "GOOD DAY": {
+  "qid": "Q39074586",
+  "kind": "GROUP"
+ },
+ "GOT the beat": {
+  "qid": "Q110310446",
+  "kind": "GROUP"
+ },
+ "GOT7": {
+  "qid": "Q23772001",
+  "kind": "GROUP"
+ },
+ "GRAY": {
+  "qid": null,
+  "kind": null
+ },
+ "gugudan": {
+  "qid": "Q24694634",
+  "kind": "GROUP"
+ },
+ "GWSN": {
+  "qid": "Q55715778",
+  "kind": "GROUP"
+ },
+ "Gyubin": {
+  "qid": "Q125473704",
+  "kind": "SOLO"
+ },
+ "H.O.T.": {
+  "qid": "Q483135",
+  "kind": "GROUP"
+ },
+ "H//PE PRINCESS": {
+  "qid": null,
+  "kind": null
+ },
+ "H1-KEY": {
+  "qid": "Q111864756",
+  "kind": "GROUP"
+ },
+ "Ha Sung Woon": {
+  "qid": "Q30313948",
+  "kind": "GROUP"
+ },
+ "Halo": {
+  "qid": "Q32921",
+  "kind": "GROUP"
+ },
+ "HANRORO": {
+  "qid": null,
+  "kind": null
+ },
+ "Hashtag": {
+  "qid": "Q124536451",
+  "kind": "SOLO"
+ },
+ "HAWW": {
+  "qid": "Q124483339",
+  "kind": "GROUP"
+ },
+ "HEART OF WOMAN": {
+  "qid": null,
+  "kind": null
+ },
+ "Hearts2Hearts": {
+  "qid": "Q131746784",
+  "kind": "GROUP"
+ },
+ "Hebi": {
+  "qid": null,
+  "kind": null
+ },
+ "Heize": {
+  "qid": "Q24855768",
+  "kind": "SOLO"
+ },
+ "Hello Venus": {
+  "qid": "Q488674",
+  "kind": "GROUP"
+ },
+ "Hi-Fi Un!corn": {
+  "qid": "Q124518472",
+  "kind": "GROUP"
+ },
+ "Hi-L": {
+  "qid": "Q117435103",
+  "kind": "GROUP"
+ },
+ "HIGHLIGHT": {
+  "qid": "Q269595",
+  "kind": "GROUP"
+ },
+ "HISTORY": {
+  "qid": null,
+  "kind": null
+ },
+ "HITGS": {
+  "qid": "Q135904065",
+  "kind": "GROUP"
+ },
+ "Holland": {
+  "qid": "Q1001742",
+  "kind": "GROUP"
+ },
+ "Honey Popcorn": {
+  "qid": "Q50821732",
+  "kind": "GROUP"
+ },
+ "Hoppipolla": {
+  "qid": "Q90259159",
+  "kind": "GROUP"
+ },
+ "HORI7ON": {
+  "qid": "Q120016097",
+  "kind": "GROUP"
+ },
+ "Hot Issue": {
+  "qid": "Q106504896",
+  "kind": "GROUP"
+ },
+ "HOTSHOT": {
+  "qid": "Q20684188",
+  "kind": "GROUP"
+ },
+ "hrtz.wav": {
+  "qid": null,
+  "kind": null
+ },
+ "Huh Jiwon": {
+  "qid": "Q60566856",
+  "kind": "SOLO"
+ },
+ "Hwang Chiyeul": {
+  "qid": "Q21060878",
+  "kind": "SOLO"
+ },
+ "Hwang Minhyun": {
+  "qid": null,
+  "kind": null
+ },
+ "HWISOO": {
+  "qid": "Q50039137",
+  "kind": "GROUP"
+ },
+ "HyunA": {
+  "qid": "Q19794442",
+  "kind": "SOLO"
+ },
+ "HyunA&DAWN": {
+  "qid": null,
+  "kind": null
+ },
+ "Hyunjun Hur": {
+  "qid": null,
+  "kind": null
+ },
+ "I (Cha Yoonji)": {
+  "qid": null,
+  "kind": null
+ },
+ "i-dle": {
+  "qid": "Q51885404",
+  "kind": "GROUP"
+ },
+ "I:MOND": {
+  "qid": "Q126325118",
+  "kind": "GROUP"
+ },
+ "I.MET.U": {
+  "qid": null,
+  "kind": null
+ },
+ "I.O.I": {
+  "qid": "Q23688122",
+  "kind": "GROUP"
+ },
+ "ICHILLIN’": {
+  "qid": "Q109256946",
+  "kind": "GROUP"
+ },
+ "IDID": {
+  "qid": "Q135466598",
+  "kind": "GROUP"
+ },
+ "idntt": {
+  "qid": "Q135913139",
+  "kind": "GROUP"
+ },
+ "ifeye": {
+  "qid": "Q134883791",
+  "kind": "GROUP"
+ },
+ "iii": {
+  "qid": "Q133873444",
+  "kind": "GROUP"
+ },
+ "iKON": {
+  "qid": "Q18161349",
+  "kind": "GROUP"
+ },
+ "ILLIT": {
+  "qid": "Q122179261",
+  "kind": "GROUP"
+ },
+ "ILY:1": {
+  "qid": "Q110959886",
+  "kind": "GROUP"
+ },
+ "IN A MINUTE": {
+  "qid": "Q133873462",
+  "kind": "GROUP"
+ },
+ "INFINITE": {
+  "qid": "Q50598",
+  "kind": "GROUP"
+ },
+ "INI": {
+  "qid": "Q107248914",
+  "kind": "GROUP"
+ },
+ "IRISÉ": {
+  "qid": null,
+  "kind": null
+ },
+ "IRRIS": {
+  "qid": "Q113213673",
+  "kind": "GROUP"
+ },
+ "IS:SUE": {
+  "qid": "Q125589349",
+  "kind": "GROUP"
+ },
+ "Isaac Hong": {
+  "qid": null,
+  "kind": null
+ },
+ "ISEGYE IDOL": {
+  "qid": "Q112074413",
+  "kind": "GROUP"
+ },
+ "ITZY": {
+  "qid": "Q60732823",
+  "kind": "GROUP"
+ },
+ "IU": {
+  "qid": "Q20145",
+  "kind": "SOLO"
+ },
+ "IVE": {
+  "qid": "Q109375061",
+  "kind": "GROUP"
+ },
+ "Ivy": {
+  "qid": "Q3142165",
+  "kind": "GROUP"
+ },
+ "IZ": {
+  "qid": "Q41145757",
+  "kind": "GROUP"
+ },
+ "IZ*ONE": {
+  "qid": "Q56402353",
+  "kind": "GROUP"
+ },
+ "izna": {
+  "qid": "Q127162707",
+  "kind": "GROUP"
+ },
+ "Izykite": {
+  "qid": null,
+  "kind": null
+ },
+ "J.Y.Park": {
+  "qid": "Q109307762",
+  "kind": "GROUP"
+ },
+ "JAMIE": {
+  "qid": "Q135495292",
+  "kind": "GROUP"
+ },
+ "Jang Haneum": {
+  "qid": null,
+  "kind": null
+ },
+ "Jannabi": {
+  "qid": "Q27953445",
+  "kind": "GROUP"
+ },
+ "Jay Park": {
+  "qid": "Q31816996",
+  "kind": "GROUP"
+ },
+ "JBJ": {
+  "qid": "Q39075630",
+  "kind": "GROUP"
+ },
+ "JD1": {
+  "qid": "Q85010490",
+  "kind": "SOLO"
+ },
+ "Jeon Somi": {
+  "qid": "Q21058681",
+  "kind": "SOLO"
+ },
+ "Jeon Youl": {
+  "qid": null,
+  "kind": null
+ },
+ "Jeong Sewoon": {
+  "qid": "Q16746002",
+  "kind": "SOLO"
+ },
+ "Jeong Yein": {
+  "qid": "Q21012418",
+  "kind": "GROUP"
+ },
+ "Jewelry": {
+  "qid": "Q490873",
+  "kind": "GROUP"
+ },
+ "JI BLUE": {
+  "qid": null,
+  "kind": null
+ },
+ "Jiae": {
+  "qid": "Q114772081",
+  "kind": "SOLO"
+ },
+ "Jini": {
+  "qid": "Q109307988",
+  "kind": "SOLO"
+ },
+ "Jo Yuri": {
+  "qid": "Q56678033",
+  "kind": "SOLO"
+ },
+ "JO1": {
+  "qid": "Q78297569",
+  "kind": "GROUP"
+ },
+ "JQT": {
+  "qid": "Q485691",
+  "kind": "GROUP"
+ },
+ "Jueun": {
+  "qid": "Q65330332",
+  "kind": "SOLO"
+ },
+ "Jung Seunghwan": {
+  "qid": null,
+  "kind": null
+ },
+ "JUNNY": {
+  "qid": "Q107109742",
+  "kind": "SOLO"
+ },
+ "JustB": {
+  "qid": null,
+  "kind": null
+ },
+ "K.will": {
+  "qid": "Q326575",
+  "kind": "SOLO"
+ },
+ "Kandis": {
+  "qid": "Q2615105",
+  "kind": "GROUP"
+ },
+ "Kang Hyewon": {
+  "qid": null,
+  "kind": null
+ },
+ "KANGDANIEL": {
+  "qid": null,
+  "kind": null
+ },
+ "KANGTA": {
+  "qid": "Q2404780",
+  "kind": "GROUP"
+ },
+ "KARA": {
+  "qid": "Q124459",
+  "kind": "GROUP"
+ },
+ "KARD": {
+  "qid": "Q27989963",
+  "kind": "GROUP"
+ },
+ "KATSEYE": {
+  "qid": "Q123480242",
+  "kind": "GROUP"
+ },
+ "KAVE": {
+  "qid": "Q131384685",
+  "kind": "GROUP"
+ },
+ "KENTA・SANGGYUN": {
+  "qid": "Q56534357",
+  "kind": "GROUP"
+ },
+ "Kep1er": {
+  "qid": "Q109077000",
+  "kind": "GROUP"
+ },
+ "Key": {
+  "qid": "Q1400",
+  "kind": "GROUP"
+ },
+ "Keyveatz": {
+  "qid": "Q139771740",
+  "kind": "GROUP"
+ },
+ "Keyvitup": {
+  "qid": "Q140303957",
+  "kind": "GROUP"
+ },
+ "KickFlip": {
+  "qid": "Q131722593",
+  "kind": "GROUP"
+ },
+ "KiiiKiii": {
+  "qid": "Q132526762",
+  "kind": "GROUP"
+ },
+ "Kiiras": {
+  "qid": "Q134702826",
+  "kind": "GROUP"
+ },
+ "Kik5o": {
+  "qid": null,
+  "kind": null
+ },
+ "Kik5o x AleXa": {
+  "qid": null,
+  "kind": null
+ },
+ "Kim Hyojong": {
+  "qid": null,
+  "kind": null
+ },
+ "Kim Jae-joong": {
+  "qid": "Q169717",
+  "kind": "SOLO"
+ },
+ "Kim Jaehwan": {
+  "qid": null,
+  "kind": null
+ },
+ "Kim Ji-yeon": {
+  "qid": "Q12588803",
+  "kind": "GROUP"
+ },
+ "Kim Se-jeong": {
+  "qid": "Q22911780",
+  "kind": "SOLO"
+ },
+ "Kim Seri": {
+  "qid": "Q93132814",
+  "kind": "SOLO"
+ },
+ "Kim Woojin": {
+  "qid": null,
+  "kind": null
+ },
+ "Kim Wooseok": {
+  "qid": "Q28698246",
+  "kind": "SOLO"
+ },
+ "KISS OF LIFE": {
+  "qid": "Q118314702",
+  "kind": "GROUP"
+ },
+ "KNK": {
+  "qid": "Q23022478",
+  "kind": "GROUP"
+ },
+ "KPop Demon Hunters": {
+  "qid": "Q30253351",
+  "kind": "GROUP"
+ },
+ "Kwon Eunbi": {
+  "qid": "Q56505060",
+  "kind": "SOLO"
+ },
+ "LABOUM": {
+  "qid": "Q18344661",
+  "kind": "GROUP"
+ },
+ "Ladies’ Code": {
+  "qid": "Q11588897",
+  "kind": "GROUP"
+ },
+ "LAPILLUS": {
+  "qid": "Q112620284",
+  "kind": "GROUP"
+ },
+ "Latency": {
+  "qid": "Q137734516",
+  "kind": "GROUP"
+ },
+ "LC9": {
+  "qid": "Q13580493",
+  "kind": "GROUP"
+ },
+ "LE SSERAFIM": {
+  "qid": "Q111381707",
+  "kind": "GROUP"
+ },
+ "LED Apple": {
+  "qid": "Q487363",
+  "kind": "GROUP"
+ },
+ "Lee Chaeyeon": {
+  "qid": "Q106518536",
+  "kind": "GROUP"
+ },
+ "Lee Dahye": {
+  "qid": null,
+  "kind": null
+ },
+ "Lee Hi": {
+  "qid": "Q24945",
+  "kind": "SOLO"
+ },
+ "Lee Hyori": {
+  "qid": "Q232491",
+  "kind": "SOLO"
+ },
+ "Lee Jiyeon": {
+  "qid": "Q55733453",
+  "kind": "SOLO"
+ },
+ "Lee Jun Young": {
+  "qid": "Q28699255",
+  "kind": "SOLO"
+ },
+ "Lee Junghyun": {
+  "qid": null,
+  "kind": null
+ },
+ "Lee Sujeong": {
+  "qid": null,
+  "kind": null
+ },
+ "Lee Youngji": {
+  "qid": "Q96873744",
+  "kind": "SOLO"
+ },
+ "LIGHTSUM": {
+  "qid": "Q107005985",
+  "kind": "GROUP"
+ },
+ "Lim Kim": {
+  "qid": "Q115591739",
+  "kind": "GROUP"
+ },
+ "Lim Youngmin": {
+  "qid": "Q30949851",
+  "kind": "GROUP"
+ },
+ "LNGSHOT": {
+  "qid": "Q137800046",
+  "kind": "GROUP"
+ },
+ "LOCO": {
+  "qid": "Q2300903",
+  "kind": "GROUP"
+ },
+ "LOONA": {
+  "qid": "Q28025953",
+  "kind": "GROUP"
+ },
+ "Loossemble": {
+  "qid": "Q121975741",
+  "kind": "GROUP"
+ },
+ "Lovelyz": {
+  "qid": "Q18437003",
+  "kind": "GROUP"
+ },
+ "LOVEONE": {
+  "qid": null,
+  "kind": null
+ },
+ "LU": {
+  "qid": null,
+  "kind": null
+ },
+ "Lucas": {
+  "qid": "Q320980",
+  "kind": "SOLO"
+ },
+ "LUCY": {
+  "qid": null,
+  "kind": null
+ },
+ "Luminous": {
+  "qid": null,
+  "kind": null
+ },
+ "LUN8": {
+  "qid": "Q119521803",
+  "kind": "GROUP"
+ },
+ "LUNARSOLAR": {
+  "qid": "Q98136614",
+  "kind": "GROUP"
+ },
+ "M.O.N.T": {
+  "qid": "Q73184015",
+  "kind": "GROUP"
+ },
+ "MADEIN": {
+  "qid": "Q114554468",
+  "kind": "GROUP"
+ },
+ "MAKAMAKA": {
+  "qid": null,
+  "kind": null
+ },
+ "MAMAMOO": {
+  "qid": "Q17278068",
+  "kind": "GROUP"
+ },
+ "MAP6": {
+  "qid": null,
+  "kind": null
+ },
+ "MARMELLO": {
+  "qid": null,
+  "kind": null
+ },
+ "MAVE:": {
+  "qid": "Q116278127",
+  "kind": "GROUP"
+ },
+ "Maywish": {
+  "qid": "Q60161874",
+  "kind": "GROUP"
+ },
+ "MBLAQ": {
+  "qid": "Q499183",
+  "kind": "GROUP"
+ },
+ "MCND": {
+  "qid": "Q85873198",
+  "kind": "GROUP"
+ },
+ "ME:I": {
+  "qid": "Q123859475",
+  "kind": "GROUP"
+ },
+ "Megamax": {
+  "qid": "Q111982626",
+  "kind": "GROUP"
+ },
+ "MelodyDay": {
+  "qid": "Q16951368",
+  "kind": "GROUP"
+ },
+ "MEOVV": {
+  "qid": "Q130084175",
+  "kind": "GROUP"
+ },
+ "Mijoo": {
+  "qid": "Q21059878",
+  "kind": "GROUP"
+ },
+ "MILLENNIUM": {
+  "qid": null,
+  "kind": null
+ },
+ "MILLIC": {
+  "qid": "Q447437",
+  "kind": "SOLO"
+ },
+ "MIMIIROSE": {
+  "qid": "Q113670989",
+  "kind": "GROUP"
+ },
+ "Min Jiwoon": {
+  "qid": null,
+  "kind": null
+ },
+ "MINIMANI": {
+  "qid": "Q117435233",
+  "kind": "GROUP"
+ },
+ "MIRAE": {
+  "qid": "Q105451317",
+  "kind": "GROUP"
+ },
+ "Mirani": {
+  "qid": "Q105705445",
+  "kind": "SOLO"
+ },
+ "Miss A": {
+  "qid": "Q284740",
+  "kind": "GROUP"
+ },
+ "MIXX": {
+  "qid": "Q24856468",
+  "kind": "GROUP"
+ },
+ "MOBB": {
+  "qid": "Q26817488",
+  "kind": "GROUP"
+ },
+ "MODYSSEY": {
+  "qid": "Q137666840",
+  "kind": "GROUP"
+ },
+ "MOMOLAND": {
+  "qid": "Q27820706",
+  "kind": "GROUP"
+ },
+ "MONSTA X": {
+  "qid": "Q19855151",
+  "kind": "GROUP"
+ },
+ "Moon Sujin": {
+  "qid": null,
+  "kind": null
+ },
+ "MUU": {
+  "qid": "Q5397294",
+  "kind": "SOLO"
+ },
+ "MW:MEU": {
+  "qid": null,
+  "kind": null
+ },
+ "MY.st": {
+  "qid": "Q97349567",
+  "kind": "GROUP"
+ },
+ "MyB": {
+  "qid": "Q22099765",
+  "kind": "GROUP"
+ },
+ "MYTEEN": {
+  "qid": "Q28415681",
+  "kind": "GROUP"
+ },
+ "N.Flying": {
+  "qid": "Q15727149",
+  "kind": "GROUP"
+ },
+ "n.SSign": {
+  "qid": "Q120335691",
+  "kind": "GROUP"
+ },
+ "Nature": {
+  "qid": "Q56501962",
+  "kind": "GROUP"
+ },
+ "NAZE": {
+  "qid": "Q16394330",
+  "kind": "SOLO"
+ },
+ "Nchive": {
+  "qid": null,
+  "kind": null
+ },
+ "NCT": {
+  "qid": "Q23725822",
+  "kind": "GROUP"
+ },
+ "NCT 127": {
+  "qid": "Q55624444",
+  "kind": "GROUP"
+ },
+ "NCT DREAM": {
+  "qid": "Q47002841",
+  "kind": "GROUP"
+ },
+ "NCT WISH": {
+  "qid": "Q122575981",
+  "kind": "GROUP"
+ },
+ "NCUS": {
+  "qid": "Q192105",
+  "kind": "GROUP"
+ },
+ "NeonPunch": {
+  "qid": "Q55443637",
+  "kind": "GROUP"
+ },
+ "New-L": {
+  "qid": "Q54240",
+  "kind": "GROUP"
+ },
+ "NEWBEAT": {
+  "qid": "Q133796204",
+  "kind": "GROUP"
+ },
+ "NewJeans": {
+  "qid": "Q113189277",
+  "kind": "GROUP"
+ },
+ "NEXZ": {
+  "qid": "Q123865358",
+  "kind": "GROUP"
+ },
+ "NIKA": {
+  "qid": "Q1261871",
+  "kind": "GROUP"
+ },
+ "NINE.i": {
+  "qid": "Q111463362",
+  "kind": "GROUP"
+ },
+ "NiziU": {
+  "qid": "Q96647935",
+  "kind": "GROUP"
+ },
+ "NMIXX": {
+  "qid": "Q109307762",
+  "kind": "GROUP"
+ },
+ "NO:EL": {
+  "qid": "Q55728779",
+  "kind": "SOLO"
+ },
+ "NOIR": {
+  "qid": null,
+  "kind": null
+ },
+ "NOMAD": {
+  "qid": "Q110205519",
+  "kind": "SOLO"
+ },
+ "NouerA": {
+  "qid": "Q132119456",
+  "kind": "GROUP"
+ },
+ "NOWZ": {
+  "qid": "Q125367227",
+  "kind": "GROUP"
+ },
+ "NRG": {
+  "qid": "Q626033",
+  "kind": "GROUP"
+ },
+ "NTX": {
+  "qid": "Q108878805",
+  "kind": "GROUP"
+ },
+ "NU'EST": {
+  "qid": "Q225105",
+  "kind": "GROUP"
+ },
+ "NuNew": {
+  "qid": "Q111303654",
+  "kind": "SOLO"
+ },
+ "ODD YOUTH": {
+  "qid": "Q132130020",
+  "kind": "GROUP"
+ },
+ "OH MY GIRL": {
+  "qid": "Q19794854",
+  "kind": "GROUP"
+ },
+ "Olivia Marsh": {
+  "qid": "Q132712533",
+  "kind": "SOLO"
+ },
+ "Omega X": {
+  "qid": "Q107502104",
+  "kind": "GROUP"
+ },
+ "ONE PACT": {
+  "qid": "Q123256080",
+  "kind": "GROUP"
+ },
+ "ONEUS": {
+  "qid": "Q60528927",
+  "kind": "GROUP"
+ },
+ "ONEWE": {
+  "qid": "Q42288986",
+  "kind": "GROUP"
+ },
+ "ONF": {
+  "qid": "Q35101861",
+  "kind": "GROUP"
+ },
+ "ONLEE": {
+  "qid": "Q123701374",
+  "kind": "SOLO"
+ },
+ "OnlyOneOf": {
+  "qid": "Q64214669",
+  "kind": "GROUP"
+ },
+ "OWIS": {
+  "qid": "Q139119897",
+  "kind": "GROUP"
+ },
+ "owoon": {
+  "qid": null,
+  "kind": null
+ },
+ "Oyster": {
+  "qid": null,
+  "kind": null
+ },
+ "P1Harmony": {
+  "qid": "Q101529383",
+  "kind": "GROUP"
+ },
+ "Papaya": {
+  "qid": null,
+  "kind": null
+ },
+ "Park Eun-bin": {
+  "qid": "Q491387",
+  "kind": "SOLO"
+ },
+ "Park Hyoshin": {
+  "qid": null,
+  "kind": null
+ },
+ "Park Jihoon": {
+  "qid": "Q30114466",
+  "kind": "SOLO"
+ },
+ "Park Min Jung": {
+  "qid": "Q69697161",
+  "kind": "SOLO"
+ },
+ "PENTAGON": {
+  "qid": "Q23936742",
+  "kind": "GROUP"
+ },
+ "pH-1": {
+  "qid": "Q45190216",
+  "kind": "SOLO"
+ },
+ "PinkFantasy": {
+  "qid": "Q60994549",
+  "kind": "GROUP"
+ },
+ "PIXY": {
+  "qid": "Q98096705",
+  "kind": "GROUP"
+ },
+ "PLAVE": {
+  "qid": "Q119025962",
+  "kind": "GROUP"
+ },
+ "POW": {
+  "qid": "Q156150",
+  "kind": "GROUP"
+ },
+ "PRIMARY": {
+  "qid": "Q15959626",
+  "kind": "GROUP"
+ },
+ "PRIMROSE": {
+  "qid": "Q1888102",
+  "kind": "GROUP"
+ },
+ "PRISTIN": {
+  "qid": "Q26265886",
+  "kind": "GROUP"
+ },
+ "PRITTI-G": {
+  "qid": null,
+  "kind": null
+ },
+ "PRITZ": {
+  "qid": "Q18455649",
+  "kind": "GROUP"
+ },
+ "Psy": {
+  "qid": "Q20150",
+  "kind": "SOLO"
+ },
+ "PURPLE KISS": {
+  "qid": "Q97780109",
+  "kind": "GROUP"
+ },
+ "Purplebeck": {
+  "qid": "Q64785127",
+  "kind": "GROUP"
+ },
+ "QI.X": {
+  "qid": "Q121636188",
+  "kind": "GROUP"
+ },
+ "Queenz Eye": {
+  "qid": "Q117074661",
+  "kind": "GROUP"
+ },
+ "QWER": {
+  "qid": "Q124412677",
+  "kind": "GROUP"
+ },
+ "Rainbow": {
+  "qid": "Q14944851",
+  "kind": "GROUP"
+ },
+ "RAINZ": {
+  "qid": "Q41399213",
+  "kind": "GROUP"
+ },
+ "RaNia": {
+  "qid": "Q491708",
+  "kind": "GROUP"
+ },
+ "RE:WIND": {
+  "qid": "Q113155148",
+  "kind": "GROUP"
+ },
+ "Red Velvet": {
+  "qid": "Q17466114",
+  "kind": "GROUP"
+ },
+ "RedSquare": {
+  "qid": "Q96401398",
+  "kind": "GROUP"
+ },
+ "RESCENE": {
+  "qid": "Q124856415",
+  "kind": "GROUP"
+ },
+ "RIIZE": {
+  "qid": "Q121075203",
+  "kind": "GROUP"
+ },
+ "RoaD-B": {
+  "qid": null,
+  "kind": null
+ },
+ "Rocket Punch": {
+  "qid": "Q65771078",
+  "kind": "GROUP"
+ },
+ "Rocking Doll": {
+  "qid": "Q113493817",
+  "kind": "GROUP"
+ },
+ "ROCKY": {
+  "qid": "Q19386751",
+  "kind": "GROUP"
+ },
+ "Roh Taehyun": {
+  "qid": null,
+  "kind": null
+ },
+ "Rolling Quartz": {
+  "qid": "Q104655627",
+  "kind": "GROUP"
+ },
+ "Rothy": {
+  "qid": "Q35277020",
+  "kind": "GROUP"
+ },
+ "Royal 44": {
+  "qid": null,
+  "kind": null
+ },
+ "Royal Pirates": {
+  "qid": "Q7374722",
+  "kind": "GROUP"
+ },
+ "Ryu Sera": {
+  "qid": null,
+  "kind": null
+ },
+ "Ryu Sujeong": {
+  "qid": null,
+  "kind": null
+ },
+ "S": {
+  "qid": "Q11574",
+  "kind": "GROUP"
+ },
+ "S.E.S": {
+  "qid": "Q491542",
+  "kind": "GROUP"
+ },
+ "S.I.S": {
+  "qid": "Q39433817",
+  "kind": "GROUP"
+ },
+ "Samuel": {
+  "qid": "Q172678",
+  "kind": "SOLO"
+ },
+ "Santos Bravos": {
+  "qid": "Q137397652",
+  "kind": "GROUP"
+ },
+ "SATURDAY": {
+  "qid": "Q60992060",
+  "kind": "GROUP"
+ },
+ "SAY MY NAME": {
+  "qid": "Q130581752",
+  "kind": "GROUP"
+ },
+ "Scarlet (2014)": {
+  "qid": null,
+  "kind": null
+ },
+ "SE SO NEON": {
+  "qid": "Q78775759",
+  "kind": "GROUP"
+ },
+ "Secret": {
+  "qid": "Q482995",
+  "kind": "GROUP"
+ },
+ "Secret Number": {
+  "qid": "Q96274223",
+  "kind": "GROUP"
+ },
+ "SeeYa": {
+  "qid": "Q489543",
+  "kind": "GROUP"
+ },
+ "Seo Taiji": {
+  "qid": "Q488973",
+  "kind": "GROUP"
+ },
+ "Seo Taiji and Boys": {
+  "qid": "Q488973",
+  "kind": "GROUP"
+ },
+ "Seori": {
+  "qid": "Q109281867",
+  "kind": "SOLO"
+ },
+ "SEVENTEEN": {
+  "qid": "Q14524548",
+  "kind": "GROUP"
+ },
+ "SEVENUS": {
+  "qid": "Q131385350",
+  "kind": "GROUP"
+ },
+ "SF9": {
+  "qid": "Q26856852",
+  "kind": "GROUP"
+ },
+ "SHA SHA": {
+  "qid": "Q60989250",
+  "kind": "GROUP"
+ },
+ "She'z": {
+  "qid": "Q7491912",
+  "kind": "GROUP"
+ },
+ "Shin Jimin": {
+  "qid": "Q16183093",
+  "kind": "SOLO"
+ },
+ "SHINee": {
+  "qid": "Q269836",
+  "kind": "GROUP"
+ },
+ "Shinhwa": {
+  "qid": "Q482620",
+  "kind": "GROUP"
+ },
+ "SHINVI": {
+  "qid": "Q624035",
+  "kind": "GROUP"
+ },
+ "SISTAR": {
+  "qid": "Q223048",
+  "kind": "GROUP"
+ },
+ "SKINZ": {
+  "qid": "Q17012277",
+  "kind": "SOLO"
+ },
+ "SKYE": {
+  "qid": "Q42327284",
+  "kind": "GROUP"
+ },
+ "Smile.G": {
+  "qid": null,
+  "kind": null
+ },
+ "SMORZ": {
+  "qid": "Q135067839",
+  "kind": "GROUP"
+ },
+ "Snuper": {
+  "qid": "Q22098485",
+  "kind": "GROUP"
+ },
+ "Son Dam Bi": {
+  "qid": "Q266356",
+  "kind": "SOLO"
+ },
+ "SONAMOO": {
+  "qid": "Q18651163",
+  "kind": "GROUP"
+ },
+ "Soojin": {
+  "qid": "Q61100297",
+  "kind": "GROUP"
+ },
+ "Soorin": {
+  "qid": null,
+  "kind": null
+ },
+ "SoRi": {
+  "qid": "Q61612053",
+  "kind": "SOLO"
+ },
+ "SPICA": {
+  "qid": "Q492387",
+  "kind": "GROUP"
+ },
+ "SPLAYIT": {
+  "qid": null,
+  "kind": null
+ },
+ "STAYC": {
+  "qid": "Q101541493",
+  "kind": "GROUP"
+ },
+ "Stella Jang": {
+  "qid": null,
+  "kind": null
+ },
+ "Stellar": {
+  "qid": "Q7607174",
+  "kind": "GROUP"
+ },
+ "StelLive": {
+  "qid": "Q126685925",
+  "kind": "GROUP"
+ },
+ "Stray Kids": {
+  "qid": "Q46134670",
+  "kind": "GROUP"
+ },
+ "Summer Soul": {
+  "qid": null,
+  "kind": null
+ },
+ "Sunmi": {
+  "qid": "Q624995",
+  "kind": "GROUP"
+ },
+ "Sunny Hill": {
+  "qid": "Q486323",
+  "kind": "GROUP"
+ },
+ "SUPER JUNIOR": {
+  "qid": "Q239693",
+  "kind": "GROUP"
+ },
+ "Superkind": {
+  "qid": "Q112692507",
+  "kind": "GROUP"
+ },
+ "SuperM": {
+  "qid": "Q66710876",
+  "kind": "GROUP"
+ },
+ "SURAN": {
+  "qid": "Q27953716",
+  "kind": "SOLO"
+ },
+ "Suzy": {
+  "qid": "Q464645",
+  "kind": "SOLO"
+ },
+ "T-ARA": {
+  "qid": "Q495383",
+  "kind": "GROUP"
+ },
+ "Taemin": {
+  "qid": "Q269836",
+  "kind": "GROUP"
+ },
+ "Taeyeon": {
+  "qid": "Q233371",
+  "kind": "GROUP"
+ },
+ "Tahiti": {
+  "qid": "Q12070509",
+  "kind": "GROUP"
+ },
+ "TAN": {
+  "qid": null,
+  "kind": null
+ },
+ "TASTY": {
+  "qid": "Q492131",
+  "kind": "GROUP"
+ },
+ "Teen Top": {
+  "qid": "Q307368",
+  "kind": "GROUP"
+ },
+ "Tempest": {
+  "qid": "Q110920753",
+  "kind": "GROUP"
+ },
+ "TFN": {
+  "qid": "Q105093757",
+  "kind": "GROUP"
+ },
+ "THE BOYZ": {
+  "qid": "Q41949104",
+  "kind": "GROUP"
+ },
+ "The Deep": {
+  "qid": null,
+  "kind": null
+ },
+ "The KingDom": {
+  "qid": "Q106610132",
+  "kind": "GROUP"
+ },
+ "The Legend": {
+  "qid": "Q28700112",
+  "kind": "GROUP"
+ },
+ "The Poles": {
+  "qid": "Q137364200",
+  "kind": "GROUP"
+ },
+ "The Rose": {
+  "qid": "Q47276215",
+  "kind": "GROUP"
+ },
+ "The Wind": {
+  "qid": "Q1297",
+  "kind": "GROUP"
+ },
+ "TIOT": {
+  "qid": "Q125200743",
+  "kind": "GROUP"
+ },
+ "TNX": {
+  "qid": "Q111745890",
+  "kind": "GROUP"
+ },
+ "TO1": {
+  "qid": "Q86730786",
+  "kind": "GROUP"
+ },
+ "TOMATOMAT": {
+  "qid": null,
+  "kind": null
+ },
+ "TOMORROW X TOGETHER": {
+  "qid": "Q60550265",
+  "kind": "GROUP"
+ },
+ "TOZ": {
+  "qid": "Q130475627",
+  "kind": "GROUP"
+ },
+ "Trade L": {
+  "qid": "Q80839",
+  "kind": "GROUP"
+ },
+ "TRCNG": {
+  "qid": "Q42431662",
+  "kind": "GROUP"
+ },
+ "TREASURE": {
+  "qid": "Q61057550",
+  "kind": "GROUP"
+ },
+ "TRENDZ": {
+  "qid": "Q110920749",
+  "kind": "GROUP"
+ },
+ "TRI.BE": {
+  "qid": "Q105592472",
+  "kind": "GROUP"
+ },
+ "Triple H": {
+  "qid": "Q29350008",
+  "kind": "GROUP"
+ },
+ "tripleS": {
+  "qid": "Q115099831",
+  "kind": "GROUP"
+ },
+ "Trouble Maker": {
+  "qid": "Q492416",
+  "kind": "GROUP"
+ },
+ "TUIDE": {
+  "qid": "Q141030335",
+  "kind": "GROUP"
+ },
+ "TUNEXX": {
+  "qid": "Q140298575",
+  "kind": "GROUP"
+ },
+ "TVXQ": {
+  "qid": "Q192983",
+  "kind": "GROUP"
+ },
+ "TWICE": {
+  "qid": "Q20645861",
+  "kind": "GROUP"
+ },
+ "TWS": {
+  "qid": "Q124091148",
+  "kind": "GROUP"
+ },
+ "U_Chae": {
+  "qid": null,
+  "kind": null
+ },
+ "U-KISS": {
+  "qid": "Q482543",
+  "kind": "GROUP"
+ },
+ "UDTT": {
+  "qid": null,
+  "kind": null
+ },
+ "UN": {
+  "qid": "Q7865415",
+  "kind": "GROUP"
+ },
+ "UNB": {
+  "qid": "Q48938268",
+  "kind": "GROUP"
+ },
+ "UNI.T": {
+  "qid": "Q48938270",
+  "kind": "GROUP"
+ },
+ "UNICODE": {
+  "qid": "Q131275093",
+  "kind": "GROUP"
+ },
+ "UNIQ": {
+  "qid": "Q18712416",
+  "kind": "GROUP"
+ },
+ "UNIS": {
+  "qid": "Q124362218",
+  "kind": "GROUP"
+ },
+ "UNVS": {
+  "qid": "Q87103914",
+  "kind": "GROUP"
+ },
+ "UP10TION": {
+  "qid": "Q21012399",
+  "kind": "GROUP"
+ },
+ "USPEER": {
+  "qid": "Q134540226",
+  "kind": "GROUP"
+ },
+ "V01D": {
+  "qid": null,
+  "kind": null
+ },
+ "VANNER": {
+  "qid": "Q63790667",
+  "kind": "GROUP"
+ },
+ "Varsity": {
+  "qid": "Q48700513",
+  "kind": "GROUP"
+ },
+ "VAV": {
+  "qid": "Q27951748",
+  "kind": "GROUP"
+ },
+ "VAYONN": {
+  "qid": null,
+  "kind": null
+ },
+ "VERIVERY": {
+  "qid": "Q60577989",
+  "kind": "GROUP"
+ },
+ "VICTON": {
+  "qid": "Q27861498",
+  "kind": "GROUP"
+ },
+ "ViV": {
+  "qid": "Q127856770",
+  "kind": "GROUP"
+ },
+ "VIVIZ": {
+  "qid": "Q108853211",
+  "kind": "GROUP"
+ },
+ "VIXX": {
+  "qid": "Q1447659",
+  "kind": "GROUP"
+ },
+ "VVS": {
+  "qid": null,
+  "kind": null
+ },
+ "VVUP": {
+  "qid": "Q125131224",
+  "kind": "GROUP"
+ },
+ "W!TCHX": {
+  "qid": null,
+  "kind": null
+ },
+ "WAKER": {
+  "qid": "Q127856665",
+  "kind": "GROUP"
+ },
+ "Wanna One": {
+  "qid": "Q30311578",
+  "kind": "GROUP"
+ },
+ "WATERFIRE": {
+  "qid": "Q125963681",
+  "kind": "GROUP"
+ },
+ "wave to earth": {
+  "qid": "Q123125515",
+  "kind": "GROUP"
+ },
+ "WayV": {
+  "qid": "Q60062907",
+  "kind": "GROUP"
+ },
+ "We Girls": {
+  "qid": "Q57584225",
+  "kind": "GROUP"
+ },
+ "WE IN THE ZONE": {
+  "qid": "Q64481613",
+  "kind": "GROUP"
+ },
+ "Weeekly": {
+  "qid": "Q65046002",
+  "kind": "GROUP"
+ },
+ "WEi": {
+  "qid": null,
+  "kind": null
+ },
+ "Weki Meki": {
+  "qid": "Q32860762",
+  "kind": "GROUP"
+ },
+ "Wezag": {
+  "qid": null,
+  "kind": null
+ },
+ "WHIB": {
+  "qid": "Q123398518",
+  "kind": "GROUP"
+ },
+ "WINNER": {
+  "qid": "Q15116397",
+  "kind": "GROUP"
+ },
+ "Wish": {
+  "qid": null,
+  "kind": null
+ },
+ "WJSN": {
+  "qid": "Q21964258",
+  "kind": "GROUP"
+ },
+ "Wonder Girls": {
+  "qid": "Q476119",
+  "kind": "GROUP"
+ },
+ "Wonho": {
+  "qid": "Q28549863",
+  "kind": "SOLO"
+ },
+ "WOOAH": {
+  "qid": "Q94615987",
+  "kind": "GROUP"
+ },
+ "WOODZ": {
+  "qid": "Q8033729",
+  "kind": "GROUP"
+ },
+ "X-5": {
+  "qid": "Q307931",
+  "kind": "GROUP"
+ },
+ "X:IN": {
+  "qid": "Q117354566",
+  "kind": "GROUP"
+ },
+ "X1": {
+  "qid": "Q65665588",
+  "kind": "GROUP"
+ },
+ "XD": {
+  "qid": "Q125200745",
+  "kind": "GROUP"
+ },
+ "Xdinary Heroes": {
+  "qid": "Q109579414",
+  "kind": "GROUP"
+ },
+ "XENO-T": {
+  "qid": "Q15633507",
+  "kind": "GROUP"
+ },
+ "XG": {
+  "qid": "Q111419721",
+  "kind": "GROUP"
+ },
+ "XIA": {
+  "qid": "Q482783",
+  "kind": "SOLO"
+ },
+ "xikers": {
+  "qid": "Q117191573",
+  "kind": "GROUP"
+ },
+ "XLOV": {
+  "qid": "Q131624412",
+  "kind": "GROUP"
+ },
+ "XngHan&Xoul": {
+  "qid": null,
+  "kind": null
+ },
+ "XODIAC": {
+  "qid": "Q119843334",
+  "kind": "GROUP"
+ },
+ "xooos": {
+  "qid": "Q69696977",
+  "kind": "SOLO"
+ },
+ "XUM": {
+  "qid": "Q100166477",
+  "kind": "GROUP"
+ },
+ "Yena": {
+  "qid": "Q27658442",
+  "kind": "GROUP"
+ },
+ "Yeojin": {
+  "qid": "Q56824821",
+  "kind": "SOLO"
+ },
+ "Yerin": {
+  "qid": "Q985297",
+  "kind": "GROUP"
+ },
+ "Yerin Baek": {
+  "qid": "Q9021940",
+  "kind": "SOLO"
+ },
+ "YongYong": {
+  "qid": null,
+  "kind": null
+ },
+ "Yoon Jisung": {
+  "qid": null,
+  "kind": null
+ },
+ "Yoon Min": {
+  "qid": "Q59148032",
+  "kind": "GROUP"
+ },
+ "Yoon Seobin": {
+  "qid": "Q115528364",
+  "kind": "SOLO"
+ },
+ "You Dayeon": {
+  "qid": "Q135615370",
+  "kind": "SOLO"
+ },
+ "Youha": {
+  "qid": null,
+  "kind": null
+ },
+ "Youkyung": {
+  "qid": "Q16767745",
+  "kind": "SOLO"
+ },
+ "Young Posse": {
+  "qid": "Q123099728",
+  "kind": "GROUP"
+ },
+ "Younha": {
+  "qid": "Q11265033",
+  "kind": "SOLO"
+ },
+ "Younite": {
+  "qid": "Q111199847",
+  "kind": "GROUP"
+ },
+ "YUHZ": {
+  "qid": "Q140032627",
+  "kind": "GROUP"
+ },
+ "Yuju": {
+  "qid": "Q20821809",
+  "kind": "SOLO"
+ },
+ "Yukika": {
+  "qid": "Q9129696",
+  "kind": "SOLO"
+ },
+ "Yves": {
+  "qid": "Q106057",
+  "kind": "SOLO"
+ },
+ "Z-Girls": {
+  "qid": "Q61882117",
+  "kind": "GROUP"
+ },
+ "ZE:A": {
+  "qid": "Q483626",
+  "kind": "GROUP"
+ },
+ "ZEROBASEONE": {
+  "qid": "Q117808633",
+  "kind": "GROUP"
+ },
+ "ZION.T": {
+  "qid": "Q23044904",
+  "kind": "SOLO"
+ }
+}

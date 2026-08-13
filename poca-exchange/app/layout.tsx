@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AuthNav } from "@/components/auth-nav";
 import { AuthSessionProvider } from "@/components/session-provider";
+import { SiteHeader } from "@/components/site-header";
 import { Footer } from "@/components/footer";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
@@ -70,14 +69,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AuthSessionProvider>
-          <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white/80 backdrop-blur dark:border-neutral-800 dark:bg-black/80">
-            <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-              <Link href="/" className="font-bold">
-                {siteConfig.name}
-              </Link>
-              <AuthNav />
-            </div>
-          </header>
+          <SiteHeader />
           {children}
           <Footer />
         </AuthSessionProvider>

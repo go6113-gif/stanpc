@@ -51,26 +51,48 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       memberId: member.id,
     };
 
-    // TODO: condition 필터 구현 (DB 스키마에 condition 컬럼 추가 후)
-    // if (condition && condition !== 'all') {
-    //   whereCondition.condition = condition;
-    // }
+    // vaultStatus 필터 구현 — UserBinderCard의 status 필드로 필터링
+    // 'owned': PERSONAL 또는 FOR_TRADE/FOR_SALE (거래 의도가 없는 소장용)
+    // 'iso': ISO (구하는 중)
+    // 'trade': FOR_TRADE (교환 가능)
+    // 'sale': FOR_SALE (판매 가능)
+    let userBinderFilter: any = undefined;
+    if (vaultStatus && vaultStatus !== 'all') {
+      userBinderFilter = {};
+      if (vaultStatus === 'owned') {
+        userBinderFilter.OR = [
+          { status: 'PERSONAL' },
+          { status: 'FOR_TRADE' },
+          { status: 'FOR_SALE' },
+        ];
+      } else if (vaultStatus === 'iso') {
+        userBinderFilter.status = 'ISO';
+      } else if (vaultStatus === 'trade') {
+        userBinderFilter.status = 'FOR_TRADE';
+      } else if (vaultStatus === 'sale') {
+        userBinderFilter.status = 'FOR_SALE';
+      }
+    }
 
-    // TODO: vaultStatus 필터 구현 (UserBinderCard 관계 확인 후)
-    // if (vaultStatus && vaultStatus !== 'all') {
-    //   // vaultStatus에 따라 userBinders 관계 필터링
-    // }
-
-    // 멤버의 카드 조회
+    // 멤버의 카드 조회 — vaultStatus 필터 적용
     const cards = await prisma.photoCard.findMany({
-      where: whereCondition,
+      where: {
+        ...whereCondition,
+        ...(userBinderFilter
+          ? { userBinders: { some: userBinderFilter } }
+          : {}),
+      },
       include: {
         group: { select: { slug: true, nameEn: true } },
         member: { select: { nameEn: true } },
         album: { select: { slug: true, title: true } },
         userBinders: {
-          select: { id: true },
-          take: 1,
+          where: userBinderFilter,
+          select: {
+            id: true,
+            status: true,
+            tags: true,
+          },
         },
       },
       orderBy: { createdAt: 'desc' },

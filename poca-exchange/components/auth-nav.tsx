@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProviders, signIn, signOut, useSession } from "next-auth/react";
+import { getProviders, signIn, useSession } from "next-auth/react";
+import { ProfileDropdown } from "@/components/profile-dropdown";
 
 const PROVIDER_LABELS: Record<string, string> = {
   google: "Google로 로그인",
@@ -27,24 +28,10 @@ export function AuthNav() {
   if (session?.user) {
     return (
       <div className="flex items-center gap-3">
-        {session.user.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={session.user.image}
-            alt={session.user.name ?? "profile"}
-            className="h-7 w-7 rounded-full"
-          />
-        ) : null}
         <span className="hidden text-sm text-neutral-600 sm:inline dark:text-neutral-300">
           {session.user.name ?? session.user.email}
         </span>
-        <button
-          type="button"
-          onClick={() => signOut()}
-          className="rounded-full border border-neutral-200 px-3 py-1 text-sm hover:border-neutral-400 dark:border-neutral-700"
-        >
-          로그아웃
-        </button>
+        <ProfileDropdown />
       </div>
     );
   }

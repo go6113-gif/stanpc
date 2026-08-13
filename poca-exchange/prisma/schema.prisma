@@ -53,6 +53,12 @@ model User {
   collectorIndex Int   @default(0) @map("collector_index")
   mannerScore    Float @default(36.5) @map("manner_score")
 
+  // C2C 거래 연락 수단 — 공개 프로필에서 거래 문의 시 사용
+  // 사용자가 직접 설정하는 선택사항. 공개 프로필 조회 시에만 노출
+  twitterHandle   String? @map("twitter_handle")
+  openKakaoUrl    String? @map("open_kakao_url")
+  discordUrl      String? @map("discord_url")
+
   accounts Account[]
   sessions Session[]
 
@@ -385,7 +391,16 @@ model GlobalSKUMapping {
   @@map("global_sku_mapping")
 }
 
-// -----------------------------------------------------------------------------
+// 바인더 카드 상태 — 거래 가능 여부 및 용도
+enum UserBinderCardStatus {
+  PERSONAL      // 개인 소장용 (기본값, 거래 불가)
+  FOR_TRADE     // 교환 가능
+  FOR_SALE      // 판매 가능
+  ISO           // 구하는 중 (위시리스트)
+
+  @@map("user_binder_card_status")
+}
+
 // User Virtual Binder - Many-to-many relationship between User and PhotoCard
 // with status tags: "In Hand", "ISO" (In Search Of), "#드볼중" (Seeking to buy),
 // etc. Acts as a user collection/wishlist system.
@@ -394,6 +409,7 @@ model UserBinderCard {
   id        String   @id @default(cuid())
   tags      String[] @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
   note      String? // User's personal note about this card
+  status    UserBinderCardStatus @default(PERSONAL) // 거래 상태 (판매/교환/개인 소장)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -669,4 +685,24 @@ model TradeItem {
   @@index([cardId])
   @@index([offeredByUserId])
   @@map("trade_items")
+}
+
+// -----------------------------------------------------------------------------
+// Waitlist — Fake Door demand validation
+// No Pro plan or payment module exists yet (see docs/PHASE2_ROADMAP.md). The
+// landing page's "Pro 업그레이드"/AI 스캔/멀티 바인더 CTAs open a modal
+// instead of a paywall and collect an email here so we can measure real
+// demand before building the paid feature. `source` records which CTA fired
+// the modal for later breakdown; anonymous by design (no User relation) since
+// this must also work for guests who haven't signed in.
+// -----------------------------------------------------------------------------
+model WaitlistSignup {
+  id        String   @id @default(cuid())
+  email     String
+  source    String // e.g. "pro_upgrade_header", "ai_scan", "multi_binder"
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([email, source])
+  @@index([createdAt])
+  @@map("waitlist_signups")
 }

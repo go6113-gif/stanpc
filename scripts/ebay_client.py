@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # Credentials live in poca-exchange/.env (this is a Python sibling project
 # sharing the same eBay Developer application as the Next.js app).
 _ROOT = Path(__file__).resolve().parent
-load_dotenv(_ROOT / "poca-exchange" / ".env")
+load_dotenv(_ROOT.parent / "poca-exchange" / ".env")
 load_dotenv(_ROOT / ".env")  # allow a root-level override too, if present
 
 TOKEN_URL = "https://api.ebay.com/identity/v1/oauth2/token"

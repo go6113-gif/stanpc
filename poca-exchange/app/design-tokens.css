@@ -181,6 +181,45 @@
   border: 1px solid var(--color-condition-hp);
 }
 
+/* Dual-thumb price range slider (FilterDrawer) — two overlapping native
+   <input type="range"> elements; each rule below hides everything but the
+   thumb so only the thumb is clickable and the visible track underneath
+   (rendered separately as a plain div) shows through. */
+.range-thumb {
+  pointer-events: none;
+}
+
+.range-thumb::-webkit-slider-thumb {
+  pointer-events: auto;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-nomad-red);
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-nomad-red);
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.range-thumb::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+.range-thumb::-moz-range-track {
+  background: transparent;
+}
+
 /* Vault Status Badge */
 .vault-status-badge {
   display: inline-flex;
@@ -210,4 +249,20 @@
 .vault-status-badge.wishlist {
   background-color: #F3E8FF;
   color: var(--color-vault-wishlist);
+}
+
+/* Gallery Grid — Auto-fill responsive grid with fixed card width
+   Card width is maintained (280px min), screen expansion adds columns only.
+   Mobile (≤480px): 2 columns fixed via media query. */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  width: 100%;
+  gap: inherit;
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

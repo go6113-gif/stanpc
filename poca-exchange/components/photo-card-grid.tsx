@@ -16,18 +16,28 @@ function popularityScore(card: PhotoCardGridItem) {
  * scaling up to 6-up on wide desktops, image-led tiles with a
  * hover/tap overlay carrying the identifying metadata.
  */
-export function PhotoCardGrid({ cards }: { cards: PhotoCardGridItem[] }) {
+export function PhotoCardGrid({
+  cards,
+  preserveOrder = false,
+  emptyMessage = "아직 등록된 포토카드가 없어요.",
+}: {
+  cards: PhotoCardGridItem[];
+  /** Skip the default popularity re-sort — for callers (e.g. the gallery
+   * filter page) that already sorted `cards` server-side by price/date. */
+  preserveOrder?: boolean;
+  emptyMessage?: string;
+}) {
   if (cards.length === 0) {
     return (
       <p className="py-12 text-center text-sm text-neutral-500">
-        아직 등록된 포토카드가 없어요.
+        {emptyMessage}
       </p>
     );
   }
 
-  const sorted = [...cards].sort(
-    (a, b) => popularityScore(b) - popularityScore(a)
-  );
+  const sorted = preserveOrder
+    ? cards
+    : [...cards].sort((a, b) => popularityScore(b) - popularityScore(a));
 
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">

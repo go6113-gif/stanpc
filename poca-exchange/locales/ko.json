@@ -1,0 +1,174 @@
+{
+  "site": {
+    "name": "stanpc",
+    "title": "stanpc — K-pop 포토카드 도감 & 거래",
+    "description": "K-pop 그룹·멤버별 포토카드 전체 도감. 시세 비교와 안전한 맞교환까지."
+  },
+  "header": {
+    "pro_upgrade": "Pro 업그레이드",
+    "search_placeholder": "그룹, 멤버, 앨범 검색..."
+  },
+  "search": {
+    "placeholder": "검색 또는 필터",
+    "submit": "검색",
+    "clear": "검색어 삭제",
+    "quickFilters": {
+      "popular": "🔥 인기 TOP",
+      "wishlist": "❤️ 내 위시",
+      "owned": "📦 내 소장"
+    },
+    "sections": {
+      "recent": "최근 검색",
+      "trending": "실시간 인기",
+      "artists": "주요 아티스트",
+      "results": "검색 결과",
+      "artists_members": "아티스트/멤버",
+      "albums": "앨범",
+      "photocards": "특전/POB"
+    },
+    "empty": "검색 결과가 없습니다",
+    "loading": "검색 중...",
+    "keyboard_hint": "↑↓로 이동, Enter로 선택"
+  },
+  "hero": {
+    "headline": "10초 만에 가입 없이",
+    "headline_secondary": "내 바인더 만들기",
+    "subheadline": "로그인 없이 바로 담아보고, 마음에 들면 그때 저장하세요.",
+    "cta_button": "시작하기",
+    "value_prop_1_title": "글로벌 3개국 실시간 시세",
+    "value_prop_1_desc": "한국·미국·일본 3개 시장 가격을 한 곳에서 비교하세요.",
+    "value_prop_2_title": "앱 설치 없는 웹 라이브 바인더",
+    "value_prop_2_desc": "브라우저만 열면 내 바인더가 그대로. 설치 없이 어디서든.",
+    "value_prop_3_title": "SNS 인증 짤 3초 완성",
+    "value_prop_3_desc": "내 바인더를 워터마크 포함 SNS용 이미지로 바로 다운로드."
+  },
+  "fake_door": {
+    "title": "현재 Pro 플랜 오픈 준비 중입니다!",
+    "subtitle": "사전 예약 시 첫 달 무료 혜택을 드립니다.",
+    "email_placeholder": "you@example.com",
+    "submit_button": "사전 예약하기",
+    "submit_loading": "등록 중...",
+    "close_aria": "닫기",
+    "success_message": "사전 예약 완료! 오픈하면 가장 먼저 알려드릴게요.",
+    "error_message": "등록에 실패했어요. 다시 시도해 주세요."
+  },
+  "filter": {
+    "quick": {
+      "all": "전체",
+      "popular": "🔥 인기 TOP",
+      "wishlist": "❤️ 내 위시",
+      "owned": "📦 내 소장",
+      "trade": "🔄 교환가능"
+    },
+    "bar": {
+      "label": "필터",
+      "openDrawer": "필터 옵션",
+      "openDrawerShort": "필터",
+      "resultCount": "{count}개의 포토카드를 찾았어요.",
+      "loading": "데이터 로드 중...",
+      "error": "오류: {message}"
+    },
+    "drawer": {
+      "title": "상세 필터",
+      "close": "닫기",
+      "sectionGroupMember": "그룹 및 멤버",
+      "sectionAlbumVersion": "앨범 및 버전",
+      "sectionPrice": "가격대",
+      "priceMin": "최소",
+      "priceMax": "최대",
+      "priceUnit": "USD",
+      "reset": "초기화",
+      "apply": "{count}개의 포카 보기"
+    },
+    "active": {
+      "clearAll": "전체 해제",
+      "remove": "{label} 필터 해제",
+      "group": "그룹: {value}",
+      "member": "멤버: {value}",
+      "album": "앨범: {value}",
+      "version": "버전: {value}",
+      "price": "가격: {min} - {max}"
+    },
+    "loginRequired": "로그인이 필요한 필터예요.",
+    "empty": "선택한 조건에 맞는 포토카드가 없습니다."
+  },
+  "cardDetail": {
+    "close": "닫기",
+    "comingSoon": "곧 만나보실 수 있어요. 준비 중입니다.",
+    "tabs": {
+      "guide": "스펙 가이드",
+      "price": "글로벌 시세",
+      "versions": "연관 포카",
+      "collectors": "수집가 & 거래"
+    },
+    "pob": "특전 출처",
+    "sleeveRecommend": "추천 슬리브 규격",
+    "fakeDoorC2c": "C2C 실시간 거래 매칭 기능 오픈 준비 중입니다.",
+    "guide": {
+      "specTitle": "기본 스펙",
+      "group": "그룹",
+      "member": "멤버",
+      "album": "발매 앨범",
+      "releaseDate": "발매일",
+      "releaseDateUnknown": "미확인",
+      "version": "버전",
+      "pobUnknown": "미확인",
+      "dimensions": "실측 규격",
+      "rarityTitle": "희소성 등급",
+      "rarity": {
+        "COMMON": "Common",
+        "RARE": "Rare",
+        "POB": "POB",
+        "ULTRA_RARE": "Ultra Rare"
+      },
+      "originStoryTitle": "이 포카의 이야기",
+      "originStoryEmpty": "아직 작성된 스토리가 없어요. 이 포카에 얽힌 사연을 알고 계신가요?",
+      "mediaLinksTitle": "관련 기사 · 미디어",
+      "officialSourcesTitle": "공식 출처",
+      "valuationTitle": "가치 평가 요약",
+      "valuationEmpty": "아직 시세 데이터가 충분하지 않아요.",
+      "valuationTrend": {
+        "UP": "상승세",
+        "DOWN": "하락세",
+        "STABLE": "보합세"
+      },
+      "contributionsCount": "{count}명의 수집가가 이 정보를 함께 만들었어요",
+      "reportButton": "📝 위키 수정 제보",
+      "reportModalTitle": "위키 수정 제보 기능 준비 중입니다!",
+      "reportModalSubtitle": "오픈하면 가장 먼저 알려드릴게요.",
+      "reportModalSubmit": "사전 예약하기"
+    }
+  },
+  "myVault": {
+    "pageTitle": "내 포카 바인더",
+    "stats": {
+      "have": "소장",
+      "want": "위시",
+      "collectorIndex": "덕력 지수"
+    },
+    "actions": {
+      "showcase": "✨ 내 포카 쇼케이스",
+      "editProfile": "⚙️ 프로필 편집"
+    },
+    "collection": {
+      "progress": "{albumName} - {current}/{total} 수집 완료",
+      "remaining": "({remaining}장 남음!)",
+      "allCollected": "완성!"
+    },
+    "showcase": {
+      "title": "포카 쇼케이스",
+      "subtitle": "SNS에 공유할 수 있는 쇼케이스 이미지를 생성합니다",
+      "selectRatio": "비율 선택",
+      "ratio169": "16:9 (X/스레드)",
+      "ratio916": "9:16 (인스타 스토리/릴스)",
+      "ratio11": "1:1 (정사각형)",
+      "generate": "이미지 생성",
+      "generating": "생성 중...",
+      "download": "다운로드",
+      "share": "공유",
+      "close": "닫기",
+      "shareText": "드래곤볼까지 딱 {remaining}장 남음! StanPC에서 제 바인더 구경하고 남는 포카 교환해요. 🔗 StanPC.com/u/{username}"
+    },
+    "emptyState": "아직 소장한 포카가 없어요. 도감에서 포카를 추가해보세요!"
+  }
+}
