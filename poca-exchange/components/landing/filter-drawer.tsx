@@ -1,0 +1,194 @@
+"use client";
+
+import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Check } from "lucide-react";
+import { useTranslations } from "@/lib/i18n";
+
+interface FilterDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  groups: Array<{ slug: string; name: string }>;
+  selectedGroup: string | null;
+  onSelectGroup: (slug: string | null) => void;
+}
+
+// Mock filter data
+const MOCK_MEMBERS = [
+  { id: "member-1", name: "카리나" },
+  { id: "member-2", name: "지젤" },
+  { id: "member-3", name: "닝닝" },
+  { id: "member-4", name: "윈터" },
+];
+
+const MOCK_CARD_TYPES = [
+  { id: "type-standard", name: "스탠다드" },
+  { id: "type-pob", name: "팬 회원 특전 (POB)" },
+  { id: "type-hologram", name: "홀로그램" },
+  { id: "type-rare", name: "레어" },
+];
+
+export function FilterDrawer({
+  isOpen,
+  onClose,
+  groups,
+  selectedGroup,
+  onSelectGroup,
+}: FilterDrawerProps) {
+  const { t } = useTranslations();
+
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm"
+          />
+
+          {/* Drawer */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed right-0 top-0 z-[1000] h-full w-full max-w-sm overflow-y-auto bg-[#1A1A1E] border-l border-white/10"
+          >
+            {/* Header */}
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#1A1A1E]/95 backdrop-blur-sm px-4 py-4">
+              <h2 className="text-lg font-bold text-white">
+                {t("filter.drawer.title") || "필터"}
+              </h2>
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-full p-1.5 text-white hover:bg-white/10 transition-colors"
+                aria-label="닫기"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="space-y-6 px-4 py-6">
+              {/* Groups Filter Section */}
+              <div>
+                <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
+                  {t("filter.drawer.groups") || "그룹"}
+                </h3>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={selectedGroup === null}
+                      onChange={() => onSelectGroup(null)}
+                      className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
+                    />
+                    <span className="text-sm text-white">전체</span>
+                  </label>
+                  {groups.map((group) => (
+                    <label
+                      key={group.slug}
+                      className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedGroup === group.slug}
+                        onChange={() => onSelectGroup(group.slug)}
+                        className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
+                      />
+                      <span className="text-sm text-white">{group.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Members Filter Section (Mock) */}
+              <div>
+                <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
+                  {t("filter.drawer.members") || "멤버"}
+                </h3>
+                <div className="space-y-2">
+                  {MOCK_MEMBERS.map((member) => (
+                    <label
+                      key={member.id}
+                      className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors"
+                    >
+                      <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
+                      />
+                      <span className="text-sm text-white">{member.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Type Filter Section (Mock) */}
+              <div>
+                <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
+                  {t("filter.drawer.cardTypes") || "카드 종류"}
+                </h3>
+                <div className="space-y-2">
+                  {MOCK_CARD_TYPES.map((type) => (
+                    <label
+                      key={type.id}
+                      className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors"
+                    >
+                      <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
+                      />
+                      <span className="text-sm text-white">{type.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Reset & Apply Buttons */}
+              <div className="sticky bottom-0 border-t border-white/10 bg-[#1A1A1E]/95 backdrop-blur-sm px-0 py-4 -mx-4">
+                <div className="space-y-2 px-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onSelectGroup(null);
+                      onClose();
+                    }}
+                    className="w-full rounded-lg border border-white/20 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+                  >
+                    {t("filter.drawer.reset") || "초기화"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="w-full rounded-lg bg-[#FF2A55] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+                  >
+                    {t("filter.drawer.apply") || "적용"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
