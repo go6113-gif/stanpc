@@ -55,9 +55,9 @@ model User {
 
   // C2C 거래 연락 수단 — 공개 프로필에서 거래 문의 시 사용
   // 사용자가 직접 설정하는 선택사항. 공개 프로필 조회 시에만 노출
-  twitterHandle   String? @map("twitter_handle")
-  openKakaoUrl    String? @map("open_kakao_url")
-  discordUrl      String? @map("discord_url")
+  twitterHandle String? @map("twitter_handle")
+  openKakaoUrl  String? @map("open_kakao_url")
+  discordUrl    String? @map("discord_url")
 
   accounts Account[]
   sessions Session[]
@@ -152,6 +152,43 @@ model Group {
   @@map("groups")
 }
 
+// -----------------------------------------------------------------------------
+// Artist — additive replacement for Group, in progress.
+// Group cannot represent solo acts and stays live (22 files still query it) —
+// see prisma/_migrate_schema.ts for why an in-place rename is unsafe on
+// `db push`. Artist is a parallel table; Member/Album/PhotoCard gain a
+// nullable artistId alongside their existing groupId so both read paths work
+// during the transition. Group and the old *Id columns are dropped in a
+// follow-up cutover once Artist data is verified.
+// -----------------------------------------------------------------------------
+enum ArtistType {
+  GROUP
+  SOLO
+
+  @@map("artist_type")
+}
+
+model Artist {
+  id        String     @id
+  slug      String     @unique
+  nameEn    String
+  nameKr    String?
+  aliases   String[]   @default([])
+  agency    String?
+  debutDate DateTime?
+  imageUrl  String?
+  type      ArtistType @default(GROUP)
+
+  members    Member[]
+  albums     Album[]
+  photoCards PhotoCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("artists")
+}
+
 model Member {
   id       String  @id @default(cuid())
   slug     String
@@ -163,6 +200,10 @@ model Member {
   groupId String
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
+  // Additive mirror of groupId — see the Artist model comment above.
+  artistId String? @map("artist_id")
+  artist   Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+
   photoCards PhotoCard[]
 
   createdAt DateTime @default(now())
@@ -170,6 +211,7 @@ model Member {
 
   @@unique([groupId, slug])
   @@index([groupId])
+  @@index([artistId])
   @@map("members")
 }
 
@@ -183,32 +225,87 @@ model Album {
   groupId String
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
+  // Additive mirror of groupId — see the Artist model comment above.
+  artistId String? @map("artist_id")
+  artist   Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+
   photoCards PhotoCard[]
+  versions   Version[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([groupId, slug])
   @@index([groupId])
+  @@index([artistId])
   @@map("albums")
+}
+
+// -----------------------------------------------------------------------------
+// Version — one packaging/edition of an Album (e.g. "Weverse Ver.", "POB
+// Ver."). Did not exist before this migration: album-version artwork was
+// hotlinked straight from biasroomcdn.com with nowhere in the schema to
+// record it. `sourceVersionId` is biasroom's own Version_ID, kept as the
+// upsert key so re-running the fetch/import pipeline never duplicates rows.
+// `imageUrl` only ever holds a local /images/album-versions/*.webp path —
+// never the external CDN URL — populated from
+// data/album_version_image_manifest.json for versions that downloaded
+// successfully; left null otherwise rather than pointing at a broken path.
+// -----------------------------------------------------------------------------
+model Version {
+  id              String    @id @default(cuid())
+  slug            String
+  versionName     String
+  sourceVersionId String    @unique
+  imageUrl        String?
+  releaseDate     DateTime?
+
+  albumId String
+  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
+
+  photoCards PhotoCard[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([albumId, slug])
+  @@index([albumId])
+  @@map("versions")
 }
 
 model PhotoCard {
   id             String  @id @default(cuid())
   slug           String  @unique // pSEO URL slug used by /card/[cardSlug]
   cardName       String?
-  version        String? // e.g. "Photobook Ver.", "Weverse MD", "POB"
+  version        String? // e.g. "Photobook Ver.", "Weverse MD", "POB" — freeform,
+  // read by lib/queries.ts's gallery filter drawer (getGalleryFacets /
+  // buildGalleryWhere). Kept even though every live row has it null today;
+  // see `catalogVersion` below for the new structured relation instead.
   imageUrl       String? // Original_Image_URL
   thumbImagePath String? // Local_Thumb_Path (optimized WebP thumbnail)
 
   groupId String
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
+  // Additive mirror of groupId — see the Artist model comment above.
+  artistId String? @map("artist_id")
+  artist   Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+
   memberId String?
   member   Member? @relation(fields: [memberId], references: [id], onDelete: SetNull)
 
   albumId String?
   album   Album?  @relation(fields: [albumId], references: [id], onDelete: SetNull)
+
+  // Structured counterpart to the freeform `version` string above — points at
+  // the real Version catalog (prisma/_migrate_schema.ts Phase 3). Nullable:
+  // Phase 4 attempts a best-effort match per existing PhotoCard and is
+  // expected to succeed for very few of them, since cardName on today's live
+  // rows carries no version identity to match against (see that script's
+  // header comment). Named `catalogVersion`, not `version`, to avoid
+  // colliding with the string field above.
+  catalogVersionId String?  @map("catalog_version_id")
+  catalogVersion   Version? @relation(fields: [catalogVersionId], references: [id], onDelete: SetNull)
 
   // Sprint 01 — pSEO directory MVP (no escrow/P2P): market signal fields
   // shown on the card tile/detail page. Est. price and badge are editorial
@@ -219,6 +316,11 @@ model PhotoCard {
   haveCount      Int     @default(0)
   viewCount      Int     @default(0)
   badge          String?
+
+  // pSEO/GEO 가이드 탭 본문 — Claude Sonnet이 생성한 위키 수준 마크다운 원문.
+  // /card/[cardSlug]의 CardTabs가 RSC에서 이 문자열을 시맨틱 HTML로 파싱해
+  // SSR로 내려보낸다. null이면 콘텐츠 준비 중 placeholder만 노출한다.
+  guideContent String? @map("guide_content")
 
   // Outbound eBay/Buyee click tracking: clickCount is the quick aggregate
   // shown/used for sorting; outboundClicks is the per-event log (market +
@@ -252,8 +354,10 @@ model PhotoCard {
   updatedAt DateTime @updatedAt
 
   @@index([groupId])
+  @@index([artistId])
   @@index([memberId])
   @@index([albumId])
+  @@index([catalogVersionId])
   @@map("photo_cards")
 }
 
@@ -393,10 +497,10 @@ model GlobalSKUMapping {
 
 // 바인더 카드 상태 — 거래 가능 여부 및 용도
 enum UserBinderCardStatus {
-  PERSONAL      // 개인 소장용 (기본값, 거래 불가)
-  FOR_TRADE     // 교환 가능
-  FOR_SALE      // 판매 가능
-  ISO           // 구하는 중 (위시리스트)
+  PERSONAL // 개인 소장용 (기본값, 거래 불가)
+  FOR_TRADE // 교환 가능
+  FOR_SALE // 판매 가능
+  ISO // 구하는 중 (위시리스트)
 
   @@map("user_binder_card_status")
 }
@@ -406,12 +510,12 @@ enum UserBinderCardStatus {
 // etc. Acts as a user collection/wishlist system.
 // -----------------------------------------------------------------------------
 model UserBinderCard {
-  id        String   @id @default(cuid())
-  tags      String[] @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
+  id        String               @id @default(cuid())
+  tags      String[]             @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
   note      String? // User's personal note about this card
   status    UserBinderCardStatus @default(PERSONAL) // 거래 상태 (판매/교환/개인 소장)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

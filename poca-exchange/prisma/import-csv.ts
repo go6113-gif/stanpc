@@ -5,7 +5,6 @@ import { parse } from "csv-parse/sync";
 import { PrismaClient } from "../app/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { slugify, dedupeSlug } from "../lib/slugify";
-import { isLikelyRealMemberName } from "./member-name-denylist";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL, max: 10 });
 const prisma = new PrismaClient({ adapter });
@@ -14,7 +13,12 @@ const prisma = new PrismaClient({ adapter });
 const DATA_DIR = path.resolve(__dirname, "..", "..");
 
 const GROUPS_CSV = path.join(DATA_DIR, "biasroom_groups_master.csv");
-const MEMBERS_CSV = path.join(DATA_DIR, "group_members_final.csv");
+// Sourced from Wikidata P463/P527 membership (scripts/fetch_members_wikidata.py),
+// not regex-parsed from album version names — every row is a real member by
+// construction, so it needs no noise-word denylist. Replaces the retired
+// group_members_final.csv (1st-pass regex parse) + member-name-denylist.ts
+// combo — see prisma/member-name-denylist.ts's header for why that existed.
+const MEMBERS_CSV = path.join(DATA_DIR, "group_members_wikidata.csv");
 const PHOTOCARDS_CSV = path.join(DATA_DIR, "biasroom_photocards_master.csv");
 
 function readCsv(filePath: string): Record<string, string>[] {
@@ -120,13 +124,11 @@ async function main() {
   console.log(`Members CSV: ${memberRows.length} rows`);
 
   const membersByGroup = new Map<string, string[]>(); // groupName -> real member names (for matching in Phase 4)
-  let rejectedAsNoise = 0;
   let rejectedNoGroup = 0;
 
-  type MemberUpsert = { groupName: string; name: string };
+  type MemberUpsert = { groupName: string; name: string; nameKr: string | null };
   const seenPair = new Set<string>();
   const memberUpserts: MemberUpsert[] = [];
-  const scannedGroupIds = new Set<string>(); // every group we saw a member row for, valid or not
 
   for (const row of memberRows) {
     const groupName = row["Group_Name"]?.trim();
@@ -137,15 +139,11 @@ async function main() {
       rejectedNoGroup += 1;
       continue;
     }
-    scannedGroupIds.add(groupId);
-    if (!isLikelyRealMemberName(name, groupName)) {
-      rejectedAsNoise += 1;
-      continue;
-    }
     const pairKey = `${groupName}::${name.toLowerCase()}`;
     if (seenPair.has(pairKey)) continue;
     seenPair.add(pairKey);
-    memberUpserts.push({ groupName, name });
+    const nameKr = row["Member_Name_KO"]?.trim() || null;
+    memberUpserts.push({ groupName, name, nameKr });
 
     const list = membersByGroup.get(groupName) ?? [];
     list.push(name);
@@ -172,25 +170,27 @@ async function main() {
 
     const member = await prisma.member.upsert({
       where: { groupId_slug: { groupId, slug } },
-      update: { nameEn: m.name },
-      create: { groupId, slug, nameEn: m.name },
+      update: { nameEn: m.name, nameKr: m.nameKr },
+      create: { groupId, slug, nameEn: m.name, nameKr: m.nameKr },
     });
     memberIdByGroupAndName.set(`${m.groupName}::${m.name.toLowerCase()}`, member.id);
   });
   console.log(
-    `Members upserted: ${memberIdByGroupAndName.size} ` +
-      `(skipped as merch/version noise: ${rejectedAsNoise}, unmatched group: ${rejectedNoGroup})`
+    `Members upserted: ${memberIdByGroupAndName.size} (unmatched group: ${rejectedNoGroup})`
   );
 
-  // Denylist tuning between runs can reclassify a previously-imported row as
-  // noise (e.g. BTS's roster was 100% merch/format words in the source CSV).
-  // Sweep away anything for a scanned group that isn't in this run's valid
-  // set — PhotoCard.memberId is onDelete: SetNull, so this is safe.
+  // Final pipeline cutover to Wikidata as the sole Member source (see the
+  // MEMBERS_CSV comment above) — reconcile every group in the DB, not just
+  // ones this run's CSV touched, so members left over from the retired
+  // regex+denylist pipeline (e.g. "Standard", "Acoustic" on groups Wikidata
+  // doesn't cover) are swept too instead of lingering forever.
+  // PhotoCard.memberId is onDelete: SetNull, so this never drops a card.
   let staleMembersRemoved = 0;
-  await runBatches([...scannedGroupIds], 10, async (groupId) => {
+  const allGroupIds = [...groupIdByName.values()];
+  await runBatches(allGroupIds, 10, async (groupId) => {
     const validSlugs = [...(memberSlugsUsedByGroup.get(groupId) ?? [])];
     const { count } = await prisma.member.deleteMany({
-      where: { groupId, slug: { notIn: validSlugs } },
+      where: { groupId, ...(validSlugs.length > 0 ? { slug: { notIn: validSlugs } } : {}) },
     });
     staleMembersRemoved += count;
   });

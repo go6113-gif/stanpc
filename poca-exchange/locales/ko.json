@@ -137,6 +137,17 @@
       "reportModalTitle": "위키 수정 제보 기능 준비 중입니다!",
       "reportModalSubtitle": "오픈하면 가장 먼저 알려드릴게요.",
       "reportModalSubmit": "사전 예약하기"
+    },
+    "price": {
+      "marketSummaryTitle": "글로벌 시세",
+      "marketSummaryEmpty": "아직 수집된 시세 데이터가 없어요.",
+      "estimatedPriceLabel": "예상가",
+      "lastChecked": "{date} 기준",
+      "trendTitle": "최근 30일 시세 변동",
+      "trendEmpty": "최근 30일간 시세 변동 데이터가 없어요.",
+      "outboundTitle": "외부 사이트에서 보기",
+      "viewOnEbay": "eBay에서 매물 보기",
+      "viewOnBuyee": "Buyee에서 검색하기"
     }
   },
   "myVault": {

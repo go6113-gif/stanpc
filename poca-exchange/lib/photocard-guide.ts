@@ -2,7 +2,7 @@ import type { Prisma } from "@/app/generated/prisma/client";
 import type { PhotocardGuide, RarityGrade } from "@/types/photocard-guide";
 
 export type PhotocardGuideSource = Prisma.PhotoCardGetPayload<{
-  include: { group: true; member: true; album: true };
+  include: { group: true; member: true; album: true; priceHistory: true };
 }>;
 
 // Every PhotoCard shares one physical spec today (no per-card override

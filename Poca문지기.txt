@@ -1,0 +1,83 @@
+ebay 개발자 모드
+StanPC Production
+App ID (Client ID)
+MOONKYUL-StanPC-PRD-da49b9009-63003dc3
+User Tokens|Notifications
+Dev ID
+4bc72816-c194-490c-b65a-633f75a88162
+Cert ID (Client Secret)
+PRD-a49b90096d39-47e0-4103-8b4a-3607
+Rotate (Reset) Cert ID
+
+
+Sandbox
+StanPC
+App ID (Client ID)
+MOONKYUL-StanPC-SBX-fa4cd4de7-538ddd1c
+User Tokens|Notifications
+Dev ID
+4bc72816-c194-490c-b65a-633f75a88162
+Cert ID (Client Secret)
+SBX-a4cd4de7e5f9-62ca-43fe-a4b6-fa83
+Rotate (Reset) Cert ID
+
+텔레그램
+
+
+e-bay 개발자 로그인
+go6113/**rae****!
+
+namecheap
+go6113/**rae****!
+
+	
+
+poca-test3
+AIzaSyC7kz7QOD5IHojC4O2pQ2cYhvb0cnmqscg
+
+setx GOOGLE_CSE_KEY "AIzaSyAthYcB9vhxG9B1k7fjway5oFUqWOw1b3M"
+
+stanpc.com
+<script async src="https://cse.google.com/cse.js?cx=9437debcb6659454a">
+</script>
+<div class="gcse-search"></div>
+
+<script async src="https://cse.google.com/cse.js?cx=216fb9f324b754649">
+</script>
+<div class="gcse-search"></div>
+216fb9f324b754649
+
+구글드라이브 MCP
+클라이언트 ID
+461337261626-s3kdcjdhc2hupe9uiva6kf6g15tf8vh3.apps.googleusercontent.com
+클라이언트 보안 비밀번호
+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
+생성일
+2026년 8월 11일 PM 1시 20분 32초 GMT+9
+상태
+사용 설정됨
+
+Superbase
+Namncp_iam_BPAMKR1wOLw75B2A5Mhg		e: go6113-gif's Org (기본값 그대로 사용하셔도 됩니다)
+Type: Personal
+Plan: Free - $0/month (무료 요금제)
+postgresql://postgres:[7600gorae8900]@db.odocxoxthfokcmwieibn.supabase.co:5432/postgres
+Database password: ****gorae****
+
+
+네이버 클라우드 gorae7600!
+네이버 NAVER API HUB 
+id: po85ajzs6w
+key: XjLg7ll14cizFYRZo9mlqjiDLQJwpHvWVnUe4PDb
+
+Access Key ID:
+ncp_iam_BPKMKRUvFMqH65oPzYHX6zPO8nlJCNYDMS
+Secret Key
+ncp_iam_BPKMKRUvFMqH65oPzYHX6zPO8nlJCNYDMS
+API Gateway key
+Primary key bGKGrkyT6eirHx0TQveT6y12ljmy7IH9yFp84ZXk
+Secondary key J0Tnxpa2JdVXOYSIgzNOb6qnEI2R2e6QeK1AcuAj
+
+
+skyblue 앱비번
+em5e-b3nn-fwym-suxl

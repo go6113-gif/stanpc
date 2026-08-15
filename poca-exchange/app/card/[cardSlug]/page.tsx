@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { getCardDetail, getUserCardStatus } from "@/lib/queries-card-detail";
 import { CardTabs } from "@/components/card-detail/card-tabs";
 import { CardWantButton } from "@/components/card-detail/card-want-button";
+import { GuideMarkdown } from "@/components/card-detail/guide-markdown";
 import { formatMultiCurrency } from "@/lib/format";
 
 interface CardDetailPageProps {
@@ -162,6 +163,9 @@ export default async function CardDetailPage({
             wantCount: card.wantCount,
             haveCount: card.haveCount,
           }}
+          guideContent={
+            card.guideContent?.trim() ? <GuideMarkdown markdown={card.guideContent} /> : null
+          }
         />
       </div>
 

@@ -5,7 +5,10 @@ import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { t } from "@/lib/i18n";
 import { buildPhotocardGuide, type PhotocardGuideSource } from "@/lib/photocard-guide";
+import { buildPhotocardPrice } from "@/lib/photocard-price";
+import { buildPhotocardSearchQuery } from "@/lib/search-query";
 import { Tab1_Guide } from "@/components/modal/Tab1_Guide";
+import { Tab2_Price } from "@/components/modal/Tab2_Price";
 
 type TabId = "guide" | "price" | "versions" | "collectors";
 
@@ -32,6 +35,8 @@ interface PhotocardDetailModalProps {
 export function PhotocardDetailModal({ isOpen, onClose, card }: PhotocardDetailModalProps) {
   const [activeTab, setActiveTab] = useState<TabId>("guide");
   const guide = buildPhotocardGuide(card);
+  const price = buildPhotocardPrice(card);
+  const searchQuery = buildPhotocardSearchQuery(card);
   const image = card.imageUrl ?? card.thumbImagePath;
   const memberName = card.member ? (card.member.nameKr ?? card.member.nameEn) : null;
   const groupName = card.group.nameKr ?? card.group.nameEn;
@@ -115,6 +120,8 @@ export function PhotocardDetailModal({ isOpen, onClose, card }: PhotocardDetailM
                 <div className="flex-1 p-4 sm:overflow-y-auto">
                   {activeTab === "guide" ? (
                     <Tab1_Guide guide={guide} />
+                  ) : activeTab === "price" ? (
+                    <Tab2_Price price={price} cardId={card.id} cardSlug={card.slug} searchQuery={searchQuery} />
                   ) : (
                     <p className="py-8 text-center text-sm text-neutral-400">
                       {t("cardDetail.comingSoon")}

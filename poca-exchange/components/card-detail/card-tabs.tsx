@@ -12,6 +12,11 @@ interface CardTabsProps {
     wantCount: number;
     haveCount: number;
   };
+  // Pre-rendered by the server (see GuideMarkdown) and passed down as an
+  // already-evaluated element tree, so the guide tab's markdown parsing
+  // stays entirely server-side even though this component is a client
+  // component. null means no guide content exists yet for this card.
+  guideContent?: React.ReactNode;
 }
 
 const TAB_LABELS: Record<TabId, string> = {
@@ -21,7 +26,7 @@ const TAB_LABELS: Record<TabId, string> = {
   collector: "수집가",
 };
 
-export function CardTabs({ cardData }: CardTabsProps) {
+export function CardTabs({ cardData, guideContent }: CardTabsProps) {
   const [activeTab, setActiveTab] = useState<TabId>("price");
 
   return (
@@ -49,7 +54,7 @@ export function CardTabs({ cardData }: CardTabsProps) {
       <div className="min-h-[300px] py-6">
         {activeTab === "guide" && (
           <TabContent>
-            <p className="text-neutral-400">콘텐츠 준비 중</p>
+            {guideContent ?? <p className="text-neutral-400">콘텐츠 준비 중</p>}
           </TabContent>
         )}
 
