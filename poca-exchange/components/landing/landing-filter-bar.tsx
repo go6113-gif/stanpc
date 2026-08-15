@@ -10,11 +10,23 @@ interface LandingFilterBarProps {
   groups: Array<{ slug: string; name: string }>;
   selectedGroup: string | null;
   onSelectGroup: (slug: string | null) => void;
+  selectedCardTypes: Set<string>;
+  onSelectCardTypes: (types: Set<string>) => void;
+  onResetFilters: () => void;
 }
 
-export function LandingFilterBar({ groups, selectedGroup, onSelectGroup }: LandingFilterBarProps) {
+export function LandingFilterBar({
+  groups,
+  selectedGroup,
+  onSelectGroup,
+  selectedCardTypes,
+  onSelectCardTypes,
+  onResetFilters,
+}: LandingFilterBarProps) {
   const { t } = useTranslations();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const filterCount = (selectedGroup ? 1 : 0) + selectedCardTypes.size;
 
   return (
     <>
@@ -27,9 +39,9 @@ export function LandingFilterBar({ groups, selectedGroup, onSelectGroup }: Landi
           >
             <Filter size={16} />
             <span className="hidden sm:inline">{t("filter.bar.openDrawer")}</span>
-            {selectedGroup && (
+            {filterCount > 0 && (
               <span className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-[#FF2A55]">
-                1
+                {filterCount}
               </span>
             )}
           </button>
@@ -52,6 +64,9 @@ export function LandingFilterBar({ groups, selectedGroup, onSelectGroup }: Landi
         groups={groups}
         selectedGroup={selectedGroup}
         onSelectGroup={onSelectGroup}
+        selectedCardTypes={selectedCardTypes}
+        onSelectCardTypes={onSelectCardTypes}
+        onResetFilters={onResetFilters}
       />
     </>
   );

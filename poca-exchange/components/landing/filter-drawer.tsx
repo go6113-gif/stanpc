@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Check } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
@@ -11,6 +11,9 @@ interface FilterDrawerProps {
   groups: Array<{ slug: string; name: string }>;
   selectedGroup: string | null;
   onSelectGroup: (slug: string | null) => void;
+  selectedCardTypes: Set<string>;
+  onSelectCardTypes: (types: Set<string>) => void;
+  onResetFilters: () => void;
 }
 
 // Mock filter data
@@ -34,8 +37,19 @@ export function FilterDrawer({
   groups,
   selectedGroup,
   onSelectGroup,
+  selectedCardTypes,
+  onSelectCardTypes,
+  onResetFilters,
 }: FilterDrawerProps) {
   const { t } = useTranslations();
+  const [localCardTypes, setLocalCardTypes] = useState<Set<string>>(new Set(selectedCardTypes));
+
+  // Sync local state with selected card types when drawer opens
+  useEffect(() => {
+    if (isOpen) {
+      setLocalCardTypes(new Set(selectedCardTypes));
+    }
+  }, [isOpen, selectedCardTypes]);
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
@@ -48,6 +62,27 @@ export function FilterDrawer({
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  const handleCardTypeToggle = (typeId: string) => {
+    const updated = new Set(localCardTypes);
+    if (updated.has(typeId)) {
+      updated.delete(typeId);
+    } else {
+      updated.add(typeId);
+    }
+    setLocalCardTypes(updated);
+  };
+
+  const handleApply = () => {
+    onSelectCardTypes(localCardTypes);
+    onClose();
+  };
+
+  const handleReset = () => {
+    onResetFilters();
+    setLocalCardTypes(new Set());
+    onClose();
+  };
 
   return (
     <AnimatePresence>
@@ -141,7 +176,7 @@ export function FilterDrawer({
                 </div>
               </div>
 
-              {/* Card Type Filter Section (Mock) */}
+              {/* Card Type Filter Section */}
               <div>
                 <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
                   {t("filter.drawer.cardTypes") || "카드 종류"}
@@ -154,7 +189,8 @@ export function FilterDrawer({
                     >
                       <input
                         type="checkbox"
-                        defaultChecked={false}
+                        checked={localCardTypes.has(type.id)}
+                        onChange={() => handleCardTypeToggle(type.id)}
                         className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
                       />
                       <span className="text-sm text-white">{type.name}</span>
@@ -168,17 +204,14 @@ export function FilterDrawer({
                 <div className="space-y-2 px-4">
                   <button
                     type="button"
-                    onClick={() => {
-                      onSelectGroup(null);
-                      onClose();
-                    }}
+                    onClick={handleReset}
                     className="w-full rounded-lg border border-white/20 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
                   >
                     {t("filter.drawer.reset") || "초기화"}
                   </button>
                   <button
                     type="button"
-                    onClick={onClose}
+                    onClick={handleApply}
                     className="w-full rounded-lg bg-[#FF2A55] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
                   >
                     {t("filter.drawer.apply") || "적용"}
