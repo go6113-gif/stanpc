@@ -17,5 +17,5 @@ export async function GET(request: Request) {
   }
 
   // 에러 발생 시 로그인 페이지로 리다이렉트
-  return NextResponse.redirect(new URL("/auth/login", request.url));
+  return NextResponse.redirect(new URL("/auth/signin", request.url));
 }

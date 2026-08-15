@@ -14,6 +14,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  redirects: async () => [
+    {
+      source: "/auth/login",
+      destination: "/auth/signin",
+      permanent: false, // 301 대신 302 (임시 리다이렉트)
+    },
+  ],
 };
 
 export default nextConfig;
