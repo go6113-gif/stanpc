@@ -16,9 +16,9 @@ const nextConfig: NextConfig = {
   },
   redirects: async () => [
     {
-      source: "/auth/login",
-      destination: "/auth/signin",
-      permanent: false, // 301 대신 302 (임시 리다이렉트)
+      source: "/auth/signin",
+      destination: "/auth/login",
+      permanent: true, // 308 Permanent Redirect
     },
   ],
 };

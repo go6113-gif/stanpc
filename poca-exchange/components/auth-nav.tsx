@@ -23,7 +23,7 @@ export function AuthNav() {
   if (!session?.user) {
     return (
       <Link
-        href="/auth/signin"
+        href="/auth/login"
         className="inline-flex items-center gap-2 rounded-lg bg-[#FF2A55] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
       >
         <User size={16} />
