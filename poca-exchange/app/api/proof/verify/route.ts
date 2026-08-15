@@ -63,7 +63,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
           data: {
             userId,
             cardId,
-            status: 'PERSONAL',
+            status: 'OWNED',
           },
         })
       }

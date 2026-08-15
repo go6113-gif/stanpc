@@ -22,8 +22,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
               select: {
                 id: true,
                 estimatedPrice: true,
-                haveCount: true,
-                wantCount: true,
+                ownedCount: true,
+                wishedCount: true,
               },
             },
           },
@@ -32,8 +32,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           select: {
             id: true,
             estimatedPrice: true,
-            haveCount: true,
-            wantCount: true,
+            ownedCount: true,
+            wishedCount: true,
           },
         },
       },
@@ -60,8 +60,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         avgPrice:
           cards.reduce((sum, c) => sum + (c.estimatedPrice || 0), 0) /
           (cards.filter((c) => c.estimatedPrice).length || 1),
-        totalHaveCount: cards.reduce((sum, c) => sum + c.haveCount, 0),
-        totalWantCount: cards.reduce((sum, c) => sum + c.wantCount, 0),
+        totalOwnedCount: cards.reduce((sum, c) => sum + c.ownedCount, 0),
+        totalWishedCount: cards.reduce((sum, c) => sum + c.wishedCount, 0),
       };
     });
 
@@ -73,8 +73,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       avgPrice:
         allCards.reduce((sum, c) => sum + (c.estimatedPrice || 0), 0) /
         (allCards.filter((c) => c.estimatedPrice).length || 1),
-      totalHaveCount: allCards.reduce((sum, c) => sum + c.haveCount, 0),
-      totalWantCount: allCards.reduce((sum, c) => sum + c.wantCount, 0),
+      totalOwnedCount: allCards.reduce((sum, c) => sum + c.ownedCount, 0),
+      totalWishedCount: allCards.reduce((sum, c) => sum + c.wishedCount, 0),
     };
 
     return NextResponse.json({

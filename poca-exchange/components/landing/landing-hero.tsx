@@ -1,8 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Globe2, MonitorSmartphone, Sparkles } from "lucide-react";
+import { Globe2, MonitorSmartphone, Sparkles, Plus } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
 
 // Icons only — labels are fetched at render time for i18n.
@@ -25,7 +26,7 @@ const item = {
   },
 };
 
-export function LandingHero() {
+export function LandingHero({ gridRef }: { gridRef?: React.RefObject<HTMLDivElement | null> }) {
   const { t } = useTranslations();
 
   const valuePropKeys = [
@@ -33,6 +34,12 @@ export function LandingHero() {
     { titleKey: "hero.value_prop_2_title", descKey: "hero.value_prop_2_desc" },
     { titleKey: "hero.value_prop_3_title", descKey: "hero.value_prop_3_desc" },
   ] as const;
+
+  const handleQuickBinder = () => {
+    if (gridRef?.current) {
+      gridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <motion.div
@@ -52,6 +59,19 @@ export function LandingHero() {
       <motion.p variants={item} className="mt-4 max-w-lg text-sm text-white/60 sm:text-base">
         {t("hero.subheadline")}
       </motion.p>
+
+      {/* Quick Binder CTA - below subheadline */}
+      <motion.div variants={item} className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button
+          onClick={handleQuickBinder}
+          className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/15 transition-colors backdrop-blur-sm"
+        >
+          <Plus size={16} />
+          {t("hero.quick_binder_cta") || "10초 만에 내 바인더 만들기"}
+        </button>
+      </motion.div>
+
+      {/* Main CTA Button */}
       <motion.div variants={item} className="mt-8">
         <Link
           href="/gallery"

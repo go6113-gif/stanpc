@@ -54,8 +54,8 @@ export async function GET(req: NextRequest): Promise<NextResponse<VaultResponse 
             slug: true,
             cardName: true,
             estimatedPrice: true,
-            haveCount: true,
-            wantCount: true,
+            ownedCount: true,
+            wishedCount: true,
             imageUrl: true,
             thumbImagePath: true,
             group: { select: { nameEn: true } },
@@ -66,7 +66,7 @@ export async function GET(req: NextRequest): Promise<NextResponse<VaultResponse 
       },
       orderBy:
         sortBy === 'popular'
-          ? { card: { haveCount: 'desc' } }
+          ? { card: { ownedCount: 'desc' } }
           : sortBy === 'price-high'
             ? { card: { estimatedPrice: 'desc' } }
             : sortBy === 'price-low'
@@ -97,8 +97,8 @@ export async function GET(req: NextRequest): Promise<NextResponse<VaultResponse 
       dimensions: CARD_DIMENSIONS.standard,
       compatibleSleeves: ['Standard 56x87mm', 'Premium 60x90mm'],
       estimatedPrice: bc.card.estimatedPrice,
-      haveCount: bc.card.haveCount,
-      wantCount: bc.card.wantCount,
+      ownedCount: bc.card.ownedCount,
+      wishedCount: bc.card.wishedCount,
       addedAt: bc.createdAt.toISOString(),
       updatedAt: bc.updatedAt.toISOString(),
     }));

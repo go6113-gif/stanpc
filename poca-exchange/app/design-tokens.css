@@ -251,6 +251,12 @@
   color: var(--color-vault-wishlist);
 }
 
+/* Photocard Aspect Ratio — Standard trading card proportions (2.5:3.5) */
+:root {
+  --aspect-photocard: 2.5 / 3.5;
+  --aspect-photocard-thumbnail: 5 / 7;
+}
+
 /* Gallery Grid — Auto-fill responsive grid with fixed card width
    Card width is maintained (280px min), screen expansion adds columns only.
    Mobile (≤480px): 2 columns fixed via media query. */
@@ -265,4 +271,18 @@
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Optimized image rendering for photocard tiles */
+.photocard-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  line-height: 0; /* Remove inline spacing artifacts */
+}
+
+.photocard-image.thumbnail {
+  object-position: center;
 }

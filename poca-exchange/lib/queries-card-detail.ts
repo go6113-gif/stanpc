@@ -31,11 +31,11 @@ export async function toggleCardWantStatus(
   isWant: boolean
 ) {
   if (isWant) {
-    // Create or update to ISO status
+    // Create or update to WTB status
     return await prisma.userBinderCard.upsert({
       where: { userId_cardId: { userId, cardId } },
-      create: { userId, cardId, status: "ISO" },
-      update: { status: "ISO" },
+      create: { userId, cardId, status: "WTB" },
+      update: { status: "WTB" },
     });
   } else {
     // Delete the binder entry if it only exists for want tracking

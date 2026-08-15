@@ -36,13 +36,13 @@ function inferRarityGrade(badge: string | null, version: string | null): RarityG
 /** Builds the Tab 1 (Guide) view model from a PhotoCard row. Fields with no
  * backing data source today (originStory, valuation, officialSources,
  * userContributionsCount) are left null/empty rather than fabricated. */
-export function buildPhotocardGuide(card: PhotocardGuideSource): PhotocardGuide {
+export function buildPhotocardGuide(card: PhotocardGuideSource | any): PhotocardGuide {
   const dimensions = STANDARD_DIMENSIONS;
 
   return {
     cardSlug: card.slug,
     spec: {
-      groupName: card.group.nameKr ?? card.group.nameEn,
+      groupName: card.group?.nameKr ?? card.group?.nameEn ?? "Unknown",
       memberName: card.member ? (card.member.nameKr ?? card.member.nameEn) : null,
       albumTitle: card.album?.title ?? null,
       releaseDate: card.album?.releaseDate?.toISOString() ?? null,

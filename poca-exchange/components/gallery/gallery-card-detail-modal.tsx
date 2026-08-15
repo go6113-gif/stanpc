@@ -97,15 +97,15 @@ export function GalleryCardDetailModal({
             <div className="grid grid-cols-3 gap-2">
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <p className="text-2xl font-bold text-white">
-                  {card.haveCount}
+                  {card.ownedCount}
                 </p>
-                <p className="text-xs text-white/60 mt-1">Have</p>
+                <p className="text-xs text-white/60 mt-1">Owned</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <p className="text-2xl font-bold text-white">
-                  {card.wantCount}
+                  {card.wishedCount}
                 </p>
-                <p className="text-xs text-white/60 mt-1">Want</p>
+                <p className="text-xs text-white/60 mt-1">Wished</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <p className="text-2xl font-bold text-white">

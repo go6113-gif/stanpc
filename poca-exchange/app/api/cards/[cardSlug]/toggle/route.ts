@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
 type ToggleBody = {
-  type: "have" | "want";
+  type: "owned" | "wished";
   value: boolean;
 };
 
@@ -9,7 +9,7 @@ function isToggleBody(body: unknown): body is ToggleBody {
   if (typeof body !== "object" || body === null) return false;
   const b = body as Record<string, unknown>;
   return (
-    (b.type === "have" || b.type === "want") && typeof b.value === "boolean"
+    (b.type === "owned" || b.type === "wished") && typeof b.value === "boolean"
   );
 }
 

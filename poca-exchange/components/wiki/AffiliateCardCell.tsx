@@ -17,8 +17,8 @@ interface AffiliateCardCellProps {
   imageUrl: string | null;
   version?: string | null;
   estimatedPrice: number | null;
-  haveCount: number;
-  wantCount: number;
+  ownedCount: number;
+  wishedCount: number;
   cardName?: string | null;
   memberName: string;
   groupName: string;
@@ -32,8 +32,8 @@ export default function AffiliateCardCell({
   imageUrl,
   version,
   estimatedPrice,
-  haveCount,
-  wantCount,
+  ownedCount,
+  wishedCount,
   cardName,
   memberName,
   groupName,
@@ -107,7 +107,7 @@ export default function AffiliateCardCell({
 
         {/* Stats */}
         <p className="mt-1 text-xs text-neutral-600 dark:text-neutral-400">
-          보유: {haveCount} | 원함: {wantCount}
+          보유: {ownedCount} | 원함: {wishedCount}
         </p>
 
         {/* Spacer */}

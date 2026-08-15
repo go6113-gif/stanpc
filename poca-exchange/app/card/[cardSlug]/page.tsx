@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import { auth } from "@/auth";
 import { getCardDetail, getUserCardStatus } from "@/lib/queries-card-detail";
+import { generateCardMetadata } from "@/lib/seo-generator";
 import { CardTabs } from "@/components/card-detail/card-tabs";
 import { CardWantButton } from "@/components/card-detail/card-want-button";
 import { GuideMarkdown } from "@/components/card-detail/guide-markdown";
@@ -12,7 +14,7 @@ interface CardDetailPageProps {
 
 export async function generateMetadata({
   params,
-}: CardDetailPageProps) {
+}: CardDetailPageProps): Promise<Metadata> {
   const { cardSlug } = await params;
   const card = await getCardDetail(cardSlug);
 
@@ -20,9 +22,59 @@ export async function generateMetadata({
     return { title: "포토카드 찾을 수 없음" };
   }
 
+  const ogImageUrl = card.thumbImagePath || card.imageUrl || "";
+
+  const metadata = generateCardMetadata(
+    {
+      slug: cardSlug,
+      cardName: card.cardName,
+      member: card.member ? { nameEn: card.member.nameEn } : null,
+      group: { nameEn: card.group.nameEn },
+      album: card.album ? { title: card.album.title } : null,
+      badge: card.badge,
+      version: card.version,
+      estimatedPrice: card.estimatedPrice,
+      imageUrl: card.imageUrl,
+      thumbImagePath: card.thumbImagePath,
+    },
+    ogImageUrl
+  );
+
   return {
-    title: `${card.cardName || "포토카드"} - ${card.group.nameKr || card.group.nameEn}`,
-    description: `${card.member?.nameKr || card.member?.nameEn || ""} 포토카드. 원하는 수: ${card.wantCount}, 소유한 수: ${card.haveCount}`,
+    title: metadata.title,
+    description: metadata.description,
+    keywords: metadata.keywords,
+    robots: metadata.robots,
+    alternates: {
+      canonical: `https://www.stanpc.com${metadata.canonicalUrl}`,
+    },
+    openGraph: {
+      title: metadata.openGraph.title,
+      description: metadata.openGraph.description,
+      url: metadata.openGraph.url,
+      type: "website",
+      locale: "en_US",
+      images: metadata.openGraph.image
+        ? [
+            {
+              url: metadata.openGraph.image,
+              alt: metadata.openGraph.imageAlt,
+              width: 1200,
+              height: 1600,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.twitterCard.title,
+      description: metadata.twitterCard.description,
+      images: metadata.twitterCard.image
+        ? [metadata.twitterCard.image]
+        : [],
+      creator: metadata.twitterCard.creator,
+      site: metadata.twitterCard.site,
+    },
   };
 }
 
@@ -40,7 +92,7 @@ export default async function CardDetailPage({
   let isWanted = false;
   if (session?.user?.id) {
     const userCard = await getUserCardStatus(session.user.id, card.id);
-    isWanted = userCard?.status === "ISO";
+    isWanted = userCard?.status === "WTB";
   }
 
   return (
@@ -112,11 +164,11 @@ export default async function CardDetailPage({
           <div className="grid grid-cols-2 gap-4 p-4 bg-neutral-900 rounded-lg border border-neutral-800 mb-8">
             <div>
               <p className="text-xs text-neutral-500 mb-2">원하는 수</p>
-              <p className="text-2xl font-bold text-white">♡ {card.wantCount}</p>
+              <p className="text-2xl font-bold text-white">♡ {card.wishedCount}</p>
             </div>
             <div>
               <p className="text-xs text-neutral-500 mb-2">소유한 수</p>
-              <p className="text-2xl font-bold text-white">◆ {card.haveCount}</p>
+              <p className="text-2xl font-bold text-white">◆ {card.ownedCount}</p>
             </div>
             {card.viewCount > 0 && (
               <div>
@@ -160,8 +212,8 @@ export default async function CardDetailPage({
             cardName: card.cardName,
             version: card.version,
             estimatedPrice: card.estimatedPrice,
-            wantCount: card.wantCount,
-            haveCount: card.haveCount,
+            wishedCount: card.wishedCount,
+            ownedCount: card.ownedCount,
           }}
           guideContent={
             card.guideContent?.trim() ? <GuideMarkdown markdown={card.guideContent} /> : null

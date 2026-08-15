@@ -18,8 +18,8 @@ interface ProfileHeaderProps {
     }>;
   };
   stats: {
-    haveCount: number;
-    wantCount: number;
+    ownedCount: number;
+    wishedCount: number;
   };
   isOwn: boolean;
   onShowcaseClick: () => void;
@@ -71,7 +71,7 @@ export function ProfileHeader({
           <div className="mb-4 grid grid-cols-3 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-neutral-900 dark:text-white">
-                {stats.haveCount}
+                {stats.ownedCount}
               </div>
               <div className="text-xs text-neutral-600 dark:text-neutral-400">
                 {t("stats.have")}
@@ -79,7 +79,7 @@ export function ProfileHeader({
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-neutral-900 dark:text-white">
-                {stats.wantCount}
+                {stats.wishedCount}
               </div>
               <div className="text-xs text-neutral-600 dark:text-neutral-400">
                 {t("stats.want")}

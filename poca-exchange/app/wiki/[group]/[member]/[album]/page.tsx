@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { seoFormulas } from '@/lib/seo-config';
+import { generateAlbumMetadata } from '@/lib/seo-generator';
 
 interface AlbumWikiPageProps {
   params: Promise<{
@@ -35,8 +35,8 @@ interface PhotoCardData {
   version: string | null;
   imageUrl: string | null;
   estimatedPrice: number | null;
-  haveCount: number;
-  wantCount: number;
+  ownedCount: number;
+  wishedCount: number;
   viewCount: number;
 }
 
@@ -94,17 +94,51 @@ export async function generateMetadata(
   const groupName = normalizedParams.group.toUpperCase();
   const albumName = data.album.title;
 
-  const title = seoFormulas.albumTitle(memberName, groupName, albumName);
-  const description = seoFormulas.albumDescription(memberName, groupName);
+  const metadata = generateAlbumMetadata({
+    memberName,
+    groupName,
+    albumName,
+    cardCount: data.stats.totalCards,
+    imageUrl: data.album.coverImageUrl,
+    groupSlug: normalizedParams.group,
+    memberSlug: normalizedParams.member,
+    albumSlug: normalizedParams.album,
+  });
 
   return {
-    title,
-    description,
+    title: metadata.title,
+    description: metadata.description,
+    keywords: metadata.keywords,
+    robots: metadata.robots,
+    alternates: {
+      canonical: `https://www.stanpc.com${metadata.canonicalUrl}`,
+    },
     openGraph: {
-      title,
-      description,
+      title: metadata.openGraph.title,
+      description: metadata.openGraph.description,
+      url: metadata.openGraph.url,
       type: 'website',
-      images: data.album.coverImageUrl ? [{ url: data.album.coverImageUrl }] : [],
+      locale: 'en_US',
+      images: metadata.openGraph.image
+        ? [
+            {
+              url: metadata.openGraph.image,
+              alt: metadata.openGraph.imageAlt || albumName,
+              width: 1200,
+              height: 630,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: metadata.twitterCard.title,
+      description: metadata.twitterCard.description,
+      images: metadata.twitterCard.image
+        ? [metadata.twitterCard.image]
+        : [],
+      creator: metadata.twitterCard.creator,
+      site: metadata.twitterCard.site,
     },
   };
 }
@@ -242,7 +276,7 @@ export default async function AlbumWikiPage(props: AlbumWikiPageProps) {
                     </p>
                   )}
                   <p className="mt-1 text-xs text-neutral-600 dark:text-neutral-400">
-                    보유: {card.haveCount} | 원함: {card.wantCount}
+                    보유: {card.ownedCount} | 원함: {card.wishedCount}
                   </p>
                 </div>
               </Link>

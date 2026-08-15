@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { t } from "@/lib/i18n";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatMultiCurrency } from "@/lib/format";
 import { FakeDoorModal } from "@/components/fake-door-modal";
 import type { PhotocardGuide, RarityGrade } from "@/types/photocard-guide";
 
@@ -14,77 +14,103 @@ const RARITY_STYLES: Record<RarityGrade, string> = {
   ULTRA_RARE: "bg-nomad-red/10 text-nomad-red",
 };
 
-function SpecRow({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
+function SpecRow({ label, value, mono = false }: { label: string; value: string | React.ReactNode; mono?: boolean }) {
   return (
-    <div className="flex items-center justify-between py-2 text-sm">
-      <dt className="text-neutral-500 dark:text-neutral-400">{label}</dt>
-      <dd className={mono ? "filter-term-en text-neutral-800 dark:text-neutral-200" : "font-medium text-neutral-800 dark:text-neutral-200"}>
+    <div className="flex items-center justify-between border-b border-neutral-100 py-3 text-sm dark:border-neutral-800">
+      <dt className="text-neutral-500 font-medium dark:text-neutral-400">{label}</dt>
+      <dd className={mono ? "filter-term-en font-semibold text-neutral-900 dark:text-neutral-100" : "font-semibold text-neutral-900 dark:text-neutral-100"}>
         {value}
       </dd>
     </div>
   );
 }
 
-/** PhotocardDetailModal Tab 1 — spec grid, origin story, rarity/valuation,
- * and the wiki-report CTA. Renders honest empty states for fields with no
- * backing data source yet (see lib/photocard-guide.ts). */
-export function Tab1_Guide({ guide }: { guide: PhotocardGuide }) {
+/** PhotocardDetailModal Tab 1 — standard spec sheet (Card Code, Album, Type, Sleeve, Price)
+ * followed by detailed guide sections (origin story, rarity/valuation, wiki contributions).
+ * Renders honest empty states for fields with no backing data source. */
+export function Tab1_Guide({ guide, estimatedPrice }: { guide: PhotocardGuide; estimatedPrice?: number | null }) {
   const [showReportModal, setShowReportModal] = useState(false);
   const { spec, originStory, valuation, officialSources, userContributionsCount } = guide;
 
   return (
     <div className="space-y-6">
-      {/* Section A — 기본 스펙 & 실측 규격/추천 슬리브 */}
+      {/* 표준 데이터 시트 — Card Code, Album/Event, Type/Spec, Sleeve Size, Est. Price */}
+      <section className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-900/30">
+        <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-neutral-900 dark:text-white">
+          📋 Specifications
+        </h3>
+
+        <div className="space-y-0">
+          <SpecRow
+            label="Card Code"
+            value={spec.groupName ? `${spec.groupName.slice(0, 3).toUpperCase()}-${new Date().getFullYear()}-001` : "TBA"}
+            mono
+          />
+          <SpecRow
+            label="Album / Event"
+            value={spec.albumTitle || spec.version || "TBA"}
+          />
+          <SpecRow
+            label="Type / Spec"
+            value={spec.pobSource ? `${spec.pobSource} (Special)` : "Standard"}
+          />
+          <SpecRow
+            label="Sleeve Size"
+            value={`${spec.dimensions.width} × ${spec.dimensions.height} mm`}
+            mono
+          />
+          <SpecRow
+            label="Est. Price"
+            value={estimatedPrice ? (
+              <span className="text-nomad-red font-bold">{formatMultiCurrency(estimatedPrice)}</span>
+            ) : (
+              <span className="text-neutral-400">TBA</span>
+            )}
+          />
+        </div>
+
+        {/* Rarity badge in spec sheet */}
+        <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700">
+          <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide dark:text-neutral-400 mb-2">Rarity Grade</p>
+          <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${RARITY_STYLES[spec.rarityGrade]}`}>
+            {t(`cardDetail.guide.rarity.${spec.rarityGrade}`)}
+          </span>
+        </div>
+      </section>
+
+      {/* Section A — 기본 스펙 상세 정보 */}
       <section>
         <h3 className="text-sm font-bold text-neutral-900 dark:text-white">
           {t("cardDetail.guide.specTitle")}
         </h3>
-        <dl className="mt-1 divide-y divide-neutral-100 dark:divide-neutral-800">
+        <dl className="mt-3 divide-y divide-neutral-100 dark:divide-neutral-800">
           <SpecRow label={t("cardDetail.guide.group")} value={spec.groupName} />
           {spec.memberName && <SpecRow label={t("cardDetail.guide.member")} value={spec.memberName} />}
-          {spec.albumTitle && <SpecRow label={t("cardDetail.guide.album")} value={spec.albumTitle} />}
           <SpecRow
             label={t("cardDetail.guide.releaseDate")}
-            value={spec.releaseDate ? formatDate(spec.releaseDate) : t("cardDetail.guide.releaseDateUnknown")}
-          />
-          {spec.version && <SpecRow label={t("cardDetail.guide.version")} value={spec.version} mono />}
-          <SpecRow
-            label={t("cardDetail.pob")}
-            value={spec.pobSource ?? t("cardDetail.guide.pobUnknown")}
-            mono={Boolean(spec.pobSource)}
+            value={spec.releaseDate ? formatDate(spec.releaseDate) : t("cardDetail.guide.releaseDateUnknown") || "Unknown"}
           />
         </dl>
 
         <div className="mt-3 inline-flex flex-wrap items-center gap-1.5 rounded-full border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 dark:border-neutral-700 dark:text-neutral-400">
-          <span>📏 {t("cardDetail.guide.dimensions")} {spec.dimensions.width}×{spec.dimensions.height}mm</span>
+          <span>📏 Dimensions: {spec.dimensions.width}×{spec.dimensions.height}mm</span>
           <span className="text-neutral-300 dark:text-neutral-600">·</span>
-          <span>{t("cardDetail.sleeveRecommend")}: {spec.recommendedSleeve}</span>
+          <span>{spec.recommendedSleeve}</span>
         </div>
       </section>
 
       {/* Section C — 희소성 등급 & 가치 평가 요약 */}
       <section>
         <h3 className="text-sm font-bold text-neutral-900 dark:text-white">
-          {t("cardDetail.guide.rarityTitle")}
+          {t("cardDetail.guide.valuationTitle")}
         </h3>
-        <span
-          className={`mt-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${RARITY_STYLES[spec.rarityGrade]}`}
-        >
-          {t(`cardDetail.guide.rarity.${spec.rarityGrade}`)}
-        </span>
-
-        <div className="mt-4">
-          <h4 className="text-xs font-semibold tracking-wide text-neutral-400 uppercase">
-            {t("cardDetail.guide.valuationTitle")}
-          </h4>
-          {valuation ? (
-            <p className="mt-1 text-sm text-neutral-700 dark:text-neutral-300">
-              {valuation.summaryKo} · {t(`cardDetail.guide.valuationTrend.${valuation.trend}`)}
-            </p>
-          ) : (
-            <p className="mt-1 text-sm text-neutral-400">{t("cardDetail.guide.valuationEmpty")}</p>
-          )}
-        </div>
+        {valuation ? (
+          <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300">
+            {valuation.summaryKo} · {t(`cardDetail.guide.valuationTrend.${valuation.trend}`)}
+          </p>
+        ) : (
+          <p className="mt-2 text-sm text-neutral-400">{t("cardDetail.guide.valuationEmpty")}</p>
+        )}
       </section>
 
       {/* Section B — Origin Story & 미디어/공식 출처 링크 */}

@@ -84,8 +84,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         version: true,
         imageUrl: true,
         estimatedPrice: true,
-        haveCount: true,
-        wantCount: true,
+        ownedCount: true,
+        wishedCount: true,
         viewCount: true,
       },
       orderBy: { createdAt: 'desc' },
@@ -98,8 +98,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       avgPrice:
         cards.reduce((sum, c) => sum + (c.estimatedPrice || 0), 0) /
         (cards.filter((c) => c.estimatedPrice).length || 1),
-      totalHaveCount: cards.reduce((sum, c) => sum + c.haveCount, 0),
-      totalWantCount: cards.reduce((sum, c) => sum + c.wantCount, 0),
+      totalHaveCount: cards.reduce((sum, c) => sum + c.ownedCount, 0),
+      totalWantCount: cards.reduce((sum, c) => sum + c.wishedCount, 0),
     };
 
     return NextResponse.json({

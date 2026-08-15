@@ -37,11 +37,14 @@ export async function generateMetadata(
   if (!member) return {};
 
   const cardCount = member.photoCards.length;
-  const seoData = generateMemberMetadata(
-    member.nameEn,
-    member.group.nameEn,
-    cardCount
-  );
+  const seoData = generateMemberMetadata({
+    memberName: member.nameEn,
+    groupName: member.group.nameEn,
+    cardCount,
+    groupSlug: groupSlug as string,
+    memberSlug: memberSlug as string,
+    imageUrl: member.imageUrl,
+  });
 
   return {
     title: seoData.title,
@@ -104,8 +107,8 @@ export default async function MemberPage(
           memberName: member.nameEn,
           albumTitle: card.album?.title ?? null,
           estimatedPrice: card.estimatedPrice,
-          wantCount: card.wantCount,
-          haveCount: card.haveCount,
+          wishedCount: card.wishedCount,
+          ownedCount: card.ownedCount,
           viewCount: card.viewCount,
           badge: card.badge,
         }))}

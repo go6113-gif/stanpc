@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
           ? { estimatedPrice: "desc" }
           : sortBy === "newest"
             ? { createdAt: "desc" }
-            : [{ wantCount: "desc" }, { haveCount: "desc" }, { viewCount: "desc" }]; // popular
+            : [{ wishedCount: "desc" }, { ownedCount: "desc" }, { viewCount: "desc" }]; // popular
 
     // Fetch total count (for pagination metadata)
     const total = await prisma.photoCard.count({ where });
@@ -65,8 +65,8 @@ export async function GET(request: NextRequest) {
         memberName: card.member ? card.member.nameKr ?? card.member.nameEn : null,
         albumTitle: card.album?.title ?? null,
         estimatedPrice: card.estimatedPrice,
-        haveCount: card.haveCount,
-        wantCount: card.wantCount,
+        ownedCount: card.ownedCount,
+        wishedCount: card.wishedCount,
         viewCount: card.viewCount,
         badge: card.badge,
       })),

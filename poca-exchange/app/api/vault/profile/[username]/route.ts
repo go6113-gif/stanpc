@@ -48,16 +48,16 @@ export async function GET(
       userBinderFilter = {};
       if (vaultStatus === 'owned') {
         userBinderFilter.OR = [
-          { status: 'PERSONAL' },
-          { status: 'FOR_TRADE' },
-          { status: 'FOR_SALE' },
+          { status: 'OWNED' },
+          { status: 'WTT' },
+          { status: 'WTS' },
         ];
       } else if (vaultStatus === 'iso') {
-        userBinderFilter.status = 'ISO';
+        userBinderFilter.status = 'WTB';
       } else if (vaultStatus === 'trade') {
-        userBinderFilter.status = 'FOR_TRADE';
+        userBinderFilter.status = 'WTT';
       } else if (vaultStatus === 'sale') {
-        userBinderFilter.status = 'FOR_SALE';
+        userBinderFilter.status = 'WTS';
       }
     }
 
@@ -90,14 +90,14 @@ export async function GET(
       totalCards: binderCards.length,
       ownedCards: binderCards.filter(
         (bc) =>
-          bc.status === 'PERSONAL' ||
-          bc.status === 'FOR_TRADE' ||
-          bc.status === 'FOR_SALE'
+          bc.status === 'OWNED' ||
+          bc.status === 'WTT' ||
+          bc.status === 'WTS'
       ).length,
-      isoCards: binderCards.filter((bc) => bc.status === 'ISO').length,
-      forTradeCards: binderCards.filter((bc) => bc.status === 'FOR_TRADE')
+      isoCards: binderCards.filter((bc) => bc.status === 'WTB').length,
+      forTradeCards: binderCards.filter((bc) => bc.status === 'WTT')
         .length,
-      forSaleCards: binderCards.filter((bc) => bc.status === 'FOR_SALE').length,
+      forSaleCards: binderCards.filter((bc) => bc.status === 'WTS').length,
       estimatedVaultValue: binderCards.reduce(
         (sum, bc) => sum + (bc.card.estimatedPrice || 0),
         0

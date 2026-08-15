@@ -2,12 +2,12 @@ import Link from "next/link";
 import { CardThumbnail, type CardThumbnailItem } from "@/components/CardThumbnail";
 
 export type PhotoCardGridItem = CardThumbnailItem & {
-  haveCount: number;
+  ownedCount: number;
   viewCount: number;
 };
 
 function popularityScore(card: PhotoCardGridItem) {
-  return card.wantCount * 10 + card.haveCount * 5 + card.viewCount * 1;
+  return card.wishedCount * 10 + card.ownedCount * 5 + card.viewCount * 1;
 }
 
 /**

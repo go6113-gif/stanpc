@@ -22,7 +22,7 @@ const TABS: { id: TabId; labelKey: `cardDetail.tabs.${TabId}`; icon: string }[] 
 interface PhotocardDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
-  card: PhotocardGuideSource;
+  card: PhotocardGuideSource | any;
 }
 
 /**
@@ -39,7 +39,7 @@ export function PhotocardDetailModal({ isOpen, onClose, card }: PhotocardDetailM
   const searchQuery = buildPhotocardSearchQuery(card);
   const image = card.imageUrl ?? card.thumbImagePath;
   const memberName = card.member ? (card.member.nameKr ?? card.member.nameEn) : null;
-  const groupName = card.group.nameKr ?? card.group.nameEn;
+  const groupName = card.group?.nameKr ?? card.group?.nameEn ?? "Unknown";
 
   return (
     <AnimatePresence>
@@ -125,7 +125,7 @@ export function PhotocardDetailModal({ isOpen, onClose, card }: PhotocardDetailM
 
                 <div className="flex-1 p-4 sm:overflow-y-auto">
                   {activeTab === "guide" ? (
-                    <Tab1_Guide guide={guide} />
+                    <Tab1_Guide guide={guide} estimatedPrice={card.estimatedPrice} />
                   ) : activeTab === "price" ? (
                     <Tab2_Price price={price} cardId={card.id} cardSlug={card.slug} searchQuery={searchQuery} />
                   ) : (
@@ -142,3 +142,5 @@ export function PhotocardDetailModal({ isOpen, onClose, card }: PhotocardDetailM
     </AnimatePresence>
   );
 }
+
+export default PhotocardDetailModal;

@@ -11,10 +11,10 @@ interface CardStatusDropdownProps {
 }
 
 const statuses = [
-  UserBinderCardStatus.PERSONAL,
-  UserBinderCardStatus.FOR_TRADE,
-  UserBinderCardStatus.FOR_SALE,
-  UserBinderCardStatus.ISO,
+  UserBinderCardStatus.OWNED,
+  UserBinderCardStatus.WTT,
+  UserBinderCardStatus.WTS,
+  UserBinderCardStatus.WTB,
 ];
 
 export function CardStatusDropdown({

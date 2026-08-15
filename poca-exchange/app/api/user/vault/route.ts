@@ -105,9 +105,9 @@ export async function GET() {
       // Check if user has this card
       const userCard = binderCards.find((bc) => bc.cardId === card.id);
       if (userCard) {
-        if (userCard.status === "PERSONAL" || userCard.status === "FOR_TRADE" || userCard.status === "FOR_SALE") {
+        if (userCard.status === "OWNED" || userCard.status === "WTT" || userCard.status === "WTS") {
           group.have += 1;
-        } else if (userCard.status === "ISO") {
+        } else if (userCard.status === "WTB") {
           group.want += 1;
         }
       }
@@ -157,13 +157,13 @@ export async function GET() {
     }
 
     // Calculate overall stats
-    const haveCount = binderCards.filter(
+    const ownedCount = binderCards.filter(
       (bc) =>
-        bc.status === "PERSONAL" ||
-        bc.status === "FOR_TRADE" ||
-        bc.status === "FOR_SALE"
+        bc.status === "OWNED" ||
+        bc.status === "WTT" ||
+        bc.status === "WTS"
     ).length;
-    const wantCount = binderCards.filter((bc) => bc.status === "ISO").length;
+    const wishedCount = binderCards.filter((bc) => bc.status === "WTB").length;
 
     return NextResponse.json({
       user: {
@@ -178,10 +178,10 @@ export async function GET() {
       cards: gridCards,
       stats: {
         totalCards: binderCards.length,
-        haveCount,
-        wantCount,
+        ownedCount,
+        wishedCount,
         completion: allCardsInAlbums.length
-          ? ((haveCount / allCardsInAlbums.length) * 100).toFixed(1)
+          ? ((ownedCount / allCardsInAlbums.length) * 100).toFixed(1)
           : "0",
       },
     });

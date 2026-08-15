@@ -20,6 +20,8 @@
     "@aws-sdk/s3-request-presigner": "^3.1111.0",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.112.3",
     "csv-parser": "^3.2.1",
     "framer-motion": "^13.1.0",
     "html2canvas": "^1.4.1",

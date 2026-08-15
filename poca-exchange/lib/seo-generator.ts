@@ -5,14 +5,37 @@
  * and structured data. Centralized so formula changes auto-propagate.
  */
 
-import { seoFormulas, structuredDataTemplates, type CardSeoData } from "./seo-config";
+import {
+  seoFormulas,
+  structuredDataTemplates,
+  openGraphGenerators,
+  twitterCardGenerators,
+  type CardSeoData,
+  type OpenGraphMetadata,
+  type TwitterCardMetadata,
+} from "./seo-config";
 
 export interface CardMetadataResult {
   title: string;
   description: string;
+  keywords: string;
   ogImageUrl: string;
   canonicalUrl: string;
+  openGraph: OpenGraphMetadata;
+  twitterCard: TwitterCardMetadata;
   jsonLd: Record<string, unknown>;
+  robots?: string;
+}
+
+export interface MemberMetadataResult {
+  title: string;
+  description: string;
+  keywords: string;
+  canonicalUrl: string;
+  openGraph: OpenGraphMetadata;
+  twitterCard: TwitterCardMetadata;
+  jsonLd: Record<string, unknown>;
+  robots?: string;
 }
 
 /**
@@ -44,6 +67,7 @@ export function generateCardMetadata(
 
   const title = seoFormulas.cardTitle(seoData);
   const description = seoFormulas.cardDescription(seoData);
+  const keywords = seoFormulas.cardKeywords(seoData);
   const canonicalUrl = `/card/${card.slug}`;
 
   // Product schema for rich snippets
@@ -57,12 +81,22 @@ export function generateCardMetadata(
     url: `https://www.stanpc.com${canonicalUrl}`,
   });
 
+  // Open Graph metadata
+  const openGraph = openGraphGenerators.cardOG(seoData, image, canonicalUrl);
+
+  // Twitter Card metadata
+  const twitterCard = twitterCardGenerators.cardCard(seoData, image);
+
   return {
     title,
     description,
+    keywords,
     ogImageUrl,
     canonicalUrl,
+    openGraph,
+    twitterCard,
     jsonLd,
+    robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   };
 }
 
@@ -83,18 +117,128 @@ export function generateGroupMetadata(
 }
 
 /**
- * Generate member detail page metadata
+ * Generate complete member detail page metadata
  */
-export function generateMemberMetadata(
-  memberName: string,
-  groupName: string,
-  cardCount: number
-): {
-  title: string;
-  description: string;
-} {
+export function generateMemberMetadata(options: {
+  memberName: string;
+  groupName: string;
+  cardCount: number;
+  imageUrl?: string | null;
+  groupSlug: string;
+  memberSlug: string;
+}): MemberMetadataResult {
+  const canonicalUrl = `/wiki/${options.groupSlug}/${options.memberSlug}`;
+  const title = seoFormulas.memberTitle(options.memberName, options.groupName);
+  const description = seoFormulas.memberDescription(
+    options.memberName,
+    options.groupName,
+    options.cardCount
+  );
+  const keywords = seoFormulas.memberKeywords(options.memberName, options.groupName);
+
+  // Collection schema for rich snippets
+  const jsonLd = structuredDataTemplates.collectionSchema({
+    name: `${options.memberName} (${options.groupName})`,
+    description,
+    itemCount: options.cardCount,
+    url: `https://www.stanpc.com${canonicalUrl}`,
+  });
+
+  // Open Graph metadata
+  const openGraph = openGraphGenerators.memberOG(
+    options.memberName,
+    options.groupName,
+    options.imageUrl || undefined,
+    canonicalUrl,
+    options.cardCount
+  );
+
+  // Twitter Card metadata
+  const twitterCard = twitterCardGenerators.memberCard(
+    options.memberName,
+    options.groupName,
+    options.imageUrl || undefined,
+    options.cardCount
+  );
+
   return {
-    title: seoFormulas.memberTitle(memberName, groupName),
-    description: seoFormulas.memberDescription(memberName, groupName, cardCount),
+    title,
+    description,
+    keywords,
+    canonicalUrl,
+    openGraph,
+    twitterCard,
+    jsonLd,
+    robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  };
+}
+
+/**
+ * Generate complete album detail page metadata
+ */
+export function generateAlbumMetadata(options: {
+  memberName: string;
+  groupName: string;
+  albumName: string;
+  cardCount?: number;
+  imageUrl?: string | null;
+  groupSlug: string;
+  memberSlug: string;
+  albumSlug: string;
+}): MemberMetadataResult {
+  const canonicalUrl = `/wiki/${options.groupSlug}/${options.memberSlug}/${options.albumSlug}`;
+  const title = seoFormulas.albumTitle(
+    options.memberName,
+    options.groupName,
+    options.albumName
+  );
+  const description = seoFormulas.albumDescription(
+    options.memberName,
+    options.groupName
+  );
+  const keywords = [
+    options.memberName,
+    options.groupName,
+    options.albumName,
+    "photocard",
+    "template",
+    "K-pop",
+    "trading card",
+  ].join(", ");
+
+  // Collection schema for rich snippets
+  const jsonLd = structuredDataTemplates.collectionSchema({
+    name: `${options.memberName} - ${options.albumName}`,
+    description,
+    itemCount: options.cardCount || 0,
+    url: `https://www.stanpc.com${canonicalUrl}`,
+  });
+
+  // Open Graph metadata
+  const openGraph = openGraphGenerators.albumOG(
+    options.memberName,
+    options.groupName,
+    options.albumName,
+    options.imageUrl || undefined,
+    canonicalUrl
+  );
+
+  // Twitter Card metadata
+  const twitterCard = twitterCardGenerators.albumCard(
+    options.memberName,
+    options.groupName,
+    options.albumName,
+    options.imageUrl || undefined
+  );
+
+  return {
+    title,
+    description,
+    keywords,
+    canonicalUrl,
+    openGraph,
+    twitterCard,
+    jsonLd,
+    robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   };
 }

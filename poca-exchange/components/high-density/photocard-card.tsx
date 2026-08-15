@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { formatMultiCurrency } from "@/lib/format";
+import { buildPhotocardGuide } from "@/lib/photocard-guide";
 import PhotoCardDetailModal from "../modal/PhotocardDetailModal";
 
 export interface PhotoCardData {
@@ -19,13 +20,16 @@ export interface PhotoCardData {
   memberName: string | null;
   albumTitle: string | null;
   estimatedPrice: number | null;
-  haveCount: number;
-  wantCount: number;
+  ownedCount: number;
+  wishedCount: number;
   viewCount: number;
   badge: string | null;
   /** Position in a ranked list (e.g. the landing page's TOP 100 grid).
    * Absent for unranked contexts like /gallery. */
   rank?: number;
+  group?: { slug: string; nameEn: string; nameKr: string | null };
+  member?: { slug: string; nameEn: string; nameKr: string | null } | null;
+  album?: { title: string } | null;
 }
 
 interface PhotoCardCardProps {
@@ -46,15 +50,20 @@ export function PhotoCardCard({
   onCardSelect,
 }: PhotoCardCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTouchDevice] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
   );
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (isTouchDevice && !isFlipped) {
+      // 터치 디바이스: 첫 탭은 플립
       setIsFlipped(true);
     } else if (!isTouchDevice || isFlipped) {
+      // 데스크톱: 클릭 시 즉시 모달 열기, 터치: 플립 후 다시 탭하면 모달
+      setIsModalOpen(true);
       onCardSelect?.(card);
     }
   };
@@ -64,15 +73,11 @@ export function PhotoCardCard({
 
   return (
     <motion.div
-      className="relative h-full w-full"
+      className="relative aspect-[2.5/3.5] w-full cursor-pointer"
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      onClick={handleClick}
     >
-      <button
-        type="button"
-        className="block h-full w-full bg-none border-none p-0 cursor-pointer"
-        onClick={handleClick}
-      >
         <motion.div
           className="relative h-full w-full cursor-pointer preserve-3d"
           initial={false}
@@ -93,11 +98,14 @@ export function PhotoCardCard({
             } as any}
           >
             {card.thumbImagePath || card.imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={card.thumbImagePath || card.imageUrl || ""}
                 alt={card.cardName || ""}
-                className="absolute inset-0 h-full w-full object-cover"
+                fill
+                className="photocard-image absolute inset-0"
+                sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                priority={false}
+                loading="lazy"
               />
             ) : (
               <div className="absolute inset-0 bg-gradient-to-br from-neutral-700 to-neutral-900" />
@@ -125,7 +133,7 @@ export function PhotoCardCard({
                   Wish
                 </span>
                 <span className="text-sm font-bold text-white">
-                  {card.wantCount}
+                  {card.wishedCount}
                 </span>
               </div>
             </div>
@@ -158,7 +166,7 @@ export function PhotoCardCard({
                   Owned
                 </span>
                 <span className="text-sm font-bold text-white">
-                  {card.haveCount}
+                  {card.ownedCount}
                 </span>
               </div>
             </div>
@@ -225,7 +233,6 @@ export function PhotoCardCard({
             </div>
           </motion.div>
         </motion.div>
-      </button>
 
       {/* Detail Modal - Nomad List style overlay */}
       <PhotoCardDetailModal

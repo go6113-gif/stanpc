@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 import { LandingHero } from "./landing-hero";
 
-export function LandingHeroSection() {
+export function LandingHeroSection({ gridRef }: { gridRef?: React.RefObject<HTMLDivElement | null> }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isSoundOn, setIsSoundOn] = useState(false);
 
@@ -86,7 +86,7 @@ export function LandingHeroSection() {
 
       {/* Hero Content - positioned above video and overlay */}
       <div className="relative z-10">
-        <LandingHero />
+        <LandingHero gridRef={gridRef} />
       </div>
     </div>
   );

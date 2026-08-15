@@ -79,7 +79,7 @@ export async function getTopPhotoCards(limit = 100) {
   const ranked = cards
     .map((card) => ({
       card,
-      score: card.wantCount * 10 + card.haveCount * 5 + card.viewCount,
+      score: card.wishedCount * 10 + card.ownedCount * 5 + card.viewCount,
     }))
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
@@ -97,10 +97,13 @@ export async function getTopPhotoCards(limit = 100) {
     memberName: card.member ? (card.member.nameKr ?? card.member.nameEn) : null,
     albumTitle: card.album?.title ?? null,
     estimatedPrice: card.estimatedPrice,
-    haveCount: card.haveCount,
-    wantCount: card.wantCount,
+    ownedCount: card.ownedCount,
+    wishedCount: card.wishedCount,
     viewCount: card.viewCount,
     badge: card.badge,
+    group: card.group,
+    member: card.member,
+    album: card.album,
   }));
 }
 
@@ -229,11 +232,11 @@ function buildGalleryWhere(filters: FilterState, userId?: string): Prisma.PhotoC
   }
 
   if (filters.quick === "wishlist") {
-    AND.push({ userBinders: { some: { userId, status: "ISO" } } });
+    AND.push({ userBinders: { some: { userId, status: "WTB" } } });
   } else if (filters.quick === "owned") {
     AND.push({ userBinders: { some: { userId } } });
   } else if (filters.quick === "trade") {
-    AND.push({ userBinders: { some: { status: "FOR_TRADE" } } });
+    AND.push({ userBinders: { some: { status: "WTT" } } });
   }
 
   return { AND };
@@ -243,7 +246,7 @@ function buildGalleryWhere(filters: FilterState, userId?: string): Prisma.PhotoC
 // and `"owned"` read the signed-in user's own UserBinderCard rows and
 // return no results without a userId (the UI gates these behind the vault
 // auth modal before ever reaching this call); `"trade"` browses
-// community-wide FOR_TRADE cards and needs no userId.
+// community-wide WTT cards and needs no userId.
 export async function getFilteredPhotoCards(filters: FilterState, userId?: string) {
   const requiresLogin = filters.quick === "wishlist" || filters.quick === "owned";
   if (requiresLogin && !userId) {
@@ -254,7 +257,7 @@ export async function getFilteredPhotoCards(filters: FilterState, userId?: strin
 
   const orderBy: Prisma.PhotoCardOrderByWithRelationInput | Prisma.PhotoCardOrderByWithRelationInput[] =
     filters.quick === "popular" || filters.sort === "popular"
-      ? [{ wantCount: "desc" }, { haveCount: "desc" }, { viewCount: "desc" }]
+      ? [{ wishedCount: "desc" }, { ownedCount: "desc" }, { viewCount: "desc" }]
       : filters.sort === "price-asc"
         ? { estimatedPrice: "asc" }
         : filters.sort === "price-desc"
@@ -278,10 +281,13 @@ export async function getFilteredPhotoCards(filters: FilterState, userId?: strin
     memberName: card.member ? (card.member.nameKr ?? card.member.nameEn) : null,
     albumTitle: card.album?.title ?? null,
     estimatedPrice: card.estimatedPrice,
-    haveCount: card.haveCount,
-    wantCount: card.wantCount,
+    ownedCount: card.ownedCount,
+    wishedCount: card.wishedCount,
     viewCount: card.viewCount,
     badge: card.badge,
+    group: card.group,
+    member: card.member,
+    album: card.album,
   }));
 }
 

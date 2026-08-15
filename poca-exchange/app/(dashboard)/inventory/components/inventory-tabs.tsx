@@ -10,21 +10,21 @@ interface InventoryTabsProps {
 const tabs = [
   { status: undefined, label: "전체", count: null },
   {
-    status: UserBinderCardStatus.PERSONAL,
-    label: "개인 소장",
+    status: UserBinderCardStatus.OWNED,
+    label: "소유 중",
     count: null,
   },
   {
-    status: UserBinderCardStatus.FOR_TRADE,
-    label: "교환 가능",
+    status: UserBinderCardStatus.WTT,
+    label: "교환 중",
     count: null,
   },
   {
-    status: UserBinderCardStatus.FOR_SALE,
-    label: "판매 가능",
+    status: UserBinderCardStatus.WTS,
+    label: "판매 중",
     count: null,
   },
-  { status: UserBinderCardStatus.ISO, label: "위시리스트", count: null },
+  { status: UserBinderCardStatus.WTB, label: "구매 중", count: null },
 ];
 
 export function InventoryTabs({ currentStatus }: InventoryTabsProps) {

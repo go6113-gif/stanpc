@@ -1,10 +1,10 @@
 interface StatsProps {
   stats: {
     total: number;
-    personal: number;
-    forTrade: number;
-    forSale: number;
-    iso: number;
+    owned: number;
+    wtt: number;
+    wts: number;
+    wtb: number;
   };
   className?: string;
 }
@@ -18,26 +18,26 @@ export function InventoryStats({ stats, className = "" }: StatsProps) {
       textColor: "text-blue-600 dark:text-blue-400",
     },
     {
-      label: "개인 소장",
-      value: stats.personal,
+      label: "소유 중",
+      value: stats.owned,
       color: "bg-purple-50 dark:bg-purple-900/20",
       textColor: "text-purple-600 dark:text-purple-400",
     },
     {
-      label: "교환 가능",
-      value: stats.forTrade,
+      label: "교환 중",
+      value: stats.wtt,
       color: "bg-green-50 dark:bg-green-900/20",
       textColor: "text-green-600 dark:text-green-400",
     },
     {
-      label: "판매 가능",
-      value: stats.forSale,
+      label: "판매 중",
+      value: stats.wts,
       color: "bg-orange-50 dark:bg-orange-900/20",
       textColor: "text-orange-600 dark:text-orange-400",
     },
     {
-      label: "위시리스트",
-      value: stats.iso,
+      label: "구매 중",
+      value: stats.wtb,
       color: "bg-yellow-50 dark:bg-yellow-900/20",
       textColor: "text-yellow-600 dark:text-yellow-400",
     },

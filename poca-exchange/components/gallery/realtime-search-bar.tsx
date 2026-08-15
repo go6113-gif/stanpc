@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { Search, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, X, Clock } from "lucide-react";
 
 interface RealtimeSearchBarProps {
   placeholder?: string;
@@ -14,9 +14,39 @@ export function RealtimeSearchBar({
 }: RealtimeSearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const containerRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState(
     searchParams.get("q") || ""
   );
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
+
+  // 검색 히스토리 초기화
+  useEffect(() => {
+    const saved = localStorage.getItem("searchHistory");
+    if (saved) {
+      setSearchHistory(JSON.parse(saved).slice(0, 5));
+    }
+  }, []);
+
+  // 외부 클릭 감지
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isDropdownOpen]);
 
   const handleSearch = useCallback(
     (value: string) => {
@@ -38,18 +68,39 @@ export function RealtimeSearchBar({
     [router, searchParams]
   );
 
+  const handleSubmit = (value: string) => {
+    if (!value.trim()) return;
+
+    // 검색 히스토리에 추가
+    const newHistory = [
+      value,
+      ...searchHistory.filter((h) => h !== value),
+    ].slice(0, 5);
+
+    setSearchHistory(newHistory);
+    localStorage.setItem("searchHistory", JSON.stringify(newHistory));
+    setIsDropdownOpen(false);
+  };
+
+  const handleHistoryClick = (value: string) => {
+    setSearchValue(value);
+    handleSearch(value);
+    handleSubmit(value);
+  };
+
   const handleClear = useCallback(() => {
     handleSearch("");
   }, [handleSearch]);
 
   return (
     <motion.div
-      className="relative w-full mb-4"
+      ref={containerRef}
+      className="relative w-full mb-4 z-[60]"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="relative flex items-center">
+      <div className="relative flex items-center z-[60]">
         {/* 검색 아이콘 */}
         <Search
           size={18}
@@ -61,6 +112,12 @@ export function RealtimeSearchBar({
           type="text"
           value={searchValue}
           onChange={(e) => handleSearch(e.target.value)}
+          onFocus={() => setIsDropdownOpen(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit(searchValue);
+            }
+          }}
           placeholder={placeholder}
           className="w-full pl-10 pr-10 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-colors"
         />
@@ -82,10 +139,41 @@ export function RealtimeSearchBar({
         )}
       </div>
 
+      {/* 검색 드롭다운 */}
+      <AnimatePresence>
+        {isDropdownOpen && !searchValue && searchHistory.length > 0 && (
+          <motion.div
+            className="absolute top-full left-0 right-0 mt-1 bg-[#1A1A1E] border border-white/10 rounded-lg shadow-lg z-[61] overflow-hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <div className="px-3 py-2 border-b border-white/5">
+              <p className="text-xs font-semibold text-white/50 uppercase">
+                최근 검색
+              </p>
+            </div>
+            <div className="divide-y divide-white/5">
+              {searchHistory.map((query, idx) => (
+                <motion.button
+                  key={idx}
+                  onClick={() => handleHistoryClick(query)}
+                  className="w-full text-left px-3 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2"
+                  whileHover={{ paddingLeft: 16 }}
+                >
+                  <Clock size={14} className="text-white/40 flex-shrink-0" />
+                  <span className="truncate">{query}</span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* 검색 힌트 */}
       {searchValue && (
         <motion.div
-          className="absolute top-full left-0 right-0 mt-1 text-xs text-white/50 text-center"
+          className="absolute top-full left-0 right-0 mt-1 text-xs text-white/50 text-center pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

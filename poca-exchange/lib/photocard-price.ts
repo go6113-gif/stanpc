@@ -8,8 +8,8 @@ const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
  * all USD) — marketSummary/trend come back empty rather than invented, and
  * the component falls back to the live eBay Browse API search
  * (components/ebay-live-listings.tsx) for cards with no stored history. */
-export function buildPhotocardPrice(card: PhotocardGuideSource): PhotocardPrice {
-  const history = [...card.priceHistory].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+export function buildPhotocardPrice(card: PhotocardGuideSource | any): PhotocardPrice {
+  const history = [...(card.priceHistory ?? [])].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   const latestByMarket = new Map<string, (typeof history)[number]>();
   for (const row of history) {

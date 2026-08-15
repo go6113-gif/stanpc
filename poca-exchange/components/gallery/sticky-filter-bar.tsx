@@ -52,7 +52,7 @@ export function StickyFilterBar({ filterState, loggedIn, facets }: StickyFilterB
   return (
     <>
       <motion.div
-        className="sticky top-[57px] z-30 border-b border-white/5 bg-[#0F0F12]/95 backdrop-blur"
+        className="sticky top-[57px] z-40 border-b border-white/5 bg-[#0F0F12]/95 backdrop-blur"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
@@ -62,7 +62,7 @@ export function StickyFilterBar({ filterState, loggedIn, facets }: StickyFilterB
           <RealtimeSearchBar />
 
           {/* Quick Filter Chips */}
-          <div className="flex flex-wrap items-center gap-2 mb-3">
+          <div className="flex flex-wrap items-center gap-2">
             {QUICK_FILTERS.map((id) => {
               const isDisabled =
                 (id === "wishlist" || id === "owned") && !loggedIn;

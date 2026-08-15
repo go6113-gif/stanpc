@@ -9,8 +9,8 @@ interface CardTabsProps {
     cardName?: string | null;
     version?: string | null;
     estimatedPrice?: number | null;
-    wantCount: number;
-    haveCount: number;
+    wishedCount: number;
+    ownedCount: number;
   };
   // Pre-rendered by the server (see GuideMarkdown) and passed down as an
   // already-evaluated element tree, so the guide tab's markdown parsing
@@ -72,13 +72,13 @@ export function CardTabs({ cardData, guideContent }: CardTabsProps) {
                   <div>
                     <p className="text-xs text-neutral-500 mb-1">원하는 수</p>
                     <p className="text-lg font-semibold text-white">
-                      ♡ {cardData.wantCount}
+                      ♡ {cardData.wishedCount}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-neutral-500 mb-1">소유한 수</p>
                     <p className="text-lg font-semibold text-white">
-                      ◆ {cardData.haveCount}
+                      ◆ {cardData.ownedCount}
                     </p>
                   </div>
                 </div>
@@ -110,13 +110,13 @@ export function CardTabs({ cardData, guideContent }: CardTabsProps) {
               <div>
                 <p className="text-sm text-neutral-500 mb-2">원하는 수집가</p>
                 <p className="text-lg font-semibold text-white">
-                  ♡ {cardData.wantCount}
+                  ♡ {cardData.wishedCount}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-neutral-500 mb-2">소유한 수집가</p>
                 <p className="text-lg font-semibold text-white">
-                  ◆ {cardData.haveCount}
+                  ◆ {cardData.ownedCount}
                 </p>
               </div>
             </div>

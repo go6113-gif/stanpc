@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type CardThumbnailItem = {
   slug: string;
   cardName: string | null;
@@ -7,8 +9,8 @@ export type CardThumbnailItem = {
   memberName: string | null;
   albumTitle: string | null;
   estimatedPrice: number | null;
-  haveCount: number;
-  wantCount: number;
+  ownedCount: number;
+  wishedCount: number;
   badge: string | null;
   isoNumber?: string | null;
   pobCode?: string | null;
@@ -34,15 +36,16 @@ export function CardThumbnail({ card }: { card: CardThumbnailItem }) {
 
   return (
     <>
-      <div className="aspect-[5/7] w-full overflow-hidden">
+      <div className="relative aspect-[5/7] w-full overflow-hidden">
         {src ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={src}
             alt={card.cardName ?? subtitle ?? card.groupName}
+            fill
+            className="photocard-image thumbnail absolute inset-0 transition-transform duration-300 ease-out group-hover:scale-105"
+            sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+            priority={false}
             loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-xs text-neutral-400">
@@ -71,7 +74,7 @@ export function CardThumbnail({ card }: { card: CardThumbnailItem }) {
           </div>
           <div className="flex flex-col gap-0.5">
             <span className="text-white/60 uppercase">In Hand</span>
-            <span className="font-semibold text-white">{wantFormatter.format(card.haveCount)}</span>
+            <span className="font-semibold text-white">{wantFormatter.format(card.ownedCount)}</span>
           </div>
           {card.isoNumber && (
             <div className="flex flex-col gap-0.5">
@@ -86,7 +89,7 @@ export function CardThumbnail({ card }: { card: CardThumbnailItem }) {
             </div>
           )}
           <div className="col-span-2 flex items-center justify-between text-white/80">
-            <span>❤️ {wantFormatter.format(card.wantCount)}</span>
+            <span>❤️ {wantFormatter.format(card.wishedCount)}</span>
           </div>
         </div>
       </div>

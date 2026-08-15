@@ -66,20 +66,20 @@ export async function GET(req: NextRequest): Promise<NextResponse<CardGeneratorU
     ).length;
 
     // 완성된 세트 개수 (임시: 그룹 내 모든 멤버 카드 보유 시 1세트)
-    const groupCounts = new Map<string, { total: number; haveCount: number }>();
+    const groupCounts = new Map<string, { total: number; ownedCount: number }>();
     for (const bc of binderCards) {
       const groupId = bc.card.groupId;
       if (!groupCounts.has(groupId)) {
         const groupCards = await prisma.photoCard.count({
           where: { groupId },
         });
-        groupCounts.set(groupId, { total: groupCards, haveCount: 0 });
+        groupCounts.set(groupId, { total: groupCards, ownedCount: 0 });
       }
-      groupCounts.get(groupId)!.haveCount += 1;
+      groupCounts.get(groupId)!.ownedCount += 1;
     }
 
     const completeSets = Array.from(groupCounts.values()).filter(
-      (g) => g.haveCount === g.total
+      (g) => g.ownedCount === g.total
     ).length;
 
     // 최근 추가된 카드 (1개만)

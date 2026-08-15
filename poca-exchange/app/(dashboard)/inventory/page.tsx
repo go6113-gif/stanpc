@@ -88,16 +88,16 @@ export default async function InventoryPage({
   // 통계 계산 — 클라이언트로는 순수 직렬화 가능한 데이터만 전달
   const stats = {
     total: allCards.length,
-    personal: allCards.filter(
-      (c) => c.status === UserBinderCardStatus.PERSONAL
+    owned: allCards.filter(
+      (c) => c.status === UserBinderCardStatus.OWNED
     ).length,
-    forTrade: allCards.filter(
-      (c) => c.status === UserBinderCardStatus.FOR_TRADE
+    wtt: allCards.filter(
+      (c) => c.status === UserBinderCardStatus.WTT
     ).length,
-    forSale: allCards.filter(
-      (c) => c.status === UserBinderCardStatus.FOR_SALE
+    wts: allCards.filter(
+      (c) => c.status === UserBinderCardStatus.WTS
     ).length,
-    iso: allCards.filter((c) => c.status === UserBinderCardStatus.ISO).length,
+    wtb: allCards.filter((c) => c.status === UserBinderCardStatus.WTB).length,
   };
 
   return (

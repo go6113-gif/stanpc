@@ -103,8 +103,8 @@ export default async function GroupPage(props: PageProps<GroupPageParams>) {
           memberName: card.member?.nameEn ?? null,
           albumTitle: card.album?.title ?? null,
           estimatedPrice: card.estimatedPrice,
-          wantCount: card.wantCount,
-          haveCount: card.haveCount,
+          wishedCount: card.wishedCount,
+          ownedCount: card.ownedCount,
           viewCount: card.viewCount,
           badge: card.badge,
         }))}

@@ -96,7 +96,7 @@ export function FilterDrawer({ open, onClose, facets }: FilterDrawerProps) {
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -105,7 +105,7 @@ export function FilterDrawer({ open, onClose, facets }: FilterDrawerProps) {
 
           {/* Drawer Panel */}
           <motion.div
-            className="fixed bottom-0 left-0 right-0 z-50 max-h-[90vh] overflow-y-auto rounded-t-2xl border-t border-white/10 bg-[#0F0F12] sm:bottom-auto sm:right-auto sm:top-0 sm:max-h-screen sm:min-w-[360px] sm:rounded-none sm:border-l sm:border-t-0"
+            className="fixed bottom-0 left-0 right-0 z-[60] max-h-[90vh] overflow-y-auto rounded-t-2xl border-t border-white/10 bg-[#0F0F12] sm:bottom-auto sm:right-auto sm:top-0 sm:max-h-screen sm:min-w-[360px] sm:rounded-none sm:border-l sm:border-t-0"
             initial={{ y: "100%", x: 0 }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}

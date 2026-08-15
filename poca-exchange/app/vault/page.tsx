@@ -501,7 +501,7 @@ function VaultListView({ cards }: { cards: VaultCardItem[] }) {
               </p>
             )}
             <p className="text-xs text-neutral-600 dark:text-neutral-400">
-              보유: {card.haveCount} | 원함: {card.wantCount}
+              보유: {card.ownedCount} | 원함: {card.wishedCount}
             </p>
             {card.dimensions && (
               <div className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">

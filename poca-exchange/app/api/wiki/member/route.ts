@@ -105,8 +105,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       avgPrice:
         cards.reduce((sum, c) => sum + (c.estimatedPrice || 0), 0) /
         (cards.filter((c) => c.estimatedPrice).length || 1),
-      totalHaveCount: cards.reduce((sum, c) => sum + c.haveCount, 0),
-      totalWantCount: cards.reduce((sum, c) => sum + c.wantCount, 0),
+      totalOwnedCount: cards.reduce((sum, c) => sum + c.ownedCount, 0),
+      totalWishedCount: cards.reduce((sum, c) => sum + c.wishedCount, 0),
       collectorCount: cards.reduce((sum, c) => sum + c.userBinders.length, 0),
     };
 

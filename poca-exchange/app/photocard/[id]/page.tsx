@@ -15,8 +15,8 @@ const MOCK_PHOTOCARDS: Record<string, any> = {
     albumTitle: "Feel Special",
     version: "Photobook Ver.",
     estimatedPrice: 45.99,
-    haveCount: 234,
-    wantCount: 1892,
+    ownedCount: 234,
+    wishedCount: 1892,
     badge: "Hologram",
   },
   "blackpink-jennie-aptober": {
@@ -29,8 +29,8 @@ const MOCK_PHOTOCARDS: Record<string, any> = {
     albumTitle: "APTOBER",
     version: "Official Album",
     estimatedPrice: 89.5,
-    haveCount: 156,
-    wantCount: 2341,
+    ownedCount: 156,
+    wishedCount: 2341,
     badge: "Signed",
   },
   "exo-sehun-obsession": {
@@ -43,8 +43,8 @@ const MOCK_PHOTOCARDS: Record<string, any> = {
     albumTitle: "Obsession",
     version: "Standard Ver.",
     estimatedPrice: 35.0,
-    haveCount: 89,
-    wantCount: 734,
+    ownedCount: 89,
+    wishedCount: 734,
     badge: null,
   },
   "stray-kids-felix-noeasy": {
@@ -57,8 +57,8 @@ const MOCK_PHOTOCARDS: Record<string, any> = {
     albumTitle: "NOEASY",
     version: "Official Album",
     estimatedPrice: 12.99,
-    haveCount: 456,
-    wantCount: 1245,
+    ownedCount: 456,
+    wishedCount: 1245,
     badge: "Rare",
   },
 };
@@ -289,11 +289,11 @@ export default async function PhotocardPage({
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-lg border border-neutral-200 p-3 dark:border-neutral-800">
                 <p className="text-xs text-neutral-500">보유 중</p>
-                <p className="text-xl font-bold">{photocard.haveCount}</p>
+                <p className="text-xl font-bold">{photocard.ownedCount}</p>
               </div>
               <div className="rounded-lg border border-neutral-200 p-3 dark:border-neutral-800">
                 <p className="text-xs text-neutral-500">찾는 중</p>
-                <p className="text-xl font-bold">{photocard.wantCount}</p>
+                <p className="text-xl font-bold">{photocard.wishedCount}</p>
               </div>
             </div>
 

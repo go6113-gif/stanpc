@@ -86,6 +86,24 @@ export const seoFormulas = {
   },
 
   /**
+   * Card keywords (comma-separated for meta tag)
+   * Combines member, group, album, and commerce keywords
+   */
+  cardKeywords: (data: CardSeoData): string => {
+    const keywords = [
+      data.memberName,
+      data.groupName,
+      data.albumName,
+      "photocard",
+      "K-pop",
+      "trading card",
+      "collectible",
+      "price",
+    ];
+    return keywords.filter(Boolean).join(", ");
+  },
+
+  /**
    * Group/member listing page title
    * Format: {Group} {Category} Photocards — Complete Collection | StanPC
    */
@@ -114,6 +132,13 @@ export const seoFormulas = {
   memberDescription: (memberName: string, groupName: string, cardCount?: number): string => {
     const cardInfo = cardCount ? ` Browse ${cardCount}+ cards.` : '';
     return `Explore ${memberName} (${groupName}) photocard templates, rarest cards, prices & size.${cardInfo} The ultimate K-pop PC wiki & wishlist on StanPC.`;
+  },
+
+  /**
+   * Member page keywords
+   */
+  memberKeywords: (memberName: string, groupName: string): string => {
+    return [memberName, groupName, "photocard", "template", "trading card", "K-pop", "collectible"].join(", ");
   },
 
   /**
@@ -166,6 +191,151 @@ export const seoFormulas = {
   cardGeneratorDescription: (): string => {
     return `Design stunning 9:16 and 1:1 photocard collection cards. Share your K-pop vault on Instagram and Twitter with auto-generated OG images.`;
   },
+};
+
+/**
+ * Open Graph metadata structure
+ * Used for social sharing (Facebook, LinkedIn, Discord, etc.)
+ */
+export interface OpenGraphMetadata {
+  title: string;
+  description: string;
+  url: string;
+  type: "website" | "article" | "product";
+  image?: string;
+  imageAlt?: string;
+  locale?: string;
+}
+
+/**
+ * Twitter Card metadata structure
+ * Used for Twitter/X social sharing
+ */
+export interface TwitterCardMetadata {
+  card: "summary" | "summary_large_image" | "player";
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  creator?: string;
+  site?: string;
+}
+
+/**
+ * Open Graph metadata generators
+ */
+export const openGraphGenerators = {
+  /**
+   * Generate OG metadata for card pages
+   */
+  cardOG: (
+    data: CardSeoData,
+    imageUrl: string | undefined,
+    canonicalUrl: string
+  ): OpenGraphMetadata => ({
+    title: seoFormulas.cardTitle(data),
+    description: seoFormulas.cardDescription(data),
+    url: `https://www.stanpc.com${canonicalUrl}`,
+    type: "product",
+    image: imageUrl,
+    imageAlt: `${data.memberName || data.groupName} ${data.albumName || "Photocard"} Template`,
+    locale: "en_US",
+  }),
+
+  /**
+   * Generate OG metadata for member pages
+   */
+  memberOG: (
+    memberName: string,
+    groupName: string,
+    imageUrl: string | undefined,
+    canonicalUrl: string,
+    cardCount: number
+  ): OpenGraphMetadata => ({
+    title: seoFormulas.memberTitle(memberName, groupName),
+    description: seoFormulas.memberDescription(memberName, groupName, cardCount),
+    url: `https://www.stanpc.com${canonicalUrl}`,
+    type: "website",
+    image: imageUrl,
+    imageAlt: `${memberName} ${groupName} Photocard Template`,
+    locale: "en_US",
+  }),
+
+  /**
+   * Generate OG metadata for album pages
+   */
+  albumOG: (
+    memberName: string,
+    groupName: string,
+    albumName: string,
+    imageUrl: string | undefined,
+    canonicalUrl: string
+  ): OpenGraphMetadata => ({
+    title: seoFormulas.albumTitle(memberName, groupName, albumName),
+    description: seoFormulas.albumDescription(memberName, groupName),
+    url: `https://www.stanpc.com${canonicalUrl}`,
+    type: "website",
+    image: imageUrl,
+    imageAlt: `${memberName} ${groupName} ${albumName} Photocard Template`,
+    locale: "en_US",
+  }),
+};
+
+/**
+ * Twitter Card metadata generators
+ */
+export const twitterCardGenerators = {
+  /**
+   * Generate Twitter Card metadata for card pages
+   */
+  cardCard: (
+    data: CardSeoData,
+    imageUrl: string | undefined
+  ): TwitterCardMetadata => ({
+    card: imageUrl ? "summary_large_image" : "summary",
+    title: seoFormulas.cardTitle(data),
+    description: seoFormulas.cardDescription(data),
+    image: imageUrl,
+    imageAlt: `${data.memberName || data.groupName} ${data.albumName || "Photocard"} Template`,
+    site: "@stanpc_io",
+    creator: "@stanpc_io",
+  }),
+
+  /**
+   * Generate Twitter Card metadata for member pages
+   */
+  memberCard: (
+    memberName: string,
+    groupName: string,
+    imageUrl: string | undefined,
+    cardCount: number
+  ): TwitterCardMetadata => ({
+    card: imageUrl ? "summary_large_image" : "summary",
+    title: seoFormulas.memberTitle(memberName, groupName),
+    description: seoFormulas.memberDescription(memberName, groupName, cardCount),
+    image: imageUrl,
+    imageAlt: `${memberName} ${groupName} Photocard Template`,
+    site: "@stanpc_io",
+    creator: "@stanpc_io",
+  }),
+
+  /**
+   * Generate Twitter Card metadata for album pages
+   */
+  albumCard: (
+    memberName: string,
+    groupName: string,
+    albumName: string,
+    imageUrl: string | undefined
+  ): TwitterCardMetadata => ({
+    card: imageUrl ? "summary_large_image" : "summary",
+    title: seoFormulas.albumTitle(memberName, groupName, albumName),
+    description: seoFormulas.albumDescription(memberName, groupName),
+    image: imageUrl,
+    imageAlt: `${memberName} ${groupName} ${albumName} Photocard Template`,
+    site: "@stanpc_io",
+    creator: "@stanpc_io",
+  }),
 };
 
 /**

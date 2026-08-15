@@ -19,7 +19,7 @@ export type InventoryActionResult<T> =
 export async function addCardToVault(
   userId: string,
   cardId: string,
-  status: UserBinderCardStatus = UserBinderCardStatus.PERSONAL,
+  status: UserBinderCardStatus = UserBinderCardStatus.OWNED,
   note?: string
 ): Promise<InventoryActionResult<{ id: string; status: string }>> {
   try {
@@ -283,10 +283,10 @@ export async function getUserBinderCards(
 export async function getInventoryStats(userId: string): Promise<
   InventoryActionResult<{
     total: number;
-    personal: number;
-    forTrade: number;
-    forSale: number;
-    iso: number;
+    owned: number;
+    wtt: number;
+    wts: number;
+    wtb: number;
   }>
 > {
   try {
@@ -297,13 +297,13 @@ export async function getInventoryStats(userId: string): Promise<
 
     const stats = {
       total: cards.length,
-      personal: cards.filter((c) => c.status === UserBinderCardStatus.PERSONAL)
+      owned: cards.filter((c) => c.status === UserBinderCardStatus.OWNED)
         .length,
-      forTrade: cards.filter((c) => c.status === UserBinderCardStatus.FOR_TRADE)
+      wtt: cards.filter((c) => c.status === UserBinderCardStatus.WTT)
         .length,
-      forSale: cards.filter((c) => c.status === UserBinderCardStatus.FOR_SALE)
+      wts: cards.filter((c) => c.status === UserBinderCardStatus.WTS)
         .length,
-      iso: cards.filter((c) => c.status === UserBinderCardStatus.ISO).length,
+      wtb: cards.filter((c) => c.status === UserBinderCardStatus.WTB).length,
     };
 
     return {

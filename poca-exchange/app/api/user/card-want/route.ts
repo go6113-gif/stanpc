@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (isWant) {
-      // Add to ISO (In Search Of) / Want list
+      // Add to WTB (In Search Of) / Want list
       await prisma.userBinderCard.upsert({
         where: {
           userId_cardId: { userId: session.user.id, cardId },
@@ -28,10 +28,10 @@ export async function POST(request: NextRequest) {
         create: {
           userId: session.user.id,
           cardId,
-          status: "ISO",
+          status: "WTB",
         },
         update: {
-          status: "ISO",
+          status: "WTB",
         },
       });
     } else {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         where: {
           userId: session.user.id,
           cardId,
-          status: "ISO",
+          status: "WTB",
         },
       });
     }
