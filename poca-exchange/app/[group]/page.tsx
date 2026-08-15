@@ -6,16 +6,33 @@ import { PhotoCardGrid } from "@/components/photo-card-grid";
 import { siteConfig } from "@/lib/site-config";
 import { generateGroupMetadata } from "@/lib/seo-generator";
 
+interface GroupPageParams {
+  group: string;
+}
+
+// generateStaticParams 실패 시(빌드 타임 DB 미연결 등) 빈 배열을 반환해
+// 빌드가 깨지지 않고 온디맨드 렌더링으로 폴백되도록 함
 export async function generateStaticParams() {
-  const groups = await getAllGroupSlugs();
-  return groups.map((group) => ({ group: group.slug }));
+  try {
+    const groups = await getAllGroupSlugs();
+    return groups.map((group) => ({ group: group.slug }));
+  } catch (err) {
+    console.warn("generateStaticParams failed for /[group]:", err);
+    return [];
+  }
 }
 
 export async function generateMetadata(
-  props: PageProps<"/[group]">
+  props: PageProps<GroupPageParams>
 ): Promise<Metadata> {
   const { group: groupSlug } = await props.params;
-  const group = await getGroupBySlug(groupSlug);
+  let group;
+  try {
+    group = await getGroupBySlug(groupSlug);
+  } catch (err) {
+    console.error("getGroupBySlug failed:", err);
+    group = null;
+  }
   if (!group) return {};
 
   const cardCount = group.photoCards.length;
@@ -42,9 +59,15 @@ export async function generateMetadata(
   };
 }
 
-export default async function GroupPage(props: PageProps<"/[group]">) {
+export default async function GroupPage(props: PageProps<GroupPageParams>) {
   const { group: groupSlug } = await props.params;
-  const group = await getGroupBySlug(groupSlug);
+  let group;
+  try {
+    group = await getGroupBySlug(groupSlug);
+  } catch (err) {
+    console.error("getGroupBySlug failed:", err);
+    group = null;
+  }
   if (!group) notFound();
 
   return (

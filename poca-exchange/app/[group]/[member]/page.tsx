@@ -6,16 +6,34 @@ import { PhotoCardGrid } from "@/components/photo-card-grid";
 import { siteConfig } from "@/lib/site-config";
 import { generateMemberMetadata } from "@/lib/seo-generator";
 
+interface MemberPageParams {
+  group: string;
+  member: string;
+}
+
+// 빌드 타임 DB 미연결 시 정적 params 없이 빌드가 통과하고
+// 온디맨드 렌더링으로 폴백되도록 함
 export async function generateStaticParams() {
-  const members = await getAllMemberSlugs();
-  return members.map(({ group, member }) => ({ group, member }));
+  try {
+    const members = await getAllMemberSlugs();
+    return members.map(({ group, member }) => ({ group, member }));
+  } catch (err) {
+    console.warn("generateStaticParams failed for /[group]/[member]:", err);
+    return [];
+  }
 }
 
 export async function generateMetadata(
-  props: PageProps<"/[group]/[member]">
+  props: PageProps<MemberPageParams>
 ): Promise<Metadata> {
   const { group: groupSlug, member: memberSlug } = await props.params;
-  const member = await getMemberBySlug(groupSlug, memberSlug);
+  let member;
+  try {
+    member = await getMemberBySlug(groupSlug, memberSlug);
+  } catch (err) {
+    console.error("getMemberBySlug failed:", err);
+    member = null;
+  }
   if (!member) return {};
 
   const cardCount = member.photoCards.length;
@@ -47,10 +65,16 @@ export async function generateMetadata(
 }
 
 export default async function MemberPage(
-  props: PageProps<"/[group]/[member]">
+  props: PageProps<MemberPageParams>
 ) {
   const { group: groupSlug, member: memberSlug } = await props.params;
-  const member = await getMemberBySlug(groupSlug, memberSlug);
+  let member;
+  try {
+    member = await getMemberBySlug(groupSlug, memberSlug);
+  } catch (err) {
+    console.error("getMemberBySlug failed:", err);
+    member = null;
+  }
   if (!member) notFound();
 
   return (

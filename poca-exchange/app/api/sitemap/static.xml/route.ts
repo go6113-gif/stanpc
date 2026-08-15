@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://stanpc.com';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 86400; // 24 hours
 
 export async function GET() {

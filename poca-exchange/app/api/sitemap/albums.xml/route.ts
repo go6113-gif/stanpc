@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://stanpc.com';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 604800; // 7 days
 
 export async function GET() {

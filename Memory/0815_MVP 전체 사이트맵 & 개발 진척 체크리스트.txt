@@ -1,0 +1,169 @@
+0815_MVP 전체 사이트맵 & 개발 진척 체크리스트
+
+
+Claude Code와의 페어 프로그래밍 및 전체 공정 진척 관리를 위한 **StanPC MVP 전체 사이트맵(Site-Map) 및 엔지니어링 체크리스트 마스터 문서**입니다.
+
+---
+
+# 🗺️ StanPC MVP 전체 사이트맵 & 개발 진척 체크리스트
+
+```text
+[StanPC MVP Route Architecture]
+/ (Landing & Value Prop)
+├── /explore (Catalog & pSEO) ── /explore/[artist]/[id] (PC Detail & Certificate)
+├── /vault (My Vault) ────────── /vault/upload (Compression & EXIF/pHash)
+│                                └── /vault/share/[id] (Canvas Proof Generator)
+├── /pricing (Founder Pass) ──── /api/stripe (Checkout & Webhook)
+├── /leaderboard (Challenge) ─── /terms (Fair Use & Points TOS)
+└── /u/[username] (Public Portfolio & WTT/WTS Match Surface)
+
+```
+
+---
+
+## 1. 프론트엔드 라우트별 사이트맵 & UI/UX 구현 명세
+
+| 경로 (Path) | 주요 기능 및 컴포넌트 | 연동 API / 백엔드 로직 | 완료 여부 |
+| --- | --- | --- | --- |
+| **`/` (랜딩)** | • 가변 적응형 카드 리스팅 & 플립(Card Flip) 인터랙션<br>
+
+<br>• 핵심 가치 제안 온보딩 (3초 비주얼 카드)<br>
+
+<br>• 실시간 완공 챌린지 TOP 3 랭킹 티저 | • `/api/landing/stats`<br>
+
+<br>• Supabase Public Read | [ ] |
+| **`/explore` (도감)** | • 10개 아티스트 5,000종 마스터 도감 탐색기<br>
+
+<br>• 그룹/멤버/앨범/특전사별 다중 필터 & 실시간 검색<br>
+
+<br>• 미수집 음각 슬롯(Recessed Slot) 시각화 | • Supabase `master_cards`<br>
+
+<br>• ISR / SSG 렌더링 (pSEO) | [ ] |
+| **`/explore/[artist]/[id]`** | • 포토카드 단일 상세 페이지 (pSEO 타깃)<br>
+
+<br>• 보유 유저 수 / 갈망 유저 수 실시간 통계<br>
+
+<br>• 도감 최초 제보자 크레딧 ("Contributed by @유저") | • Dynamic Route SEO Meta<br>
+
+<br>• OpenGraph Image 자동 생성 | [ ] |
+| **`/vault` (마이 볼트)** | • 4단계 인벤토리 탭 (`Owned`, `Incoming`, `Trading`, `Wish`)<br>
+
+<br>• 그리드 / 3×3 9포켓 실물 바인더 뷰 전환<br>
+
+<br>• WTT / WTS / WTB 상태 토글 스위치 | • Supabase `user_inventory` RLS<br>
+
+<br>• 드래그앤드롭 순서 변경 | [ ] |
+| **`/vault/upload`** | • 드래그앤드롭 이미지 업로드 모달<br>
+
+<br>• 클라이언트 WebP 자동 변환 (무료 480p / 유료 720p~4K)<br>
+
+<br>• EXIF 파싱 및 pHash 중복 검증 피드백 | • `browser-image-compression`<br>
+
+<br>• Cloudflare R2 Pre-signed URL | [ ] |
+| **`/vault/share/[id]`** | • 디지털 보유 인증서(Proof-of-Collection) 뷰어<br>
+
+<br>• 1:1 (X/트위터) & 9:16 (인스타 스토리) Canvas 렌더러<br>
+
+<br>• 다이내믹 QR코드 및 위변조 방지 워터마크 합성 | • HTML5 Canvas / WebGL<br>
+
+<br>• 이미지 Blob 다운로드 처리 | [ ] |
+| **`/u/[username]`** | • 유저 공개 컬렉션 포트폴리오 (공식 명함 링크)<br>
+
+<br>• WTT(교환)/WTS(판매) 필터링 뷰<br>
+
+<br>• 상단 마스터 볼트 엠블럼 & 인증 뱃지 노출 | • Supabase Public Profile View<br>
+
+<br>• 사기 방지 EXIF 검증 뱃지 노출 | [ ] |
+| **`/pricing`** | • 선착순 3,000명 $12 Founder Pass 카운트다운<br>
+
+<br>• Free vs PRO 티어 기능 비교표<br>
+
+<br>• 10% 할인 앰버서더 프로모션 코드 입력란 | • Stripe Checkout Session 생성<br>
+
+<br>• 프로모션 코드 유효성 검증 API | [ ] |
+| **`/leaderboard`** | • 분기별 슈퍼 컬렉터 챌린지 실시간 랭킹 리더보드<br>
+
+<br>• 아티스트/멤버별 완공률(%) TOP 10 실시간 집계<br>
+
+<br>• 쿨다운/롤다운 적용 차순위 승계 현황 표시 | • Supabase Aggregation Query<br>
+
+<br>• `reward_history` 롤다운 계산 | [ ] |
+| **`/terms`** | • 공정 사용 정책 (Fair Use Policy, 일 500장/2만장 제한)<br>
+
+<br>• 비환급성 프로모션 포인트 운영 규정 (전금법 배제)<br>
+
+<br>• 5년 장기 미접속 데이터 파기 정책 명시 | • 정적 페이지 (Static Text)<br>
+
+<br>• 법무 검토 완료 약관 탑재 | [ ] |
+
+---
+
+## 2. 엔지니어링 백엔드 & 인프라 세부 체크포인트
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                        엔지니어링 코어 체크포인트                      │
+├─────────────────────┬──────────────────────────────────────────────────┤
+│ 1. 데이터베이스(DB) │ RLS 강제, 4단계 Status ENUM, 쿨다운 테이블 구현  │
+├─────────────────────┼──────────────────────────────────────────────────┤
+│ 2. 스토리지(R2)     │ Pre-signed URL 발급, CORS 세팅, Egress $0 구성    │
+├─────────────────────┼──────────────────────────────────────────────────┤
+│ 3. 결제(Stripe)     │ Webhook 무결성 검증, 결제 후 PRO 티어 즉시 승격 │
+├─────────────────────┼──────────────────────────────────────────────────┤
+│ 4. 보안(Security)   │ Cloudflare WAF, Rate Limiting, MIME 타입 변조 방지│
+└─────────────────────┴──────────────────────────────────────────────────┘
+
+```
+
+### ① 데이터베이스 & RLS (Supabase PostgreSQL)
+
+* [ ] `master_cards`: 10개 아티스트 5,000종 시드 데이터 임포트 완료
+* [ ] `user_inventory`: `status` ENUM (`OWNED`, `INCOMING`, `TRADING`, `WISH`) 및 `trade_intent_*` 컬럼 적용
+* [ ] `inventory_certificates`: 시리얼 넘버(`STPC-YYYY-UUID`), pHash, EXIF 메타데이터 테이블 구성
+* [ ] `reward_history`: 분기별 챌린지 수상자 기록 및 1년 쿨다운 여부(`is_cooldown`) 플래그 처리
+* [ ] **RLS(Row-Level Security):** 비공개 볼트 데이터에 대한 타인 접근 차단 및 소유자 전용 `UPDATE/DELETE` 정책 검증
+
+### ② 미디어 파이프라인 & 스토리지 (Cloudflare R2)
+
+* [ ] 클라이언트단 `browser-image-compression` 분기 (Free: 480p/60KB vs PRO: 720p~4K)
+* [ ] R2 버킷 생성, CORS 허용 설정 및 API 발급 엔드포인트(`POST /api/upload/presigned-url`) 구축
+* [ ] 이미지 업로드 시 매직 넘버(Magic Number) 검증으로 실행 파일/악성 스크립트 업로드 차단
+* [ ] 서버리스 환경에서 Perceptual Hash(pHash) 연산 및 허용 오차 내 도용 이미지 탐지 로직 연동
+
+### ③ 결제 & 유료회원 전환 (Stripe Webhook)
+
+* [ ] Stripe Checkout 호스팅 결제 세션 생성 API (`POST /api/stripe/checkout`)
+* [ ] Stripe Webhook (`POST /api/stripe/webhook`) 구성 및 Signature 시크릿 검증 로직 구현
+* [ ] `checkout.session.completed` 수신 시 유저 `subscription_tier`를 `PRO`로 즉시 업데이트 및 볼트 용량 1,000장 부여
+* [ ] 50인 앰버서더 전용 10% 할인 프로모션 코드 Stripe 연동 및 유입 추적 파라미터 매핑
+
+### ④ 보안, 캐싱 및 자동화 (Cron & Security)
+
+* [ ] Cloudflare Pro WAF 활성화 및 API 엔드포인트 대상 Rate Limiting(일 500회 초과 차단) 설정
+* [ ] 구글 검색 최적화를 위한 Dynamic `sitemap.xml` 및 `robots.txt` 자동 생성 엔드포인트 구축
+* [ ] 5년 장기 미접속 휴면 계정 탐색 및 3단계 파기 이메일 발송 자동화 Cron 배치 설계
+
+---
+
+## 3. 마일스톤별 일정 및 단계별 개발 공정표 (Sprint Timeline)
+
+```text
+[Sprint 1: 기반 골조] ──▶ [Sprint 2: 볼트 & 캔버스] ──▶ [Sprint 3: 결제 & 보안] ──▶ [Sprint 4: 배포 & GTM]
+  (DB / R2 / 마스터)        (4단계 상태 / 인증서)         (Stripe / RLS / 약관)        (50인 앰버서더 시딩)
+
+```
+
+* **Sprint 1 (D-10 ~ D-8): 데이터 및 스토리지 인프라 셋업**
+* Supabase DB 스키마 마이그레이션 + R2 버킷 연동 + 마스터 도감 5,000종 Seeding.
+
+
+* **Sprint 2 (D-7 ~ D-5): 볼트 인터랙션 & 디지털 보유 증명 완성**
+* `/vault` 4단계 상태 관리 머신 + EXIF/pHash 검증 + Canvas SNS 공유 카드 생성기 구현.
+
+
+* **Sprint 3 (D-4 ~ D-2): 과금 체계, 랭킹 리더보드 & 보안 검증**
+* Stripe Web-First 결제 연동 + 챌린지 롤다운 로직 + RLS 정책 전수 점검 + 이용약관 탑재.
+
+
+* **Sprint 4 (D-1 ~ D-Day): E2E 테스트, 색인 제출 & 런칭**
+* 전체 결제/업로드 E2E 플로우 검증 + `sitemap.xml` 제출 + 50인 앰버서더 VIP 초대장 발송.

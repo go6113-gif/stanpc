@@ -59,6 +59,13 @@ model User {
   openKakaoUrl  String? @map("open_kakao_url")
   discordUrl    String? @map("discord_url")
 
+  // Stripe Billing — Collector/Pro tier subscription management
+  tier                    String?   @default("FREE") // "FREE", "COLLECTOR", "PRO"
+  stripeCustomerId        String?   @unique @map("stripe_customer_id")
+  subscriptionId          String?   @unique @map("subscription_id")
+  subscriptionStatus      String?   @map("subscription_status") // "active", "past_due", "canceled", etc.
+  subscriptionExpiresAt   DateTime? @map("subscription_expires_at")
+
   accounts Account[]
   sessions Session[]
 
@@ -69,6 +76,9 @@ model User {
   badges        UserBadge[]
   reactions     Reaction[]
   notifications Notification[]
+
+  // Proof Records for photocard ownership verification
+  proofRecords ProofRecord[] @relation("ProofRecords")
 
   // WTT (Want To Trade) — tables exist but stay unused in the MVP.
   bundleMatchesAsA  BundleMatch[] @relation("BundleMatchUserA")
@@ -505,6 +515,15 @@ enum UserBinderCardStatus {
   @@map("user_binder_card_status")
 }
 
+// Proof Record Status — Photocard ownership verification workflow
+enum ProofStatus {
+  PENDING // 심사 대기 중
+  VERIFIED // 검증 완료
+  REJECTED // 검증 실패
+
+  @@map("proof_status")
+}
+
 // User Virtual Binder - Many-to-many relationship between User and PhotoCard
 // with status tags: "In Hand", "ISO" (In Search Of), "#드볼중" (Seeking to buy),
 // etc. Acts as a user collection/wishlist system.
@@ -526,10 +545,52 @@ model UserBinderCard {
   // A binder entry doubles as the "자랑" (show-off) unit other users react to.
   reactions Reaction[]
 
+  // Proof record for this binder card ownership verification
+  proofRecord ProofRecord?
+
   @@unique([userId, cardId])
   @@index([userId])
   @@index([cardId])
   @@map("user_binder_cards")
+}
+
+// ---
+// Proof Record — Photocard ownership verification via R2 image upload.
+// Each proof is a single image tied to a UserBinderCard. The image is uploaded
+// to R2 (Cloudflare), hashed for integrity verification, and stored in metadata.
+// Verification status tracks editorial review (PENDING/VERIFIED/REJECTED).
+// ---
+model ProofRecord {
+  id String @id @default(cuid())
+
+  // Foreign key to the binder card this proof belongs to (1:1 relationship)
+  userBinderCardId String       @unique @map("user_binder_card_id")
+  userBinderCard   UserBinderCard @relation(fields: [userBinderCardId], references: [id], onDelete: Cascade)
+
+  userId String @map("user_id")
+  user   User   @relation("ProofRecords", fields: [userId], references: [id], onDelete: Cascade)
+
+  // R2 storage paths
+  rawImageKey       String? @map("raw_image_key") // Original uploaded image key
+  processedImageKey String? @map("processed_image_key") // Processed/optimized version
+
+  // Image integrity: SHA-256 hash of the original file
+  hashSha256 String? @map("hash_sha256")
+
+  // Verification workflow
+  status    ProofStatus @default(PENDING)
+  verifiedAt DateTime?  @map("verified_at")
+
+  // Metadata: EXIF, dimensions, etc.
+  metadata  Json?  @db.JsonB
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("proof_records")
 }
 
 // -----------------------------------------------------------------------------
