@@ -10,6 +10,7 @@ interface HighDensityGridProps {
   page?: number;
   total?: number;
   onPageChange?: (page: number) => void;
+  onCardSelect?: (card: PhotoCardData) => void;
   /** Auto-fill column min-width in px. Shared between /gallery (denser,
    * paginated browsing) and / (TOP 100 landing showcase), which want
    * different card sizes — each caller passes its own value explicitly
@@ -33,6 +34,7 @@ export function HighDensityGrid({
   page = 1,
   total = 0,
   onPageChange,
+  onCardSelect,
   minCardWidth = 250,
   gap = 24,
 }: HighDensityGridProps) {
@@ -98,6 +100,7 @@ export function HighDensityGrid({
               onWantToggle={handleWantToggle}
               isHave={localCards.has(card.slug)}
               isWant={wantCards.has(card.slug)}
+              onCardSelect={onCardSelect}
             />
           </motion.div>
         ))}

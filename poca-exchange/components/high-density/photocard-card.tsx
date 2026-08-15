@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { formatMultiCurrency } from "@/lib/format";
+import PhotoCardDetailModal from "../modal/PhotocardDetailModal";
 
 export interface PhotoCardData {
   slug: string;
@@ -12,7 +13,9 @@ export interface PhotoCardData {
   imageUrl: string | null;
   thumbImagePath: string | null;
   version?: string | null;
+  groupSlug?: string;
   groupName: string;
+  memberSlug?: string | null;
   memberName: string | null;
   albumTitle: string | null;
   estimatedPrice: number | null;
@@ -31,6 +34,7 @@ interface PhotoCardCardProps {
   onWantToggle?: (slug: string, isWant: boolean) => void;
   isHave?: boolean;
   isWant?: boolean;
+  onCardSelect?: (card: PhotoCardData) => void;
 }
 
 export function PhotoCardCard({
@@ -39,6 +43,7 @@ export function PhotoCardCard({
   onWantToggle,
   isHave = false,
   isWant = false,
+  onCardSelect,
 }: PhotoCardCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isTouchDevice] = useState(
@@ -46,9 +51,11 @@ export function PhotoCardCard({
   );
 
   const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (isTouchDevice && !isFlipped) {
-      e.preventDefault();
       setIsFlipped(true);
+    } else if (!isTouchDevice || isFlipped) {
+      onCardSelect?.(card);
     }
   };
 
@@ -61,7 +68,11 @@ export function PhotoCardCard({
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      <Link href={`/card/${card.slug}`} className="block h-full w-full" onClick={handleClick}>
+      <button
+        type="button"
+        className="block h-full w-full bg-none border-none p-0 cursor-pointer"
+        onClick={handleClick}
+      >
         <motion.div
           className="relative h-full w-full cursor-pointer preserve-3d"
           initial={false}
@@ -105,13 +116,13 @@ export function PhotoCardCard({
                 </div>
               )}
 
-              {/* Want badge - Right */}
+              {/* Wish badge - Right (formerly Want) */}
               <div className="ml-auto flex flex-col items-center">
                 <span className="text-base font-bold text-white">
                   ♡
                 </span>
                 <span className="text-xs font-semibold text-white/80 mt-0.5">
-                  Want
+                  Wish
                 </span>
                 <span className="text-sm font-bold text-white">
                   {card.wantCount}
@@ -121,10 +132,10 @@ export function PhotoCardCard({
 
             {/* Middle: Member + Group names (center) */}
             <div className="relative z-10 flex flex-col items-center justify-center text-center space-y-1">
-              <p className="text-2xl font-bold text-white leading-tight">
+              <p className="text-2xl font-bold text-white leading-tight text-stroke-strong">
                 {displayMemberName}
               </p>
-              <p className="text-sm font-medium text-white leading-tight">
+              <p className="text-sm font-medium text-white leading-tight text-stroke-strong">
                 {displayGroupName}
               </p>
             </div>
@@ -138,13 +149,13 @@ export function PhotoCardCard({
                 </span>
               )}
 
-              {/* Have badge - Right */}
+              {/* Owned badge - Right (formerly Have) */}
               <div className="ml-auto flex flex-col items-center">
                 <span className="text-base font-bold text-white">
                   ◆
                 </span>
                 <span className="text-xs font-semibold text-white/80 mt-0.5">
-                  Have
+                  Owned
                 </span>
                 <span className="text-sm font-bold text-white">
                   {card.haveCount}
@@ -200,7 +211,7 @@ export function PhotoCardCard({
                   className="mr-1.5 inline"
                   fill={isWant ? "currentColor" : "none"}
                 />
-                Want
+                Wish
               </button>
               <button
                 type="button"
@@ -214,7 +225,18 @@ export function PhotoCardCard({
             </div>
           </motion.div>
         </motion.div>
-      </Link>
+      </button>
+
+      {/* Detail Modal - Nomad List style overlay */}
+      <PhotoCardDetailModal
+        card={{
+          ...card,
+          groupSlug: card.groupSlug,
+          memberSlug: card.memberSlug,
+        }}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </motion.div>
   );
 }

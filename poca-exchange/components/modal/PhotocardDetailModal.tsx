@@ -12,11 +12,11 @@ import { Tab2_Price } from "@/components/modal/Tab2_Price";
 
 type TabId = "guide" | "price" | "versions" | "collectors";
 
-const TABS: { id: TabId; labelKey: `cardDetail.tabs.${TabId}` }[] = [
-  { id: "guide", labelKey: "cardDetail.tabs.guide" },
-  { id: "price", labelKey: "cardDetail.tabs.price" },
-  { id: "versions", labelKey: "cardDetail.tabs.versions" },
-  { id: "collectors", labelKey: "cardDetail.tabs.collectors" },
+const TABS: { id: TabId; labelKey: `cardDetail.tabs.${TabId}`; icon: string }[] = [
+  { id: "guide", labelKey: "cardDetail.tabs.guide", icon: "📖" },
+  { id: "price", labelKey: "cardDetail.tabs.price", icon: "📊" },
+  { id: "versions", labelKey: "cardDetail.tabs.versions", icon: "⚡" },
+  { id: "collectors", labelKey: "cardDetail.tabs.collectors", icon: "⭐" },
 ];
 
 interface PhotocardDetailModalProps {
@@ -63,10 +63,10 @@ export function PhotocardDetailModal({ isOpen, onClose, card }: PhotocardDetailM
           >
             <div className="flex items-center justify-between border-b border-neutral-100 px-4 py-3 dark:border-neutral-800">
               <div className="min-w-0">
-                <p className="truncate text-sm font-bold text-neutral-900 dark:text-white">
+                <p className="text-stroke-strong truncate text-sm font-bold text-neutral-900 dark:text-white">
                   {card.cardName ?? `${groupName} 포토카드`}
                 </p>
-                <p className="truncate text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-stroke-strong truncate text-xs text-neutral-500 dark:text-neutral-400">
                   {[groupName, memberName].filter(Boolean).join(" · ")}
                 </p>
               </div>
@@ -99,20 +99,26 @@ export function PhotocardDetailModal({ isOpen, onClose, card }: PhotocardDetailM
               </div>
 
               <div className="flex flex-1 flex-col sm:overflow-hidden">
-                <div className="flex shrink-0 gap-1 overflow-x-auto border-b border-neutral-100 px-4 pt-2 dark:border-neutral-800">
+                <div className="flex shrink-0 gap-0.5 overflow-x-auto border-b border-neutral-100 px-4 pt-2 dark:border-neutral-800">
                   {TABS.map((tab) => (
                     <button
                       key={tab.id}
                       type="button"
                       onClick={() => setActiveTab(tab.id)}
                       aria-pressed={activeTab === tab.id}
-                      className={`shrink-0 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
+                      className={`relative shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-semibold transition-all duration-200 ${
                         activeTab === tab.id
-                          ? "border-nomad-red text-nomad-red"
-                          : "border-transparent text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
+                          ? "text-nomad-red"
+                          : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
                       }`}
                     >
-                      {t(tab.labelKey)}
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-base">{tab.icon}</span>
+                        {t(tab.labelKey)}
+                      </span>
+                      {activeTab === tab.id && (
+                        <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-nomad-red to-transparent rounded-t" />
+                      )}
                     </button>
                   ))}
                 </div>

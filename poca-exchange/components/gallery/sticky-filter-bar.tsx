@@ -8,6 +8,7 @@ import { useTranslations } from "@/lib/i18n";
 import type { FilterState, QuickFilterId } from "@/lib/filter-query";
 import { serializeFilterState, QUICK_FILTERS } from "@/lib/filter-query";
 import { FilterDrawer } from "./filter-drawer";
+import { RealtimeSearchBar } from "./realtime-search-bar";
 import type { GalleryFacets } from "@/lib/queries";
 
 const QUICK_FILTER_LABELS: Record<QuickFilterId, string> = {
@@ -56,7 +57,10 @@ export function StickyFilterBar({ filterState, loggedIn, facets }: StickyFilterB
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="w-full px-4 py-3 md:px-8">
+        <div className="w-full px-4 py-4 md:px-8 space-y-3">
+          {/* Realtime Search Bar */}
+          <RealtimeSearchBar />
+
           {/* Quick Filter Chips */}
           <div className="flex flex-wrap items-center gap-2 mb-3">
             {QUICK_FILTERS.map((id) => {

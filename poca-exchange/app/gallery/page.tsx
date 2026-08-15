@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { StickyFilterBar } from "@/components/gallery/sticky-filter-bar";
-import { HighDensityGrid } from "@/components/high-density/high-density-grid";
+import { GalleryWithModal } from "@/components/gallery/gallery-with-modal";
 import { getFilteredPhotoCards, getGalleryFacets } from "@/lib/queries";
 import { parseFilterState, toURLSearchParams } from "@/lib/filter-query";
 import { t } from "@/lib/i18n";
@@ -59,7 +59,7 @@ export default async function GalleryPage({
             </p>
           </div>
         ) : (
-          <HighDensityGrid cards={cards} />
+          <GalleryWithModal cards={cards} />
         )}
       </main>
     </div>

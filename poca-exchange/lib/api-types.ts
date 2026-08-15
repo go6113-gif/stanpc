@@ -69,8 +69,8 @@ export interface VaultCardItem {
 
   // 마켓 정보
   estimatedPrice: number | null;
-  haveCount: number;
-  wantCount: number;
+  ownedCount: number;
+  wishedCount: number;
 
   // 타임스탬프
   addedAt: string;

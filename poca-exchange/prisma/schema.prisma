@@ -319,11 +319,12 @@ model PhotoCard {
 
   // Sprint 01 — pSEO directory MVP (no escrow/P2P): market signal fields
   // shown on the card tile/detail page. Est. price and badge are editorial
-  // and stay null ("TBA") until priced; want/have/view counts are simple
+  // and stay null ("TBA") until priced; wish/owned/view counts are simple
   // aggregate counters, not per-user relations.
+  // Terminology: wishedCount = users who want to acquire; ownedCount = users who own
   estimatedPrice Float?
-  wantCount      Int     @default(0)
-  haveCount      Int     @default(0)
+  wishedCount    Int     @default(0) @map("want_count")
+  ownedCount     Int     @default(0) @map("have_count")
   viewCount      Int     @default(0)
   badge          String?
 
@@ -505,12 +506,13 @@ model GlobalSKUMapping {
   @@map("global_sku_mapping")
 }
 
-// 바인더 카드 상태 — 거래 가능 여부 및 용도
+// 바인더 카드 상태 — 표준화된 수집 상태 분류
+// 사용자가 카드에 대해 취하고 있는 행동/상태를 나타냄
 enum UserBinderCardStatus {
-  PERSONAL // 개인 소장용 (기본값, 거래 불가)
-  FOR_TRADE // 교환 가능
-  FOR_SALE // 판매 가능
-  ISO // 구하는 중 (위시리스트)
+  OWNED   @map("OWNED")   // 소유 중 (개인 수집용, 기본값)
+  WTT     @map("WTT")     // 교환 중 (Want To Trade)
+  WTS     @map("WTS")     // 판매 중 (Want To Sell)
+  WTB     @map("WTB")     // 구매 중 (Want To Buy, ISO와 동일)
 
   @@map("user_binder_card_status")
 }
@@ -532,7 +534,7 @@ model UserBinderCard {
   id        String               @id @default(cuid())
   tags      String[]             @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
   note      String? // User's personal note about this card
-  status    UserBinderCardStatus @default(PERSONAL) // 거래 상태 (판매/교환/개인 소장)
+  status    UserBinderCardStatus @default(OWNED) // 사용자 카드 상태 (OWNED/WTT/WTS/WTB)
   createdAt DateTime             @default(now())
   updatedAt DateTime             @updatedAt
 

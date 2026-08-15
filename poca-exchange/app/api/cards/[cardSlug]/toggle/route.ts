@@ -24,16 +24,16 @@ export async function POST(
     return Response.json({ error: "invalid body" }, { status: 400 });
   }
 
-  const column = body.type === "have" ? "haveCount" : "wantCount";
+  const column = body.type === "owned" ? "ownedCount" : "wishedCount";
   const delta = body.value ? 1 : -1;
 
   const rows = await prisma.$queryRawUnsafe<
-    { haveCount: number; wantCount: number }[]
+    { ownedCount: number; wishedCount: number }[]
   >(
     `UPDATE photo_cards
      SET "${column}" = GREATEST("${column}" + $1, 0)
      WHERE slug = $2
-     RETURNING "haveCount", "wantCount"`,
+     RETURNING "ownedCount", "wishedCount"`,
     delta,
     cardSlug
   );
