@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Check } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
+import { CARD_TAG_LIST, CARD_TAG_LABELS } from "@/lib/photocard-tags";
 
 interface FilterDrawerProps {
   isOpen: boolean;
@@ -13,6 +14,8 @@ interface FilterDrawerProps {
   onSelectGroup: (slug: string | null) => void;
   selectedCardTypes: Set<string>;
   onSelectCardTypes: (types: Set<string>) => void;
+  selectedMembers: Set<string>;
+  onSelectMembers: (members: Set<string>) => void;
   onResetFilters: () => void;
 }
 
@@ -24,12 +27,7 @@ const MOCK_MEMBERS = [
   { id: "member-4", name: "윈터" },
 ];
 
-const MOCK_CARD_TYPES = [
-  { id: "type-standard", name: "스탠다드" },
-  { id: "type-pob", name: "팬 회원 특전 (POB)" },
-  { id: "type-hologram", name: "홀로그램" },
-  { id: "type-rare", name: "레어" },
-];
+const CARD_TYPES = CARD_TAG_LIST.map((id) => ({ id, name: CARD_TAG_LABELS[id] }));
 
 export function FilterDrawer({
   isOpen,
@@ -39,6 +37,8 @@ export function FilterDrawer({
   onSelectGroup,
   selectedCardTypes,
   onSelectCardTypes,
+  selectedMembers,
+  onSelectMembers,
   onResetFilters,
 }: FilterDrawerProps) {
   const { t } = useTranslations();
@@ -154,7 +154,7 @@ export function FilterDrawer({
                 </div>
               </div>
 
-              {/* Members Filter Section (Mock) */}
+              {/* Members Filter Section */}
               <div>
                 <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
                   {t("filter.drawer.members") || "멤버"}
@@ -167,7 +167,16 @@ export function FilterDrawer({
                     >
                       <input
                         type="checkbox"
-                        defaultChecked={false}
+                        checked={selectedMembers.has(member.id)}
+                        onChange={() => {
+                          const updated = new Set(selectedMembers);
+                          if (updated.has(member.id)) {
+                            updated.delete(member.id);
+                          } else {
+                            updated.add(member.id);
+                          }
+                          onSelectMembers(updated);
+                        }}
                         className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
                       />
                       <span className="text-sm text-white">{member.name}</span>
@@ -182,7 +191,7 @@ export function FilterDrawer({
                   {t("filter.drawer.cardTypes") || "카드 종류"}
                 </h3>
                 <div className="space-y-2">
-                  {MOCK_CARD_TYPES.map((type) => (
+                  {CARD_TYPES.map((type) => (
                     <label
                       key={type.id}
                       className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors"

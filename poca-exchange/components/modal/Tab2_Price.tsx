@@ -6,6 +6,7 @@ import { formatMultiCurrency, formatDate } from "@/lib/format";
 import { PriceTrendChart } from "@/components/price-trend-chart";
 import { OutboundLink } from "@/components/outbound-link";
 import { EbayLiveListings } from "@/components/ebay-live-listings";
+import { GlobalPriceComparison } from "@/components/modal/GlobalPriceComparison";
 import type { PhotocardPrice } from "@/types/photocard-price";
 
 const MARKET_META: Record<string, { flag: string; label: string }> = {
@@ -32,46 +33,8 @@ export function Tab2_Price({ price, cardId, cardSlug, searchQuery }: Tab2_PriceP
 
   return (
     <div className="space-y-6">
-      {/* Section A — 글로벌 시세 요약 */}
-      <section>
-        <h3 className="text-sm font-bold text-neutral-900 dark:text-white">
-          {t("cardDetail.price.marketSummaryTitle")}
-        </h3>
-        {price.marketSummary.length > 0 ? (
-          <ul className="mt-2 space-y-2">
-            {price.marketSummary.map((m) => {
-              const meta = MARKET_META[m.market] ?? { flag: "🌐", label: m.market };
-              return (
-                <li
-                  key={m.market}
-                  className="flex items-center justify-between rounded-lg border border-neutral-100 px-3 py-2 dark:border-neutral-800"
-                >
-                  <span className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
-                    <span>{meta.flag}</span> {meta.label}
-                  </span>
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-neutral-900 dark:text-white">
-                      {formatMultiCurrency(m.price)}
-                    </p>
-                    <p className="text-[11px] text-neutral-400">
-                      {t("cardDetail.price.lastChecked", { date: formatDate(m.checkedAt) })}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : price.estimatedPrice != null ? (
-          <div className="mt-2 rounded-lg border border-neutral-100 px-3 py-2 dark:border-neutral-800">
-            <p className="text-xs text-neutral-500">{t("cardDetail.price.estimatedPriceLabel")}</p>
-            <p className="text-sm font-bold text-neutral-900 dark:text-white">
-              {formatMultiCurrency(price.estimatedPrice)}
-            </p>
-          </div>
-        ) : (
-          <p className="mt-2 text-sm text-neutral-400">{t("cardDetail.price.marketSummaryEmpty")}</p>
-        )}
-      </section>
+      {/* 신규: 글로벌 3개국 실시간 시세 비교 컴포넌트 (고도화된 UI) */}
+      <GlobalPriceComparison cardName="Photocard" />
 
       {/* Section B — 최근 30일 시세 변동 */}
       <section>

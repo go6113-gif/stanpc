@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Filter } from "lucide-react";
+import { Filter, X } from "lucide-react";
 import { InstantMultiSearch } from "@/components/header/InstantMultiSearch";
 import { FilterDrawer } from "@/components/landing/filter-drawer";
 import { useTranslations } from "@/lib/i18n";
@@ -12,7 +12,10 @@ interface LandingFilterBarProps {
   onSelectGroup: (slug: string | null) => void;
   selectedCardTypes: Set<string>;
   onSelectCardTypes: (types: Set<string>) => void;
+  selectedMembers: Set<string>;
+  onSelectMembers: (members: Set<string>) => void;
   onResetFilters: () => void;
+  hasActiveFilters: boolean;
 }
 
 export function LandingFilterBar({
@@ -21,7 +24,10 @@ export function LandingFilterBar({
   onSelectGroup,
   selectedCardTypes,
   onSelectCardTypes,
+  selectedMembers,
+  onSelectMembers,
   onResetFilters,
+  hasActiveFilters,
 }: LandingFilterBarProps) {
   const { t } = useTranslations();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -47,13 +53,24 @@ export function LandingFilterBar({
           </button>
 
           <div className="hidden sm:block">
-            <InstantMultiSearch />
+            <InstantMultiSearch onSelectCardType={(tag) => onSelectCardTypes(new Set([tag]))} />
           </div>
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={onResetFilters}
+              className="flex shrink-0 items-center gap-1 text-xs font-bold text-white/50 hover:text-white transition-colors"
+            >
+              <X size={14} />
+              {t("filter.active.clearAll")}
+            </button>
+          )}
         </div>
 
         {/* Mobile search - below the filters row */}
         <div className="border-t border-white/5 px-4 py-2 sm:hidden">
-          <InstantMultiSearch />
+          <InstantMultiSearch onSelectCardType={(tag) => onSelectCardTypes(new Set([tag]))} />
         </div>
       </div>
 
@@ -66,6 +83,8 @@ export function LandingFilterBar({
         onSelectGroup={onSelectGroup}
         selectedCardTypes={selectedCardTypes}
         onSelectCardTypes={onSelectCardTypes}
+        selectedMembers={selectedMembers}
+        onSelectMembers={onSelectMembers}
         onResetFilters={onResetFilters}
       />
     </>

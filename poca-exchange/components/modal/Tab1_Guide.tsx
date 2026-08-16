@@ -5,6 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { t } from "@/lib/i18n";
 import { formatDate, formatMultiCurrency } from "@/lib/format";
 import { FakeDoorModal } from "@/components/fake-door-modal";
+import { SpecificationDataSheet } from "@/components/modal/SpecificationDataSheet";
 import type { PhotocardGuide, RarityGrade } from "@/types/photocard-guide";
 
 const RARITY_STYLES: Record<RarityGrade, string> = {
@@ -28,55 +29,18 @@ function SpecRow({ label, value, mono = false }: { label: string; value: string 
 /** PhotocardDetailModal Tab 1 — standard spec sheet (Card Code, Album, Type, Sleeve, Price)
  * followed by detailed guide sections (origin story, rarity/valuation, wiki contributions).
  * Renders honest empty states for fields with no backing data source. */
-export function Tab1_Guide({ guide, estimatedPrice }: { guide: PhotocardGuide; estimatedPrice?: number | null }) {
+export function Tab1_Guide({ guide, estimatedPrice, cardName }: { guide: PhotocardGuide; estimatedPrice?: number | null; cardName?: string }) {
   const [showReportModal, setShowReportModal] = useState(false);
   const { spec, originStory, valuation, officialSources, userContributionsCount } = guide;
 
   return (
     <div className="space-y-6">
-      {/* 표준 데이터 시트 — Card Code, Album/Event, Type/Spec, Sleeve Size, Est. Price */}
-      <section className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-900/30">
-        <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-neutral-900 dark:text-white">
-          📋 Specifications
-        </h3>
-
-        <div className="space-y-0">
-          <SpecRow
-            label="Card Code"
-            value={spec.groupName ? `${spec.groupName.slice(0, 3).toUpperCase()}-${new Date().getFullYear()}-001` : "TBA"}
-            mono
-          />
-          <SpecRow
-            label="Album / Event"
-            value={spec.albumTitle || spec.version || "TBA"}
-          />
-          <SpecRow
-            label="Type / Spec"
-            value={spec.pobSource ? `${spec.pobSource} (Special)` : "Standard"}
-          />
-          <SpecRow
-            label="Sleeve Size"
-            value={`${spec.dimensions.width} × ${spec.dimensions.height} mm`}
-            mono
-          />
-          <SpecRow
-            label="Est. Price"
-            value={estimatedPrice ? (
-              <span className="text-nomad-red font-bold">{formatMultiCurrency(estimatedPrice)}</span>
-            ) : (
-              <span className="text-neutral-400">TBA</span>
-            )}
-          />
-        </div>
-
-        {/* Rarity badge in spec sheet */}
-        <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700">
-          <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide dark:text-neutral-400 mb-2">Rarity Grade</p>
-          <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${RARITY_STYLES[spec.rarityGrade]}`}>
-            {t(`cardDetail.guide.rarity.${spec.rarityGrade}`)}
-          </span>
-        </div>
-      </section>
+      {/* 신규: 표준 스펙 데이터 시트 컴포넌트 (고도화된 테이블) */}
+      <SpecificationDataSheet
+        groupName={spec.groupName}
+        memberName={spec.memberName}
+        cardName={cardName}
+      />
 
       {/* Section A — 기본 스펙 상세 정보 */}
       <section>

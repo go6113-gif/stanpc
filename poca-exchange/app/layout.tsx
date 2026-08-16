@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AuthSessionProvider } from "@/components/session-provider";
 import { SiteHeader } from "@/components/site-header";
 import { Footer } from "@/components/footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -70,8 +71,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col">
         <AuthSessionProvider>
           <SiteHeader />
-          {children}
+          <main className="flex-1 pb-16 sm:pb-0">
+            {children}
+          </main>
           <Footer />
+          <MobileBottomNav />
         </AuthSessionProvider>
       </body>
     </html>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { VaultResponse, VaultCardItem } from '@/lib/api-types';
 import VaultAuthModal from '@/components/wiki/VaultAuthModal';
+import { BinderValueCard } from '@/components/vault/BinderValueCard';
 
 interface FilterState {
   tags: string[];
@@ -207,6 +208,9 @@ export default function VaultPage() {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        {/* Binder Value Card - 상단 요약 */}
+        <BinderValueCard />
+
         <div className="grid gap-8 lg:grid-cols-4">
           {/* Left: Filters */}
           <aside className="space-y-6">

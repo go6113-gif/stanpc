@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CardThumbnail, type CardThumbnailItem } from "@/components/CardThumbnail";
+import { CardTiltWrapper } from "@/components/card/CardTiltWrapper";
 
 export type PhotoCardGridItem = CardThumbnailItem & {
   ownedCount: number;
@@ -42,13 +43,19 @@ export function PhotoCardGrid({
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
       {sorted.map((card) => (
-        <Link
+        <CardTiltWrapper
           key={card.slug}
-          href={`/photocard/${card.slug}`}
+          intensity={8}
+          scale={1.04}
           className="group relative block overflow-hidden rounded-xl bg-neutral-100 outline-none ring-blue-500 focus-visible:ring-2 dark:bg-neutral-900"
         >
-          <CardThumbnail card={card} />
-        </Link>
+          <Link
+            href={`/photocard/${card.slug}`}
+            className="block h-full w-full"
+          >
+            <CardThumbnail card={card} />
+          </Link>
+        </CardTiltWrapper>
       ))}
     </div>
   );

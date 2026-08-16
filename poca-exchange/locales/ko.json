@@ -17,6 +17,21 @@
       "wishlist": "❤️ 내 위시",
       "owned": "📦 내 소장"
     },
+    "mega": {
+      "collection": "수집 & 거래",
+      "popular": "인기 TOP 50",
+      "wish": "내 위시리스트",
+      "owned": "내 소장 바인더",
+      "wtt": "교환 가능",
+      "wts": "판매 중",
+      "groups": "인기 그룹",
+      "types": "포카 종류",
+      "album": "앨범 포카",
+      "pob": "미공포 / 특전",
+      "lucky_draw": "럭키드로우",
+      "fanmeet": "팬싸 / 공방 포카",
+      "sg": "시즌그리팅"
+    },
     "sections": {
       "recent": "최근 검색",
       "trending": "실시간 인기",
