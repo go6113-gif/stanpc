@@ -1,56 +1,82 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { LogOut, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { LogOut, User, BookOpen } from "lucide-react";
+import { useAuthStore } from "@/lib/store/useAuthStore";
 
-/**
- * Safe Auth Navigation Component
- * Handles missing auth gracefully without crashing
- */
 export function AuthNav() {
-  const { data: session, status } = useSession();
-  const isLoading = status === "loading";
+  const [hydrated, setHydrated] = useState(false);
+  const router = useRouter();
+  const { user, isAuthenticated, logout } = useAuthStore();
 
-  // Loading state - show minimal UI
-  if (isLoading) {
+  useEffect(() => {
+    useAuthStore.persist.rehydrate();
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
     return (
       <div className="h-10 w-10 animate-pulse rounded-full bg-neutral-600" />
     );
   }
 
-  // No session - show sign in link
-  if (!session?.user) {
+  // 비로그인 상태
+  if (!isAuthenticated) {
     return (
-      <Link
-        href="/auth/login"
-        className="inline-flex items-center gap-2 rounded-lg bg-[#FF2A55] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
-      >
-        <User size={16} />
-        Sign In
-      </Link>
+      <div className="flex items-center gap-3">
+        <Link
+          href="/vault"
+          className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
+        >
+          <BookOpen size={16} />
+          📖 내 바인더
+        </Link>
+        <Link
+          href="/auth/login"
+          className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
+        >
+          <User size={16} />
+          로그인
+        </Link>
+        <Link
+          href="/auth/signup"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#FF2A55] px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 transition-colors"
+        >
+          회원가입
+        </Link>
+      </div>
     );
   }
 
-  // Session exists - show user menu
+  // 로그인 상태
   return (
     <div className="flex items-center gap-3">
-      {session.user.image && (
-        <img
-          src={session.user.image}
-          alt={session.user.name || "User"}
-          className="h-8 w-8 rounded-full"
-        />
-      )}
-      <span className="text-sm font-medium text-white">
-        {session.user.name || session.user.email}
-      </span>
       <Link
-        href="/api/auth/signout"
-        className="inline-flex items-center gap-1 rounded-lg hover:bg-neutral-800 px-2 py-1 transition-colors"
+        href="/vault"
+        className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
+      >
+        <BookOpen size={16} />
+        📖 내 바인더
+      </Link>
+      <Link
+        href="/profile"
+        className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
+      >
+        <User size={16} />
+        👤 {user?.nickname}
+      </Link>
+      <button
+        onClick={() => {
+          logout();
+          router.push("/");
+        }}
+        className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors hover:bg-neutral-800/50"
       >
         <LogOut size={16} />
-      </Link>
+        로그아웃
+      </button>
     </div>
   );
 }

@@ -112,7 +112,7 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
       <main className="min-h-screen bg-[#0F0F12]">
         <LandingHeroSection gridRef={gridRef} />
 
-        {/* StanPC Explore Cards Section */}
+        {/* StanPC Explore: 핵심 4개 카드만 노출 */}
         <StanpcExploreCards />
 
         <LandingFilterBar
