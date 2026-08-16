@@ -12,9 +12,8 @@ export default function ExportPageClient() {
   const [mode, setMode] = useState<ExportMode>('flex');
   const [hydrated, setHydrated] = useState(false);
 
-  const selectedCardIds = useAssetSelectionStore((state) =>
-    Array.from(state.selectedCardIds)
-  );
+  const selectedCardIdsSet = useAssetSelectionStore((state) => state.selectedCardIds);
+  const selectedCardIds = useMemo(() => Array.from(selectedCardIdsSet), [selectedCardIdsSet]);
 
   const ownedCards = useBinderStore((state) => state.ownedCards);
   const wishCards = useBinderStore((state) => state.wishCards);

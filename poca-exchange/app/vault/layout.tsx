@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { seoFormulas } from "@/lib/seo-config";
 import { siteConfig } from "@/lib/site-config";
+import { VaultLayoutClient } from "./VaultLayoutClient";
 
 export async function generateMetadata(): Promise<Metadata> {
   const session = await auth();
@@ -80,5 +81,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function VaultLayout({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+  return <VaultLayoutClient>{children}</VaultLayoutClient>;
 }

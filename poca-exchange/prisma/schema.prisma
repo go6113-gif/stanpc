@@ -90,6 +90,16 @@ model User {
   tradeRoomsAsB     TradeRoom[]   @relation("TradeRoomUserB")
   tradeItemsOffered TradeItem[]   @relation("TradeItemOfferedBy")
 
+  // Referral & Credits System — 글로벌 추천인 및 크레딧 관리
+  referralCode      String?   @unique @map("referral_code") // 사용자의 고유 추천 코드
+  referredBy        String?   @map("referred_by") // 나를 추천한 사용자의 referralCode
+  credits           Int       @default(0) // 사용자의 누적 크레딧
+  membershipType    String    @default("FREE") @map("membership_type") // "FREE", "COLLECTOR", "PRO"
+  membershipExpiresAt DateTime? @map("membership_expires_at") // 멤버십 만료 일시
+
+  // Referral logs
+  referralLogs ReferralLog[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -919,4 +929,39 @@ model WaitlistSignup {
   @@unique([email, source])
   @@index([createdAt])
   @@map("waitlist_signups")
+}
+
+// -----------------------------------------------------------------------------
+// Referral & Credits — 글로벌 추천인 및 크레딧 시스템
+//
+// 추천인-피추천인 관계, 크레딧 지급 기록을 추적합니다.
+// 모든 금액과 리워드는 USD 기준이며, pricing.config.ts에서 관리됩니다.
+// -----------------------------------------------------------------------------
+model ReferralLog {
+  id            String   @id @default(cuid())
+  referrerId    String   @map("referrer_id") // 추천인 User ID
+  referrer      User     @relation(fields: [referrerId], references: [id], onDelete: Cascade)
+  refereeEmail  String   @map("referee_email") // 피추천인 이메일 (가입 전)
+
+  // 링크 관계 (피추천인이 가입한 후 설정)
+  refereeId     String?  @map("referee_id")
+
+  // 크레딧 트랜잭션 기록
+  referrerCreditsAwarded    Int      @default(0) @map("referrer_credits_awarded") // 추천인에게 주어진 크레딧
+  refereeCreditsAwarded     Int      @default(0) @map("referee_credits_awarded") // 피추천인에게 주어진 크레딧
+  referrerCreditsStatus     String   @default("PENDING") @map("referrer_credits_status") // "PENDING", "AWARDED", "REVOKED"
+  refereeCreditsStatus      String   @default("PENDING") @map("referee_credits_status")
+
+  // 결제 연동
+  paymentId     String?  @map("payment_id") // Stripe payment ID (향후)
+  paymentAmount Float?   @map("payment_amount") // 결제 금액 (USD)
+
+  // 타임스탐프
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([referrerId])
+  @@index([refereeEmail])
+  @@index([refereeId])
+  @@map("referral_logs")
 }

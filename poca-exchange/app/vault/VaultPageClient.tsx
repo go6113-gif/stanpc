@@ -30,9 +30,8 @@ export default function VaultPageClient() {
   const viewMode = useFilterStore((state) => state.viewMode);
 
   // useAssetSelectionStore
-  const selectedCardIds = useAssetSelectionStore((state) =>
-    Array.from(state.selectedCardIds)
-  );
+  const selectedCardIdsSet = useAssetSelectionStore((state) => state.selectedCardIds);
+  const selectedCardIds = useMemo(() => Array.from(selectedCardIdsSet), [selectedCardIdsSet]);
   const toggleCardSelection = useAssetSelectionStore((state) => state.toggleCardSelection);
   const clearSelection = useAssetSelectionStore((state) => state.clearSelection);
 
