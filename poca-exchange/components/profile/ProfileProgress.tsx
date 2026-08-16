@@ -1,6 +1,15 @@
 ﻿"use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+interface GroupCompletion {
+  groupName: string;
+  groupSlug: string;
+  owned: number;
+  total: number;
+  percentage: number;
+}
 
 interface CollectionItem {
   name: string;
@@ -10,10 +19,56 @@ interface CollectionItem {
 }
 
 interface ProfileProgressProps {
-  collections: CollectionItem[];
+  userId?: string;
+  collections?: CollectionItem[];
 }
 
-export function ProfileProgress({ collections }: ProfileProgressProps) {
+export function ProfileProgress({ userId, collections: initialCollections }: ProfileProgressProps) {
+  const [collections, setCollections] = useState<CollectionItem[]>(initialCollections || []);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // 초기 데이터가 있으면 로드하지 않음
+    if (initialCollections && initialCollections.length > 0) {
+      setLoading(false);
+      return;
+    }
+
+    // userId가 없으면 로드 스킵
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
+    // API에서 실데이터 조회
+    const fetchCompletion = async () => {
+      try {
+        const response = await fetch(`/api/profile/completion?userId=${userId}`);
+        if (!response.ok) throw new Error("Failed to fetch completion");
+        const data = await response.json();
+
+        // API 응답의 groups 배열을 CollectionItem 형식으로 변환
+        const transformed: CollectionItem[] = (data.groups || []).map(
+          (group: GroupCompletion) => ({
+            name: group.groupName,
+            completion: group.percentage,
+            owned: group.owned,
+            total: group.total,
+          })
+        );
+
+        setCollections(transformed);
+      } catch (error) {
+        console.error("Error fetching completion:", error);
+        setCollections([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCompletion();
+  }, [userId, initialCollections]);
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -39,6 +94,17 @@ export function ProfileProgress({ collections }: ProfileProgressProps) {
     return "from-rose-500 to-pink-500";
   };
 
+  if (loading) {
+    return (
+      <div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">수집 진척도</h2>
+          <p className="text-white/60">로딩 중...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="mb-6">
@@ -52,9 +118,9 @@ export function ProfileProgress({ collections }: ProfileProgressProps) {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
-        {collections.map((collection, idx) => (
+        {collections.slice(0, 6).map((collection, idx) => (
           <motion.div
-            key={idx}
+            key={`progress-${idx}`}
             variants={item}
             whileHover={{ y: -4 }}
             className="rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/30 border border-white/10 p-5 hover:border-white/20 transition-colors"
@@ -71,7 +137,7 @@ export function ProfileProgress({ collections }: ProfileProgressProps) {
               </div>
               <div className="text-right">
                 <div className="text-xl font-bold text-white">
-                  {collection.completion}%
+                  {collection.completion.toFixed(1)}%
                 </div>
               </div>
             </div>

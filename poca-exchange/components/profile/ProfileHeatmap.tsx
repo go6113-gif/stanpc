@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface HeatmapCell {
   date: string;
@@ -10,32 +10,8 @@ interface HeatmapCell {
 }
 
 interface ProfileHeatmapProps {
-  data: HeatmapCell[];
-}
-
-// Mock 데이터 생성 함수
-export function generateMockHeatmap(): HeatmapCell[] {
-  const data: HeatmapCell[] = [];
-  const oneYearAgo = new Date();
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-  for (let i = 0; i < 365; i++) {
-    const date = new Date(oneYearAgo);
-    date.setDate(date.getDate() + i);
-    const count = Math.random() > 0.7 ? Math.floor(Math.random() * 12) : 0;
-    const intensity = Math.min(
-      4,
-      Math.floor(count / 3)
-    ) as 0 | 1 | 2 | 3 | 4;
-
-    data.push({
-      date: date.toISOString().split("T")[0],
-      count,
-      intensity,
-    });
-  }
-
-  return data;
+  userId?: string;
+  data?: HeatmapCell[];
 }
 
 // 강도에 따른 배경색
@@ -56,8 +32,51 @@ function getIntensityColor(intensity: number): string {
   }
 }
 
-export function ProfileHeatmap({ data }: ProfileHeatmapProps) {
+export function ProfileHeatmap({ userId, data: initialData }: ProfileHeatmapProps) {
+  const [data, setData] = useState<HeatmapCell[]>(initialData || []);
+  const [loading, setLoading] = useState(true);
   const [hoveredCell, setHoveredCell] = useState<string | null>(null);
+
+  useEffect(() => {
+    // 초기 데이터가 있으면 로드하지 않음 (SSR에서 전달된 경우)
+    if (initialData && initialData.length > 0) {
+      setLoading(false);
+      return;
+    }
+
+    // userId가 없으면 로드 스킵
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
+    // API에서 실데이터 조회
+    const fetchHeatmap = async () => {
+      try {
+        const response = await fetch(`/api/activity/heatmap?userId=${userId}`);
+        if (!response.ok) throw new Error("Failed to fetch heatmap");
+        const heatmapData = await response.json();
+        setData(heatmapData);
+      } catch (error) {
+        console.error("Error fetching heatmap:", error);
+        // 에러 시 빈 배열 유지
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHeatmap();
+  }, [userId, initialData]);
+
+  if (loading) {
+    return (
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-white mb-2">활동 히스토리</h2>
+        <p className="text-white/60">로딩 중...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -78,9 +97,8 @@ export function ProfileHeatmap({ data }: ProfileHeatmapProps) {
           }}
         >
           {data.map((cell, idx) => (
-            <div className="relative">
+            <div key={`heatmap-${idx}`} className="relative">
               <motion.div
-                key={idx}
                 whileHover={{ scale: 1.2, zIndex: 10 }}
                 onMouseEnter={() => setHoveredCell(cell.date)}
                 onMouseLeave={() => setHoveredCell(null)}
