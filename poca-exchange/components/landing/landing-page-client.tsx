@@ -8,27 +8,29 @@ import { HighDensityGrid } from "@/components/high-density/high-density-grid";
 import { FloatingBinderBar } from "@/components/binder/FloatingBinderBar";
 import { BinderViewModal } from "@/components/binder/BinderViewModal";
 import { getTopPhotoCards } from "@/lib/queries";
+import { inferCardTags, type CardTag } from "@/lib/photocard-tags";
+import { useBinderStore } from "@/store/useBinderStore";
 
 interface LandingPageClientProps {
   cards: Awaited<ReturnType<typeof getTopPhotoCards>>;
-}
-
-// Infer card types from version field (matches lib/photocard-guide.ts logic)
-function inferCardType(version: string | null): string | null {
-  if (!version) return null;
-  const lower = version.toLowerCase();
-  const pobKeywords = ["pob", "weverse", "soundwave", "makestar", "공방", "특전", "럭키드로우"];
-  if (pobKeywords.some((kw) => lower.includes(kw))) return "type-pob";
-  if (lower.includes("hologram")) return "type-hologram";
-  if (lower.includes("rare") || lower.includes("limited")) return "type-rare";
-  return "type-standard";
 }
 
 export function LandingPageClient({ cards }: LandingPageClientProps) {
   const gridRef = useRef<HTMLDivElement>(null);
   const [groupFilter, setGroupFilter] = useState<string | null>(null);
   const [cardTypeFilters, setCardTypeFilters] = useState<Set<string>>(new Set());
+  const [memberFilters, setMemberFilters] = useState<Set<string>>(new Set());
   const [isBinderOpen, setIsBinderOpen] = useState(false);
+
+  // InstantMultiSearch's mega-dropdown collection column (wish/owned/wtt/wts)
+  // writes here directly — see useBinderStore's activeQuickFilter comment.
+  const activeQuickFilter = useBinderStore((state) => state.activeQuickFilter);
+  const searchQuery = useBinderStore((state) => state.searchQuery);
+  const resetQuickFilter = useBinderStore((state) => state.resetQuickFilter);
+  const wishCards = useBinderStore((state) => state.wishCards);
+  const ownedCards = useBinderStore((state) => state.ownedCards);
+  const wttCards = useBinderStore((state) => state.wttCards);
+  const wtsCards = useBinderStore((state) => state.wtsCards);
 
   const groups = useMemo(() => {
     const seen = new Map<string, string>();
@@ -40,7 +42,18 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
     return Array.from(seen, ([slug, name]) => ({ slug, name }));
   }, [cards]);
 
-  // Filter by group and card types
+  const collectionSet =
+    activeQuickFilter === "wishlist"
+      ? wishCards
+      : activeQuickFilter === "owned"
+        ? ownedCards
+        : activeQuickFilter === "wtt"
+          ? wttCards
+          : activeQuickFilter === "wts"
+            ? wtsCards
+            : null;
+
+  // Filter by group, card type, members, and mega-dropdown quick filter
   const filteredCards = useMemo(() => {
     return cards.filter((card) => {
       // Group filter
@@ -48,13 +61,26 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
 
       // Card type filter
       if (cardTypeFilters.size > 0) {
-        const cardType = inferCardType(card.version);
-        if (!cardType || !cardTypeFilters.has(cardType)) return false;
+        const tags = inferCardTags(card);
+        if (!Array.from(cardTypeFilters).some((f) => tags.has(f as CardTag))) return false;
       }
+
+      // Member filter (match by memberName — will map to actual IDs when data available)
+      if (memberFilters.size > 0 && card.memberName) {
+        const matchedMember = Array.from(memberFilters).some((memberId) => {
+          // TODO: Map memberId to actual memberName when real member data is available
+          // For now, members are filtered by mock data — this will need updates
+          return true; // Placeholder: all pass for now
+        });
+        if (!matchedMember) return false;
+      }
+
+      // Collection/trade quick filter (wishlist/owned/wtt/wts)
+      if (collectionSet && !collectionSet.some((c) => c.cardId === card.slug)) return false;
 
       return true;
     });
-  }, [cards, groupFilter, cardTypeFilters]);
+  }, [cards, groupFilter, cardTypeFilters, memberFilters, collectionSet]);
 
   const handleRemoveGroupFilter = () => {
     setGroupFilter(null);
@@ -69,7 +95,16 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
   const handleResetFilters = () => {
     setGroupFilter(null);
     setCardTypeFilters(new Set());
+    setMemberFilters(new Set());
+    resetQuickFilter();
   };
+
+  const hasActiveFilters =
+    !!groupFilter ||
+    cardTypeFilters.size > 0 ||
+    memberFilters.size > 0 ||
+    !!activeQuickFilter ||
+    searchQuery.trim() !== "";
 
   return (
     <>
@@ -82,16 +117,25 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
           onSelectGroup={setGroupFilter}
           selectedCardTypes={cardTypeFilters}
           onSelectCardTypes={setCardTypeFilters}
+          selectedMembers={memberFilters}
+          onSelectMembers={setMemberFilters}
           onResetFilters={handleResetFilters}
+          hasActiveFilters={hasActiveFilters}
         />
 
         {/* Active Filter Chips */}
-        {(groupFilter || cardTypeFilters.size > 0) && (
+        {(groupFilter || cardTypeFilters.size > 0 || memberFilters.size > 0) && (
           <FilterChips
             groupFilter={groupFilter}
             cardTypeFilters={cardTypeFilters}
+            memberFilters={memberFilters}
             onRemoveGroup={handleRemoveGroupFilter}
             onRemoveCardType={handleRemoveCardTypeFilter}
+            onRemoveMember={(memberId) => {
+              const updated = new Set(memberFilters);
+              updated.delete(memberId);
+              setMemberFilters(updated);
+            }}
             groups={groups}
           />
         )}
