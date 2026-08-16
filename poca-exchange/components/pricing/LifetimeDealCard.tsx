@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Copy, Check, Share2 } from 'lucide-react';
 import {
-  getPriceInfo,
+  PRICING_CONFIG,
   formatCurrency,
   getRecommendedCurrency,
-  type PriceInfo,
+  calculateReferralBenefit,
 } from '@/lib/config/pricing.config';
 import { generateReferralLink } from '@/lib/utils/referral';
 
@@ -31,7 +31,7 @@ export function LifetimeDealCard({
   userName,
   onPurchase,
 }: LifetimeDealCardProps) {
-  const [priceInfo, setPriceInfo] = useState<PriceInfo | null>(null);
+  const [priceInfo, setPriceInfo] = useState<{ original: number; final: number } | null>(null);
   const [recommendedCurrency, setRecommendedCurrency] = useState<Currency>('USD');
   const [copied, setCopied] = useState(false);
   const [localizedPrices, setLocalizedPrices] = useState<Record<Currency, string>>({
@@ -44,19 +44,22 @@ export function LifetimeDealCard({
 
   // 클라이언트사이드 초기화
   useEffect(() => {
-    const info = getPriceInfo();
-    setPriceInfo(info);
+    const original = PRICING_CONFIG.ORIGINAL_PRICE_USD;
+    const discountAmount = original * PRICING_CONFIG.DISCOUNT_RATE;
+    const final = original - discountAmount;
+
+    setPriceInfo({ original, final });
 
     const currency = getRecommendedCurrency();
     setRecommendedCurrency(currency);
 
     // 모든 통화로 변환
     const prices: Record<Currency, string> = {
-      USD: formatCurrency(info.finalUSD, 'USD'),
-      KRW: formatCurrency(info.finalUSD, 'KRW'),
-      JPY: formatCurrency(info.finalUSD, 'JPY'),
-      EUR: formatCurrency(info.finalUSD, 'EUR'),
-      GBP: formatCurrency(info.finalUSD, 'GBP'),
+      USD: formatCurrency(final, 'USD'),
+      KRW: formatCurrency(final, 'KRW'),
+      JPY: formatCurrency(final, 'JPY'),
+      EUR: formatCurrency(final, 'EUR'),
+      GBP: formatCurrency(final, 'GBP'),
     };
     setLocalizedPrices(prices);
   }, []);
@@ -73,6 +76,8 @@ export function LifetimeDealCard({
 
   const referralLink = referralCode ? generateReferralLink(referralCode) : null;
   const displayPrice = localizedPrices[recommendedCurrency];
+  const referrerReward = PRICING_CONFIG.REFERRER_PER_USER_CREDITS / PRICING_CONFIG.POINTS_PER_USD;
+  const refereeWelcome = PRICING_CONFIG.REFEREE_WELCOME_CREDITS / PRICING_CONFIG.POINTS_PER_USD;
 
   const handleCopyLink = async () => {
     if (referralLink) {
@@ -89,7 +94,7 @@ export function LifetimeDealCard({
       try {
         await navigator.share({
           title: 'stanpc 평생 거래',
-          text: `내 추천 링크로 회원가입하면 ${priceInfo.refereeCredits}크레딧을 받을 수 있어요!`,
+          text: `내 추천 링크로 회원가입하면 ${PRICING_CONFIG.REFEREE_WELCOME_CREDITS}크레딧을 받을 수 있어요!`,
           url: referralLink,
         });
       } catch (error) {
@@ -115,11 +120,11 @@ export function LifetimeDealCard({
 
       {/* 가격 */}
       <div className="space-y-3 rounded-xl bg-white dark:bg-neutral-900/50 p-4 border border-neutral-100 dark:border-neutral-800">
-        {priceInfo.discountRate > 0 && (
+        {PRICING_CONFIG.DISCOUNT_RATE > 0 && (
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-sm text-neutral-600 dark:text-neutral-400">원가</span>
             <span className="text-lg line-through text-neutral-400">
-              {formatCurrency(priceInfo.originalUSD, recommendedCurrency)}
+              {formatCurrency(priceInfo.original, recommendedCurrency)}
             </span>
           </div>
         )}
@@ -129,9 +134,9 @@ export function LifetimeDealCard({
           </span>
           <div className="text-4xl font-bold text-[#FF2A55]">{displayPrice}</div>
         </div>
-        {priceInfo.discountRate > 0 && (
+        {PRICING_CONFIG.DISCOUNT_RATE > 0 && (
           <div className="text-xs text-green-600 dark:text-green-400">
-            {(priceInfo.discountRate * 100).toFixed(0)}% 할인
+            {(PRICING_CONFIG.DISCOUNT_RATE * 100).toFixed(0)}% 할인
           </div>
         )}
       </div>
@@ -152,7 +157,7 @@ export function LifetimeDealCard({
         </li>
         <li className="flex items-center gap-2">
           <span className="text-[#FF2A55]">✓</span>
-          추천인 수수료 {priceInfo.referrerCredits} 크레딧
+          추천인 수수료 {formatCurrency(referrerReward)} ({PRICING_CONFIG.REFERRER_PER_USER_CREDITS}P 무료)
         </li>
       </ul>
 
@@ -252,8 +257,8 @@ export function LifetimeDealCard({
           <strong>평생 접근권이란?</strong> 한 번의 구매로 평생 이용할 수 있습니다.
         </div>
         <div>
-          <strong>추천 크레딧은?</strong> 친구가 가입하면 {priceInfo.referrerCredits}
-          크레딧을 받습니다.
+          <strong>추천 크레딧은?</strong> 친구가 가입하면 {PRICING_CONFIG.REFERRER_PER_USER_CREDITS}
+          포인트({formatCurrency(referrerReward)})를 받습니다.
         </div>
       </div>
     </div>

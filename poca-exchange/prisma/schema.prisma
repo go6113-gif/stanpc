@@ -100,6 +100,15 @@ model User {
   // Referral logs
   referralLogs ReferralLog[]
 
+  // Credit transactions
+  creditTransactions CreditTransaction[] @relation("CreditTransactions")
+
+  // Digital rewards
+  digitalRewards UserDigitalReward[] @relation("DigitalRewards")
+
+  // Referral code stats
+  referralCodeStats ReferralCodeStats? @relation("ReferralCodeStats")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -956,6 +965,9 @@ model ReferralLog {
   paymentId     String?  @map("payment_id") // Stripe payment ID (향후)
   paymentAmount Float?   @map("payment_amount") // 결제 금액 (USD)
 
+  // Credit transaction link
+  creditTransactions CreditTransaction[]
+
   // 타임스탐프
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
@@ -964,4 +976,99 @@ model ReferralLog {
   @@index([refereeEmail])
   @@index([refereeId])
   @@map("referral_logs")
+}
+
+// ---
+// Credit Transaction — 크레딧 거래 로그 (지급/소비)
+// 각 크레딧의 출처와 용도, 시간을 추적합니다.
+// 지급: 추천 완료, 신규 가입 보너스
+// 소비: 년간 갱신비, 디지털 특전 구입
+// ---
+enum CreditTransactionType {
+  REFERRAL_AWARDED     @map("REFERRAL_AWARDED")     // 친구 추천 시 지급
+  WELCOME_BONUS        @map("WELCOME_BONUS")        // 신규 가입 웰컴 보너스
+  ANNUAL_RENEWAL_DEDUCT @map("ANNUAL_RENEWAL_DEDUCT") // 년간 갱신비 차감
+  REWARD_REDEEMED      @map("REWARD_REDEEMED")      // 디지털 특전 구입 시 차감
+  REVOKED              @map("REVOKED")              // 환불 시 회수
+
+  @@map("credit_transaction_type")
+}
+
+model CreditTransaction {
+  id              String                 @id @default(cuid())
+
+  userId          String                 @map("user_id")
+  user            User                   @relation("CreditTransactions", fields: [userId], references: [id], onDelete: Cascade)
+
+  type            CreditTransactionType
+  amount          Int                    // 양수: 지급, 음수: 소비
+  description     String?                // "친구 'username' 추천", "년간 갱신비", etc.
+
+  // 트랜잭션 링크 (선택사항)
+  referralLogId   String?                @map("referral_log_id")
+  referralLog     ReferralLog?           @relation(fields: [referralLogId], references: [id], onDelete: SetNull)
+
+  rewardId        String?                @map("reward_id")
+  reward          UserDigitalReward?     @relation(fields: [rewardId], references: [id], onDelete: SetNull)
+
+  createdAt       DateTime               @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("credit_transactions")
+}
+
+// ---
+// User Digital Reward — 해금된 디지털 특전 기록
+// 사용자가 충분한 크레딧을 적립해 디지털 특전을 해금했을 때의 기록
+// ---
+model UserDigitalReward {
+  id              String                 @id @default(cuid())
+
+  userId          String                 @map("user_id")
+  user            User                   @relation("DigitalRewards", fields: [userId], references: [id], onDelete: Cascade)
+
+  rewardKey       String                 @map("reward_key") // "hologram_theme", "custom_domain", etc.
+  rewardName      String                 @map("reward_name") // 한글 이름
+  requiredCredits Int                    @map("required_credits") // 해금에 필요했던 크레딧
+
+  // 특전별 설정 (예: 커스텀 도메인인 경우)
+  customValue     String?                @map("custom_value") // 도메인 선택값, etc.
+  isActive        Boolean                @default(true) @map("is_active")
+
+  // 특전 크레딧 차감 기록
+  creditTransactions CreditTransaction[]
+
+  unlockedAt      DateTime               @default(now()) @map("unlocked_at")
+  createdAt       DateTime               @default(now()) @map("created_at")
+  updatedAt       DateTime               @updatedAt @map("updated_at")
+
+  @@unique([userId, rewardKey])
+  @@index([userId])
+  @@index([rewardKey])
+  @@map("user_digital_rewards")
+}
+
+// ---
+// Referral Code — 추천 링크 통계
+// 사용자의 추천 링크가 얼마나 많은 신규 가입을 유도했는지 추적
+// ---
+model ReferralCodeStats {
+  id              String                 @id @default(cuid())
+
+  userId          String                 @unique @map("user_id")
+  user            User                   @relation("ReferralCodeStats", fields: [userId], references: [id], onDelete: Cascade)
+
+  referralCode    String                 @unique @map("referral_code")
+
+  // 통계
+  totalReferrals  Int                    @default(0) @map("total_referrals") // 총 추천인 수
+  successfulConversions Int              @default(0) @map("successful_conversions") // 결제 완료인 수
+  totalCreditsAwarded Int                @default(0) @map("total_credits_awarded") // 지급된 총 크레딧
+
+  createdAt       DateTime               @default(now()) @map("created_at")
+  updatedAt       DateTime               @updatedAt @map("updated_at")
+
+  @@map("referral_code_stats")
 }

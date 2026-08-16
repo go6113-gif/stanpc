@@ -112,6 +112,11 @@ export function ProfileProgress({ userId, collections: initialCollections }: Pro
         <p className="text-white/60">주요 그룹별 완성도</p>
       </div>
 
+      {collections.length === 0 ? (
+        <div className="text-center py-8 text-white/60">
+          아직 수집한 카드가 없습니다. 바인더에서 카드를 추가해보세요!
+        </div>
+      ) : (
       <motion.div
         variants={container}
         initial="hidden"
@@ -156,6 +161,7 @@ export function ProfileProgress({ userId, collections: initialCollections }: Pro
           </motion.div>
         ))}
       </motion.div>
+      )}
     </div>
   );
 }

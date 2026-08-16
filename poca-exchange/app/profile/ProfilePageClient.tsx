@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Share2 } from "lucide-react";
@@ -22,6 +23,7 @@ import { StanpcExploreCards } from "@/components/landing/StanpcExploreCards";
  * - StanpcExploreCards: 가이드 아카이브
  */
 export default function ProfilePageClient() {
+  const { data: session } = useSession();
   const ownedCards = useBinderStore((state) => state.ownedCards);
   const wishCards = useBinderStore((state) => state.wishCards);
   const wttCards = useBinderStore((state) => state.wttCards);
@@ -66,8 +68,8 @@ export default function ProfilePageClient() {
     return calculateBinderStats(ownedCards);
   }, [ownedCards]);
 
-  // 데모 사용자 ID (실제 환경에서는 세션에서 가져오기)
-  const userId = "demo-user";
+  // 세션에서 사용자 ID 가져오기 (없으면 demo-user)
+  const userId = session?.user?.id || "demo-user";
 
   // Web Share API
   const handleShare = async () => {

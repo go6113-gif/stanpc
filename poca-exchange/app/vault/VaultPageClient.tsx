@@ -11,9 +11,13 @@ import { BinderValueCard } from '@/components/vault/BinderValueCard';
 import { BinderGrid } from '@/components/vault/BinderGrid';
 import { VaultDashboard } from '@/components/vault/VaultDashboard';
 import { BinderShelf } from '@/components/vault/BinderShelf';
+import { SmartViewTabs } from '@/components/vault/SmartViewTabs';
+import { BulkActionBar } from '@/components/vault/BulkActionBar';
+import { AdvancedFilterPanel } from '@/components/vault/AdvancedFilterPanel';
 import { useBinderStore as useCollectionBinderStore } from '@/store/useBinderStore';
 import { useFilterStore, useVaultSync } from '@/store/useFilterStore';
 import { useAssetSelectionStore } from '@/store/useAssetSelectionStore';
+import { useVaultFilterStore } from '@/store/useVaultFilterStore';
 
 export default function VaultPageClient() {
   const router = useRouter();
@@ -28,6 +32,11 @@ export default function VaultPageClient() {
   const searchQuery = useFilterStore((state) => state.searchQuery);
   const sortBy = useFilterStore((state) => state.sortBy);
   const viewMode = useFilterStore((state) => state.viewMode);
+
+  // useVaultFilterStore (SmartViewTabs와 AdvancedFilterPanel용)
+  const vaultGroups = useVaultFilterStore((state) => state.groups);
+  const vaultMembers = useVaultFilterStore((state) => state.members);
+  const vaultTags = useVaultFilterStore((state) => state.tags);
 
   // useAssetSelectionStore
   const selectedCardIdsSet = useAssetSelectionStore((state) => state.selectedCardIds);
@@ -332,6 +341,9 @@ export default function VaultPageClient() {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        {/* SmartViewTabs - 필터 프리셋 & 커스텀 뷰 */}
+        <SmartViewTabs />
+
         {/* Binder Value Card - 상단 요약 */}
         <BinderValueCard />
 
@@ -368,72 +380,12 @@ export default function VaultPageClient() {
               </select>
             </div>
 
-            {/* Tags */}
+            {/* Advanced Filter Panel */}
             {vaultData && (
-              <div>
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">
-                  상태
-                </h3>
-                <div className="space-y-2">
-                  {vaultData.filters.tags.map((tag) => (
-                    <label
-                      key={tag}
-                      className="flex items-center gap-2 cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={tags.includes(tag)}
-                        onChange={() => toggleTag(tag)}
-                        className="rounded"
-                      />
-                      <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                        {tag}
-                      </span>
-                      <span className="text-xs text-neutral-500 dark:text-neutral-400 ml-auto">
-                        {
-                          vaultData.cards.filter((c) =>
-                            c.tags.includes(tag)
-                          ).length
-                        }
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Groups */}
-            {vaultData && (
-              <div>
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-white mb-3">
-                  그룹
-                </h3>
-                <div className="space-y-2">
-                  {vaultData.filters.groups.map((group) => (
-                    <label
-                      key={group}
-                      className="flex items-center gap-2 cursor-pointer"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={groups.includes(group)}
-                        onChange={() => toggleGroup(group)}
-                        className="rounded"
-                      />
-                      <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                        {group}
-                      </span>
-                      <span className="text-xs text-neutral-500 dark:text-neutral-400 ml-auto">
-                        {
-                          vaultData.cards.filter(
-                            (c) => c.groupName === group
-                          ).length
-                        }
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
+              <AdvancedFilterPanel
+                availableTags={vaultData.filters.tags}
+                availableGroups={vaultData.filters.groups}
+              />
             )}
 
             {/* View Mode Toggle */}
@@ -513,6 +465,24 @@ export default function VaultPageClient() {
           </div>
         </div>
       </main>
+
+      {/* Bulk Action Bar - 다중 선택 플로팅 바 */}
+      {selectMode && selectedCardIds.length > 0 && (
+        <BulkActionBar
+          selectedCount={selectedCardIds.length}
+          selectedCards={filteredCards
+            .filter((c) => selectedCardIds.includes(c.id))
+            .map((c) => ({
+              memberName: c.memberName || 'Unknown',
+              groupName: c.groupName,
+            }))}
+          vaultUrl={typeof window !== 'undefined' ? window.location.href : ''}
+          onClose={() => {
+            setSelectMode(false);
+            clearSelection();
+          }}
+        />
+      )}
     </div>
   );
 }

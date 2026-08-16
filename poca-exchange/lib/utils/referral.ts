@@ -91,7 +91,7 @@ export interface CreditTransaction {
  * 추천인 보상 크레딧 계산
  */
 export function calculateReferrerReward(): number {
-  return PRICING_CONFIG.REFERRER_REWARD_CREDITS;
+  return PRICING_CONFIG.REFERRER_PER_USER_CREDITS;
 }
 
 /**
@@ -121,7 +121,7 @@ export function getReferralSummary(
   return {
     referralCode,
     referralLink: generateReferralLink(referralCode),
-    referrerRewardUSD: PRICING_CONFIG.REFERRER_REWARD_CREDITS,
+    referrerRewardUSD: PRICING_CONFIG.REFERRER_PER_USER_CREDITS,
     refereeWelcomeCredits: PRICING_CONFIG.REFEREE_WELCOME_CREDITS,
     totalReferralsCount,
     totalCreditsEarned,

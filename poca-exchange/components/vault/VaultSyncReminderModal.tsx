@@ -38,10 +38,10 @@ export function VaultSyncReminderModal({
 
     setIsProcessing(true);
     try {
-      // 선택된 WTT/WTS 카드를 모두 VAULTED로 변경
+      // 선택된 WTT/WTS 카드를 모두 OWNED로 변경
       const cardIds = wttWtsCards.map((card) => card.cardId);
 
-      await fetch('/api/vault/card', {
+      const response = await fetch('/api/vault/card', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -49,15 +49,21 @@ export function VaultSyncReminderModal({
         body: JSON.stringify({
           userId: session.user.id,
           cardIds,
-          status: 'OWNED', // VAULTED 상태로 변경
+          status: 'OWNED',
         }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || '상태 변경 실패');
+      }
 
       markVaultSyncChecked();
       onClose();
     } catch (error) {
       console.error('Error marking cards as complete:', error);
-      alert('상태 변경 중 오류가 발생했습니다.');
+      const message = error instanceof Error ? error.message : '상태 변경 중 오류가 발생했습니다.';
+      alert(message);
     } finally {
       setIsProcessing(false);
     }

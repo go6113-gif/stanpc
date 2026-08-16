@@ -59,8 +59,18 @@ export function ProfileHeatmap({ userId, data: initialData }: ProfileHeatmapProp
         setData(heatmapData);
       } catch (error) {
         console.error("Error fetching heatmap:", error);
-        // 에러 시 빈 배열 유지
-        setData([]);
+        // 에러 시 빈 히트맵 데이터 생성 (365일)
+        const emptyData: HeatmapCell[] = [];
+        for (let i = 0; i < 365; i++) {
+          const date = new Date();
+          date.setDate(date.getDate() - (364 - i));
+          emptyData.push({
+            date: date.toISOString().split("T")[0],
+            count: 0,
+            intensity: 0,
+          });
+        }
+        setData(emptyData);
       } finally {
         setLoading(false);
       }
