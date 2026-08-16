@@ -12,6 +12,22 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "coverartarchive.org",
       },
+      {
+        protocol: "https",
+        hostname: "**.r2.cloudflarestorage.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.imgur.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.pstatic.net",
+      },
     ],
   },
   redirects: async () => [

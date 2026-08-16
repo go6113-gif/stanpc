@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PhotoCardCard, type PhotoCardData } from "./photocard-card";
+import PhotoCardDetailModal from "../modal/PhotocardDetailModal";
 
 interface HighDensityGridProps {
   cards: PhotoCardData[];
@@ -40,6 +41,7 @@ export function HighDensityGrid({
 }: HighDensityGridProps) {
   const [localCards, setLocalCards] = useState<Set<string>>(new Set());
   const [wantCards, setWantCards] = useState<Set<string>>(new Set());
+  const [selectedCard, setSelectedCard] = useState<PhotoCardData | null>(null);
 
   const handleHaveToggle = (slug: string, isHave: boolean) => {
     if (isHave) {
@@ -100,7 +102,10 @@ export function HighDensityGrid({
               onWantToggle={handleWantToggle}
               isHave={localCards.has(card.slug)}
               isWant={wantCards.has(card.slug)}
-              onCardSelect={onCardSelect}
+              onCardSelect={(card) => {
+                setSelectedCard(card);
+                onCardSelect?.(card);
+              }}
             />
           </motion.div>
         ))}
@@ -127,6 +132,19 @@ export function HighDensityGrid({
             Next →
           </button>
         </div>
+      )}
+
+      {/* Global Photo Card Detail Modal */}
+      {selectedCard && (
+        <PhotoCardDetailModal
+          card={{
+            ...selectedCard,
+            groupSlug: selectedCard.groupSlug,
+            memberSlug: selectedCard.memberSlug,
+          }}
+          isOpen={!!selectedCard}
+          onClose={() => setSelectedCard(null)}
+        />
       )}
     </div>
   );

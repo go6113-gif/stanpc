@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { LandingHeroSection } from "./landing-hero-section";
+import { StanpcExploreCards } from "./StanpcExploreCards";
 import { LandingFilterBar } from "./landing-filter-bar";
 import { FilterChips } from "./filter-chips";
 import { HighDensityGrid } from "@/components/high-density/high-density-grid";
@@ -110,6 +111,9 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
     <>
       <main className="min-h-screen bg-[#0F0F12]">
         <LandingHeroSection gridRef={gridRef} />
+
+        {/* StanPC Explore Cards Section */}
+        <StanpcExploreCards />
 
         <LandingFilterBar
           groups={groups}

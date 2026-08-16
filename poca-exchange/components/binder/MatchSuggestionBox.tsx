@@ -5,6 +5,7 @@ import { Zap, AlertCircle, Loader } from "lucide-react";
 import { motion } from "framer-motion";
 import { TradeMatchResult } from "@/lib/types/trade";
 import { useBinderStore } from "@/store/useBinderStore";
+import { ContactChannelModal, UserProfile } from "@/components/trade/ContactChannelModal";
 
 interface MatchSuggestionBoxProps {
   onContactClick?: (match: TradeMatchResult) => void;
@@ -21,6 +22,8 @@ export function MatchSuggestionBox({ onContactClick }: MatchSuggestionBoxProps) 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState<TradeMatchResult | null>(null);
 
   // Zustand 스토어에서 바인더 카드 읽기
   const ownedCards = useBinderStore((state) => state.ownedCards);
@@ -87,7 +90,43 @@ export function MatchSuggestionBox({ onContactClick }: MatchSuggestionBoxProps) 
     return null;
   }
 
+  // selectedMatch에서 UserProfile 생성
+  const mockUserProfile: UserProfile | null = selectedMatch
+    ? {
+        username: "익명 거래자",
+        trustBadges: [
+          { label: "신규", icon: "🌟" },
+          { label: "친절", icon: "😊" },
+        ],
+        externalChannels: {
+          twitter:
+            selectedMatch.contactChannel.type === "twitter"
+              ? selectedMatch.contactChannel.value
+              : undefined,
+          instagram:
+            selectedMatch.contactChannel.type === "instagram"
+              ? selectedMatch.contactChannel.value
+              : undefined,
+          kakaoOpenChatLink:
+            selectedMatch.contactChannel.type === "openKakao"
+              ? selectedMatch.contactChannel.value
+              : undefined,
+        },
+      }
+    : null;
+
   return (
+    <>
+      {mockUserProfile && (
+        <ContactChannelModal
+          isOpen={isContactModalOpen}
+          onClose={() => {
+            setIsContactModalOpen(false);
+            setSelectedMatch(null);
+          }}
+          userProfile={mockUserProfile}
+        />
+      )}
     <div className="rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 overflow-hidden dark:from-amber-950/20 dark:to-orange-950/20 dark:border-amber-900/30">
       {/* 헤더 */}
       <div className="flex items-center justify-between gap-3 bg-gradient-to-r from-amber-400 to-orange-400 dark:from-amber-600 dark:to-orange-600 px-4 py-3">
@@ -221,7 +260,11 @@ export function MatchSuggestionBox({ onContactClick }: MatchSuggestionBoxProps) 
 
                   <button
                     type="button"
-                    onClick={() => onContactClick?.(match)}
+                    onClick={() => {
+                      setSelectedMatch(match);
+                      setIsContactModalOpen(true);
+                      onContactClick?.(match);
+                    }}
                     className="px-3 py-1.5 text-xs font-bold rounded-lg bg-nomad-red text-white hover:bg-red-600 transition-all group-hover:shadow-md"
                   >
                     연락하기
@@ -241,5 +284,6 @@ export function MatchSuggestionBox({ onContactClick }: MatchSuggestionBoxProps) 
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { formatMultiCurrency } from "@/lib/format";
 import { buildPhotocardGuide } from "@/lib/photocard-guide";
-import PhotoCardDetailModal from "../modal/PhotocardDetailModal";
 
 export interface PhotoCardData {
   slug: string;
@@ -50,21 +49,35 @@ export function PhotoCardCard({
   onCardSelect,
 }: PhotoCardCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isTouchDevice] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
-  );
+  const [lastClickTime, setLastClickTime] = useState(0);
 
-  const handleClick = (e: React.MouseEvent) => {
+  // 싱글 클릭: 카드 뒤집기 토글
+  const handleSingleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (isTouchDevice && !isFlipped) {
-      // 터치 디바이스: 첫 탭은 플립
-      setIsFlipped(true);
-    } else if (!isTouchDevice || isFlipped) {
-      // 데스크톱: 클릭 시 즉시 모달 열기, 터치: 플립 후 다시 탭하면 모달
-      setIsModalOpen(true);
-      onCardSelect?.(card);
+    setIsFlipped((prev) => !prev);
+  };
+
+  // 더블 클릭: 상세 모달 오픈
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onCardSelect?.(card);
+  };
+
+  // 싱글 클릭과 더블 클릭 구분 (debounce 방식)
+  const handleCardClick = (e: React.MouseEvent) => {
+    const now = Date.now();
+    const timeSinceLastClick = now - lastClickTime;
+
+    if (timeSinceLastClick < 300) {
+      // 더블 클릭으로 감지
+      handleDoubleClick(e);
+      setLastClickTime(0); // 리셋
+    } else {
+      // 싱글 클릭
+      setLastClickTime(now);
+      handleSingleClick(e);
     }
   };
 
@@ -76,15 +89,13 @@ export function PhotoCardCard({
       className="relative aspect-[2.5/3.5] w-full cursor-pointer"
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      onClick={handleClick}
+      onClick={handleCardClick}
     >
         <motion.div
           className="relative h-full w-full cursor-pointer preserve-3d"
           initial={false}
           animate={{ rotateY: isFlipped ? 180 : 0 }}
           transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-          onMouseEnter={() => !isTouchDevice && setIsFlipped(true)}
-          onMouseLeave={() => !isTouchDevice && setIsFlipped(false)}
           style={{
             transformStyle: "preserve-3d",
           } as any}
@@ -172,51 +183,82 @@ export function PhotoCardCard({
             </div>
           </motion.div>
 
-          {/* Back (Flipped) */}
+          {/* Back (Spec) */}
           <motion.div
-            className="absolute inset-0 rounded-lg border border-white/5 bg-gradient-to-br from-[#1A1A1E] to-[#0F0F12] p-4 flex flex-col justify-between"
+            className="absolute inset-0 rounded-lg border border-white/5 bg-gradient-to-br from-[#1A1A1E] to-[#0F0F12] p-4 flex flex-col justify-between overflow-y-auto"
             style={{
               backfaceVisibility: "hidden",
               WebkitBackfaceVisibility: "hidden",
               rotateY: 180,
             } as any}
           >
-            {/* Price section */}
-            {card.estimatedPrice ? (
-              <div className="space-y-2.5">
-                <p className="text-sm font-semibold text-white/50">
-                  Est. Price
-                </p>
-                <p className="text-base font-bold text-[#FF2A55]">
-                  {formatMultiCurrency(card.estimatedPrice)}
-                </p>
-              </div>
-            ) : (
+            {/* Spec Info */}
+            <div className="space-y-3">
+              {/* Group/Member */}
               <div>
-                <p className="text-sm font-semibold text-white/50">
-                  Est. Price
+                <p className="text-xs font-semibold text-white/40">그룹</p>
+                <p className="text-sm font-bold text-white leading-tight">
+                  {displayGroupName}
                 </p>
-                <p className="text-base text-white/30">TBA</p>
               </div>
-            )}
+              {card.memberName && (
+                <div>
+                  <p className="text-xs font-semibold text-white/40">멤버</p>
+                  <p className="text-sm font-bold text-white leading-tight">
+                    {displayMemberName}
+                  </p>
+                </div>
+              )}
+
+              {/* Release Type & Album */}
+              {card.album?.title && (
+                <div>
+                  <p className="text-xs font-semibold text-white/40">앨범</p>
+                  <p className="text-sm font-bold text-white/80 leading-tight truncate">
+                    {card.album.title}
+                  </p>
+                </div>
+              )}
+
+              {/* Version */}
+              {card.version && (
+                <div>
+                  <p className="text-xs font-semibold text-white/40">버전</p>
+                  <p className="text-sm font-bold text-white leading-tight">
+                    {card.version}
+                  </p>
+                </div>
+              )}
+
+              {/* Price */}
+              {card.estimatedPrice ? (
+                <div className="pt-2 border-t border-white/10">
+                  <p className="text-xs font-semibold text-white/40">시세</p>
+                  <p className="text-base font-bold text-[#FF2A55]">
+                    {formatMultiCurrency(card.estimatedPrice)}
+                  </p>
+                </div>
+              ) : null}
+            </div>
 
             {/* Action buttons */}
-            <div className="space-y-2.5">
+            <div className="space-y-2 pt-3 border-t border-white/10">
               <button
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
                   onWantToggle?.(card.slug, !isWant);
                 }}
-                className={`w-full rounded-lg px-4 py-2.5 text-sm font-bold transition-colors ${
+                className={`w-full rounded-lg px-3 py-2 text-xs font-bold transition-colors ${
                   isWant
                     ? "bg-[#FF2A55] text-white"
                     : "border border-white/20 bg-white/5 text-white hover:bg-white/10"
                 }`}
               >
                 <Heart
-                  size={14}
-                  className="mr-1.5 inline"
+                  size={12}
+                  className="mr-1 inline"
                   fill={isWant ? "currentColor" : "none"}
                 />
                 Wish
@@ -225,25 +267,20 @@ export function PhotoCardCard({
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
+                  onHaveToggle?.(card.slug, !isHave);
                 }}
-                className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-bold text-white hover:bg-white/10 transition-colors"
+                className={`w-full rounded-lg px-3 py-2 text-xs font-bold transition-colors ${
+                  isHave
+                    ? "bg-green-600 text-white"
+                    : "border border-white/20 bg-white/5 text-white hover:bg-white/10"
+                }`}
               >
-                🔍 AI Scan
+                ◆ Owned
               </button>
             </div>
           </motion.div>
         </motion.div>
-
-      {/* Detail Modal - Nomad List style overlay */}
-      <PhotoCardDetailModal
-        card={{
-          ...card,
-          groupSlug: card.groupSlug,
-          memberSlug: card.memberSlug,
-        }}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
     </motion.div>
   );
 }

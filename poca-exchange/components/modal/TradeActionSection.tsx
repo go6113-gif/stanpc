@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingCart, Send, Heart, BookmarkCheck, DollarSign, ArrowRightLeft, Target } from "lucide-react";
+import { ShoppingCart, Send, Heart, BookmarkCheck, DollarSign, ArrowRightLeft, Target, Share2 } from "lucide-react";
+import { TwitterWttCardModal } from "@/components/share/TwitterWttCardModal";
 
 type TradeMode = "wts" | "wtb" | "wtt";
 
@@ -30,6 +31,7 @@ export function TradeActionSection({
   const [tradeMode, setTradeMode] = useState<TradeMode>("wts");
   const [isOwned, setIsOwned] = useState(initialOwned);
   const [isWished, setIsWished] = useState(initialWished);
+  const [isTwitterModalOpen, setIsTwitterModalOpen] = useState(false);
 
   // WTS (Willing To Sell) — 판매 제안
   const [wtsPrice, setWtsPrice] = useState<string>("15000");
@@ -275,14 +277,25 @@ export function TradeActionSection({
             3장 이상의 중복된 희망 카드가 있는 사용자에게 교환 매칭 알림을 받습니다
           </p>
 
-          <button
-            type="button"
-            disabled={wttMembers.length === 0}
-            className="w-full rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
-          >
-            <ArrowRightLeft size={16} />
-            교환 제안 등록
-          </button>
+          <div className="space-y-2">
+            <button
+              type="button"
+              disabled={wttMembers.length === 0}
+              className="w-full rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+            >
+              <ArrowRightLeft size={16} />
+              교환 제안 등록
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsTwitterModalOpen(true)}
+              className="w-full rounded-lg border border-[#1D9BF0]/30 bg-[#1D9BF0]/10 px-4 py-2.5 text-sm font-bold text-[#1D9BF0] hover:bg-[#1D9BF0]/20 transition-all flex items-center justify-center gap-2"
+            >
+              <Share2 size={16} />
+              𝕏 포카교환 트윗 올리기
+            </button>
+          </div>
         </div>
       )}
 
@@ -295,6 +308,22 @@ export function TradeActionSection({
           </span>
         </p>
       </div>
+
+      {/* Twitter WTT Modal */}
+      <TwitterWttCardModal
+        isOpen={isTwitterModalOpen}
+        onClose={() => setIsTwitterModalOpen(false)}
+        haveCard={{
+          cardName,
+          memberName: cardName?.split(" ")[0] || "Unknown",
+          groupName: "StanPC",
+        }}
+        wishCard={{
+          memberName: wttMembers[0] || "원하는 멤버",
+          groupName: "StanPC",
+        }}
+        tradeId={cardId || "share"}
+      />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { VaultResponse, VaultCardItem } from '@/lib/api-types';
 import VaultAuthModal from '@/components/wiki/VaultAuthModal';
 import { BinderValueCard } from '@/components/vault/BinderValueCard';
+import { useBinderStore } from '@/store/useBinderStore';
 
 interface FilterState {
   tags: string[];
@@ -17,7 +18,6 @@ export default function VaultPage() {
   const [vaultData, setVaultData] = useState<VaultResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isUnauthorized, setIsUnauthorized] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     tags: [],
     groups: [],
@@ -26,10 +26,88 @@ export default function VaultPage() {
   const [sortBy, setSortBy] = useState<'recent' | 'price-high' | 'price-low'>('recent');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
+  // Zustand 로컬 바인더 (비회원 사용)
+  const ownedCards = useBinderStore((state) => state.ownedCards);
+  const wishCards = useBinderStore((state) => state.wishCards);
+
   useEffect(() => {
     const fetchVaultData = async () => {
       try {
         setLoading(true);
+
+        // 로컬 바인더가 있으면 사용
+        if (ownedCards.length > 0 || wishCards.length > 0) {
+          const mockVaultData: VaultResponse = {
+            user: {
+              id: 'guest',
+              name: '비회원',
+              image: null,
+              collectorIndex: 0,
+            },
+            cards: [
+              ...ownedCards.map((card) => ({
+                id: card.cardId,
+                cardId: card.cardId,
+                cardSlug: card.cardId,
+                cardName: card.cardName,
+                memberName: card.memberName || 'Unknown',
+                groupName: card.groupName,
+                albumTitle: null,
+                imageUrl: card.imageUrl || null,
+                thumbImagePath: null,
+                tags: ['Owned'],
+                note: null,
+                estimatedPrice: null,
+                ownedCount: 1,
+                wishedCount: 0,
+                addedAt: new Date(card.addedAt).toISOString(),
+                updatedAt: new Date(card.addedAt).toISOString(),
+                compatibleSleeves: [],
+              })),
+              ...wishCards.map((card) => ({
+                id: card.cardId,
+                cardId: card.cardId,
+                cardSlug: card.cardId,
+                cardName: card.cardName,
+                memberName: card.memberName || 'Unknown',
+                groupName: card.groupName,
+                albumTitle: null,
+                imageUrl: card.imageUrl || null,
+                thumbImagePath: null,
+                tags: ['Wish'],
+                note: null,
+                estimatedPrice: null,
+                ownedCount: 0,
+                wishedCount: 1,
+                addedAt: new Date(card.addedAt).toISOString(),
+                updatedAt: new Date(card.addedAt).toISOString(),
+                compatibleSleeves: [],
+              })),
+            ],
+            stats: {
+              totalCards: ownedCards.length + wishCards.length,
+              inHandCount: ownedCards.length,
+              wishlistCount: wishCards.length,
+              tradeCount: 0,
+              completeSetCount: 0,
+            },
+            filters: {
+              tags: ['Owned', 'Wish'],
+              groups: Array.from(
+                new Set([
+                  ...ownedCards.map((c) => c.groupName),
+                  ...wishCards.map((c) => c.groupName),
+                ])
+              ),
+            },
+            timestamp: new Date().toISOString(),
+          };
+          setVaultData(mockVaultData);
+          setError(null);
+          return;
+        }
+
+        // API 시도 (로그인된 경우)
         const params = new URLSearchParams();
         if (filters.tags.length > 0) {
           filters.tags.forEach((tag) => params.append('filterTags', tag));
@@ -42,9 +120,29 @@ export default function VaultPage() {
         const response = await fetch(`/api/vault?${params.toString()}`);
         if (!response.ok) {
           if (response.status === 401) {
-            setIsUnauthorized(true);
+            // API 실패 시 로컬 빈 상태로 표시
+            setVaultData({
+              user: {
+                id: 'guest',
+                name: '비회원',
+                image: null,
+                collectorIndex: 0,
+              },
+              cards: [],
+              stats: {
+                totalCards: 0,
+                inHandCount: 0,
+                wishlistCount: 0,
+                tradeCount: 0,
+                completeSetCount: 0,
+              },
+              filters: {
+                tags: [],
+                groups: [],
+              },
+              timestamp: new Date().toISOString(),
+            });
             setError(null);
-            setVaultData(null);
             return;
           }
           throw new Error(`Failed to fetch vault: ${response.status}`);
@@ -52,18 +150,16 @@ export default function VaultPage() {
         const data: VaultResponse = await response.json();
         setVaultData(data);
         setError(null);
-        setIsUnauthorized(false);
       } catch (err) {
         console.error('Error fetching vault data:', err);
         setError(err instanceof Error ? err.message : 'Failed to load vault');
-        setIsUnauthorized(false);
       } finally {
         setLoading(false);
       }
     };
 
     fetchVaultData();
-  }, [filters, sortBy]);
+  }, [filters, sortBy, ownedCards, wishCards]);
 
   // 필터링 및 정렬
   const filteredCards = useMemo(() => {
@@ -348,25 +444,13 @@ export default function VaultPage() {
 
           {/* Right: Cards */}
           <div className="lg:col-span-3">
-            {isUnauthorized ? (
-              <div className="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950 p-8">
-                <div className="text-center">
-                  <h2 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-2">
-                    🔐 로그인이 필요한 서비스입니다
-                  </h2>
-                  <p className="text-sm text-blue-700 dark:text-blue-300 mb-6">
-                    100% 평생 무료 - My Vault에서 당신의 포토카드 컬렉션을 관리하고 자랑하세요
-                  </p>
-                  <VaultAuthModal isOpen={isUnauthorized} onClose={() => {}} />
-                </div>
-              </div>
-            ) : error ? (
+            {error ? (
               <div className="rounded-lg border-2 border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-950 p-6">
                 <p className="text-red-700 dark:text-red-300">
                   오류가 발생했습니다: {error}
                 </p>
               </div>
-            ) : loading ? (
+            ) : loading || !vaultData ? (
               <div className="space-y-4">
                 <div className="h-8 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
@@ -378,13 +462,15 @@ export default function VaultPage() {
                   ))}
                 </div>
               </div>
-            ) : filteredCards.length === 0 ? (
+            ) : vaultData && filteredCards.length === 0 ? (
               <div className="rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 p-12 text-center">
                 <p className="text-neutral-600 dark:text-neutral-400">
-                  선택한 조건에 맞는 카드가 없습니다
+                  {vaultData.cards.length === 0
+                    ? '카드를 추가해보세요. 그리드에서 카드를 클릭해 저장할 수 있습니다.'
+                    : '선택한 조건에 맞는 카드가 없습니다'}
                 </p>
               </div>
-            ) : (
+            ) : vaultData && (
               <>
                 <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-400">
                   {filteredCards.length}개의 카드
