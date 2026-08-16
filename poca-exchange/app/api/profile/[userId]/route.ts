@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { transformUserBinderCardsToBinderCards } from "@/lib/utils/cardTransform";
+import { calculateTotalPortfolioCompletion } from "@/lib/utils/completionEngine";
 
 export const dynamic = "force-dynamic";
 
 /**
  * GET /api/profile/[userId]
- * 사용자 프로필 데이터 조회 (Stub - DB 구현 대기)
+ * 사용자 프로필 데이터 조회 (DB 연동)
  *
  * Response:
  * {
@@ -20,27 +23,63 @@ export async function GET(
   try {
     const { userId } = await params;
 
-    // TODO: Prisma 쿼리로 실제 데이터 조회
-    // 현재는 스텁 응답으로 API 계약만 정의
+    // 사용자 정보 조회
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        collectorIndex: true,
+        mannerScore: true,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    // 사용자의 바인더 카드 조회
+    const binderCards = await prisma.userBinderCard.findMany({
+      where: { userId },
+      include: {
+        card: {
+          include: {
+            group: { select: { nameEn: true } },
+            member: { select: { nameEn: true } },
+          },
+        },
+      },
+    });
+
+    // 상태별 카운트
+    const ownedCount = binderCards.filter((b: any) => b.status === "OWNED").length;
+    const wishedCount = binderCards.filter((b: any) => b.status === "WTB").length;
+    const wttCount = binderCards.filter((b: any) => b.status === "WTT").length;
+
+    // BinderCard 배열로 변환 (OWNED 상태만)
+    const ownedBinderCards = transformUserBinderCardsToBinderCards(
+      binderCards.filter((b: any) => b.status === "OWNED" && b.card.group)
+    );
+
+    // 완성도 계산
+    const completion = calculateTotalPortfolioCompletion(ownedBinderCards);
 
     return NextResponse.json(
       {
-        user: {
-          id: userId,
-          email: "user@example.com",
-          name: "Collector",
-          collectorIndex: 385,
-          mannerScore: 38.2,
-        },
+        user,
         stats: {
-          ownedCount: 42,
-          wishedCount: 15,
-          wttCount: 8,
+          ownedCount,
+          wishedCount,
+          wttCount,
         },
         completion: {
-          owned: 42,
-          total: 220,
-          percentage: 19.1,
+          owned: completion.owned,
+          total: completion.total,
+          percentage: completion.percentage,
         },
       },
       { status: 200 }

@@ -1,22 +1,28 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { VaultResponse, VaultCardItem } from '@/lib/api-types';
+import { Share2, Check } from 'lucide-react';
 import VaultAuthModal from '@/components/wiki/VaultAuthModal';
 import { BinderValueCard } from '@/components/vault/BinderValueCard';
 import { BinderGrid } from '@/components/vault/BinderGrid';
 import { VaultDashboard } from '@/components/vault/VaultDashboard';
 import { BinderShelf } from '@/components/vault/BinderShelf';
 import { useBinderStore as useCollectionBinderStore } from '@/store/useBinderStore';
-import { useVaultStore } from '@/store/useVaultStore';
 import { useFilterStore, useVaultSync } from '@/store/useFilterStore';
+import { useAssetSelectionStore } from '@/store/useAssetSelectionStore';
 
 export default function VaultPage() {
+  const router = useRouter();
   const [vaultData, setVaultData] = useState<VaultResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectMode, setSelectMode] = useState(false);
 
   // useFilterStore에서 필터 상태 읽기
   const tags = useFilterStore((state) => state.tags);
@@ -24,6 +30,13 @@ export default function VaultPage() {
   const searchQuery = useFilterStore((state) => state.searchQuery);
   const sortBy = useFilterStore((state) => state.sortBy);
   const viewMode = useFilterStore((state) => state.viewMode);
+
+  // useAssetSelectionStore
+  const selectedCardIds = useAssetSelectionStore((state) =>
+    Array.from(state.selectedCardIds)
+  );
+  const toggleCardSelection = useAssetSelectionStore((state) => state.toggleCardSelection);
+  const clearSelection = useAssetSelectionStore((state) => state.clearSelection);
 
   // useFilterStore 액션들
   const setTags = useFilterStore((state) => state.setTags);
@@ -235,12 +248,36 @@ export default function VaultPage() {
                 당신의 포토카드 컬렉션을 관리하고 자랑하세요
               </p>
             </div>
-            <Link
-              href="/card-generator"
-              className="inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
-            >
-              📸 자랑 카드 만들기
-            </Link>
+            <div className="flex items-center gap-3">
+              {selectMode && selectedCardIds.length > 0 && (
+                <button
+                  onClick={() => router.push('/export')}
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#FF2A55] px-4 py-2 text-sm font-semibold text-white hover:bg-[#FF2A55]/90 transition-colors"
+                >
+                  <Share2 className="w-4 h-4" />
+                  SNS 내보내기 ({selectedCardIds.length})
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  setSelectMode(!selectMode);
+                  if (selectMode) clearSelection();
+                }}
+                className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+                  selectMode
+                    ? 'bg-[#FF2A55] text-white hover:bg-[#FF2A55]/90'
+                    : 'bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-white hover:bg-neutral-300 dark:hover:bg-neutral-700'
+                }`}
+              >
+                {selectMode ? '✓ 선택 중' : '선택 모드'}
+              </button>
+              <Link
+                href="/card-generator"
+                className="inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+              >
+                📸 자랑 카드 만들기
+              </Link>
+            </div>
           </div>
 
           {/* Stats Bar */}
@@ -463,7 +500,13 @@ export default function VaultPage() {
                   {filteredCards.length}개의 카드
                 </p>
 
-                {viewMode === 'grid' ? (
+                {selectMode ? (
+                  <SelectableCardGrid
+                    cards={filteredCards}
+                    selectedCardIds={selectedCardIds}
+                    onToggleCard={toggleCardSelection}
+                  />
+                ) : viewMode === 'grid' ? (
                   <BinderGrid cards={filteredCards} minCardWidth={180} gap={16} />
                 ) : (
                   <VaultListView cards={filteredCards} />
@@ -473,6 +516,59 @@ export default function VaultPage() {
           </div>
         </div>
       </main>
+    </div>
+  );
+}
+
+// 선택 가능한 그리드
+function SelectableCardGrid({
+  cards,
+  selectedCardIds,
+  onToggleCard,
+}: {
+  cards: VaultCardItem[];
+  selectedCardIds: string[];
+  onToggleCard: (cardId: string) => void;
+}) {
+  return (
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+      {cards.map((card) => {
+        const isSelected = selectedCardIds.includes(card.id);
+        return (
+          <div key={card.id} className="relative group cursor-pointer">
+            <div
+              onClick={() => onToggleCard(card.id)}
+              className={`relative rounded-lg overflow-hidden border-2 transition-all aspect-[56/87] ${
+                isSelected
+                  ? 'border-[#FF2A55] bg-[#FF2A55]/10 shadow-lg shadow-[#FF2A55]/20'
+                  : 'border-transparent hover:border-neutral-400'
+              }`}
+            >
+              {card.imageUrl && (
+                <Image
+                  src={card.imageUrl}
+                  alt={card.cardName || '포토카드'}
+                  fill
+                  className="object-cover"
+                />
+              )}
+              {isSelected && (
+                <div className="absolute inset-0 bg-[#FF2A55]/20 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-[#FF2A55] flex items-center justify-center">
+                    <Check className="w-5 h-5 text-white" />
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="mt-2 text-sm text-neutral-900 dark:text-white font-medium truncate">
+              {card.memberName}
+            </div>
+            <div className="text-xs text-neutral-600 dark:text-neutral-400 truncate">
+              {card.groupName}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

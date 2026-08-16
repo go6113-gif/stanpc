@@ -3,14 +3,14 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, Package, Target, Zap } from "lucide-react";
-import { useVaultStore } from "@/store/useVaultStore";
+// import { useVaultStore } from "@/store/useVaultStore";
 
 /**
  * Vault 상단 대시보드
  * 전체 자산 평가액, 총 도감 완성률 등 핵심 지표 표시
  */
 export function VaultDashboard() {
-  const binders = useVaultStore((state) => state.binders);
+  const binders: any[] = []; // useVaultStore 삭제로 기본값 사용
   const [currency, setCurrency] = useState<"KRW" | "USD">("KRW");
 
   // 총 자산 가치 계산

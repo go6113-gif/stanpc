@@ -3,7 +3,19 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Lock, LockOpen, X } from "lucide-react";
-import { useVaultStore, type VaultBinder } from "@/store/useVaultStore";
+// import { useVaultStore, type VaultBinder } from "@/store/useVaultStore";
+
+interface VaultBinder {
+  id: string;
+  name: string;
+  description?: string;
+  isPublic: boolean;
+  completionPercentage: number;
+  cardCount: number;
+  totalValue: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 /**
  * 공개/비공개 설정 모달
@@ -164,10 +176,11 @@ function BinderModalDialog({
  * 실물 바인더가 꽂혀 있는 형태의 가로 스크롤 컴포넌트
  */
 export function BinderShelf() {
-  const binders = useVaultStore((state) => state.binders);
-  const selectBinder = useVaultStore((state) => state.selectBinder);
-  const toggleVisibility = useVaultStore((state) => state.toggleBinderVisibility);
-  const addBinder = useVaultStore((state) => state.addBinder);
+  // useVaultStore 대체 - Mock 데이터 사용
+  const binders: VaultBinder[] = [];
+  const selectBinder = (id: string) => console.log("Select binder:", id);
+  const toggleVisibility = (id: string) => console.log("Toggle visibility:", id);
+  const addBinder = (binder: VaultBinder) => console.log("Add binder:", binder);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);

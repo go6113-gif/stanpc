@@ -8,7 +8,8 @@
       "Bash(npm install *)",
       "Bash(rm -rf temp_test_run/images_original/* temp_test_run/images_cropped/* temp_test_run/images_processed/* temp_test_run/metadata/*)",
       "Bash(PYTHONIOENCODING=utf-8 python real_image_pipeline_test.py)",
-      "Bash(echo \"EXIT: $?\")"
+      "Bash(echo \"EXIT: $?\")",
+      "PowerShell(New-Item -ItemType Directory -Path \"D:\\\\StanPC\\\\poca-exchange\\\\components\\\\profile\" -Force)"
     ]
   }
 }

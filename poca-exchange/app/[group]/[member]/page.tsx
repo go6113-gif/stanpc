@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+
+export const dynamic = 'force-dynamic';
+
 import { getAllMemberSlugs, getMemberBySlug } from "@/lib/queries";
 import { PhotoCardGrid } from "@/components/photo-card-grid";
 import { siteConfig } from "@/lib/site-config";
