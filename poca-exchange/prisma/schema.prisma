@@ -80,6 +80,9 @@ model User {
   // Proof Records for photocard ownership verification
   proofRecords ProofRecord[] @relation("ProofRecords")
 
+  // Activity logs
+  activityLogs ActivityLog[] @relation("ActivityLogs")
+
   // WTT (Want To Trade) — tables exist but stay unused in the MVP.
   bundleMatchesAsA  BundleMatch[] @relation("BundleMatchUserA")
   bundleMatchesAsB  BundleMatch[] @relation("BundleMatchUserB")
@@ -323,10 +326,15 @@ model PhotoCard {
   // aggregate counters, not per-user relations.
   // Terminology: wishedCount = users who want to acquire; ownedCount = users who own
   estimatedPrice Float?
-  wishedCount    Int     @default(0) @map("want_count")
-  ownedCount     Int     @default(0) @map("have_count")
+  wishedCount    Int     @default(0) @map("wantCount")
+  ownedCount     Int     @default(0) @map("haveCount")
   viewCount      Int     @default(0)
   badge          String?
+
+  // Market price tracking (KRW and USD). Dual-currency pricing for global accessibility.
+  // Updated by price-tracking pipeline or manual editorial input.
+  priceKrw       Int?    @default(0) @map("price_krw")  // Korean Won
+  priceUsd       Float?  @default(0) @map("price_usd")  // US Dollar
 
   // pSEO/GEO 가이드 탭 본문 — Claude Sonnet이 생성한 위키 수준 마크다운 원문.
   // /card/[cardSlug]의 CardTabs가 RSC에서 이 문자열을 시맨틱 HTML로 파싱해
@@ -343,6 +351,9 @@ model PhotoCard {
   // review folds a report into `estimatedPrice` manually; submitting one
   // never writes `estimatedPrice` directly.
   priceReports PriceReport[]
+
+  // Activity log references
+  activityLogs ActivityLog[] @relation("ActivityLogs")
 
   // Time-series price history for trend analysis
   priceHistory PriceHistory[]
@@ -504,6 +515,42 @@ model GlobalSKUMapping {
   @@index([cardId])
   @@index([market])
   @@map("global_sku_mapping")
+}
+
+// Activity Log - 사용자 활동 기록 (활동 히트맵/잔디 생성용)
+// 카드 추가, 거래 성사, 자랑 게시 등의 주요 활동을 시간 단위로 기록합니다.
+// ProfileHeatmap에서 일자별 활동 횟수를 집계하는 데 사용됩니다.
+// ---
+enum ActivityType {
+  CARD_ADDED       @map("CARD_ADDED")       // 카드 소장 추가
+  CARD_REMOVED     @map("CARD_REMOVED")     // 카드 제거
+  CARD_SHOWCASED   @map("CARD_SHOWCASED")   // 자랑 게시
+  TRADE_COMPLETED  @map("TRADE_COMPLETED")  // 거래 완료
+  BADGE_EARNED     @map("BADGE_EARNED")     // 뱃지 획득
+
+  @@map("activity_type")
+}
+
+model ActivityLog {
+  id        String       @id @default(cuid())
+
+  userId    String       @map("user_id")
+  user      User         @relation("ActivityLogs", fields: [userId], references: [id], onDelete: Cascade)
+
+  type      ActivityType
+  description String?    // Optional: 활동 설명 (카드 이름, 거래 대상 등)
+
+  // Optional reference to related card
+  cardId    String?      @map("card_id")
+  card      PhotoCard?   @relation("ActivityLogs", fields: [cardId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime     @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([cardId])
+  @@index([createdAt])
+  @@index([type])
+  @@map("activity_logs")
 }
 
 // 바인더 카드 상태 — 표준화된 수집 상태 분류
