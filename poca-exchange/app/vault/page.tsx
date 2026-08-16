@@ -6,29 +6,41 @@ import Link from 'next/link';
 import { VaultResponse, VaultCardItem } from '@/lib/api-types';
 import VaultAuthModal from '@/components/wiki/VaultAuthModal';
 import { BinderValueCard } from '@/components/vault/BinderValueCard';
-import { useBinderStore } from '@/store/useBinderStore';
-
-interface FilterState {
-  tags: string[];
-  groups: string[];
-  searchQuery: string;
-}
+import { BinderGrid } from '@/components/vault/BinderGrid';
+import { VaultDashboard } from '@/components/vault/VaultDashboard';
+import { BinderShelf } from '@/components/vault/BinderShelf';
+import { useBinderStore as useCollectionBinderStore } from '@/store/useBinderStore';
+import { useVaultStore } from '@/store/useVaultStore';
+import { useFilterStore, useVaultSync } from '@/store/useFilterStore';
 
 export default function VaultPage() {
   const [vaultData, setVaultData] = useState<VaultResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filters, setFilters] = useState<FilterState>({
-    tags: [],
-    groups: [],
-    searchQuery: '',
-  });
-  const [sortBy, setSortBy] = useState<'recent' | 'price-high' | 'price-low'>('recent');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  // useFilterStore에서 필터 상태 읽기
+  const tags = useFilterStore((state) => state.tags);
+  const groups = useFilterStore((state) => state.groups);
+  const searchQuery = useFilterStore((state) => state.searchQuery);
+  const sortBy = useFilterStore((state) => state.sortBy);
+  const viewMode = useFilterStore((state) => state.viewMode);
+
+  // useFilterStore 액션들
+  const setTags = useFilterStore((state) => state.setTags);
+  const setGroups = useFilterStore((state) => state.setGroups);
+  const setSearchQuery = useFilterStore((state) => state.setSearchQuery);
+  const setSortBy = useFilterStore((state) => state.setSortBy);
+  const setViewMode = useFilterStore((state) => state.setViewMode);
+  const toggleTag = useFilterStore((state) => state.toggleTag);
+  const toggleGroup = useFilterStore((state) => state.toggleGroup);
+  const resetFilters = useFilterStore((state) => state.reset);
+
+  // URL Query Parameter와 동기화
+  useVaultSync();
 
   // Zustand 로컬 바인더 (비회원 사용)
-  const ownedCards = useBinderStore((state) => state.ownedCards);
-  const wishCards = useBinderStore((state) => state.wishCards);
+  const ownedCards = useCollectionBinderStore((state) => state.ownedCards);
+  const wishCards = useCollectionBinderStore((state) => state.wishCards);
 
   useEffect(() => {
     const fetchVaultData = async () => {
@@ -109,11 +121,11 @@ export default function VaultPage() {
 
         // API 시도 (로그인된 경우)
         const params = new URLSearchParams();
-        if (filters.tags.length > 0) {
-          filters.tags.forEach((tag) => params.append('filterTags', tag));
+        if (tags.length > 0) {
+          tags.forEach((tag) => params.append('filterTags', tag));
         }
-        if (filters.groups.length > 0) {
-          filters.groups.forEach((group) => params.append('filterGroups', group));
+        if (groups.length > 0) {
+          groups.forEach((group) => params.append('filterGroups', group));
         }
         params.set('sortBy', sortBy);
 
@@ -159,7 +171,7 @@ export default function VaultPage() {
     };
 
     fetchVaultData();
-  }, [filters, sortBy, ownedCards, wishCards]);
+  }, [tags, groups, sortBy, ownedCards, wishCards]);
 
   // 필터링 및 정렬
   const filteredCards = useMemo(() => {
@@ -167,22 +179,22 @@ export default function VaultPage() {
     let result = [...vaultData.cards];
 
     // 태그 필터
-    if (filters.tags.length > 0) {
+    if (tags.length > 0) {
       result = result.filter((card) =>
-        filters.tags.some((tag) => card.tags.includes(tag))
+        tags.some((tag) => card.tags.includes(tag))
       );
     }
 
     // 그룹 필터
-    if (filters.groups.length > 0) {
+    if (groups.length > 0) {
       result = result.filter((card) =>
-        filters.groups.includes(card.groupName)
+        groups.includes(card.groupName)
       );
     }
 
     // 검색어
-    if (filters.searchQuery) {
-      const query = filters.searchQuery.toLowerCase();
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
       result = result.filter(
         (card) =>
           card.cardName?.toLowerCase().includes(query) ||
@@ -207,25 +219,7 @@ export default function VaultPage() {
     }
 
     return result;
-  }, [vaultData, filters, sortBy]);
-
-  const handleTagToggle = (tag: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      tags: prev.tags.includes(tag)
-        ? prev.tags.filter((t) => t !== tag)
-        : [...prev.tags, tag],
-    }));
-  };
-
-  const handleGroupToggle = (group: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      groups: prev.groups.includes(group)
-        ? prev.groups.filter((g) => g !== group)
-        : [...prev.groups, group],
-    }));
-  };
+  }, [vaultData, tags, groups, searchQuery, sortBy]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-950">
@@ -318,13 +312,8 @@ export default function VaultPage() {
               <input
                 type="text"
                 placeholder="카드 이름, 멤버 검색..."
-                value={filters.searchQuery}
-                onChange={(e) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    searchQuery: e.target.value,
-                  }))
-                }
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white text-sm"
               />
             </div>
@@ -336,9 +325,7 @@ export default function VaultPage() {
               </label>
               <select
                 value={sortBy}
-                onChange={(e) =>
-                  setSortBy(e.target.value as typeof sortBy)
-                }
+                onChange={(e) => setSortBy(e.target.value as any)}
                 className="w-full px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white text-sm"
               >
                 <option value="recent">최근 추가순</option>
@@ -361,8 +348,8 @@ export default function VaultPage() {
                     >
                       <input
                         type="checkbox"
-                        checked={filters.tags.includes(tag)}
-                        onChange={() => handleTagToggle(tag)}
+                        checked={tags.includes(tag)}
+                        onChange={() => toggleTag(tag)}
                         className="rounded"
                       />
                       <span className="text-sm text-neutral-700 dark:text-neutral-300">
@@ -395,8 +382,8 @@ export default function VaultPage() {
                     >
                       <input
                         type="checkbox"
-                        checked={filters.groups.includes(group)}
-                        onChange={() => handleGroupToggle(group)}
+                        checked={groups.includes(group)}
+                        onChange={() => toggleGroup(group)}
                         className="rounded"
                       />
                       <span className="text-sm text-neutral-700 dark:text-neutral-300">
@@ -477,7 +464,7 @@ export default function VaultPage() {
                 </p>
 
                 {viewMode === 'grid' ? (
-                  <VaultGridView cards={filteredCards} />
+                  <BinderGrid cards={filteredCards} minCardWidth={180} gap={16} />
                 ) : (
                   <VaultListView cards={filteredCards} />
                 )}
@@ -486,57 +473,6 @@ export default function VaultPage() {
           </div>
         </div>
       </main>
-    </div>
-  );
-}
-
-// Grid View 컴포넌트
-function VaultGridView({ cards }: { cards: VaultCardItem[] }) {
-  return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-      {cards.map((card) => (
-        <Link
-          key={card.id}
-          href={`/card/${card.cardSlug}`}
-          className="group rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700 hover:shadow-lg transition-shadow"
-        >
-          <div className="relative aspect-[56/87] bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
-            {card.imageUrl && (
-              <Image
-                src={card.imageUrl}
-                alt={card.cardName || '포토카드'}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform"
-              />
-            )}
-            {card.tags.length > 0 && (
-              <div className="absolute top-2 right-2 flex gap-1 flex-wrap">
-                {card.tags.slice(0, 2).map((tag) => (
-                  <span
-                    key={tag}
-                    className="bg-blue-600 text-white text-xs px-2 py-1 rounded"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="p-2">
-            <p className="font-semibold text-sm text-neutral-900 dark:text-white truncate">
-              {card.memberName}
-            </p>
-            <p className="text-xs text-neutral-600 dark:text-neutral-400 truncate">
-              {card.groupName}
-            </p>
-            {card.estimatedPrice && (
-              <p className="mt-1 text-sm font-semibold text-green-600">
-                ${card.estimatedPrice.toFixed(2)}
-              </p>
-            )}
-          </div>
-        </Link>
-      ))}
     </div>
   );
 }

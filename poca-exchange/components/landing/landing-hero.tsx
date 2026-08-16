@@ -3,12 +3,12 @@
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Globe2, MonitorSmartphone, Sparkles } from "lucide-react";
+import { Globe2, BookOpen, Smartphone, Share2 } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
 import { BinderStats } from "@/components/binder/BinderStats";
 
 // Icons only — labels are fetched at render time for i18n.
-const VALUE_PROP_ICONS = [Globe2, MonitorSmartphone, Sparkles] as const;
+const VALUE_PROP_ICONS = [Globe2, BookOpen, Smartphone, Share2] as const;
 
 const container = {
   hidden: { opacity: 0 },
@@ -32,10 +32,13 @@ export function LandingHero({ gridRef }: { gridRef?: React.RefObject<HTMLDivElem
   const { t } = useTranslations();
 
   const valuePropKeys = [
-    { titleKey: "hero.value_prop_1_title", descKey: "hero.value_prop_1_desc" },
-    { titleKey: "hero.value_prop_2_title", descKey: "hero.value_prop_2_desc" },
-    { titleKey: "hero.value_prop_3_title", descKey: "hero.value_prop_3_desc" },
+    { titleKey: "explore.card_01_title", descKey: "explore.card_01_subtitle" },
+    { titleKey: "explore.card_02_title", descKey: "explore.card_02_subtitle" },
+    { titleKey: "explore.card_03_title", descKey: "explore.card_03_subtitle" },
+    { titleKey: "explore.card_04_title", descKey: "explore.card_04_subtitle" },
   ] as const;
+
+  const actionRoutes = ["/gallery", "/wiki", "/vault", "/binder-export"];
 
   const handleQuickBinder = () => {
     if (gridRef?.current) {
@@ -79,23 +82,18 @@ export function LandingHero({ gridRef }: { gridRef?: React.RefObject<HTMLDivElem
 
       <motion.div
         variants={container}
-        className="mt-10 sm:mt-12 md:mt-14 grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-3"
+        className="mt-10 sm:mt-12 md:mt-14 grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4"
       >
         {valuePropKeys.map(({ titleKey, descKey }, idx) => {
           const Icon = VALUE_PROP_ICONS[idx];
-          const isClickable = idx === 2; // 3번째 항목 (SNS 인증 짤)
+          const actionRoute = actionRoutes[idx];
 
           return (
             <motion.button
               key={titleKey}
               variants={item}
-              onClick={isClickable ? handleBinderExport : undefined}
-              disabled={!isClickable}
-              className={`rounded-2xl border border-white/5 bg-[#1A1A1E] p-4 sm:p-5 text-left transition-all ${
-                isClickable
-                  ? "hover:border-[#FF2A55]/50 hover:bg-[#1A1A1E]/80 cursor-pointer group"
-                  : ""
-              }`}
+              onClick={() => router.push(actionRoute)}
+              className="rounded-2xl border border-white/5 bg-[#1A1A1E] p-4 sm:p-5 text-left transition-all hover:border-[#FF2A55]/50 hover:bg-[#1A1A1E]/80 cursor-pointer group"
               type="button"
             >
               <Icon className="text-[#FF2A55] group-hover:scale-110 transition-transform" size={20} />
