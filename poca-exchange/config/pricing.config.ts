@@ -1,0 +1,11 @@
+export const PRICING_CONFIG = {
+  REFERRER_PER_USER_CREDITS: 3125,
+  REFEREE_WELCOME_CREDITS: 500,
+  ANNUAL_RENEWAL_USD: 99,
+  POINTS_PER_USD: 100,
+  DIGITAL_REWARDS: {
+    HOLOGRAM_THEME: { requiredCredits: 12500 },
+    CUSTOM_DOMAIN: { requiredCredits: 25000 },
+    AMBASSADOR_BADGE: { requiredCredits: 50000 },
+  },
+};

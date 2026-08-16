@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prisma';
 import { generateReferralCode } from './generate-referral-code';
-import { awardReferralCredits, revokeReferralCredits } from './credit-manager';
 
 /**
  * 추천 시스템 관리자
@@ -116,12 +115,22 @@ export async function matchReferral(
       });
 
       // 크레딧 지급
-      await awardReferralCredits(referrer.id, refereeId, referralLog.id);
+      await tx.user.update({
+        where: { id: referrer.id },
+        data: { credits: { increment: 3125 } },
+      });
+
+      await tx.user.update({
+        where: { id: refereeId },
+        data: { credits: { increment: 500 } },
+      });
 
       // ReferralLog 상태 업데이트
       await tx.referralLog.update({
         where: { id: referralLog.id },
         data: {
+          referrerCreditsAwarded: 3125,
+          refereeCreditsAwarded: 500,
           referrerCreditsStatus: 'AWARDED',
           refereeCreditsStatus: 'AWARDED',
         },
@@ -258,10 +267,33 @@ export async function handleRefereeRefund(referralLogId: string): Promise<void> 
   }
 
   // 크레딧 회수
-  await revokeReferralCredits(
-    referralLog.referrerId,
-    referralLogId
-  );
+  await prisma.user.update({
+    where: { id: referralLog.referrerId },
+    data: {
+      credits: {
+        decrement: referralLog.referrerCreditsAwarded || 3125,
+      },
+    },
+  });
+
+  if (referralLog.refereeId) {
+    await prisma.user.update({
+      where: { id: referralLog.refereeId },
+      data: {
+        credits: {
+          decrement: 500,
+        },
+      },
+    });
+  }
+
+  await prisma.referralLog.update({
+    where: { id: referralLogId },
+    data: {
+      referrerCreditsStatus: 'REVOKED',
+      refereeCreditsStatus: 'REVOKED',
+    },
+  });
 
   // 통계 업데이트
   await prisma.referralCodeStats.update({

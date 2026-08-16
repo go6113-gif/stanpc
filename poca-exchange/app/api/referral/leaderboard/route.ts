@@ -1,64 +1,45 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getTopReferrers } from '@/lib/referral/referral-manager';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-/**
- * GET /api/referral/leaderboard
- * 상위 추천인(Top Ambassadors) 리더보드
- */
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
-    const limit = Math.min(
-      parseInt(req.nextUrl.searchParams.get('limit') || '10'),
-      50
-    );
-
-    const topReferrers = await getTopReferrers(limit);
-
-    if (topReferrers.length === 0) {
-      return NextResponse.json({
-        leaderboard: [],
-        totalCount: 0,
-      });
-    }
-
-    // 사용자 정보 조회
-    const userIds = topReferrers.map((r: any) => r.userId);
-    const users = await prisma.user.findMany({
-      where: { id: { in: userIds } },
+    // 추천인 통계 조회 (상위 10명)
+    const leaderboard = await prisma.user.findMany({
       select: {
         id: true,
         name: true,
-        image: true,
-        collectorIndex: true,
+        credits: true,
+        referralLogs: {
+          select: { id: true, refereeId: true },
+        },
       },
+      where: {
+        referralLogs: { some: { refereeId: { not: null } } },
+      },
+      orderBy: { credits: 'desc' },
+      take: 100,
     });
 
-    // 통합
-    const leaderboard = topReferrers.map((r: any, index: number) => {
-      const user = users.find((u: any) => u.id === r.userId);
-      return {
-        rank: index + 1,
-        userId: r.userId,
-        userName: user?.name || 'Anonymous',
-        userImage: user?.image,
-        collectorIndex: user?.collectorIndex || 0,
-        totalReferrals: r.totalReferrals,
-        successfulConversions: r.successfulConversions,
-        totalCreditsAwarded: r.totalCreditsAwarded,
-        ambassador: r.successfulConversions >= 16, // Top Ambassador 여부
-      };
-    });
+    // 데이터 포맷팅
+    const formattedLeaderboard = leaderboard
+      .map((user, idx) => ({
+        rank: idx + 1,
+        userId: user.id,
+        userName: user.name || `User ${user.id.slice(0, 8)}`,
+        totalReferrals: user.referralLogs.filter((l) => l.refereeId).length,
+        totalCredits: user.credits,
+        badge: user.credits >= 50000 ? '👑' : user.credits >= 25000 ? '🌐' : user.credits >= 12500 ? '✨' : undefined,
+      }))
+      .slice(0, 10);
 
     return NextResponse.json({
-      leaderboard,
-      totalCount: leaderboard.length,
-      timestamp: new Date(),
+      leaderboard: formattedLeaderboard,
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('Failed to get leaderboard:', error);
+    console.error('[/api/referral/leaderboard]', error);
     return NextResponse.json(
-      { error: '리더보드 조회 중 오류가 발생했습니다.' },
+      { error: 'Failed to fetch leaderboard' },
       { status: 500 }
     );
   }

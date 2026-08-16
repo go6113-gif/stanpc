@@ -1072,3 +1072,31 @@ model ReferralCodeStats {
 
   @@map("referral_code_stats")
 }
+
+// ---
+// Stripe Payment Record — 결제 이력 추적
+// 중복 결제 방지 및 환불 처리를 위해 결제 기록 저장
+// ---
+model StripePaymentRecord {
+  id                        String   @id @default(cuid())
+
+  userId                    String   @map("user_id")
+  sessionId                 String   @map("session_id")
+
+  // 중복 결제 방지: 동일 카드의 Fingerprint 저장
+  paymentMethodFingerprint  String?  @map("payment_method_fingerprint")
+
+  // 결제 정보
+  amount                    Int      @map("amount") // 금액 (센트)
+  currency                  String   @default("usd") @map("currency")
+
+  // 상태: COMPLETED, REFUNDED, CANCELED
+  status                    String   @default("COMPLETED") @map("status")
+
+  createdAt                 DateTime @default(now()) @map("created_at")
+  updatedAt                 DateTime @updatedAt @map("updated_at")
+
+  @@map("stripe_payment_records")
+  @@index([userId])
+  @@index([sessionId])
+}
