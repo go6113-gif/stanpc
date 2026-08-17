@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AuthNav } from "@/components/auth-nav";
+import { BinderStats } from "@/components/binder/BinderStats";
 import { siteConfig } from "@/lib/site-config";
 
 export function SiteHeader() {
@@ -11,15 +12,18 @@ export function SiteHeader() {
 
   if (isLanding) {
     // Filters + search live further down the page on landing (see
-    // components/landing/landing-filter-bar.tsx) — the header here is just
-    // brand + profile.
+    // components/landing/landing-filter-bar.tsx) — the header here displays
+    // brand, binder stats, and profile links.
     return (
       <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0F0F12]/90 backdrop-blur">
         <div className="flex w-full items-center justify-between gap-4 px-4 py-3 md:px-8">
           <Link href="/" className="shrink-0 font-bold text-white">
             {siteConfig.name}
           </Link>
-          <AuthNav />
+          <div className="flex items-center gap-4 md:gap-6">
+            <BinderStats />
+            <AuthNav />
+          </div>
         </div>
       </header>
     );

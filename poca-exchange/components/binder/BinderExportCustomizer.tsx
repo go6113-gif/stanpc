@@ -102,7 +102,7 @@ const THEME_OVERLAY_STYLES: Record<ThemeType, string> = {
 
 export function BinderExportCustomizer() {
   const [selectedTheme, setSelectedTheme] = useState<ThemeType>("dark-neon");
-  const [selectedRatio, setSelectedRatio] = useState<CanvasRatio>("1:1");
+  const [selectedRatio, setSelectedRatio] = useState<CanvasRatio>("9:16");
   const [username, setUsername] = useState("my_vault");
   const [title, setTitle] = useState("My Photocard Binder");
 

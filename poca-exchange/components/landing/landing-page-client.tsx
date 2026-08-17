@@ -7,6 +7,7 @@ import { FilterChips } from "./filter-chips";
 import { HighDensityGrid } from "@/components/high-density/high-density-grid";
 import { FloatingBinderBar } from "@/components/binder/FloatingBinderBar";
 import { BinderViewModal } from "@/components/binder/BinderViewModal";
+import { RoadmapWidget } from "@/components/navigation/RoadmapWidget";
 import { getTopPhotoCards } from "@/lib/queries";
 import { inferCardTags, type CardTag } from "@/lib/photocard-tags";
 import { useBinderStore } from "@/store/useBinderStore";
@@ -142,6 +143,13 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
 
         <section ref={gridRef} className="w-full px-4 py-10 md:px-8">
           <HighDensityGrid cards={filteredCards} minCardWidth={180} gap={16} />
+        </section>
+
+        {/* Roadmap Widget */}
+        <section className="w-full px-4 py-10 md:px-8">
+          <div className="max-w-6xl mx-auto">
+            <RoadmapWidget />
+          </div>
         </section>
       </main>
 

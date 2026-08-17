@@ -1,16 +1,16 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { BinderExportCustomizer } from "@/components/binder/BinderExportCustomizer";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Sparkles, Zap, Share2 } from "lucide-react";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://stanpc.com";
 
 export const metadata: Metadata = {
-  title: "바인더 이미지 다운로드 - StanPC",
-  description: "내 포토카드 바인더를 SNS 공유용 이미지로 만드세요.",
+  title: "내 포카 바인더 1초 박제 ✨ - StanPC",
+  description: "터치 한 번으로 인스타 스토리에 내 바인더 자랑하기",
   openGraph: {
-    title: "My Photocard Binder - StanPC",
-    description: "포토카드 바인더를 SNS에 공유하세요",
+    title: "내 포카 바인더 1초 박제 ✨",
+    description: "터치 한 번으로 인스타 스토리에 내 바인더 자랑하기",
     url: `${siteUrl}/binder-export`,
     type: "website",
     images: [
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "My Photocard Binder - StanPC",
-    description: "포토카드 바인더를 SNS에 공유하세요",
+    title: "내 포카 바인더 1초 박제 ✨",
+    description: "터치 한 번으로 인스타 스토리에 내 바인더 자랑하기",
     images: [
       `${siteUrl}/api/og/binder?username=StanPC%20Collector&title=My%20Photocard%20Binder&ownedCount=0&wishCount=0&theme=neon`,
     ],
@@ -34,62 +34,70 @@ export const metadata: Metadata = {
 
 export default function BinderExportPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-neutral-900 via-neutral-900 to-black px-4 py-12 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-gradient-to-b from-neutral-900 via-neutral-900 to-black px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-white sm:text-4xl">
-              바인더 공유하기
+        <div className="mb-12 flex items-start justify-between gap-4">
+          <div className="space-y-3 flex-1">
+            <h1 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-pink-300">
+              내 포카 바인더 1초 박제 ✨
             </h1>
-            <p className="mt-2 text-neutral-400">
-              내 포토카드 바인더를 예쁜 이미지로 만들어 SNS에 공유하세요
+            <p className="text-lg text-neutral-300 font-medium">
+              터치 한 번으로 인스타 스토리에 내 바인더 자랑하기
             </p>
           </div>
           <Link
             href="/"
-            className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 transition-colors"
+            className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20 transition-colors flex-shrink-0"
           >
             <ArrowLeft size={16} />
-            돌아가기
           </Link>
         </div>
 
         {/* Binder Export Customizer */}
         <BinderExportCustomizer />
 
-        {/* Features Section */}
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="rounded-lg bg-neutral-800/30 p-4 border border-neutral-700">
-            <div className="text-sm font-semibold text-rose-400">🎨</div>
-            <p className="mt-2 text-sm font-medium text-white">HD 품질</p>
-            <p className="mt-1 text-xs text-neutral-400">
-              고해상도(2배 배율) PNG 이미지로 다운로드
+        {/* Features Section - 1020 감성 */}
+        <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="rounded-xl bg-gradient-to-br from-pink-500/10 to-rose-500/10 border border-pink-500/20 p-4 hover:border-pink-500/40 transition-colors">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-pink-400" />
+              <p className="font-bold text-white">네온 글리터</p>
+            </div>
+            <p className="text-xs text-neutral-300">
+              다크 네온, 파스텔, 홀로그램 등 1020 감성 테마
             </p>
           </div>
-          <div className="rounded-lg bg-neutral-800/30 p-4 border border-neutral-700">
-            <div className="text-sm font-semibold text-rose-400">🔗</div>
-            <p className="mt-2 text-sm font-medium text-white">즉시 사용 가능</p>
-            <p className="mt-1 text-xs text-neutral-400">
-              이미지 다운로드 후 바로 SNS에 공유
+          <div className="rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 p-4 hover:border-blue-500/40 transition-colors">
+            <div className="flex items-center gap-2 mb-2">
+              <Zap className="w-5 h-5 text-blue-400" />
+              <p className="font-bold text-white">1초 공유</p>
+            </div>
+            <p className="text-xs text-neutral-300">
+              Web Share API로 인스타 앱에 직행
             </p>
           </div>
-          <div className="rounded-lg bg-neutral-800/30 p-4 border border-neutral-700">
-            <div className="text-sm font-semibold text-rose-400">✨</div>
-            <p className="mt-2 text-sm font-medium text-white">자동 워터마크</p>
-            <p className="mt-1 text-xs text-neutral-400">
-              StanPC 워터마크가 자동으로 추가됨
+          <div className="rounded-xl bg-gradient-to-br from-purple-500/10 to-indigo-500/10 border border-purple-500/20 p-4 hover:border-purple-500/40 transition-colors">
+            <div className="flex items-center gap-2 mb-2">
+              <Share2 className="w-5 h-5 text-purple-400" />
+              <p className="font-bold text-white">추천 QR</p>
+            </div>
+            <p className="text-xs text-neutral-300">
+              우측 하단에 개인 추천 코드 자동 삽입
             </p>
           </div>
         </div>
 
         {/* Tips Section */}
-        <div className="mt-8 rounded-lg bg-blue-500/10 border border-blue-500/20 p-6">
-          <p className="text-sm font-semibold text-blue-300">💡 팁</p>
-          <ul className="mt-3 space-y-2 text-xs text-neutral-300">
-            <li>• Instagram, Twitter, Pinterest 등 SNS에 최적화되었습니다</li>
-            <li>• 다운로드된 이미지의 날짜가 파일명에 포함됩니다</li>
-            <li>• 여러 번 다운로드하여 다양한 조합으로 공유할 수 있습니다</li>
+        <div className="mt-10 rounded-xl bg-gradient-to-r from-pink-500/20 via-rose-500/10 to-pink-500/20 border border-pink-500/30 p-6">
+          <p className="text-sm font-bold text-pink-300 flex items-center gap-2">
+            ✨ 1020 팁
+          </p>
+          <ul className="mt-4 space-y-2 text-sm text-neutral-200">
+            <li>• 9:16 스토리 비율이 기본값 (인스타 스토리에 딱맞음)</li>
+            <li>• 테마/비율은 자유롭게 변경 가능 (다크 네온 추천!)</li>
+            <li>• 생성된 이미지는 즉시 인스타 스토리로 공유 가능</li>
+            <li>• 우측 하단 QR 코드로 친구들이 StanPC 가입 가능 🎉</li>
           </ul>
         </div>
       </div>

@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import html2canvas from "html2canvas";
-import { Download, Loader2 } from "lucide-react";
+import { Send, Loader2, Download } from "lucide-react";
 import type { ThemeType, CanvasRatio } from "./BinderExportCustomizer";
 
 // Mock photocard data for demonstration
@@ -85,18 +85,72 @@ export function BinderExport({
   const exportRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
 
+  const generateCanvas = async () => {
+    if (!exportRef.current) return null;
+    return await html2canvas(exportRef.current, {
+      backgroundColor: null,
+      scale: 2,
+      logging: false,
+      useCORS: true,
+      allowTaint: true,
+    });
+  };
+
+  const handleShareToStory = async () => {
+    if (!exportRef.current) return;
+
+    setIsExporting(true);
+    try {
+      const canvas = await generateCanvas();
+      if (!canvas) return;
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) return;
+
+        const file = new File([blob], `${username}_binder.png`, { type: 'image/png' });
+
+        // Web Share API 사용 가능 여부 확인
+        if (typeof navigator !== "undefined" && navigator.share && navigator.canShare?.({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: "내 포카 바인더",
+            });
+          } catch (err: any) {
+            // 사용자가 공유 취소한 경우
+            if (err.name !== 'AbortError') {
+              console.error('Share failed:', err);
+              alert('공유에 실패했습니다.');
+            }
+          }
+        } else {
+          // Web Share API 미지원 시 폴백: 다운로드
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `${username}_binder_${new Date().toISOString().slice(0, 10)}.png`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          alert('Web Share API를 지원하지 않는 브라우저입니다. 이미지가 다운로드되었습니다.');
+        }
+      });
+    } catch (error) {
+      console.error("Failed to share binder:", error);
+      alert("이미지 생성에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const handleDownload = async () => {
     if (!exportRef.current) return;
 
     setIsExporting(true);
     try {
-      const canvas = await html2canvas(exportRef.current, {
-        backgroundColor: null,
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        allowTaint: true,
-      });
+      const canvas = await generateCanvas();
+      if (!canvas) return;
 
       // Create download link
       const link = document.createElement("a");
@@ -239,28 +293,39 @@ export function BinderExport({
           </div>
         </div>
 
-        {/* Download Button */}
-        <button
-          onClick={handleDownload}
-          disabled={isExporting}
-          className="flex items-center gap-2 rounded-lg bg-rose-500 px-6 py-3 font-semibold text-white transition-all hover:bg-rose-600 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isExporting ? (
-            <>
-              <Loader2 size={18} className="animate-spin" />
-              생성 중...
-            </>
-          ) : (
-            <>
-              <Download size={18} />
-              이미지로 다운로드
-            </>
-          )}
-        </button>
+        {/* Main Action Buttons */}
+        <div className="flex flex-col gap-3 w-full">
+          <button
+            onClick={handleShareToStory}
+            disabled={isExporting}
+            className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 px-8 py-4 font-bold text-white transition-all hover:shadow-lg hover:shadow-pink-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isExporting ? (
+              <>
+                <Loader2 size={20} className="animate-spin" />
+                생성 중...
+              </>
+            ) : (
+              <>
+                <Send size={20} />
+                🚀 인스타 스토리로 1초 공유
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={handleDownload}
+            disabled={isExporting}
+            className="flex items-center justify-center gap-2 rounded-lg border border-neutral-600 bg-neutral-800/30 px-6 py-2.5 text-sm font-medium text-neutral-300 transition-all hover:border-neutral-500 hover:bg-neutral-800/50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Download size={16} />
+            다운로드
+          </button>
+        </div>
 
         {/* Info Text */}
-        <p className="text-center text-sm text-neutral-500">
-          바인더를 PNG 이미지로 다운로드해서 SNS에 공유하세요!
+        <p className="text-center text-xs text-neutral-500">
+          💡 모바일: 공유 버튼으로 인스타 앱에 직행 | 데스크톱: 이미지가 다운로드됩니다
         </p>
       </div>
     </div>

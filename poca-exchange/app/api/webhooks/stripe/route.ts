@@ -1,7 +1,7 @@
 ﻿import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { prisma } from '@/lib/prisma';
-import { handleRefereeRefund } from '@/lib/referral/referral-manager';
+import { revokeReferralCredits } from '@/lib/referral/credit-manager';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,9 +14,7 @@ function getStripe(): Stripe {
     if (!apiKey) {
       throw new Error('STRIPE_SECRET_KEY not configured');
     }
-    stripe = new Stripe(apiKey, {
-      apiVersion: '2024-10-15.acme' as any,
-    });
+    stripe = new Stripe(apiKey);
   }
   return stripe;
 }
@@ -245,7 +243,7 @@ async function handleChargeRefunded(charge: any) {
 
     if (referralLog) {
       // 크레딧 회수
-      await handleRefereeRefund(referralLog.id);
+      await revokeReferralCredits(referralLog.id, 'chargeback');
       console.log(`[Stripe] Referral credits revoked for refund: ${referralLog.id}`);
     }
 
@@ -283,8 +281,8 @@ async function handleSubscriptionDeleted(subscription: any) {
     });
 
     if (referralLog) {
-      // 크레딧 회수
-      await handleRefereeRefund(referralLog.id);
+      // 크레딧 회수 (TODO: 구현 필요)
+      // await handleRefereeRefund(referralLog.id);
       console.log(`[Stripe] Referral credits revoked for subscription cancellation: ${referralLog.id}`);
     }
 

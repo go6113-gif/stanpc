@@ -1,68 +1,89 @@
-/**
- * GET /api/credits/get-balance
- *
- * 현재 사용자의 크레딧 잔액 및 추천 현황 조회
- */
+﻿import { prisma } from '@/lib/prisma';
+import type { GetBalanceResponse } from '@/lib/types/referral';
 
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/auth';
-import { calculateReferralBenefit, getRenewalCreditsRequired } from '@/lib/config/pricing.config';
+export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
+export async function GET(): Promise<Response> {
   try {
+    const { auth } = await import('@/auth');
     const session = await auth();
-    if (!session?.user?.email) {
-      return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
+
+    if (!session?.user?.id) {
+      return Response.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
     }
 
+    const userId = session.user.id;
+
     const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
+      where: { id: userId },
       select: {
-        id: true,
-        credits: true,
         referralCode: true,
-        referralLogs: {
-          where: {
-            referrerCreditsStatus: 'AWARDED',
+        credits: true,
+        referralCodeStats: {
+          select: {
+            totalReferrals: true,
+            successfulConversions: true,
+            totalCreditsAwarded: true,
           },
+        },
+        referralLogs: {
+          where: { referrerId: userId },
           select: {
             id: true,
+            refereeEmail: true,
             referrerCreditsAwarded: true,
+            referrerCreditsStatus: true,
             createdAt: true,
           },
+          orderBy: { createdAt: 'desc' },
+          take: 5,
         },
       },
     });
 
-    if (!user) {
-      return NextResponse.json({ error: '사용자를 찾을 수 없습니다' }, { status: 404 });
+    if (!user || !user.referralCode) {
+      return Response.json(
+        { error: 'User referral data not found' },
+        { status: 404 }
+      );
     }
 
-    // 추천 통계
-    const referralCount = user.referralLogs.length;
-    const benefit = calculateReferralBenefit(referralCount);
-    const renewalCreditsRequired = getRenewalCreditsRequired();
+    const stats = user.referralCodeStats || {
+      totalReferrals: 0,
+      successfulConversions: 0,
+      totalCreditsAwarded: 0,
+    };
 
-    return NextResponse.json({
-      user: {
-        id: user.id,
+    const response: GetBalanceResponse = {
+      isLoading: false,
+      data: {
         referralCode: user.referralCode,
+        totalCredits: user.credits || 0,
+        successfulInvitations: stats.successfulConversions,
+        referralCodeStats: {
+          totalReferrals: stats.totalReferrals,
+          successfulConversions: stats.successfulConversions,
+          totalCreditsAwarded: stats.totalCreditsAwarded,
+        },
+        recentReferrals: user.referralLogs.map((log: any) => ({
+          id: log.id,
+          refereeEmail: log.refereeEmail,
+          referrerCreditsAwarded: log.referrerCreditsAwarded,
+          referrerCreditsStatus: log.referrerCreditsStatus,
+          createdAt: log.createdAt.toISOString(),
+        })),
       },
-      credits: {
-        balance: user.credits,
-        renewalRequiredCredits: renewalCreditsRequired,
-        yearsOfRenewalCovered: Math.floor(user.credits / renewalCreditsRequired),
-      },
-      referrals: {
-        totalReferrals: referralCount,
-        totalCreditsEarned: benefit.totalCredits,
-        totalUSDValue: benefit.totalUSDValue,
-        benefit,
-      },
-    });
-  } catch (error) {
-    console.error('[/api/credits/get-balance]', error);
-    return NextResponse.json({ error: '서버 오류가 발생했습니다' }, { status: 500 });
+    };
+
+    return Response.json(response);
+  } catch (err) {
+    console.error('[GET /api/credits/get-balance] Error:', err);
+    return Response.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }

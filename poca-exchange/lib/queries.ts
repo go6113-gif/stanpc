@@ -73,7 +73,21 @@ export async function getMvpGroupDirectory() {
 export async function getTopPhotoCards(limit = 100) {
   const cards = await prisma.photoCard.findMany({
     where: { group: { slug: { in: [...MVP_GROUP_SLUGS] } } },
-    include: { group: true, member: true, album: true },
+    select: {
+      slug: true,
+      cardName: true,
+      imageUrl: true,
+      thumbImagePath: true,
+      version: true,
+      estimatedPrice: true,
+      ownedCount: true,
+      wishedCount: true,
+      viewCount: true,
+      badge: true,
+      group: true,
+      member: true,
+      album: true,
+    },
   });
 
   const ranked = cards
@@ -267,7 +281,20 @@ export async function getFilteredPhotoCards(filters: FilterState, userId?: strin
   const cards = await prisma.photoCard.findMany({
     where,
     orderBy,
-    include: { group: true, member: true, album: true },
+    select: {
+      slug: true,
+      cardName: true,
+      imageUrl: true,
+      thumbImagePath: true,
+      estimatedPrice: true,
+      ownedCount: true,
+      wishedCount: true,
+      viewCount: true,
+      badge: true,
+      group: true,
+      member: true,
+      album: true,
+    },
   });
 
   return cards.map((card) => ({

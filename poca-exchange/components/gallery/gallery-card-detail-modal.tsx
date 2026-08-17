@@ -205,12 +205,25 @@ export function GalleryCardDetailModal({
                 <p className="text-white/60 text-sm">
                   상세 페이지에서 더 많은 정보를 확인하세요.
                 </p>
-                <Link
-                  href={`/card/${card.slug}`}
-                  className="inline-block bg-[#FF2A55] hover:bg-[#FF2A55]/90 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-                >
-                  자세히 보기 →
-                </Link>
+                <div className="space-y-2">
+                  <Link
+                    href={`/card/${card.slug}`}
+                    className="inline-block bg-[#FF2A55] hover:bg-[#FF2A55]/90 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                  >
+                    자세히 보기 →
+                  </Link>
+                  {card.albumTitle && (
+                    <div>
+                      <p className="text-white/60 text-sm mb-2">또는 이 앨범 전체를 확인하세요:</p>
+                      <Link
+                        href={`/gallery/${encodeURIComponent(card.albumTitle)}`}
+                        className="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                      >
+                        📚 {card.albumTitle} 도감
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>

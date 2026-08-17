@@ -23,7 +23,7 @@ export function BinderStats() {
           <BookmarkCheck size={16} className="text-nomad-red" />
         </div>
         <div className="text-center">
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">내 소장</p>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">보유</p>
           <p className="text-lg font-bold text-neutral-900 dark:text-white">
             {ownedCount}
           </p>
@@ -36,7 +36,7 @@ export function BinderStats() {
           <Heart size={16} className="text-red-500" />
         </div>
         <div className="text-center">
-          <p className="text-xs text-neutral-500 dark:text-neutral-400">위시</p>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">위시리스트</p>
           <p className="text-lg font-bold text-neutral-900 dark:text-white">
             {wishedCount}
           </p>

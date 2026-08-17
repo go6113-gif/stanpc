@@ -1,82 +1,124 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { TrendingUp } from 'lucide-react';
+import { Trophy, Medal } from 'lucide-react';
+import type { LeaderboardEntry } from '@/lib/types/referral';
 
-interface Leaderboard {
-  rank: number;
-  userId: string;
-  userName: string;
-  totalReferrals: number;
-  totalCredits: number;
-  badge?: string;
+export interface AmbassadorLeaderboardProps {
+  isLoading?: boolean;
 }
 
-export function AmbassadorLeaderboard() {
-  const [data, setData] = useState<Leaderboard[]>([]);
-  const [loading, setLoading] = useState(true);
+export function AmbassadorLeaderboard({ isLoading = false }: AmbassadorLeaderboardProps) {
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [loading, setLoading] = useState(isLoading);
 
   useEffect(() => {
-    async function fetchLeaderboard() {
+    const fetchLeaderboard = async () => {
       try {
-        const res = await fetch('/api/referral/leaderboard');
-        if (res.ok) {
-          const result = await res.json();
-          setData(result.leaderboard || []);
-        }
-      } catch (error) {
-        console.error('Failed to fetch leaderboard:', error);
+        setLoading(true);
+        const res = await fetch('/api/leaderboard/ambassadors');
+        if (!res.ok) throw new Error('Failed to fetch leaderboard');
+        const data = await res.json();
+        setLeaderboard(data.data || []);
+      } catch (err) {
+        console.error('Failed to fetch leaderboard:', err);
+        setLeaderboard([]);
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchLeaderboard();
   }, []);
 
+  const getRankIcon = (rank: number) => {
+    if (rank === 1) return '🥇';
+    if (rank === 2) return '🥈';
+    if (rank === 3) return '🥉';
+    return `#${rank}`;
+  };
+
+  const getMedalColor = (rank: number) => {
+    if (rank === 1) return 'text-yellow-500';
+    if (rank === 2) return 'text-gray-400';
+    if (rank === 3) return 'text-orange-500';
+    return 'text-neutral-400';
+  };
+
   if (loading) {
     return (
-      <div className="bg-white dark:bg-neutral-950 rounded-lg border border-neutral-200 dark:border-neutral-800 p-6 animate-pulse">
-        <div className="h-96 bg-neutral-200 dark:bg-neutral-700 rounded" />
+      <div className="bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800 p-8">
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-16 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (leaderboard.length === 0) {
+    return (
+      <div className="bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800 p-8 text-center">
+        <p className="text-neutral-600 dark:text-neutral-400">
+          아직 리더보드 데이터가 없습니다.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-neutral-950 rounded-lg border border-neutral-200 dark:border-neutral-800 p-6 space-y-4">
-      <div className="flex items-center gap-2">
-        <TrendingUp className="w-5 h-5 text-pink-600" />
-        <h3 className="font-semibold text-neutral-900 dark:text-white">
-          🏆 탑 앰버서더 랭킹
-        </h3>
+    <div className="bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+      {/* 헤더 */}
+      <div className="bg-gradient-to-r from-pink-500 to-rose-500 px-6 py-4">
+        <div className="flex items-center gap-2">
+          <Trophy className="w-6 h-6 text-white" />
+          <h2 className="text-2xl font-bold text-white">
+            명예의 전당 🌟
+          </h2>
+        </div>
+        <p className="text-sm text-pink-100 mt-1">
+          최고의 추천왕들을 만나보세요
+        </p>
       </div>
 
-      <div className="space-y-2">
-        {data.length === 0 ? (
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 py-8 text-center">
-            아직 랭킹 데이터가 없습니다
-          </p>
-        ) : (
-          data.slice(0, 10).map((entry) => (
-            <div
-              key={entry.userId}
-              className="flex items-center gap-3 p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            >
-              <div className="text-lg font-bold text-pink-600 w-6 text-center">
-                {entry.rank}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="font-medium text-neutral-900 dark:text-white truncate">
-                  {entry.userName}
-                </div>
-                <div className="text-xs text-neutral-500 dark:text-neutral-400">
-                  {entry.totalReferrals} 명 · {entry.totalCredits.toLocaleString()}P
-                </div>
-              </div>
-              {entry.badge && <span className="text-lg">{entry.badge}</span>}
+      {/* 리더보드 */}
+      <div className="divide-y divide-neutral-200 dark:divide-neutral-800">
+        {leaderboard.slice(0, 10).map((entry) => (
+          <div
+            key={entry.userId}
+            className={`px-6 py-4 flex items-center gap-4 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors ${
+              entry.rank === 1
+                ? 'bg-yellow-50 dark:bg-neutral-800/50'
+                : ''
+            }`}
+          >
+            {/* 순위 */}
+            <div className={`text-2xl font-bold ${getMedalColor(entry.rank)}`}>
+              {getRankIcon(entry.rank)}
             </div>
-          ))
-        )}
+
+            {/* 사용자 정보 */}
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-neutral-900 dark:text-white truncate">
+                {entry.username}
+              </p>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                💎 {entry.totalCredits.toLocaleString()} · 🎯 {entry.successfulInvitations}명
+              </p>
+            </div>
+
+            {/* 뱃지 */}
+            {entry.rank <= 3 && (
+              <Medal className={`w-5 h-5 ${getMedalColor(entry.rank)}`} />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* 푸터 */}
+      <div className="bg-neutral-50 dark:bg-neutral-800/50 px-6 py-3 text-xs text-neutral-600 dark:text-neutral-400">
+        {leaderboard.length}명의 앰버서더가 활동 중입니다
       </div>
     </div>
   );

@@ -6,8 +6,9 @@
 // app/generated/prisma so `@/app/generated/prisma/client` resolves through the
 // existing tsconfig "@/*" alias; the directory is gitignored.
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider      = "prisma-client"
+  output        = "../app/generated/prisma"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -72,10 +73,14 @@ model User {
   // Virtual binder: User → many BinderCards (through many-to-many)
   binderCards UserBinderCard[]
 
+  // Smart Binder Rules: Custom filter conditions for binder views
+  smartBinderRules SmartBinderRule[] @relation("SmartBinderRules")
+
   // Collector Index / gamification
   badges        UserBadge[]
   reactions     Reaction[]
   notifications Notification[]
+  pushSubscriptions PushSubscription[] @relation("PushSubscriptions")
 
   // Proof Records for photocard ownership verification
   proofRecords ProofRecord[] @relation("ProofRecords")
@@ -108,6 +113,12 @@ model User {
 
   // Referral code stats
   referralCodeStats ReferralCodeStats? @relation("ReferralCodeStats")
+
+  // Contribution & Gamification (Module 2)
+  xp                Int       @default(0) // Experience points from contributions
+  contributorTier   String    @default("ROOKIE") @map("contributor_tier") // User gamification tier (ROOKIE/MEMBER/EXPERT/LEGEND)
+  contributions     Contribution[] @relation("UserContributions")
+  contributedPhotos PhotoCard[] @relation("ContributedBy")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -350,9 +361,8 @@ model PhotoCard {
   viewCount      Int     @default(0)
   badge          String?
 
-  // Market price tracking (KRW and USD). Dual-currency pricing for global accessibility.
+  // Market price tracking (USD only). Single-currency baseline for global accessibility.
   // Updated by price-tracking pipeline or manual editorial input.
-  priceKrw       Int?    @default(0) @map("price_krw")  // Korean Won
   priceUsd       Float?  @default(0) @map("price_usd")  // US Dollar
 
   // pSEO/GEO 가이드 탭 본문 — Claude Sonnet이 생성한 위키 수준 마크다운 원문.
@@ -390,6 +400,11 @@ model PhotoCard {
   // partner parameters (eBay/Buyee/DKShop). One per partner, allowing each
   // marketplace to get its own tracked link.
   affiliateLinks AffiliateLink[]
+
+  // Contribution tracking (Module 2) — credited user who provided the image
+  contributedById String?      @map("contributed_by_id")
+  contributedBy   User?        @relation("ContributedBy", fields: [contributedById], references: [id], onDelete: SetNull)
+  contributions   Contribution[] @relation("CardContributions")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -592,13 +607,59 @@ enum ProofStatus {
   @@map("proof_status")
 }
 
+// ---
+// Tag — User-created custom tags for binder organization
+// Normalized N:M table for scalability: enables tag search, auto-completion,
+// and "popular tags" analytics for future P2P trading features.
+// Each tag is globally shared (one tag per unique name across all users);
+// UserBinderCardTag joins User collection entries to tags.
+// ---
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique // e.g., "#메이크스타", "#갈망포카"
+  usageCount Int     @default(0) @map("usage_count") // Cached count of binder entries using this tag
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  binderCardTags UserBinderCardTag[]
+
+  @@index([createdAt])
+  @@map("tags")
+}
+
+// ---
+// UserBinderCardTag — N:M join: User binder entries to custom tags
+// Replaces the `customTags` String[] array on UserBinderCard for
+// efficient filtering, aggregation, and autocomplete.
+// ---
+model UserBinderCardTag {
+  id String @id @default(cuid())
+
+  userBinderCardId String
+  userBinderCard   UserBinderCard @relation(fields: [userBinderCardId], references: [id], onDelete: Cascade)
+
+  tagId String
+  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([userBinderCardId, tagId])
+  @@index([userBinderCardId])
+  @@index([tagId])
+  @@map("user_binder_card_tags")
+}
+
 // User Virtual Binder - Many-to-many relationship between User and PhotoCard
 // with status tags: "In Hand", "ISO" (In Search Of), "#드볼중" (Seeking to buy),
 // etc. Acts as a user collection/wishlist system.
+// ---
+// NOTE: `customTags` String[] is deprecated in favor of UserBinderCardTag N:M relation.
+// Keep the array field for backward compatibility during migration; new UI uses tags relation.
 // -----------------------------------------------------------------------------
 model UserBinderCard {
   id        String               @id @default(cuid())
   tags      String[]             @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
+  customTags String[]             @default([]) // DEPRECATED: use binderCardTags relation instead
   note      String? // User's personal note about this card
   status    UserBinderCardStatus @default(OWNED) // 사용자 카드 상태 (OWNED/WTT/WTS/WTB)
   createdAt DateTime             @default(now())
@@ -610,6 +671,9 @@ model UserBinderCard {
   cardId String
   card   PhotoCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
 
+  // N:M relationship to custom tags (new normalized structure)
+  binderCardTags UserBinderCardTag[]
+
   // A binder entry doubles as the "자랑" (show-off) unit other users react to.
   reactions Reaction[]
 
@@ -620,6 +684,34 @@ model UserBinderCard {
   @@index([userId])
   @@index([cardId])
   @@map("user_binder_cards")
+}
+
+// ---
+// Smart Binder Rule — Dynamic filter conditions for organizing binder views.
+// Allows users to create custom filtration rules combining system filters
+// (groups, members) and user-defined tags. Rules render as tabs in VaultPageClient
+// and support different display modes (GRID, CHECKLIST, etc).
+//
+// **System filters**: Official catalog metadata (group/member slugs, album IDs).
+// Stored as Json so new filter types can be added without schema changes.
+// **Custom tags**: References to user-created tags via Tag.id array.
+// Normalized for efficient join queries and "tag trending" analytics.
+// ---
+model SmartBinderRule {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation("SmartBinderRules", fields: [userId], references: [id], onDelete: Cascade)
+
+  name              String   // 규칙 이름 (e.g., "2024 컬렉션", "현수막")
+  systemFilters     Json     @default("{}") // {"groups": ["aespa", "ive"], "members": ["karina"]}
+  customTagIds      String[] @default([]) @map("custom_tag_ids") // Tag.id array for N:M filtering
+  displayMode       String   @default("GRID") // "GRID", "CHECKLIST", etc.
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("smart_binder_rules")
 }
 
 // ---
@@ -769,9 +861,12 @@ model Reaction {
 // Korean copy so a delivered notification never changes wording retroactively.
 // -----------------------------------------------------------------------------
 enum NotificationType {
-  HOF_EXPOSURE // 명예의 전당 노출
+  HOF_EXPOSURE           // 명예의 전당 노출
   DAILY_REACTION_SUMMARY // 하루치 리액션 요약
-  TRADE_MATCH // WTT 번들 매칭 성사 (inactive in the MVP)
+  TRADE_MATCH            // WTT 번들 매칭 성사 (inactive in MVP)
+  CONTRIBUTION_APPROVED  // 도감 이미지 채택 및 XP 지급
+  PRICE_MATCH_ALERT      // 원하는 가격대 카드 등장
+  TRADE_OFFER            // 교환 제안 도착
 
   @@map("notification_type")
 }
@@ -798,6 +893,44 @@ model Notification {
   @@index([userId, createdAt])
   @@index([type])
   @@map("notifications")
+}
+
+// PushSubscription — Web Push API subscriptions for browser notifications
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  user      User     @relation("PushSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
+
+  endpoint  String   // Browser push service endpoint
+  p256dh    String   // ECDH public key for encryption
+  auth      String   // Authentication secret
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([userId, endpoint])
+  @@index([userId])
+  @@map("push_subscriptions")
+}
+
+// Contribution — User-submitted photocard images for catalog improvement
+model Contribution {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  user        User     @relation("UserContributions", fields: [userId], references: [id], onDelete: Cascade)
+
+  photoCardId String   @map("photo_card_id")
+  photoCard   PhotoCard @relation("CardContributions", fields: [photoCardId], references: [id], onDelete: Cascade)
+
+  imageUrl    String   @map("image_url")
+  status      String   @default("PENDING") // PENDING / APPROVED / REJECTED
+  rewardXp    Int      @default(0) @map("reward_xp") // XP awarded upon approval
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  approvedAt  DateTime? @map("approved_at")
+
+  @@index([userId, status])
+  @@index([photoCardId, status])
+  @@map("contributions")
 }
 
 // -----------------------------------------------------------------------------

@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Globe2, BookOpen, Smartphone, Share2 } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
-import { BinderStats } from "@/components/binder/BinderStats";
 
 // Icons only — labels are fetched at render time for i18n.
 const VALUE_PROP_ICONS = [Globe2, BookOpen, Smartphone, Share2] as const;
@@ -41,9 +40,8 @@ export function LandingHero({ gridRef }: { gridRef?: React.RefObject<HTMLDivElem
   const actionRoutes = ["/gallery", "/wiki", "/vault", "/binder-export"];
 
   const handleQuickBinder = () => {
-    if (gridRef?.current) {
-      gridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    // Route to guest binder — no login required
+    router.push("/vault?mode=guest");
   };
 
   const handleBinderExport = () => {
@@ -69,15 +67,14 @@ export function LandingHero({ gridRef }: { gridRef?: React.RefObject<HTMLDivElem
         {t("hero.subheadline")}
       </motion.p>
 
-      {/* Main CTA Button + Binder Stats */}
-      <motion.div variants={item} className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-center">
+      {/* Main CTA Button */}
+      <motion.div variants={item} className="mt-8">
         <button
           onClick={handleQuickBinder}
           className="inline-flex items-center gap-2 rounded-full bg-[#FF2A55] px-5 sm:px-7 py-2.5 sm:py-3.5 text-sm sm:text-base font-bold text-white hover:opacity-90 transition-opacity w-fit"
         >
-          {t("hero.cta_button") || "시작하기"}
+          {t("hero.cta_button") || "도감 둘러보기"}
         </button>
-        <BinderStats />
       </motion.div>
 
       <motion.div

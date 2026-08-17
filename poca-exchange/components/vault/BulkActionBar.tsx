@@ -1,13 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { Share2, Trash2, Tag, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Share2, Trash2, Tag, X, Sparkles } from 'lucide-react';
 import { SnsShareModal } from '@/components/export/SnsShareModal';
+import { StoryFlexCardModal } from '@/components/export/StoryFlexCardModal';
 
 interface BulkActionBarProps {
   selectedCount: number;
   selectedCards?: { memberName: string; groupName: string }[];
+  cardImages?: string[];
   vaultUrl?: string;
+  userNickname?: string;
+  userReferralCode?: string;
+  collectionCompletion?: number;
   onDelete?: () => void;
   onAddTags?: () => void;
   onClose?: () => void;
@@ -21,20 +27,35 @@ interface BulkActionBarProps {
 export function BulkActionBar({
   selectedCount,
   selectedCards = [],
+  cardImages = [],
   vaultUrl = '',
+  userNickname = 'StanPC Collector',
+  userReferralCode = '',
+  collectionCompletion = 0,
   onDelete,
   onAddTags,
   onClose,
 }: BulkActionBarProps) {
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showFlexCardModal, setShowFlexCardModal] = useState(false);
 
   if (selectedCount === 0) return null;
 
   return (
     <>
       {/* 플로팅 액션 바 */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-center pointer-events-none pb-4">
-        <div className="pointer-events-auto bg-white dark:bg-neutral-900 border-2 border-[#FF2A55] rounded-full shadow-2xl px-6 py-4 flex items-center gap-6">
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 100, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-center pointer-events-none pb-4"
+      >
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="pointer-events-auto bg-white dark:bg-neutral-900 border-2 border-[#FF2A55] rounded-full shadow-2xl px-6 py-4 flex items-center gap-6"
+        >
           {/* 선택 개수 표시 */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-[#FF2A55] text-white flex items-center justify-center font-bold text-sm">
@@ -50,6 +71,16 @@ export function BulkActionBar({
 
           {/* 액션 버튼들 */}
           <div className="flex items-center gap-3">
+            {/* 인스타 스토리 카드 */}
+            <button
+              onClick={() => setShowFlexCardModal(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:shadow-lg hover:shadow-pink-500/30 font-medium transition-all"
+              title="인스타 스토리에 공유할 멋진 카드 만들기"
+            >
+              <Sparkles className="w-4 h-4" />
+              스토리 카드
+            </button>
+
             {/* SNS 공유 */}
             <button
               onClick={() => setShowShareModal(true)}
@@ -98,8 +129,18 @@ export function BulkActionBar({
               닫기
             </button>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+
+      {/* 인스타 스토리 카드 모달 */}
+      <StoryFlexCardModal
+        isOpen={showFlexCardModal}
+        onClose={() => setShowFlexCardModal(false)}
+        userNickname={userNickname}
+        userReferralCode={userReferralCode}
+        collectionCompletion={collectionCompletion}
+        cardImages={cardImages}
+      />
 
       {/* SNS 공유 모달 */}
       <SnsShareModal
