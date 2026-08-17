@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 interface PhotoCardImageProps {
-  src: string | null;
+  src: string | null | undefined;
   alt: string;
-  memberName?: string;
-  albumTitle?: string;
-  version?: string;
+  memberName?: string | null;
+  albumTitle?: string | null;
+  version?: string | null;
   className?: string;
   width?: number;
   height?: number;
@@ -64,9 +64,9 @@ export function PhotoCardImage({
 }
 
 interface PlaceholderProps {
-  memberName?: string;
-  albumTitle?: string;
-  version?: string;
+  memberName?: string | null;
+  albumTitle?: string | null;
+  version?: string | null;
 }
 
 export function Placeholder({

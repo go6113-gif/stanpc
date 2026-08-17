@@ -8,6 +8,7 @@ import { Search, Plus, Check, Menu, X, Sparkles, ZoomIn, ZoomOut } from 'lucide-
 import { VaultResponse, VaultCardItem } from '@/lib/api-types';
 import { BulkActionBar } from '@/components/vault/BulkActionBar';
 import { CreatableTagInput } from '@/components/vault/CreatableTagInput';
+import { PhotoCardImage, Placeholder } from '@/components/PhotoCardImage';
 import { useAssetSelectionStore } from '@/store/useAssetSelectionStore';
 import { useBinderStore as useCollectionBinderStore } from '@/store/useBinderStore';
 
@@ -838,11 +839,11 @@ export default function VaultPageClient({
     <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-800">
       <div className="container mx-auto max-w-7xl px-4 py-8">
         {/* 헤더 */}
-        <div className="sticky top-0 z-40 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-neutral-800 dark:to-neutral-800 rounded-lg p-6 mb-8 shadow-sm">
-          <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-purple-600 mb-2">
+        <div className="sticky top-0 z-40 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-neutral-800 dark:to-neutral-800 rounded-lg p-4 sm:p-6 mb-8 shadow-sm">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-purple-600 mb-2">
             StanPC Vault : 나만의 디지털 바인더
           </h1>
-          <p className="text-lg text-neutral-700 dark:text-neutral-300">
+          <p className="text-sm sm:text-base lg:text-lg text-neutral-700 dark:text-neutral-300">
             보유·위시·교환 카드를 체계적으로 아카이빙하고 관리하세요.
           </p>
         </div>
@@ -861,7 +862,7 @@ export default function VaultPageClient({
                 key={stat.label}
                 className="bg-white dark:bg-neutral-800 rounded-lg p-4 text-center border border-neutral-200 dark:border-neutral-700"
               >
-                <p className="text-2xl font-bold text-pink-600">{stat.value}</p>
+                <p className="text-2xl font-bold text-white">{stat.value}</p>
                 <p className="text-xs text-neutral-600 dark:text-neutral-400">{stat.label}</p>
               </div>
             ))}
@@ -921,16 +922,16 @@ export default function VaultPageClient({
         </div>
 
         {/* 액션 바 */}
-        <div className="flex items-center justify-between mb-6 p-4 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
-          <div className="text-sm text-neutral-600 dark:text-neutral-400">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 p-4 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+          <div className="text-lg font-bold text-white w-full sm:w-auto text-center sm:text-left">
             {filteredCards.length}개 포카
             {selectMode && selectedCardIds.length > 0 && (
-              <span className="ml-2 text-pink-600 font-semibold">
+              <span className="ml-2 text-white font-bold">
                 ({selectedCardIds.length}개 선택)
               </span>
             )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-end flex-wrap">
             <DensitySelector currentSize={gridPocketSize} onChange={setGridPocketSize} />
 
             {/* 전체 선택/해제 버튼 (선택 모드 시에만) */}
@@ -1002,14 +1003,14 @@ export default function VaultPageClient({
                 >
                   {card ? (
                     <>
-                      {card.imageUrl ? (
-                        <Image
-                          src={card.imageUrl}
-                          alt={card.cardName || 'card'}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : null}
+                      <PhotoCardImage
+                        src={card.imageUrl}
+                        alt={card.cardName || 'card'}
+                        memberName={card.memberName}
+                        albumTitle={card.albumTitle}
+                        fill={true}
+                        className="object-cover"
+                      />
                       {!isCompact && gridConfig.showText && (
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-2 opacity-0 hover:opacity-100 transition">
                           <p className="text-white text-xs font-semibold truncate">
@@ -1058,16 +1059,16 @@ export default function VaultPageClient({
                   }
                 }}
               >
-                {card.imageUrl && (
-                  <div className="relative w-16 h-20 flex-shrink-0">
-                    <Image
-                      src={card.imageUrl}
-                      alt={card.cardName || 'card'}
-                      fill
-                      className="object-cover rounded"
-                    />
-                  </div>
-                )}
+                <div className="relative w-16 h-20 flex-shrink-0 rounded overflow-hidden">
+                  <PhotoCardImage
+                    src={card.imageUrl}
+                    alt={card.cardName || 'card'}
+                    memberName={card.memberName}
+                    albumTitle={card.albumTitle}
+                    fill={true}
+                    className="object-cover rounded"
+                  />
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-neutral-900 dark:text-white truncate">
                     {card.memberName}

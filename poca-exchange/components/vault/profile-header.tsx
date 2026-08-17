@@ -70,7 +70,7 @@ export function ProfileHeader({
           {/* Stats Grid */}
           <div className="mb-4 grid grid-cols-3 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-neutral-900 dark:text-white">
+              <div className="text-2xl font-bold text-white">
                 {stats.ownedCount}
               </div>
               <div className="text-xs text-neutral-600 dark:text-neutral-400">
@@ -78,7 +78,7 @@ export function ProfileHeader({
               </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-neutral-900 dark:text-white">
+              <div className="text-2xl font-bold text-white">
                 {stats.wishedCount}
               </div>
               <div className="text-xs text-neutral-600 dark:text-neutral-400">
@@ -86,7 +86,7 @@ export function ProfileHeader({
               </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-neutral-900 dark:text-white">
+              <div className="text-2xl font-bold text-white">
                 {user.collectorIndex}
               </div>
               <div className="text-xs text-neutral-600 dark:text-neutral-400">

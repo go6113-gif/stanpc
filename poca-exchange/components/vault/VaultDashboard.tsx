@@ -158,14 +158,14 @@ export function VaultDashboard() {
         {/* 공개 바인더 */}
         <motion.div variants={item} className="rounded-lg border border-white/10 bg-white/5 p-4">
           <p className="text-xs font-bold text-white/70 uppercase mb-2">공개 바인더</p>
-          <p className="text-2xl font-bold text-blue-400">{publicBindersCount}</p>
+          <p className="text-2xl font-bold text-white">{publicBindersCount}</p>
           <p className="text-xs text-white/50 mt-1">/{binders.length}</p>
         </motion.div>
 
         {/* 비공개 바인더 */}
         <motion.div variants={item} className="rounded-lg border border-white/10 bg-white/5 p-4">
           <p className="text-xs font-bold text-white/70 uppercase mb-2">비공개 바인더</p>
-          <p className="text-2xl font-bold text-purple-400">
+          <p className="text-2xl font-bold text-white">
             {binders.length - publicBindersCount}
           </p>
           <p className="text-xs text-white/50 mt-1">/{binders.length}</p>
@@ -174,7 +174,7 @@ export function VaultDashboard() {
         {/* 평균 카드/바인더 */}
         <motion.div variants={item} className="rounded-lg border border-white/10 bg-white/5 p-4">
           <p className="text-xs font-bold text-white/70 uppercase mb-2">평균</p>
-          <p className="text-2xl font-bold text-cyan-400">
+          <p className="text-2xl font-bold text-white">
             {Math.round(totalCards / binders.length)}
           </p>
           <p className="text-xs text-white/50 mt-1">카드/바인더</p>

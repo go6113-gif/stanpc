@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PlusCircle, Check, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { Placeholder } from '@/components/PhotoCardImage';
 
 export interface PhotocardItem {
   id: string;
@@ -93,7 +94,7 @@ export default function AlbumGalleryClient({
             </Link>
             <h1 className="text-2xl md:text-3xl font-bold">{albumTitle}</h1>
           </div>
-          <p className="text-xs md:text-sm text-neutral-400">총 {cards.length}종 수록</p>
+          <p className="text-sm md:text-base font-bold text-white">총 <span className="text-white font-bold">{cards.length}</span>종 수록</p>
         </div>
 
         {/* Action Buttons */}
@@ -200,8 +201,11 @@ export default function AlbumGalleryClient({
                   )}
                 </>
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-neutral-700 to-neutral-800 flex items-center justify-center text-[10px] text-neutral-500">
-                  No Image
+                <div className="w-full h-full overflow-hidden">
+                  <Placeholder
+                    memberName={card.memberName}
+                    albumTitle={card.albumTitle}
+                  />
                 </div>
               )}
 

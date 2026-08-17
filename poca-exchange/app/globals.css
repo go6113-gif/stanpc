@@ -82,6 +82,12 @@ body {
     line-height: 0; /* Remove inline gap artifacts */
   }
 
+  /* Next.js Image component for photocard tiles — object-cover for fill layout */
+  .photocard-image {
+    object-fit: cover;
+    object-position: center;
+  }
+
   /* Responsive image sizing for different viewports */
   @media (max-width: 480px) {
     /* Mobile: 2-column grid, ~50vw per card */

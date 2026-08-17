@@ -1,12 +1,15 @@
-// Sprint 01 — pSEO directory MVP. The CSV import seeded 931 groups, but the
-// MVP only ships these 5: enough long-tail keyword coverage to validate
-// indexing without curating price/badge data for the entire catalog.
+// 10-core eBay group MVP — scoped to 2,991 eBay-sourced photocard listings.
 // Every group/member/card query is scoped through this allowlist so a
 // non-MVP slug 404s instead of falling through to the full dataset.
 export const MVP_GROUP_SLUGS = [
+  "bts",
   "seventeen",
   "stray-kids",
-  "bts",
-  "aespa",
+  "enhypen",
+  "tomorrow-x-together",
   "newjeans",
+  "ive",
+  "aespa",
+  "le-sserafim",
+  "twice",
 ] as const;

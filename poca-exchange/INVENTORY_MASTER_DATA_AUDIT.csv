@@ -1,0 +1,101 @@
+동(Group),호수(Album/Era),방(Member),가구ID(CardID),가구종류(CardType),발매처/특전(Manufacturer),비주얼태그(VisualTags),예상가격KRW(EstimatedPrice),역대최고가KRW(HighestPrice),희귀도(Rarity),보유상태(IsOwned),인증여부(IsVerified),위시수(WishCount),조회수(ViewCount)
+SEVENTEEN,God's Menu Era,Seungkwan,card-0,Standard,Big Hit Entertainment,만두볼콕/안경선배,125000,450000,SSR,Yes,Yes,1234,3456
+SEVENTEEN,God's Menu Era,DK,card-1,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,275000,789000,UR,No,Yes,2156,5432
+SEVENTEEN,God's Menu Era,Jeonghan,card-2,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,350000,950000,Mythic,Yes,No,3456,7654
+SEVENTEEN,God's Menu Era,Joshua,card-3,Glitter,Big Hit Entertainment,급상승/교복착장,85000,320000,Normal,No,No,456,1234
+SEVENTEEN,God's Menu Era,Jun,card-4,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,425000,1250000,SSR,Yes,Yes,4123,8901
+SEVENTEEN,SEVENTEEN Era,Hoshi,card-5,Standard,Big Hit Entertainment,만두볼콕/안경선배,195000,550000,UR,No,Yes,1789,4567
+SEVENTEEN,SEVENTEEN Era,Seungkwan,card-6,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,310000,850000,Mythic,Yes,Yes,2987,6543
+SEVENTEEN,SEVENTEEN Era,DK,card-7,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,125000,400000,Normal,No,No,567,2345
+SEVENTEEN,Maestro Era,Jeonghan,card-8,Glitter,Big Hit Entertainment,급상승/교복착장,265000,725000,SSR,Yes,No,2134,5678
+SEVENTEEN,Maestro Era,Joshua,card-9,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,380000,1100000,UR,No,Yes,3456,7890
+Stray Kids,God's Menu Era,Felix,card-10,Standard,Big Hit Entertainment,만두볼콕/안경선배,215000,600000,Mythic,Yes,Yes,2876,6789
+Stray Kids,God's Menu Era,Bang Chan,card-11,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,145000,480000,Normal,No,No,678,2134
+Stray Kids,God's Menu Era,Changbin,card-12,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,325000,925000,SSR,Yes,Yes,3912,8765
+Stray Kids,God's Menu Era,Hyunjin,card-13,Glitter,Big Hit Entertainment,급상승/교복착장,295000,820000,UR,No,Yes,2345,5234
+Stray Kids,UNFORGIVEN Era,Jeongin,card-14,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,405000,1180000,Mythic,Yes,No,4567,9012
+Stray Kids,UNFORGIVEN Era,Seungmin,card-15,Standard,Big Hit Entertainment,만두볼콕/안경선배,175000,520000,Normal,No,No,789,3456
+Stray Kids,특 Album Era,Felix,card-16,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,335000,975000,SSR,Yes,Yes,2654,5678
+Stray Kids,특 Album Era,Bang Chan,card-17,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,105000,350000,UR,No,Yes,1456,3789
+NewJeans,Attention Cats! Era,Hanni,card-18,Glitter,Big Hit Entertainment,급상승/교복착장,245000,685000,Mythic,Yes,No,2987,6234
+NewJeans,Attention Cats! Era,Danielle,card-19,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,395000,1150000,Normal,No,Yes,3876,7654
+NewJeans,New Jeans Era,Minji,card-20,Standard,Big Hit Entertainment,만두볼콕/안경선배,285000,795000,SSR,No,No,2134,4567
+NewJeans,New Jeans Era,Jisoo,card-21,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,155000,510000,UR,Yes,Yes,1678,3456
+NewJeans,Hype Boy Era,Hanni,card-22,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,365000,1025000,Mythic,No,No,4012,8123
+NewJeans,Hype Boy Era,Danielle,card-23,Glitter,Big Hit Entertainment,급상승/교복착장,115000,380000,Normal,Yes,Yes,756,2134
+IVE,I AM Era,Wonyoung,card-24,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,445000,1300000,SSR,Yes,Yes,4234,9876
+IVE,I AM Era,Leeseo,card-25,Standard,Big Hit Entertainment,만두볼콕/안경선배,205000,575000,UR,No,No,1923,4321
+IVE,Baddie Era,Rei,card-26,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,315000,870000,Mythic,Yes,Yes,2876,5678
+IVE,Baddie Era,Liz,card-27,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,135000,420000,Normal,No,Yes,567,1234
+IVE,Magnetic Era,Yujin,card-28,Glitter,Big Hit Entertainment,급상승/교복착장,275000,755000,SSR,Yes,No,2345,5432
+IVE,Magnetic Era,Wonyoung,card-29,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,385000,1125000,UR,No,Yes,3654,7123
+TWICE,Tomboy Era,Jihyo,card-30,Standard,Big Hit Entertainment,만두볼콕/안경선배,225000,630000,Mythic,Yes,Yes,2789,6234
+TWICE,Tomboy Era,Nayeon,card-31,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,165000,540000,Normal,No,No,890,2345
+TWICE,Tomboy Era,Sana,card-32,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,345000,970000,SSR,Yes,Yes,3456,7890
+TWICE,Set Me Free Era,Momo,card-33,Glitter,Big Hit Entertainment,급상승/교복착장,295000,815000,UR,No,Yes,2456,5234
+TWICE,Set Me Free Era,Tzuyu,card-34,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,415000,1215000,Mythic,Yes,No,4123,8456
+TWICE,Formula of Love Era,Chaeyoung,card-35,Standard,Big Hit Entertainment,만두볼콕/안경선배,185000,560000,Normal,No,No,1234,3456
+TWICE,Formula of Love Era,Jihyo,card-36,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,325000,920000,SSR,Yes,Yes,2876,5678
+TWICE,Formula of Love Era,Nayeon,card-37,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,125000,410000,UR,No,No,567,1890
+ENHYPEN,Blessed-Cursed Era,Sunghoon,card-38,Glitter,Big Hit Entertainment,급상승/교복착장,255000,715000,Mythic,Yes,Yes,2654,5432
+ENHYPEN,Blessed-Cursed Era,Jungkook,card-39,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,405000,1175000,Normal,No,Yes,3789,7654
+ENHYPEN,Dimension Era,Jake,card-40,Standard,Big Hit Entertainment,만두볼콕/안경선배,215000,605000,SSR,No,No,1876,4123
+ENHYPEN,Dimension Era,Heeseung,card-41,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,145000,495000,UR,Yes,Yes,1345,3456
+ENHYPEN,Border: Carnival Era,Ni-ki,card-42,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,335000,965000,Mythic,No,No,2987,6234
+SEVENTEEN,God's Menu Era,Hoshi,card-43,Glitter,Big Hit Entertainment,급상승/교복착장,265000,745000,Normal,Yes,Yes,2134,4567
+SEVENTEEN,SEVENTEEN Era,Jun,card-44,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,395000,1135000,SSR,No,No,3456,7890
+Stray Kids,God's Menu Era,Seungmin,card-45,Standard,Big Hit Entertainment,만두볼콕/안경선배,195000,580000,UR,Yes,Yes,1897,4234
+Stray Kids,UNFORGIVEN Era,Felix,card-46,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,305000,855000,Mythic,No,Yes,2765,5432
+NewJeans,Attention Cats! Era,Minji,card-47,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,145000,450000,Normal,Yes,No,876,2345
+NewJeans,New Jeans Era,Hanni,card-48,Glitter,Big Hit Entertainment,급상승/교복착장,285000,785000,SSR,No,Yes,2345,5678
+IVE,I AM Era,Liz,card-49,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,375000,1095000,UR,Yes,Yes,3123,6789
+TWICE,Tomboy Era,Tzuyu,card-50,Standard,Big Hit Entertainment,만두볼콕/안경선배,235000,655000,Mythic,No,No,2234,4789
+TWICE,Set Me Free Era,Sana,card-51,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,155000,525000,Normal,Yes,Yes,1567,3456
+ENHYPEN,Blessed-Cursed Era,Heeseung,card-52,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,315000,905000,SSR,No,Yes,2654,5678
+SEVENTEEN,Maestro Era,DK,card-53,Glitter,Big Hit Entertainment,급상승/교복착장,245000,705000,UR,Yes,No,1987,4123
+Stray Kids,특 Album Era,Changbin,card-54,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,425000,1235000,Mythic,No,Yes,3876,7234
+NewJeans,Hype Boy Era,Jisoo,card-55,Standard,Big Hit Entertainment,만두볼콕/안경선배,175000,540000,Normal,Yes,Yes,1234,3456
+IVE,Baddie Era,Yujin,card-56,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,335000,945000,SSR,No,No,2876,5432
+TWICE,Formula of Love Era,Momo,card-57,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,105000,360000,UR,Yes,Yes,678,2134
+ENHYPEN,Dimension Era,Sunghoon,card-58,Glitter,Big Hit Entertainment,급상승/교복착장,275000,765000,Mythic,No,No,2345,5234
+SEVENTEEN,God's Menu Era,Joshua,card-59,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,385000,1145000,Normal,Yes,Yes,3567,7890
+Stray Kids,God's Menu Era,Hyunjin,card-60,Standard,Big Hit Entertainment,만두볼콕/안경선배,205000,595000,SSR,No,Yes,1876,4234
+NewJeans,New Jeans Era,Danielle,card-61,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,325000,895000,UR,Yes,No,2654,5678
+IVE,Magnetic Era,Leeseo,card-62,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,155000,480000,Mythic,No,Yes,1345,3456
+TWICE,Tomboy Era,Chaeyoung,card-63,Glitter,Big Hit Entertainment,급상승/교복착장,255000,725000,Normal,Yes,Yes,2134,4567
+ENHYPEN,Border: Carnival Era,Jake,card-64,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,405000,1190000,SSR,No,No,3789,7654
+SEVENTEEN,SEVENTEEN Era,Jeonghan,card-65,Standard,Big Hit Entertainment,만두볼콕/안경선배,215000,615000,UR,Yes,Yes,1997,4345
+Stray Kids,UNFORGIVEN Era,Bang Chan,card-66,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,145000,505000,Mythic,No,No,876,2456
+NewJeans,Attention Cats! Era,Hybe,card-67,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,365000,1045000,Normal,Yes,Yes,2876,6234
+IVE,I AM Era,Rei,card-68,Glitter,Big Hit Entertainment,급상승/교복착장,295000,835000,SSR,No,Yes,2345,5432
+TWICE,Set Me Free Era,Jihyo,card-69,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,395000,1165000,UR,Yes,No,3456,7890
+ENHYPEN,Blessed-Cursed Era,Ni-ki,card-70,Standard,Big Hit Entertainment,만두볼콕/안경선배,225000,655000,Mythic,No,Yes,2234,4789
+SEVENTEEN,Maestro Era,Jun,card-71,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,335000,965000,Normal,Yes,Yes,2987,6345
+Stray Kids,특 Album Era,Jeongin,card-72,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,125000,420000,SSR,No,No,567,1234
+NewJeans,Hype Boy Era,Minji,card-73,Glitter,Big Hit Entertainment,급상승/교복착장,265000,745000,UR,Yes,Yes,2345,5234
+IVE,Baddie Era,Liz,card-74,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,415000,1225000,Mythic,No,No,3654,7654
+TWICE,Formula of Love Era,Nayeon,card-75,Standard,Big Hit Entertainment,만두볼콕/안경선배,185000,570000,Normal,Yes,Yes,1567,3456
+ENHYPEN,Dimension Era,Jungkook,card-76,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,305000,875000,SSR,No,Yes,2654,5678
+SEVENTEEN,God's Menu Era,Jeonghan,card-77,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,345000,995000,UR,Yes,No,3456,7890
+Stray Kids,God's Menu Era,Felix,card-78,Glitter,Big Hit Entertainment,급상승/교복착장,215000,625000,Mythic,No,No,1234,3456
+NewJeans,New Jeans Era,Jisoo,card-79,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,425000,1255000,Normal,Yes,Yes,3876,8234
+IVE,Magnetic Era,Wonyoung,card-80,Standard,Big Hit Entertainment,만두볼콕/안경선배,195000,590000,SSR,No,Yes,1876,4234
+TWICE,Tomboy Era,Sana,card-81,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,165000,545000,UR,Yes,Yes,1456,3789
+ENHYPEN,Border: Carnival Era,Heeseung,card-82,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,335000,935000,Mythic,No,No,2987,6234
+SEVENTEEN,SEVENTEEN Era,Hoshi,card-83,Glitter,Big Hit Entertainment,급상승/교복착장,275000,775000,Normal,Yes,Yes,2345,5432
+Stray Kids,UNFORGIVEN Era,Changbin,card-84,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,405000,1205000,SSR,No,No,3789,7654
+NewJeans,Attention Cats! Era,Danielle,card-85,Standard,Big Hit Entertainment,만두볼콕/안경선배,225000,640000,UR,Yes,Yes,2134,4567
+IVE,I AM Era,Yujin,card-86,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,145000,485000,Mythic,No,No,876,2345
+TWICE,Set Me Free Era,Tzuyu,card-87,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,315000,905000,Normal,Yes,Yes,2654,5678
+ENHYPEN,Blessed-Cursed Era,Sunghoon,card-88,Glitter,Big Hit Entertainment,급상승/교복착장,255000,715000,SSR,No,Yes,1987,4123
+SEVENTEEN,Maestro Era,Joshua,card-89,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,375000,1115000,UR,Yes,No,3123,6789
+Stray Kids,특 Album Era,Seungmin,card-90,Standard,Big Hit Entertainment,만두볼콕/안경선배,175000,550000,Mythic,No,Yes,1234,3456
+NewJeans,Hype Boy Era,Hanni,card-91,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,305000,855000,Normal,Yes,Yes,2765,5432
+IVE,Baddie Era,Rei,card-92,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,125000,400000,SSR,No,No,567,1234
+TWICE,Formula of Love Era,Jihyo,card-93,Glitter,Big Hit Entertainment,급상승/교복착장,235000,665000,UR,Yes,Yes,2234,4789
+ENHYPEN,Dimension Era,Ni-ki,card-94,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,395000,1145000,Mythic,No,No,3456,7234
+SEVENTEEN,God's Menu Era,Seungkwan,card-95,Standard,Big Hit Entertainment,만두볼콕/안경선배,205000,605000,Normal,Yes,Yes,1876,4234
+Stray Kids,God's Menu Era,Bang Chan,card-96,Hologram,Big Hit Entertainment,인형모자/흑발냉미녀,335000,925000,SSR,No,Yes,2876,5678
+NewJeans,New Jeans Era,Minji,card-97,Emboss,Big Hit Entertainment,전설의미공포/역대최고가,155000,510000,UR,Yes,No,1345,3456
+TWICE,Tomboy Era,Momo,card-98,Glitter,Big Hit Entertainment,급상승/교복착장,265000,755000,Mythic,No,Yes,2345,5234
+ENHYPEN,Border: Carnival Era,Jake,card-99,Special Edition,Big Hit Entertainment,캐주얼룩/레전드미공포,415000,1215000,Normal,Yes,Yes,3654,7890

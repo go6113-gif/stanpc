@@ -24,7 +24,7 @@ export function BinderStats() {
         </div>
         <div className="text-center">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">보유</p>
-          <p className="text-lg font-bold text-neutral-900 dark:text-white">
+          <p className="text-white font-bold text-lg">
             {ownedCount}
           </p>
         </div>
@@ -37,7 +37,7 @@ export function BinderStats() {
         </div>
         <div className="text-center">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">위시리스트</p>
-          <p className="text-lg font-bold text-neutral-900 dark:text-white">
+          <p className="text-white font-bold text-lg">
             {wishedCount}
           </p>
         </div>

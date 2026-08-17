@@ -146,6 +146,65 @@ export interface GetVaultQuery {
 }
 
 // ============================================================================
+// Wiki 포토카드 도감 타입 (Pokedex 형식)
+// ============================================================================
+
+export interface WikiCardOfficialData {
+  releaseDate: string | null;      // 발매일 (YYYY-MM-DD)
+  manufacturer: string | null;     // 제조사 (예: SM Entertainment)
+  serialNumber: string | null;     // 일련번호
+  totalPrintRun: number | null;    // 총 발행량
+}
+
+export type CardRarity = 'SSR' | 'UR' | 'Mythic' | 'Normal';
+
+export interface WikiCard {
+  id: string;
+  slug: string;
+  cardName: string | null;
+  version: string | null;
+  imageUrl: string | null;
+
+  // 분류 정보
+  artistGroup: string;              // 아티스트/그룹명 (예: SEVENTEEN)
+  member: string | null;            // 멤버명
+  albumEra: string | null;          // 앨범/활동기 (예: "God's Menu Era")
+  cardType: string;                 // 포카 종류 (예: "Standard", "Hologram", "Emboss")
+
+  // 수집 상태
+  isOwned: boolean;                 // 내 바인더 보유 여부
+  isVerified: boolean;              // AI/관리자 팩트 검증 여부
+
+  // 팩트 데이터
+  officialData: WikiCardOfficialData;
+
+  // 팬덤 레벨 데이터
+  bestLore: string | null;          // 팬덤 베스트 댓글/스토리
+
+  // 마켓 정보
+  estimatedPrice: number | null;
+  viewCount: number;
+
+  // 🆕 Discovery UX 필드
+  rarity: CardRarity;               // 희귀도 등급
+  vibeTags: string[];               // 비주얼 태그 (예: ['만두볼콕', '안경선배'])
+  highestPrice: number | null;      // 역사적 최고가
+  wishCount: number;                // 실시간 위시 카운트
+  dominantColor: string;            // hex 코드 (배경 블러용, 예: '#FF69B4')
+}
+
+export interface WikiCardDetailResponse {
+  card: WikiCard;
+  relatedCards: WikiCard[];           // 같은 멤버/그룹의 다른 카드
+  tradingUsers: Array<{               // 교환 중인 유저 (샘플)
+    userId: string;
+    userName: string;
+    userImage: string | null;
+    tradingStatus: string;
+  }>;
+}
+
+// ============================================================================
 // API 에러 타입
 // ============================================================================
 

@@ -1,0 +1,20 @@
+﻿📥 Loading eBay 10-core data...
+✓ Loaded 10 groups
+Creating group: ENHYPEN
+Creating group: TOMORROW X TOGETHER
+Creating group: LE SSERAFIM
+✓ 10 groups ready
+📸 Seeding BTS... (299 items)
+📸 Seeding SEVENTEEN... (300 items)
+📸 Seeding Stray Kids... (300 items)
+📸 Seeding ENHYPEN... (299 items)
+📸 Seeding TOMORROW X TOGETHER... (299 items)
+📸 Seeding NewJeans... (300 items)
+📸 Seeding IVE... (299 items)
+📸 Seeding aespa... (300 items)
+📸 Seeding LE SSERAFIM... (297 items)
+📸 Seeding TWICE... (298 items)
+
+✅ Seeding complete!
+   Total PhotoCards: 2991
+   Duration: 126.9s
