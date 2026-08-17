@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import html2canvas from "html2canvas";
 import { Send, Loader2, Download } from "lucide-react";
-import type { ThemeType, CanvasRatio } from "./BinderExportCustomizer";
+import type { ThemeType, CanvasRatio, ShareMode } from "./BinderExportCustomizer";
 
 // Mock photocard data for demonstration
 const MOCK_CARDS = [
@@ -212,6 +212,7 @@ export function BinderExport({
       <div className="flex flex-col items-center gap-4">
         <div
           ref={exportRef}
+          data-export-canvas
           className={`relative w-full ${getContainerMaxWidth(canvasRatio)} ${CANVAS_RATIO_CLASSES[canvasRatio]} overflow-hidden rounded-2xl ${THEME_STYLES[theme]} p-8`}
         >
           {/* Background decorative elements */}

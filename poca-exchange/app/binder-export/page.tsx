@@ -6,11 +6,11 @@ import { ArrowLeft, Sparkles, Zap, Share2 } from "lucide-react";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://stanpc.com";
 
 export const metadata: Metadata = {
-  title: "내 포카 바인더 1초 박제 ✨ - StanPC",
-  description: "터치 한 번으로 인스타 스토리에 내 바인더 자랑하기",
+  title: "SNS 바인더 익스포트 스튜디오 - StanPC",
+  description: "내 디지털 바인더를 인스타그램 스토리, 피드, X(트위터) 규격에 맞춘 감성 이미지로 3초 만에 내보내세요.",
   openGraph: {
-    title: "내 포카 바인더 1초 박제 ✨",
-    description: "터치 한 번으로 인스타 스토리에 내 바인더 자랑하기",
+    title: "SNS 바인더 익스포트 스튜디오",
+    description: "내 디지털 바인더를 인스타그램 스토리, 피드, X(트위터) 규격에 맞춘 감성 이미지로 3초 만에 내보내세요.",
     url: `${siteUrl}/binder-export`,
     type: "website",
     images: [
@@ -18,14 +18,14 @@ export const metadata: Metadata = {
         url: `${siteUrl}/api/og/binder?username=StanPC%20Collector&title=My%20Photocard%20Binder&ownedCount=0&wishCount=0&theme=neon`,
         width: 1200,
         height: 630,
-        alt: "StanPC Binder Share",
+        alt: "StanPC Binder Export Studio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "내 포카 바인더 1초 박제 ✨",
-    description: "터치 한 번으로 인스타 스토리에 내 바인더 자랑하기",
+    title: "SNS 바인더 익스포트 스튜디오",
+    description: "내 디지털 바인더를 인스타그램 스토리, 피드, X(트위터) 규격에 맞춘 감성 이미지로 3초 만에 내보내세요.",
     images: [
       `${siteUrl}/api/og/binder?username=StanPC%20Collector&title=My%20Photocard%20Binder&ownedCount=0&wishCount=0&theme=neon`,
     ],
@@ -35,16 +35,40 @@ export const metadata: Metadata = {
 export default function BinderExportPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-neutral-900 via-neutral-900 to-black px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-12 flex items-start justify-between gap-4">
-          <div className="space-y-3 flex-1">
-            <h1 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-pink-300">
-              내 포카 바인더 1초 박제 ✨
-            </h1>
-            <p className="text-lg text-neutral-300 font-medium">
-              터치 한 번으로 인스타 스토리에 내 바인더 자랑하기
+          <div className="space-y-4 flex-1">
+            <div className="space-y-2">
+              <h1 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-pink-300">
+                SNS 바인더 익스포트 스튜디오
+              </h1>
+              <h2 className="text-xl sm:text-2xl font-bold text-white">
+                Binder Export Studio
+              </h2>
+            </div>
+            <p className="text-base sm:text-lg text-neutral-300 font-medium max-w-3xl">
+              내 디지털 바인더를 인스타그램 스토리, 피드, X(트위터) 규격에 맞춘 감성 이미지로 3초 만에 내보내세요.
             </p>
+            {/* 3-Step Guide Bar */}
+            <div className="pt-4 border-t border-white/10">
+              <div className="flex items-center gap-2 text-sm sm:text-base text-white/80 flex-wrap">
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                  <span className="font-bold text-pink-400">Step 1.</span>
+                  <span>포카 담기</span>
+                </span>
+                <span className="text-white/40">➔</span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                  <span className="font-bold text-pink-400">Step 2.</span>
+                  <span>SNS 규격 & 감성 테마 선택</span>
+                </span>
+                <span className="text-white/40">➔</span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                  <span className="font-bold text-pink-400">Step 3.</span>
+                  <span>이미지 저장 & 공유</span>
+                </span>
+              </div>
+            </div>
           </div>
           <Link
             href="/"

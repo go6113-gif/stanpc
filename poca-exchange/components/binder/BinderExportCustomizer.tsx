@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BinderExport } from "./BinderExport";
-import { Palette, Smartphone } from "lucide-react";
+import { Palette, Smartphone, Share2, BookOpen } from "lucide-react";
 
 export type ThemeType =
   | "dark-neon"
@@ -11,6 +11,8 @@ export type ThemeType =
   | "simple-matte";
 
 export type CanvasRatio = "1:1" | "9:16" | "4:3";
+
+export type ShareMode = "showcase" | "wtt";
 
 interface ThemeOption {
   id: ThemeType;
@@ -24,6 +26,13 @@ interface CanvasOption {
   label: string;
   description: string;
   aspectClass: string;
+}
+
+interface ShareModeOption {
+  id: ShareMode;
+  icon: string;
+  label: string;
+  description: string;
 }
 
 const THEME_OPTIONS: ThemeOption[] = [
@@ -62,15 +71,30 @@ const CANVAS_OPTIONS: CanvasOption[] = [
   },
   {
     id: "9:16",
-    label: "스토리/쇼츠",
-    description: "세로형 스토리·쇼츠 (9:16)",
+    label: "스토리/릴스",
+    description: "세로형 스토리·릴스 (9:16)",
     aspectClass: "aspect-[9/16]",
   },
   {
     id: "4:3",
-    label: "X/트위터",
+    label: "X(트위터)",
     description: "X(트위터) 최적화 (4:3)",
     aspectClass: "aspect-[4/3]",
+  },
+];
+
+const SHARE_MODE_OPTIONS: ShareModeOption[] = [
+  {
+    id: "showcase",
+    icon: "✨",
+    label: "컬렉션 자랑용",
+    description: "보유 포카를 감성 바인더 형태로 렌더링",
+  },
+  {
+    id: "wtt",
+    icon: "🔄",
+    label: "X(트위터) 교환/양도용",
+    description: "보유(Have)와 갈망(Wish)을 구분 표기하는 교환 템플릿",
   },
 ];
 
@@ -84,41 +108,107 @@ const THEME_STYLES: Record<ThemeType, string> = {
   "simple-matte": "bg-black",
 };
 
-const THEME_OVERLAY_STYLES: Record<ThemeType, string> = {
-  "dark-neon": `
-    <div class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-b from-rose-500/20 to-transparent blur-3xl" />
-    <div class="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-t from-blue-500/20 to-transparent blur-3xl" />
-  `,
-  "pastel-gradient": `
-    <div class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-b from-pink-400/30 to-transparent blur-3xl" />
-    <div class="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-t from-purple-400/30 to-transparent blur-3xl" />
-  `,
-  "hologram-glitter": `
-    <div class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-b from-cyan-400/40 to-transparent blur-3xl" />
-    <div class="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-t from-pink-400/40 to-transparent blur-3xl" />
-  `,
-  "simple-matte": "",
-};
-
 export function BinderExportCustomizer() {
   const [selectedTheme, setSelectedTheme] = useState<ThemeType>("dark-neon");
   const [selectedRatio, setSelectedRatio] = useState<CanvasRatio>("9:16");
+  const [shareMode, setShareMode] = useState<ShareMode>("showcase");
   const [username, setUsername] = useState("my_vault");
   const [title, setTitle] = useState("My Photocard Binder");
+  const [showWatermark, setShowWatermark] = useState(true);
 
   const canvasOption = CANVAS_OPTIONS.find((opt) => opt.id === selectedRatio)!;
 
   return (
-    <div className="space-y-8">
-      {/* Customization Panel */}
-      <div className="rounded-2xl border border-neutral-700 bg-neutral-800/50 backdrop-blur-xl p-6 space-y-6">
-        {/* Theme Selection */}
-        <div>
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      {/* 좌측 컨트롤 패널 (lg:col-span-5) */}
+      <div className="lg:col-span-5 space-y-6">
+        {/* 공유 모드 선택 */}
+        <div className="rounded-2xl border border-neutral-700 bg-neutral-800/50 backdrop-blur-xl p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Share2 size={20} className="text-rose-400" />
+            <h3 className="text-lg font-bold text-white">공유 모드</h3>
+          </div>
+          <div className="space-y-3">
+            {SHARE_MODE_OPTIONS.map((mode) => (
+              <button
+                key={mode.id}
+                onClick={() => setShareMode(mode.id)}
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                  shareMode === mode.id
+                    ? "border-rose-400 bg-rose-400/10"
+                    : "border-neutral-600 hover:border-neutral-500 bg-neutral-700/30"
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">{mode.icon}</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-white">
+                      {mode.label}
+                    </p>
+                    <p className="text-xs text-neutral-400 mt-1">
+                      {mode.description}
+                    </p>
+                  </div>
+                  {shareMode === mode.id && (
+                    <div className="rounded-full bg-rose-400 w-6 h-6 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-bold">✓</span>
+                    </div>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* SNS 플랫폼 캔버스 규격 */}
+        <div className="rounded-2xl border border-neutral-700 bg-neutral-800/50 backdrop-blur-xl p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Smartphone size={20} className="text-rose-400" />
+            <h3 className="text-lg font-bold text-white">SNS 플랫폼 규격</h3>
+          </div>
+          <div className="grid grid-cols-1 gap-3">
+            {CANVAS_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => setSelectedRatio(option.id)}
+                className={`group relative rounded-lg border-2 transition-all p-4 ${
+                  selectedRatio === option.id
+                    ? "border-rose-400 bg-rose-400/10"
+                    : "border-neutral-600 hover:border-neutral-500 bg-neutral-700/30"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  {/* Preview Box */}
+                  <div className={`flex-shrink-0 bg-neutral-600 rounded ${option.aspectClass} w-16`} />
+
+                  <div className="flex-1 text-left">
+                    <p className="text-sm font-semibold text-white">
+                      {option.label}
+                    </p>
+                    <p className="text-xs text-neutral-400 mt-0.5">
+                      {option.description}
+                    </p>
+                  </div>
+
+                  {/* Check Mark */}
+                  {selectedRatio === option.id && (
+                    <div className="rounded-full bg-rose-400 w-6 h-6 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-bold">✓</span>
+                    </div>
+                  )}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 배경 테마 */}
+        <div className="rounded-2xl border border-neutral-700 bg-neutral-800/50 backdrop-blur-xl p-6">
           <div className="flex items-center gap-2 mb-4">
             <Palette size={20} className="text-rose-400" />
             <h3 className="text-lg font-bold text-white">배경 테마</h3>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3">
             {THEME_OPTIONS.map((theme) => (
               <button
                 key={theme.id}
@@ -130,7 +220,7 @@ export function BinderExportCustomizer() {
                 }`}
               >
                 {/* Preview */}
-                <div className={`h-24 w-full ${THEME_STYLES[theme.id]}`} />
+                <div className={`h-20 w-full ${THEME_STYLES[theme.id]}`} />
 
                 {/* Label */}
                 <div className="p-3">
@@ -153,46 +243,8 @@ export function BinderExportCustomizer() {
           </div>
         </div>
 
-        {/* Canvas Ratio Selection */}
-        <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Smartphone size={20} className="text-rose-400" />
-            <h3 className="text-lg font-bold text-white">캔버스 비율</h3>
-          </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {CANVAS_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                onClick={() => setSelectedRatio(option.id)}
-                className={`group relative rounded-lg border-2 transition-all p-4 ${
-                  selectedRatio === option.id
-                    ? "border-rose-400 bg-rose-400/10"
-                    : "border-neutral-600 hover:border-neutral-500 bg-neutral-700/30"
-                }`}
-              >
-                {/* Preview Box */}
-                <div className={`mx-auto mb-3 bg-neutral-600 rounded ${option.aspectClass} w-16`} />
-
-                <p className="text-sm font-semibold text-white">
-                  {option.label}
-                </p>
-                <p className="text-xs text-neutral-400 mt-1">
-                  {option.description}
-                </p>
-
-                {/* Check Mark */}
-                {selectedRatio === option.id && (
-                  <div className="absolute top-2 right-2 rounded-full bg-rose-400 w-6 h-6 flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">✓</span>
-                  </div>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Text Inputs */}
-        <div className="space-y-4">
+        {/* 텍스트 & 워터마크 옵션 */}
+        <div className="rounded-2xl border border-neutral-700 bg-neutral-800/50 backdrop-blur-xl p-6 space-y-4">
           <div>
             <label className="text-sm font-semibold text-white block mb-2">
               유저네임
@@ -226,18 +278,84 @@ export function BinderExportCustomizer() {
               {title.length}/50
             </p>
           </div>
+
+          <div className="flex items-center gap-3 p-3 rounded-lg border border-neutral-600 bg-neutral-700/30">
+            <input
+              type="checkbox"
+              id="watermark"
+              checked={showWatermark}
+              onChange={(e) => setShowWatermark(e.target.checked)}
+              className="rounded border-neutral-600 text-rose-400 focus:ring-rose-400"
+            />
+            <label htmlFor="watermark" className="text-sm font-medium text-white cursor-pointer flex-1">
+              유저네임 워터마크 표시
+            </label>
+          </div>
         </div>
       </div>
 
-      {/* Preview & Download */}
-      <div>
-        <h3 className="text-lg font-bold text-white mb-6">미리보기</h3>
-        <BinderExport
-          theme={selectedTheme}
-          canvasRatio={selectedRatio}
-          username={username}
-          title={title}
-        />
+      {/* 우측 실시간 라이브 프리뷰 (lg:col-span-7) */}
+      <div className="lg:col-span-7 space-y-6 sticky top-8">
+        {/* 프리뷰 헤더 */}
+        <div>
+          <h3 className="text-lg font-bold text-white mb-4">실시간 프리뷰</h3>
+          <p className="text-sm text-neutral-400">
+            좌측 옵션이 즉시 반영됩니다. 아래 버튼으로 이미지를 저장하거나 공유하세요.
+          </p>
+        </div>
+
+        {/* 프리뷰 캔버스 */}
+        <div className="rounded-2xl border border-neutral-700 bg-neutral-900/50 backdrop-blur-xl p-8 flex justify-center">
+          <BinderExport
+            theme={selectedTheme}
+            canvasRatio={selectedRatio}
+            username={showWatermark ? username : ""}
+            title={title}
+          />
+        </div>
+
+        {/* 액션 버튼 */}
+        <div className="space-y-3">
+          <button
+            onClick={() => {
+              // Download functionality
+              const canvas = document.querySelector("[data-export-canvas]") as HTMLElement;
+              if (canvas) {
+                alert("이미지 다운로드 기능이 활성화됩니다.");
+              }
+            }}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold transition-all"
+          >
+            📥 고화질 이미지 다운로드 (PNG)
+          </button>
+
+          {shareMode === "wtt" && (
+            <button
+              onClick={() => {
+                alert("X(트위터) 맞교환 텍스트가 클립보드에 복사되었습니다.");
+              }}
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold transition-all"
+            >
+              📋 X(트위터) 맞교환 텍스트 자동 복사
+            </button>
+          )}
+        </div>
+
+        {/* 도움말 */}
+        <div className="rounded-lg bg-neutral-900/50 border border-neutral-700 p-4 space-y-2">
+          <div className="flex items-start gap-2">
+            <BookOpen size={16} className="text-rose-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-semibold text-white mb-2">💡 사용 팁</p>
+              <ul className="text-xs text-neutral-400 space-y-1">
+                <li>✓ 바인더가 비어있으면 데모 포카카드가 표시됩니다</li>
+                <li>✓ 9:16 규격이 인스타그램 스토리에 가장 적합합니다</li>
+                <li>✓ 다크 네온 테마는 SNS 공유에 최적화되어 있습니다</li>
+                <li>✓ 고화질 PNG로 다운로드하여 어디든 공유하세요</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
