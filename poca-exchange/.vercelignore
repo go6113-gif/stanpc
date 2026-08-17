@@ -1,0 +1,62 @@
+# Node modules and dependencies
+node_modules/
+.next/
+*.lock
+
+# Development files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Testing
+.jest/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+
+# Python and scripts (not needed for deployment)
+scripts/
+*.py
+__pycache__/
+venv/
+env/
+
+# Data and test files
+data/
+test-db.mjs
+*.mjs
+vision_pilot_output/
+vision_realdata_pilot_output/
+public/images/pilot_real_data/
+
+# Documentation
+*.md
+!README.md
+
+# Git and CI
+.git/
+.gitignore
+.github/
+
+# Database migrations (already applied)
+prisma/migrations/
