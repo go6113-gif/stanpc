@@ -1,3 +1,5 @@
+'use client';
+
 import { ReviewQueueViewer } from '@/components/admin/ReviewQueueViewer';
 
 /**
@@ -6,11 +8,9 @@ import { ReviewQueueViewer } from '@/components/admin/ReviewQueueViewer';
  */
 
 export default function ReviewQueuePage() {
-  return (
-    <ReviewQueueViewer
-      onReviewComplete={(id, status) => {
-        console.log(`Review ${id} completed with status: ${status}`);
-      }}
-    />
-  );
+  const handleReviewComplete = (id: string, status: string) => {
+    console.log(`Review ${id} completed with status: ${status}`);
+  };
+
+  return <ReviewQueueViewer onReviewComplete={handleReviewComplete} />;
 }

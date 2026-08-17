@@ -6,8 +6,8 @@
 // app/generated/prisma so `@/app/generated/prisma/client` resolves through the
 // existing tsconfig "@/*" alias; the directory is gitignored.
 generator client {
-  provider      = "prisma-client"
-  output        = "../app/generated/prisma"
+  provider        = "prisma-client"
+  output          = "../app/generated/prisma"
   previewFeatures = ["driverAdapters"]
 }
 
@@ -61,11 +61,11 @@ model User {
   discordUrl    String? @map("discord_url")
 
   // Stripe Billing — Collector/Pro tier subscription management
-  tier                    String?   @default("FREE") // "FREE", "COLLECTOR", "PRO"
-  stripeCustomerId        String?   @unique @map("stripe_customer_id")
-  subscriptionId          String?   @unique @map("subscription_id")
-  subscriptionStatus      String?   @map("subscription_status") // "active", "past_due", "canceled", etc.
-  subscriptionExpiresAt   DateTime? @map("subscription_expires_at")
+  tier                  String?   @default("FREE") // "FREE", "COLLECTOR", "PRO"
+  stripeCustomerId      String?   @unique @map("stripe_customer_id")
+  subscriptionId        String?   @unique @map("subscription_id")
+  subscriptionStatus    String?   @map("subscription_status") // "active", "past_due", "canceled", etc.
+  subscriptionExpiresAt DateTime? @map("subscription_expires_at")
 
   accounts Account[]
   sessions Session[]
@@ -77,9 +77,9 @@ model User {
   smartBinderRules SmartBinderRule[] @relation("SmartBinderRules")
 
   // Collector Index / gamification
-  badges        UserBadge[]
-  reactions     Reaction[]
-  notifications Notification[]
+  badges            UserBadge[]
+  reactions         Reaction[]
+  notifications     Notification[]
   pushSubscriptions PushSubscription[] @relation("PushSubscriptions")
 
   // Proof Records for photocard ownership verification
@@ -96,10 +96,10 @@ model User {
   tradeItemsOffered TradeItem[]   @relation("TradeItemOfferedBy")
 
   // Referral & Credits System — 글로벌 추천인 및 크레딧 관리
-  referralCode      String?   @unique @map("referral_code") // 사용자의 고유 추천 코드
-  referredBy        String?   @map("referred_by") // 나를 추천한 사용자의 referralCode
-  credits           Int       @default(0) // 사용자의 누적 크레딧
-  membershipType    String    @default("FREE") @map("membership_type") // "FREE", "COLLECTOR", "PRO"
+  referralCode        String?   @unique @map("referral_code") // 사용자의 고유 추천 코드
+  referredBy          String?   @map("referred_by") // 나를 추천한 사용자의 referralCode
+  credits             Int       @default(0) // 사용자의 누적 크레딧
+  membershipType      String    @default("FREE") @map("membership_type") // "FREE", "COLLECTOR", "PRO"
   membershipExpiresAt DateTime? @map("membership_expires_at") // 멤버십 만료 일시
 
   // Referral logs
@@ -115,10 +115,10 @@ model User {
   referralCodeStats ReferralCodeStats? @relation("ReferralCodeStats")
 
   // Contribution & Gamification (Module 2)
-  xp                Int       @default(0) // Experience points from contributions
-  contributorTier   String    @default("ROOKIE") @map("contributor_tier") // User gamification tier (ROOKIE/MEMBER/EXPERT/LEGEND)
+  xp                Int            @default(0) // Experience points from contributions
+  contributorTier   String         @default("ROOKIE") @map("contributor_tier") // User gamification tier (ROOKIE/MEMBER/EXPERT/LEGEND)
   contributions     Contribution[] @relation("UserContributions")
-  contributedPhotos PhotoCard[] @relation("ContributedBy")
+  contributedPhotos PhotoCard[]    @relation("ContributedBy")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -144,6 +144,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
   @@map("accounts")
 }
 
@@ -155,6 +156,7 @@ model Session {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
   @@map("sessions")
 }
 
@@ -363,7 +365,7 @@ model PhotoCard {
 
   // Market price tracking (USD only). Single-currency baseline for global accessibility.
   // Updated by price-tracking pipeline or manual editorial input.
-  priceUsd       Float?  @default(0) @map("price_usd")  // US Dollar
+  priceUsd Float? @default(0) @map("price_usd") // US Dollar
 
   // pSEO/GEO 가이드 탭 본문 — Claude Sonnet이 생성한 위키 수준 마크다운 원문.
   // /card/[cardSlug]의 CardTabs가 RSC에서 이 문자열을 시맨틱 HTML로 파싱해
@@ -402,8 +404,8 @@ model PhotoCard {
   affiliateLinks AffiliateLink[]
 
   // Contribution tracking (Module 2) — credited user who provided the image
-  contributedById String?      @map("contributed_by_id")
-  contributedBy   User?        @relation("ContributedBy", fields: [contributedById], references: [id], onDelete: SetNull)
+  contributedById String?        @map("contributed_by_id")
+  contributedBy   User?          @relation("ContributedBy", fields: [contributedById], references: [id], onDelete: SetNull)
   contributions   Contribution[] @relation("CardContributions")
 
   createdAt DateTime @default(now())
@@ -414,6 +416,7 @@ model PhotoCard {
   @@index([memberId])
   @@index([albumId])
   @@index([catalogVersionId])
+  @@index([createdAt])
   @@map("photo_cards")
 }
 
@@ -429,6 +432,7 @@ model OutboundClick {
 
   @@index([cardId])
   @@index([market])
+  @@index([createdAt])
   @@map("outbound_clicks")
 }
 
@@ -556,29 +560,29 @@ model GlobalSKUMapping {
 // ProfileHeatmap에서 일자별 활동 횟수를 집계하는 데 사용됩니다.
 // ---
 enum ActivityType {
-  CARD_ADDED       @map("CARD_ADDED")       // 카드 소장 추가
-  CARD_REMOVED     @map("CARD_REMOVED")     // 카드 제거
-  CARD_SHOWCASED   @map("CARD_SHOWCASED")   // 자랑 게시
-  TRADE_COMPLETED  @map("TRADE_COMPLETED")  // 거래 완료
-  BADGE_EARNED     @map("BADGE_EARNED")     // 뱃지 획득
+  CARD_ADDED      @map("CARD_ADDED") // 카드 소장 추가
+  CARD_REMOVED    @map("CARD_REMOVED") // 카드 제거
+  CARD_SHOWCASED  @map("CARD_SHOWCASED") // 자랑 게시
+  TRADE_COMPLETED @map("TRADE_COMPLETED") // 거래 완료
+  BADGE_EARNED    @map("BADGE_EARNED") // 뱃지 획득
 
   @@map("activity_type")
 }
 
 model ActivityLog {
-  id        String       @id @default(cuid())
+  id String @id @default(cuid())
 
-  userId    String       @map("user_id")
-  user      User         @relation("ActivityLogs", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+  user   User   @relation("ActivityLogs", fields: [userId], references: [id], onDelete: Cascade)
 
-  type      ActivityType
-  description String?    // Optional: 활동 설명 (카드 이름, 거래 대상 등)
+  type        ActivityType
+  description String? // Optional: 활동 설명 (카드 이름, 거래 대상 등)
 
   // Optional reference to related card
-  cardId    String?      @map("card_id")
-  card      PhotoCard?   @relation("ActivityLogs", fields: [cardId], references: [id], onDelete: SetNull)
+  cardId String?    @map("card_id")
+  card   PhotoCard? @relation("ActivityLogs", fields: [cardId], references: [id], onDelete: SetNull)
 
-  createdAt DateTime     @default(now()) @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@index([userId])
   @@index([cardId])
@@ -590,10 +594,10 @@ model ActivityLog {
 // 바인더 카드 상태 — 표준화된 수집 상태 분류
 // 사용자가 카드에 대해 취하고 있는 행동/상태를 나타냄
 enum UserBinderCardStatus {
-  OWNED   @map("OWNED")   // 소유 중 (개인 수집용, 기본값)
-  WTT     @map("WTT")     // 교환 중 (Want To Trade)
-  WTS     @map("WTS")     // 판매 중 (Want To Sell)
-  WTB     @map("WTB")     // 구매 중 (Want To Buy, ISO와 동일)
+  OWNED @map("OWNED") // 소유 중 (개인 수집용, 기본값)
+  WTT   @map("WTT") // 교환 중 (Want To Trade)
+  WTS   @map("WTS") // 판매 중 (Want To Sell)
+  WTB   @map("WTB") // 구매 중 (Want To Buy, ISO와 동일)
 
   @@map("user_binder_card_status")
 }
@@ -615,14 +619,15 @@ enum ProofStatus {
 // UserBinderCardTag joins User collection entries to tags.
 // ---
 model Tag {
-  id        String   @id @default(cuid())
-  name      String   @unique // e.g., "#메이크스타", "#갈망포카"
-  usageCount Int     @default(0) @map("usage_count") // Cached count of binder entries using this tag
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id         String   @id @default(cuid())
+  name       String   @unique // e.g., "#메이크스타", "#갈망포카"
+  usageCount Int      @default(0) @map("usage_count") // Cached count of binder entries using this tag
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   binderCardTags UserBinderCardTag[]
 
+  @@index([name])
   @@index([createdAt])
   @@map("tags")
 }
@@ -657,13 +662,13 @@ model UserBinderCardTag {
 // Keep the array field for backward compatibility during migration; new UI uses tags relation.
 // -----------------------------------------------------------------------------
 model UserBinderCard {
-  id        String               @id @default(cuid())
-  tags      String[]             @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
+  id         String               @id @default(cuid())
+  tags       String[]             @default([]) // ["In Hand", "ISO", "#드볼중", "Trade Bait", etc.]
   customTags String[]             @default([]) // DEPRECATED: use binderCardTags relation instead
-  note      String? // User's personal note about this card
-  status    UserBinderCardStatus @default(OWNED) // 사용자 카드 상태 (OWNED/WTT/WTS/WTB)
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
+  note       String? // User's personal note about this card
+  status     UserBinderCardStatus @default(OWNED) // 사용자 카드 상태 (OWNED/WTT/WTS/WTB)
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -683,6 +688,8 @@ model UserBinderCard {
   @@unique([userId, cardId])
   @@index([userId])
   @@index([cardId])
+  @@index([status])
+  @@index([createdAt])
   @@map("user_binder_cards")
 }
 
@@ -698,14 +705,14 @@ model UserBinderCard {
 // Normalized for efficient join queries and "tag trending" analytics.
 // ---
 model SmartBinderRule {
-  id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation("SmartBinderRules", fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation("SmartBinderRules", fields: [userId], references: [id], onDelete: Cascade)
 
-  name              String   // 규칙 이름 (e.g., "2024 컬렉션", "현수막")
-  systemFilters     Json     @default("{}") // {"groups": ["aespa", "ive"], "members": ["karina"]}
-  customTagIds      String[] @default([]) @map("custom_tag_ids") // Tag.id array for N:M filtering
-  displayMode       String   @default("GRID") // "GRID", "CHECKLIST", etc.
+  name          String // 규칙 이름 (e.g., "2024 컬렉션", "현수막")
+  systemFilters Json     @default("{}") // {"groups": ["aespa", "ive"], "members": ["karina"]}
+  customTagIds  String[] @default([]) @map("custom_tag_ids") // Tag.id array for N:M filtering
+  displayMode   String   @default("GRID") // "GRID", "CHECKLIST", etc.
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -724,7 +731,7 @@ model ProofRecord {
   id String @id @default(cuid())
 
   // Foreign key to the binder card this proof belongs to (1:1 relationship)
-  userBinderCardId String       @unique @map("user_binder_card_id")
+  userBinderCardId String         @unique @map("user_binder_card_id")
   userBinderCard   UserBinderCard @relation(fields: [userBinderCardId], references: [id], onDelete: Cascade)
 
   userId String @map("user_id")
@@ -738,16 +745,17 @@ model ProofRecord {
   hashSha256 String? @map("hash_sha256")
 
   // Verification workflow
-  status    ProofStatus @default(PENDING)
-  verifiedAt DateTime?  @map("verified_at")
+  status     ProofStatus @default(PENDING)
+  verifiedAt DateTime?   @map("verified_at")
 
   // Metadata: EXIF, dimensions, etc.
-  metadata  Json?  @db.JsonB
+  metadata Json? @db.JsonB
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([userId])
+  @@index([userBinderCardId])
   @@index([status])
   @@index([createdAt])
   @@map("proof_records")
@@ -861,12 +869,12 @@ model Reaction {
 // Korean copy so a delivered notification never changes wording retroactively.
 // -----------------------------------------------------------------------------
 enum NotificationType {
-  HOF_EXPOSURE           // 명예의 전당 노출
+  HOF_EXPOSURE // 명예의 전당 노출
   DAILY_REACTION_SUMMARY // 하루치 리액션 요약
-  TRADE_MATCH            // WTT 번들 매칭 성사 (inactive in MVP)
-  CONTRIBUTION_APPROVED  // 도감 이미지 채택 및 XP 지급
-  PRICE_MATCH_ALERT      // 원하는 가격대 카드 등장
-  TRADE_OFFER            // 교환 제안 도착
+  TRADE_MATCH // WTT 번들 매칭 성사 (inactive in MVP)
+  CONTRIBUTION_APPROVED // 도감 이미지 채택 및 XP 지급
+  PRICE_MATCH_ALERT // 원하는 가격대 카드 등장
+  TRADE_OFFER // 교환 제안 도착
 
   @@map("notification_type")
 }
@@ -897,13 +905,13 @@ model Notification {
 
 // PushSubscription — Web Push API subscriptions for browser notifications
 model PushSubscription {
-  id        String   @id @default(cuid())
-  userId    String   @map("user_id")
-  user      User     @relation("PushSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation("PushSubscriptions", fields: [userId], references: [id], onDelete: Cascade)
 
-  endpoint  String   // Browser push service endpoint
-  p256dh    String   // ECDH public key for encryption
-  auth      String   // Authentication secret
+  endpoint String // Browser push service endpoint
+  p256dh   String // ECDH public key for encryption
+  auth     String // Authentication secret
 
   createdAt DateTime @default(now()) @map("created_at")
 
@@ -914,19 +922,19 @@ model PushSubscription {
 
 // Contribution — User-submitted photocard images for catalog improvement
 model Contribution {
-  id          String   @id @default(cuid())
-  userId      String   @map("user_id")
-  user        User     @relation("UserContributions", fields: [userId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation("UserContributions", fields: [userId], references: [id], onDelete: Cascade)
 
-  photoCardId String   @map("photo_card_id")
+  photoCardId String    @map("photo_card_id")
   photoCard   PhotoCard @relation("CardContributions", fields: [photoCardId], references: [id], onDelete: Cascade)
 
-  imageUrl    String   @map("image_url")
-  status      String   @default("PENDING") // PENDING / APPROVED / REJECTED
-  rewardXp    Int      @default(0) @map("reward_xp") // XP awarded upon approval
+  imageUrl String @map("image_url")
+  status   String @default("PENDING") // PENDING / APPROVED / REJECTED
+  rewardXp Int    @default(0) @map("reward_xp") // XP awarded upon approval
 
-  createdAt   DateTime @default(now()) @map("created_at")
-  approvedAt  DateTime? @map("approved_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  approvedAt DateTime? @map("approved_at")
 
   @@index([userId, status])
   @@index([photoCardId, status])
@@ -1080,30 +1088,30 @@ model WaitlistSignup {
 // 모든 금액과 리워드는 USD 기준이며, pricing.config.ts에서 관리됩니다.
 // -----------------------------------------------------------------------------
 model ReferralLog {
-  id            String   @id @default(cuid())
-  referrerId    String   @map("referrer_id") // 추천인 User ID
-  referrer      User     @relation(fields: [referrerId], references: [id], onDelete: Cascade)
-  refereeEmail  String   @map("referee_email") // 피추천인 이메일 (가입 전)
+  id           String @id @default(cuid())
+  referrerId   String @map("referrer_id") // 추천인 User ID
+  referrer     User   @relation(fields: [referrerId], references: [id], onDelete: Cascade)
+  refereeEmail String @map("referee_email") // 피추천인 이메일 (가입 전)
 
   // 링크 관계 (피추천인이 가입한 후 설정)
-  refereeId     String?  @map("referee_id")
+  refereeId String? @map("referee_id")
 
   // 크레딧 트랜잭션 기록
-  referrerCreditsAwarded    Int      @default(0) @map("referrer_credits_awarded") // 추천인에게 주어진 크레딧
-  refereeCreditsAwarded     Int      @default(0) @map("referee_credits_awarded") // 피추천인에게 주어진 크레딧
-  referrerCreditsStatus     String   @default("PENDING") @map("referrer_credits_status") // "PENDING", "AWARDED", "REVOKED"
-  refereeCreditsStatus      String   @default("PENDING") @map("referee_credits_status")
+  referrerCreditsAwarded Int    @default(0) @map("referrer_credits_awarded") // 추천인에게 주어진 크레딧
+  refereeCreditsAwarded  Int    @default(0) @map("referee_credits_awarded") // 피추천인에게 주어진 크레딧
+  referrerCreditsStatus  String @default("PENDING") @map("referrer_credits_status") // "PENDING", "AWARDED", "REVOKED"
+  refereeCreditsStatus   String @default("PENDING") @map("referee_credits_status")
 
   // 결제 연동
-  paymentId     String?  @map("payment_id") // Stripe payment ID (향후)
-  paymentAmount Float?   @map("payment_amount") // 결제 금액 (USD)
+  paymentId     String? @map("payment_id") // Stripe payment ID (향후)
+  paymentAmount Float?  @map("payment_amount") // 결제 금액 (USD)
 
   // Credit transaction link
   creditTransactions CreditTransaction[]
 
   // 타임스탐프
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([referrerId])
   @@index([refereeEmail])
@@ -1118,33 +1126,33 @@ model ReferralLog {
 // 소비: 년간 갱신비, 디지털 특전 구입
 // ---
 enum CreditTransactionType {
-  REFERRAL_AWARDED     @map("REFERRAL_AWARDED")     // 친구 추천 시 지급
-  WELCOME_BONUS        @map("WELCOME_BONUS")        // 신규 가입 웰컴 보너스
+  REFERRAL_AWARDED      @map("REFERRAL_AWARDED") // 친구 추천 시 지급
+  WELCOME_BONUS         @map("WELCOME_BONUS") // 신규 가입 웰컴 보너스
   ANNUAL_RENEWAL_DEDUCT @map("ANNUAL_RENEWAL_DEDUCT") // 년간 갱신비 차감
-  REWARD_REDEEMED      @map("REWARD_REDEEMED")      // 디지털 특전 구입 시 차감
-  REVOKED              @map("REVOKED")              // 환불 시 회수
+  REWARD_REDEEMED       @map("REWARD_REDEEMED") // 디지털 특전 구입 시 차감
+  REVOKED               @map("REVOKED") // 환불 시 회수
 
   @@map("credit_transaction_type")
 }
 
 model CreditTransaction {
-  id              String                 @id @default(cuid())
+  id String @id @default(cuid())
 
-  userId          String                 @map("user_id")
-  user            User                   @relation("CreditTransactions", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+  user   User   @relation("CreditTransactions", fields: [userId], references: [id], onDelete: Cascade)
 
-  type            CreditTransactionType
-  amount          Int                    // 양수: 지급, 음수: 소비
-  description     String?                // "친구 'username' 추천", "년간 갱신비", etc.
+  type        CreditTransactionType
+  amount      Int // 양수: 지급, 음수: 소비
+  description String? // "친구 'username' 추천", "년간 갱신비", etc.
 
   // 트랜잭션 링크 (선택사항)
-  referralLogId   String?                @map("referral_log_id")
-  referralLog     ReferralLog?           @relation(fields: [referralLogId], references: [id], onDelete: SetNull)
+  referralLogId String?      @map("referral_log_id")
+  referralLog   ReferralLog? @relation(fields: [referralLogId], references: [id], onDelete: SetNull)
 
-  rewardId        String?                @map("reward_id")
-  reward          UserDigitalReward?     @relation(fields: [rewardId], references: [id], onDelete: SetNull)
+  rewardId String?            @map("reward_id")
+  reward   UserDigitalReward? @relation(fields: [rewardId], references: [id], onDelete: SetNull)
 
-  createdAt       DateTime               @default(now()) @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@index([userId])
   @@index([type])
@@ -1157,25 +1165,25 @@ model CreditTransaction {
 // 사용자가 충분한 크레딧을 적립해 디지털 특전을 해금했을 때의 기록
 // ---
 model UserDigitalReward {
-  id              String                 @id @default(cuid())
+  id String @id @default(cuid())
 
-  userId          String                 @map("user_id")
-  user            User                   @relation("DigitalRewards", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+  user   User   @relation("DigitalRewards", fields: [userId], references: [id], onDelete: Cascade)
 
-  rewardKey       String                 @map("reward_key") // "hologram_theme", "custom_domain", etc.
-  rewardName      String                 @map("reward_name") // 한글 이름
-  requiredCredits Int                    @map("required_credits") // 해금에 필요했던 크레딧
+  rewardKey       String @map("reward_key") // "hologram_theme", "custom_domain", etc.
+  rewardName      String @map("reward_name") // 한글 이름
+  requiredCredits Int    @map("required_credits") // 해금에 필요했던 크레딧
 
   // 특전별 설정 (예: 커스텀 도메인인 경우)
-  customValue     String?                @map("custom_value") // 도메인 선택값, etc.
-  isActive        Boolean                @default(true) @map("is_active")
+  customValue String? @map("custom_value") // 도메인 선택값, etc.
+  isActive    Boolean @default(true) @map("is_active")
 
   // 특전 크레딧 차감 기록
   creditTransactions CreditTransaction[]
 
-  unlockedAt      DateTime               @default(now()) @map("unlocked_at")
-  createdAt       DateTime               @default(now()) @map("created_at")
-  updatedAt       DateTime               @updatedAt @map("updated_at")
+  unlockedAt DateTime @default(now()) @map("unlocked_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@unique([userId, rewardKey])
   @@index([userId])
@@ -1188,20 +1196,20 @@ model UserDigitalReward {
 // 사용자의 추천 링크가 얼마나 많은 신규 가입을 유도했는지 추적
 // ---
 model ReferralCodeStats {
-  id              String                 @id @default(cuid())
+  id String @id @default(cuid())
 
-  userId          String                 @unique @map("user_id")
-  user            User                   @relation("ReferralCodeStats", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @map("user_id")
+  user   User   @relation("ReferralCodeStats", fields: [userId], references: [id], onDelete: Cascade)
 
-  referralCode    String                 @unique @map("referral_code")
+  referralCode String @unique @map("referral_code")
 
   // 통계
-  totalReferrals  Int                    @default(0) @map("total_referrals") // 총 추천인 수
-  successfulConversions Int              @default(0) @map("successful_conversions") // 결제 완료인 수
-  totalCreditsAwarded Int                @default(0) @map("total_credits_awarded") // 지급된 총 크레딧
+  totalReferrals        Int @default(0) @map("total_referrals") // 총 추천인 수
+  successfulConversions Int @default(0) @map("successful_conversions") // 결제 완료인 수
+  totalCreditsAwarded   Int @default(0) @map("total_credits_awarded") // 지급된 총 크레딧
 
-  createdAt       DateTime               @default(now()) @map("created_at")
-  updatedAt       DateTime               @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("referral_code_stats")
 }
@@ -1211,25 +1219,25 @@ model ReferralCodeStats {
 // 중복 결제 방지 및 환불 처리를 위해 결제 기록 저장
 // ---
 model StripePaymentRecord {
-  id                        String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  userId                    String   @map("user_id")
-  sessionId                 String   @map("session_id")
+  userId    String @map("user_id")
+  sessionId String @map("session_id")
 
   // 중복 결제 방지: 동일 카드의 Fingerprint 저장
-  paymentMethodFingerprint  String?  @map("payment_method_fingerprint")
+  paymentMethodFingerprint String? @map("payment_method_fingerprint")
 
   // 결제 정보
-  amount                    Int      @map("amount") // 금액 (센트)
-  currency                  String   @default("usd") @map("currency")
+  amount   Int    @map("amount") // 금액 (센트)
+  currency String @default("usd") @map("currency")
 
   // 상태: COMPLETED, REFUNDED, CANCELED
-  status                    String   @default("COMPLETED") @map("status")
+  status String @default("COMPLETED") @map("status")
 
-  createdAt                 DateTime @default(now()) @map("created_at")
-  updatedAt                 DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("stripe_payment_records")
   @@index([userId])
   @@index([sessionId])
+  @@map("stripe_payment_records")
 }

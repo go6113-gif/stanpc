@@ -39,6 +39,7 @@ export function getSupabaseClient() {
 
   // Dynamic import to avoid loading Supabase if not needed
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { createClient } = require("@supabase/supabase-js");
     return createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   } catch (error) {

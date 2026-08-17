@@ -48,7 +48,7 @@ const NEXT_10_GROUPS = [
     slug: 'illit',
     name: 'ILLIT',
     members: ['Moka', 'Wonhee', 'Iroha', 'Minju'],
-    albums: ['I'LL-it'],
+    albums: ["I'LL-it"],
   },
   {
     slug: 'kiss-of-life',

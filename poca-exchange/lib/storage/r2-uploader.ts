@@ -1,5 +1,4 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { GetObjectCommand } from '@aws-sdk/client-s3';
 import sharp, { Metadata } from 'sharp';
 
 interface UploadedImage {
@@ -85,7 +84,7 @@ async function validateImage(imageBuffer: Buffer): Promise<Metadata> {
 async function processImageToWebP(
   imageBuffer: Buffer
 ): Promise<{ webpBuffer: Buffer; width: number; height: number }> {
-  const metadata = await validateImage(imageBuffer);
+  await validateImage(imageBuffer);
 
   // Resize to 512x768 (standard portrait ratio for K-pop photocards)
   const resizedBuffer = await sharp(imageBuffer)
