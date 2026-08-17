@@ -1,0 +1,58 @@
+
+════════════════════════════════════════════════════════════════════════════════
+
+✅ REAL DATA PILOT — FINAL REPORT
+
+════════════════════════════════════════════════════════════════════════════════
+
+📊 RESULTS SUMMARY
+─────────────────────────────────────────────────────────────────────────────────
+  Total Processed:              100
+  ✅ Approved (LLM):            0
+  ❌ Rejected (LLM):            0
+  📝 Keyword Filtered:          40
+  ⚠️  API Errors:               60
+  📋 Review Queue:              0
+
+  🎯 Approval Rate:             0.0%
+
+⏱️  PERFORMANCE METRICS
+─────────────────────────────────────────────────────────────────────────────────
+  Total Processing Time:        0.22s
+  Time per Image:               0.00s
+
+  📈 Token Usage:
+    Total Tokens Used:          0
+    Avg per Image:              0
+
+  💰 API Cost:
+    Total Cost:                 $0.0000
+    Cost per Image:             $0.000000
+
+📊 PROJECTED FULL ROLLOUT (22,500 cards)
+─────────────────────────────────────────────────────────────────────────────────
+  Estimated Processing Time:    0.0 hours
+  Estimated API Cost:           $0.00
+  Expected Approved Images:     0
+  Expected NULL Placeholders:   22,500
+
+🎯 GO/NO-GO DECISION
+─────────────────────────────────────────────────────────────────────────────────
+  ❌ NO-GO — Approval rate 0.0% < 50%
+
+  RECOMMENDATIONS:
+  1. Check if LLM is working correctly
+  2. Verify test images are actual photocards
+  3. Refine system prompt
+  4. Consider fallback: all images → NULL + user submission
+
+📁 OUTPUT FILES
+─────────────────────────────────────────────────────────────────────────────────
+  ✅ Approved:  vision_realdata_pilot_output/results/realdata_pilot_100_approved.json
+  ❌ Rejected:  vision_realdata_pilot_output/rejected/realdata_pilot_100_rejected.json
+  📋 Review:    vision_realdata_pilot_output/review_queue/realdata_pilot_100_review.json
+  📊 Summary:   vision_realdata_pilot_output/realdata_pilot_100_summary.json
+
+════════════════════════════════════════════════════════════════════════════════
+
+Generated: Vision LLM Pipeline Real Data Pilot

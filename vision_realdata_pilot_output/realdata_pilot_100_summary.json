@@ -1,0 +1,14 @@
+{
+  "batch": "realdata_pilot_100",
+  "timestamp": "2026-08-17T10:21:00.851499",
+  "stats": {
+    "total_processed": 100,
+    "keyword_filtered": 40,
+    "llm_approved": 0,
+    "llm_rejected": 0,
+    "api_errors": 60,
+    "total_tokens_used": 0,
+    "total_api_cost_usd": 0.0,
+    "processing_time_sec": 0.21548128128051758
+  }
+}

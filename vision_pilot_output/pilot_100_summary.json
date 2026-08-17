@@ -1,0 +1,14 @@
+{
+  "batch": "pilot_100",
+  "timestamp": "2026-08-17T10:11:04.428713",
+  "stats": {
+    "total_processed": 100,
+    "keyword_filtered": 25,
+    "llm_approved": 0,
+    "llm_rejected": 63,
+    "api_errors": 12,
+    "total_tokens_used": 194447,
+    "total_api_cost_usd": 0.030002249999999973,
+    "processing_time_sec": 127.78265070915222
+  }
+}

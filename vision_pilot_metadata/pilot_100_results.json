@@ -1,0 +1,1913 @@
+{
+  "meta": {
+    "collected_at": "2026-08-17T11:31:14.262740",
+    "total_collected": 100,
+    "total_downloaded": 100,
+    "total_approved": 0,
+    "total_rejected": 100,
+    "approval_rate": 0.0
+  },
+  "approved": [],
+  "rejected": [
+    {
+      "group": "BTS",
+      "item_id": "v1|267756587301|0",
+      "title": "BTS 2026 WORLD TOUR  Arirang Official Sealed Photocard  Suga V Jung kook RM",
+      "image_url": "https://i.ebayimg.com/images/g/so0AAeSwhINqcVGM/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "b53f62cf3bcb041639ea4a0baadf5525fe18b412097f99721fcf12732c3a7929",
+      "price": 29.99,
+      "seller": "yanksjetsknicks",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_01_b53f62cf.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_01_b53f62cf.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|406909694529|677115556875",
+      "title": "[BTS] WORLD TOUR 'ARIRANG' in Goyang ARMY ZONE Benefit Official Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/x5kAAeSwCDZp--Pn/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "11d97a07f7ce54a0b412fa95c86824f364c38bb1918b0d70717b0b0c85898e28",
+      "price": 99.45,
+      "seller": "daves_k-pop_store",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_02_11d97a07.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_02_11d97a07.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|306789473767|606672607137",
+      "title": "BTS LOVE YOURSELF 轉 'Tear' Official Photocard KPOP Special Gift",
+      "image_url": "https://i.ebayimg.com/images/g/vrIAAeSw5F9poFGn/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "dc1afc4f26a5adf9d1dfee225108e5656247767e966e21143e34e6df1bb93230",
+      "price": 30.51,
+      "seller": "kpop-seoulcity",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_03_dc1afc4f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_03_dc1afc4f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|287509074602|0",
+      "title": "BTS Arirang Usa 2nd Version Photocard Full Set",
+      "image_url": "https://i.ebayimg.com/images/g/prEAAeSwHdJqdVGL/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "852e896708c1fd2dff02b79082a732330c80457831113cbd28c5225ea7864881",
+      "price": 19.99,
+      "seller": "mjdrawings",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_04_852e8967.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_04_852e8967.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|336730835164|546094319470",
+      "title": "BTS World Tour ARIRANG USA Album Lucky Draw R2 Official Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/v24AAeSwK~ZqdV1d/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "3f8a21b3ad8822fb94edafe3bb7b2fbee39bac6b656013398b35a85b4a2e8ffd",
+      "price": 70.0,
+      "seller": "tunauniversesales",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_05_3f8a21b3.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_05_3f8a21b3.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|158185446313|0",
+      "title": "BTS 2025 PERMISSION TO DANCE ON STAGE-LIVE “Jungkook” OFFICIAL PHOTO CARD",
+      "image_url": "https://i.ebayimg.com/images/g/0p8AAeSwCYxqfjg6/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "3f64cd9054502f1344198de6a3e63724464e77d691d02e7ab6d8e450de6b7c55",
+      "price": 5.0,
+      "seller": "verofern43",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_06_3f64cd90.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_06_3f64cd90.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|168451122249|467909955746",
+      "title": "BTS 2026 FESTA  LUCKY DRAW PHOTO CARD JAPAN weverse UNIVERSAL ARIRANG",
+      "image_url": "https://i.ebayimg.com/images/g/lfkAAeSw1uFqV0l8/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "d78b548a1093ab6eb0223c9e2d3af16627214203fce5046bb76814cb350d6e55",
+      "price": 98.99,
+      "seller": "akira935",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_07_d78b548a.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_07_d78b548a.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|255694275555|555630800521",
+      "title": "BTS - Proof: Standard Version (Photocard or Postcard) - Official !!!",
+      "image_url": "https://i.ebayimg.com/images/g/6IAAAOSwaERjB9RI/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "65197ba092e9ca01812ff5ed4c7c16f9e21f4eacbdfc6586e639b929e539a406",
+      "price": 6.97,
+      "seller": "cellphonedynasty",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_08_65197ba0.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_08_65197ba0.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|406329960453|0",
+      "title": "SAMSUNG x BTS Photo Card Set - Set of 7 - Exclusive Gift - New",
+      "image_url": "https://i.ebayimg.com/images/g/qPIAAOSwwLtlaX~D/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "fd399a8c26c6d37cc9c1cc7a1e18123cfb6ff2861e10a5763fd3b336835f8e62",
+      "price": 8.0,
+      "seller": "saltlakegoods",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_09_fd399a8c.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_09_fd399a8c.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "BTS",
+      "item_id": "v1|188217097929|0",
+      "title": "BTS - Jungkook JK ARIRANG Rooted In Music Target US Ver Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/qdcAAeSwPxVpxwkB/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "29a90881b2f8bc9b88d7c324d4a0eee4266b9f6e603e7e9c42de26708b0321a4",
+      "price": 22.5,
+      "seller": "stuff4salezz",
+      "collected_at": "2026-08-14T17:52:20",
+      "local_path": "/images/images/pilot_real_data/BTS/BTS_10_29a90881.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\BTS\\BTS_10_29a90881.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|407128982891|677312284623",
+      "title": "STRAY KIDS SKZ THIS & THAT Ver./ TRUCK Ver./ FANS ALBUM Ver. Official Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/t3IAAeSwtqtqe~Ay/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "ebad364f9e0130318bacd878daff36fb73df8ca817e74b841fe576999fad9b2b",
+      "price": 1.5,
+      "seller": "magicshop0613",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_11_ebad364f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_11_ebad364f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|307084476718|606916031816",
+      "title": "PRE Stray Kids THIS & THAT LUCKY DRAW POB JAPAN Photocard JYP  HMV SONY TOWER.R",
+      "image_url": "https://i.ebayimg.com/images/g/5fMAAeSw~bxqedXx/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "03e8e9579275ca38947aa76da1df73d57ff3b5688f8163d67f7369b9095e4a03",
+      "price": 77.99,
+      "seller": "bts_japan_limited",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_12_03e8e957.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_12_03e8e957.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|168528050531|467945162125",
+      "title": "Stray Kids Photocard \"THIS & THAT\" Kpop Official All POB _ 88 Choose (11 Type)",
+      "image_url": "https://i.ebayimg.com/images/g/GG4AAeSw2OhqZFns/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "e5299530367dae1ad308b2029cba03675adcfbe490e8f9c79486ee6d45332222",
+      "price": 299.99,
+      "seller": "k-grocery",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_13_e5299530.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_13_e5299530.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|307049231879|606874734984",
+      "title": "PRE Stray Kids THIS & THAT Official Album Photocard TRUCK and FANS ALBUM SHOP",
+      "image_url": "https://i.ebayimg.com/images/g/OrEAAeSw-zVqdr-4/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "65ecaef1bd3fafb9dd6d5e99d3140bb347927536b6592668800b97d92335d39a",
+      "price": 26.99,
+      "seller": "bts_japan_limited",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_14_65ecaef1.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_14_65ecaef1.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|800491017521|657472658893",
+      "title": "[STRAY KIDS] - This & That Album Photocard(Truck, This, That, &, Fans Ver)",
+      "image_url": "https://i.ebayimg.com/images/g/G-oAAeSw5VxqfG-X/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a6d8dcc79cd952074258044167adf277836a3dcb88df56717bc96cb12cc90c63",
+      "price": 6.0,
+      "seller": "gureumkr",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_15_a6d8dcc7.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_15_a6d8dcc7.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|168598661051|0",
+      "title": "Stray Kids FELIX ID Photocard That Version This & That",
+      "image_url": "https://i.ebayimg.com/images/g/fKQAAeSwZoJqd2-7/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "ddca39760f030534bf6965c92a4aa45f4f06fdd40fe4200b889ba7b402273828",
+      "price": 3.99,
+      "seller": "snopes22",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_16_ddca3976.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_16_ddca3976.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|800335215255|657411798299",
+      "title": "[STRAY KIDS] THIS & THAT - POB PHOTOCARD SKZ This and That",
+      "image_url": "https://i.ebayimg.com/images/g/DRYAAeSwBclqfFIr/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "94ce416a0241eb01d3abc8624ef344349ada7f192616e98a62d0f947a26f375b",
+      "price": 14.0,
+      "seller": "gureumkr",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_17_94ce416a.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_17_94ce416a.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|267750555617|0",
+      "title": "Bang Chan Official Photocard Stray Kids Mini Album This & That And Ver. Genuine",
+      "image_url": "https://i.ebayimg.com/images/g/7yMAAeSwY5dqdhIW/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "50904fca683acfa1df49a4eae6a363835e7c6fb7a12cf1bb5532f4774edf2da3",
+      "price": 9.99,
+      "seller": "dailyfood",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_18_50904fca.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_18_50904fca.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|267750472859|0",
+      "title": "Han Official Photocard Stray Kids Mini Album This & That Fans Album Ver.",
+      "image_url": "https://i.ebayimg.com/images/g/nYYAAeSwMwFqdfYO/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "12a670d77060888e0f2bf0d0bfbf6084aa19fc632238387e1a35e252b80ac4b5",
+      "price": 9.99,
+      "seller": "dailyfood",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_19_12a670d7.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_19_12a670d7.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "Stray Kids",
+      "item_id": "v1|398263771494|0",
+      "title": "Han Lentucular Photocard Stray Kids Mini Album This & That Fans Album Ver.",
+      "image_url": "https://i.ebayimg.com/images/g/G9UAAeSwJoxqd1nk/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "22cad206e3f68c9566608e912bbe428116e2efbb297347fa0796f53c9e9d52ff",
+      "price": 8.99,
+      "seller": "dailyfood",
+      "collected_at": "2026-08-14T17:52:30",
+      "local_path": "/images/images/pilot_real_data/Stray Kids/Stray Kids_20_22cad206.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\Stray Kids\\Stray Kids_20_22cad206.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|358862782271|626848142237",
+      "title": "TWICE Twicecoaster Lane 1 Hologram ver. Official Album Photocards [USA ONLY]",
+      "image_url": "https://i.ebayimg.com/images/g/Y4MAAeSw0K9qaq54/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "23d7fe53cbbe86079b41d7d3be2c5942a9ba6ad5d324bb7d4ec0ec461f2120bd",
+      "price": 7.0,
+      "seller": "kisses2themoon",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_21_23d7fe53.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_21_23d7fe53.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|168259578896|467808809960",
+      "title": "TEAZEN x TWICE Kombucha (30 Sticks) + Random Photocard Included",
+      "image_url": "https://i.ebayimg.com/images/g/PwUAAeSwjX1pxOSC/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "de3b01528711c4c1f67ba8ed8abcffe344b3da52cfd873bd84da51ab60e504a5",
+      "price": 50.0,
+      "seller": "smarttiger",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_22_de3b0152.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_22_de3b0152.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|196595718346|496350699874",
+      "title": "Official Twice Photocards",
+      "image_url": "https://i.ebayimg.com/images/g/jckAAOSwk2Vm0vPE/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "913619d5423c52748b53898986030dba101a1effa0625acb7e4ce5bf14e717b1",
+      "price": 40.0,
+      "seller": "momos_coathanger",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_23_913619d5.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_23_913619d5.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|127607728735|0",
+      "title": "TWICE Nayeon TT Devil twicecoasterlane1 Official Photocard K-POP Collection_RARE",
+      "image_url": "https://i.ebayimg.com/images/g/I40AAOSwf6tnUTmO/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "d731e97e182972e95575cfebe741af725e7c8f6e40a38450d9be062574ff53d9",
+      "price": 48.99,
+      "seller": "diansh-8698",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_24_d731e97e.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_24_d731e97e.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|146955985856|445489800056",
+      "title": "TWICE Monograph With Photocard Summer Nights Fancy You What Is Love Page TWO",
+      "image_url": "https://i.ebayimg.com/images/g/h-AAAeSwcVRpEzLi/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "0b0960eb5c3b256eac4707a54f70a77dd7dbd180040514cea573e27948894108",
+      "price": 89.0,
+      "seller": "k-pink_stars",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_25_0b0960eb.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_25_0b0960eb.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|146895563645|445458470578",
+      "title": "TWICE Pre Order Benefit Photocard Set pre-order POB fancy summer nights strategy",
+      "image_url": "https://i.ebayimg.com/images/g/hOEAAeSwYoRo7l3r/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "82833825842de0ae315514028e9f1b9d61a2254c81998714584fb0b27a22397f",
+      "price": 9.9,
+      "seller": "k-pink_stars",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_26_82833825.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_26_82833825.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|158076897428|459334329376",
+      "title": "TWICE THIS IS FOR WORLD TOUR FINALE in SEOUL ZONE PHOTOCARD SNAPISM PHOTO",
+      "image_url": "https://i.ebayimg.com/images/g/3roAAeSwMndqU3Jk/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "2a21fbb7fdb6b7e68326809eedfa8fe50985bce727f96669cbec01b0852ff4dd",
+      "price": 69.99,
+      "seller": "bw10463407",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_27_2a21fbb7.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_27_2a21fbb7.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|266724011944|566472913266",
+      "title": "TWICE 13th Mini Album With YOU-th [ Official ] Photocard - The most popular ones",
+      "image_url": "https://i.ebayimg.com/images/g/7ZcAAOSw9XRl5qnF/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "ad5b586237a04c814bd5c3b83454ea6ba009eea7ef7d087b96245f7cf9697114",
+      "price": 99.99,
+      "seller": "awesomekpop",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_28_ad5b5862.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_28_ad5b5862.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|198569640535|0",
+      "title": "Twice Jihyo Photocard | Ready To Be Digipack Blue Dream Media POB",
+      "image_url": "https://i.ebayimg.com/images/g/b98AAeSwVopqfoTx/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "b31b1c68fe6c262aa8c6a7313c7d386ccf3d5c28c247bb65725a084477dcc9ab",
+      "price": 9.99,
+      "seller": "cochocards",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_29_b31b1c68.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_29_b31b1c68.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TWICE",
+      "item_id": "v1|236984865549|0",
+      "title": "Twice Momo Enemy Photocard  Photo Card  Korea K-pop #119",
+      "image_url": "https://i.ebayimg.com/images/g/22UAAeSwMndqciba/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "daf8f2ea0b0b57009791883ec90a40c74b3b88cd103bb1b64bde1dd69b5da54d",
+      "price": 2.95,
+      "seller": "216liquidations",
+      "collected_at": "2026-08-14T17:53:01",
+      "local_path": "/images/images/pilot_real_data/TWICE/TWICE_30_daf8f2ea.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TWICE\\TWICE_30_daf8f2ea.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|366604555469|636280657576",
+      "title": "Seventeen KPOP Photocard lot - Choose your own, SCOUPS, Mingyu, Wonwoo, Hoshi +",
+      "image_url": "https://i.ebayimg.com/images/g/J1QAAeSwFN5qfpmH/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "821312c1a774882c56f72d189d69899cf40d9a8e31945b8f542e66c5549486f7",
+      "price": 5.0,
+      "seller": "cheerio97",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_31_821312c1.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_31_821312c1.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|117182492868|0",
+      "title": "SEVENTEEN Attacca 2021 KiT Edition Box Set CD Mini Album w/ Photo Cards",
+      "image_url": "https://i.ebayimg.com/images/g/XvIAAeSwEJpp-841/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "e67cd82522d0d7c9972e5381871520dabd1ad8e07a792ed1ebb55391f6d137cf",
+      "price": 30.0,
+      "seller": "budharaksa1",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_32_e67cd825.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_32_e67cd825.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|127622413917|428765340885",
+      "title": "SEVENTEEN - HAPPY BURSTDAY WEVERSE LUCKY DRAW PHOTOCARD OFFICIAL",
+      "image_url": "https://i.ebayimg.com/images/g/ZFIAAeSwCOBpAwUW/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "c1a0258f4844203dac0ecbf55482ac6c35eee5ccb0a3d7c65a1da8fc86b647a6",
+      "price": 21.99,
+      "seller": "diansh-8698",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_33_c1a0258f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_33_c1a0258f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|306939628744|606795218959",
+      "title": "Seventeen Your Choice APPLEMUSIC Official Photocard KPOP Special Gift",
+      "image_url": "https://i.ebayimg.com/images/g/VOgAAeSwzrlqBog2/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "2946eb6cd68378a3e34ac2ec0120729aa5897fe628e179a1dd171d5a9470b339",
+      "price": 114.26,
+      "seller": "kpop-seoulcity",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_34_2946eb6c.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_34_2946eb6c.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|157244837036|458738703725",
+      "title": "Seventeen 'Happy Burstday' Album Ver. Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/IuQAAeSwU~donj~w/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "b86ee141d1d23a2eee0150e33f419d093dfddb00d857e48a3c8a9144030bab34",
+      "price": 3.99,
+      "seller": "fantasists",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_35_b86ee141.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_35_b86ee141.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|357355398497|626039058344",
+      "title": "Seventeen 'Seventeenth Heaven'   SVT Album Photocard, Sticker,  Target exclusive",
+      "image_url": "https://i.ebayimg.com/images/g/sf8AAeSwZFRohGKh/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "7243905ce5f0645d724f2f430f3d13d0a0e1d4a2f088ffd1ff84965d4b54d7f6",
+      "price": 7.0,
+      "seller": "icy_moon",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_36_7243905c.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_36_7243905c.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|406844251108|0",
+      "title": "Seventeen World Tour New Encore Concert Carat Zone Photocard 9 Members SET",
+      "image_url": "https://i.ebayimg.com/images/g/zbAAAeSwzy5p2JxC/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a5ee88bfeb9a60343e8d0d139b6f5d4106bb82aef676f17c29f2b75a18c75403",
+      "price": 55.9,
+      "seller": "korea-hub",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_37_a5ee88bf.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_37_a5ee88bf.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|168608787653|0",
+      "title": "Seventeen The8 Face the Sun Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/a60AAeSwwyJqfMaI/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "0468ed6e5fc787542dac6621a8d7895843526170e52447060248f93d6f61d471",
+      "price": 5.0,
+      "seller": "laurennraquel",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_38_0468ed6e.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_38_0468ed6e.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|177670255056|0",
+      "title": "Seventeen Spill the Feels Mingyu Official Photocard | Carat Ver. Kpop Korea 17 ",
+      "image_url": "https://i.ebayimg.com/images/g/veoAAeSwSgppPFRw/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "d22c48a01c92e6438d835e78e2a8f691e832434a190fe0c3be1c4d72fc48305d",
+      "price": 2.95,
+      "seller": "h.h.imports",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_39_d22c48a0.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_39_d22c48a0.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "SEVENTEEN",
+      "item_id": "v1|406413790998|676732552645",
+      "title": "[SEVENTEEN] S.COUPS X MINGYU - 1st mini Album HYPE VIBES Weverse POB Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/Mk8AAeSw1L5pIl-V/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "6b35802537f72b7941b48214a1cc9652190acb3822574db8c7d5e28bc102ffd2",
+      "price": 12.45,
+      "seller": "daves_k-pop_store",
+      "collected_at": "2026-08-14T17:52:25",
+      "local_path": "/images/images/pilot_real_data/SEVENTEEN/SEVENTEEN_40_6b358025.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\SEVENTEEN\\SEVENTEEN_40_6b358025.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|206488221434|507176473089",
+      "title": "[PreSale] Enhypen 8th Mini Album The Sin : Bliss POB Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/gIEAAeSw1KtqfXnx/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "ccbaaf0ca6941f653c696b65004088c880e7fa26d3dc6c0c36aa3d8e62c625f4",
+      "price": 69.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_41_ccbaaf0c.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_41_ccbaaf0c.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|358497293441|0",
+      "title": "2pc ENHYPEN SUNGHOON Romance: Untold Official Photocard Inceptio Ver",
+      "image_url": "https://i.ebayimg.com/images/g/5rEAAeSwICVp8Mmd/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "8912bc64c0f5a3f6ae8eaa8ba7391166d99e00d69ef89d5e6201ca84fd3ba30a",
+      "price": 16.99,
+      "seller": "tengxin79",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_42_8912bc64.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_42_8912bc64.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|168605991152|467983074516",
+      "title": "Enhypen Photocard \"THE SIN : BLISS\" Kpop Official All POB _ 70 Choose (10 Type)",
+      "image_url": "https://i.ebayimg.com/images/g/ajYAAeSwPd5qe1HP/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "f104166a8a256a7c10f998ec809c91d23cab69d4ac113683258e19a41894e2c0",
+      "price": 137.99,
+      "seller": "k-grocery",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_43_f104166a.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_43_f104166a.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|377413913577|645728049473",
+      "title": "ENHYPEN LUCKYDRAW SELFIE PHOTOCARD THE SIN : BLISS MUSINSA",
+      "image_url": "https://i.ebayimg.com/images/g/hnMAAeSwhnxqfRua/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "6a46b517a6aa41a495b010d62ec67a1d21bd1b18328c117a957aa3c220f0704e",
+      "price": 129.45,
+      "seller": "7b7zdl",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_44_6a46b517.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_44_6a46b517.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|117355169370|417251973306",
+      "title": "[PreSale] Enhypen World Tour BLOOD SAGA In Busan Special Gift Event Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/HqYAAeSwA6tqfCho/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a9c223adfd5d44ca0673fe9b9181ea234e4b91e8684eb9b8ff53b41e0ec3a775",
+      "price": 79.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_45_a9c223ad.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_45_a9c223ad.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|406735289603|676973065228",
+      "title": "[ENHYPEN] THE SIN : VANISH WEVERSE Album Ver. Official Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/eVMAAeSwRzRpp016/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "aeaa9e802657d401636907a6da2c2a323b33f28e384242646f3e1f7856e063f3",
+      "price": 7.45,
+      "seller": "daves_k-pop_store",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_46_aeaa9e80.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_46_aeaa9e80.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|117352445763|417250488508",
+      "title": "[PreSale] Enhypen 8th Mini Album The Sin : Bliss KakaoTalk POB Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/XLMAAeSwMcpqeuQA/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "88f0ec730195ae2ad1a7478621357892b7110dc7d92095aca81c402ea238bba0",
+      "price": 79.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_47_88f0ec73.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_47_88f0ec73.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|227471214065|526649847538",
+      "title": "[SET] ENHYPEN 8th Mini Album [ THE SIN : BLISS ] KAKAOTALK GIFT POB PHOTOCARD",
+      "image_url": "https://i.ebayimg.com/images/g/U3gAAeSwEG1qeuLD/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "4c470549b40aae9c228c22bf6aa57a0203aa0b48e9bdb4531815e01eba92b4c0",
+      "price": 58.0,
+      "seller": "popkshop",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_48_4c470549.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_48_4c470549.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|227471217914|526650701759",
+      "title": "[SET] ENHYPEN 8th Mini Album [ THE SIN : BLISS ] GS25 POB PHOTOCARD",
+      "image_url": "https://i.ebayimg.com/images/g/tsQAAeSwtGBqeuN7/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "06e6a53e43892d811d12e2391703f643a6f036e060726cc1f9e7da4fce4a3b4c",
+      "price": 58.5,
+      "seller": "popkshop",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_49_06e6a53e.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_49_06e6a53e.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "ENHYPEN",
+      "item_id": "v1|117319674866|417236500878",
+      "title": "[PreSale] Enhypen World Tour BLOOD SAGA In Busan Day2 Special Gift Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/gq4AAeSwR-dqYx52/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "91b3050bc1be2341b2fb319a3e8d8f4a17fcb0d6a58175a6f2fb230295e83568",
+      "price": 79.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:35",
+      "local_path": "/images/images/pilot_real_data/ENHYPEN/ENHYPEN_50_91b3050b.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\ENHYPEN\\ENHYPEN_50_91b3050b.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|257644794490|558231787720",
+      "title": "4 Pcs/set AESPA KISS N TELL NINGNING KARINA WINTER GISELLE Special Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/mSsAAeSwrBNqZyRD/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "3ea141820cbafb94216d2129e733ac36f4ab0fde0962f6fc4442f713aca5d28a",
+      "price": 12.99,
+      "seller": "pinganchangjiu2602",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_51_3ea14182.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_51_3ea14182.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|168556184866|467959256381",
+      "title": "aespa KISS N TELL ALBUM PHOTO CARD & JAPAN POB OFFICIAL",
+      "image_url": "https://i.ebayimg.com/images/g/PqkAAeSwSwhqZBEZ/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "79fc27bfd6a0a2acefcc1e10db209669ca8d1c28ae3fe0d70e27f399ae21688e",
+      "price": 363.99,
+      "seller": "akira935",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_52_79fc27bf.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_52_79fc27bf.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|335660094316|545176067364",
+      "title": "aespa KARINA Autographed Signed Photo Whiplash K-POP PhotoCard Collection #Nice",
+      "image_url": "https://i.ebayimg.com/images/g/phAAAOSwP~5nOi4V/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "aed49281913c1310c880a973c53db81a1e99f56c468f622d4fe9a42a5497681f",
+      "price": 25.99,
+      "seller": "zhenj_6428",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_53_aed49281.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_53_aed49281.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|298585532694|0",
+      "title": "Aespa Winter Photocards!",
+      "image_url": "https://i.ebayimg.com/images/g/iYwAAeSw87BqfhDJ/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "6cdd8cacf6c36edb860ceadba7f73c6cbd603d1afc1b9ab557da24b828167886",
+      "price": 9.0,
+      "seller": "malavilean",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_54_6cdd8cac.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_54_6cdd8cac.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|206361831071|0",
+      "title": "Aespa Karina Rich Man QQ Music Starlight Lucky Draw Official 3 Star Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/VgMAAeSw7QpqNzTn/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "f4670342e34d1281cce4a28dd06a7f88ff40486a1f48570c42251e313de6bb40",
+      "price": 7.99,
+      "seller": "belalala",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_55_f4670342.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_55_f4670342.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|117354301616|417251426435",
+      "title": "AESPA 2026 LIVE TOUR -SYNK:COMPLaeXITY- Random Trading Card",
+      "image_url": "https://i.ebayimg.com/images/g/1poAAeSwXudqeXOy/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "3948e11f29dc51aef701da6d4b91e17d907d36159441ea6ad1a8fc7f90b3ac92",
+      "price": 11.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_56_3948e11f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_56_3948e11f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|188581856011|0",
+      "title": "Aespa Lemonade Album GISELLE Official Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/dfAAAeSwbf1qRBTH/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "c26640a030d6c019c81de20a9057801a89b7e814eed84be471eb70bd3596e60d",
+      "price": 9.0,
+      "seller": "stuff4salezz",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_57_c26640a0.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_57_c26640a0.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|397023980408|665480447170",
+      "title": "aespa Rich Man Photocard Karina Winter Giselle Ningning",
+      "image_url": "https://i.ebayimg.com/images/g/U9sAAeSwI2FouXiS/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "b1c59097d5eb9b0dd644eee61fdcc28c675cae01f263953abb8b4ba4dec899cf",
+      "price": 6.99,
+      "seller": "mirinestore",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_58_b1c59097.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_58_b1c59097.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|206484006920|507173031879",
+      "title": "AESPA 2026 LIVE TOUR -SYNK:COMPLaeXITY- SUPERSTAR Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/UyIAAeSwyudqespo/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "d00913af319a437a8272e924a2cf39f51cd0aa84cc30c72caeb10d906272e2ce",
+      "price": 19.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_59_d00913af.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_59_d00913af.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "aespa",
+      "item_id": "v1|800473904579|0",
+      "title": "Aespa Winter Girls Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/nzoAAeSwMwFqdXEi/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "8e20657c592118e4589cdf8b88583b2520bf393e03e3e2ad591cf77527eff0e6",
+      "price": 9.0,
+      "seller": "tradingwithbdub",
+      "collected_at": "2026-08-14T17:52:52",
+      "local_path": "/images/images/pilot_real_data/aespa/aespa_60_8e20657c.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\aespa\\aespa_60_8e20657c.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|188601178876|0",
+      "title": "Chaewon Le Sserafim Photocard - Iconic By Mistake Kpop Cute Sexy Girl Collab",
+      "image_url": "https://i.ebayimg.com/images/g/-4oAAeSwvAFqScZr/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "ef63aaa4470a7f65504e5fc33b12ccc66a88d354c0a58a87f9b0ae3522773f20",
+      "price": 6.99,
+      "seller": "bestbuyersteve",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_61_ef63aaa4.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_61_ef63aaa4.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|146929269695|445475795383",
+      "title": "[LE SSERAFIM] Spaghetti / Compact version Photocard PC set Chaewon",
+      "image_url": "https://i.ebayimg.com/images/g/C2YAAeSwifBpAxtO/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "3d14f07f62759572e674ed753a7dcb86928c4f7585642c192022f761e2d17a2c",
+      "price": 180.0,
+      "seller": "tauch_42",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_62_3d14f07f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_62_3d14f07f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|307050900003|606875853383",
+      "title": "LE SSERAFIM UNFORGIVEN Target Exclusive Official Photocard KPOP Special Gift",
+      "image_url": "https://i.ebayimg.com/images/g/B8YAAeSwOiBqTtto/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "4e92627f6ed4ce865dfdb4679f6a9240aa151f5a0160dcb85420ceed405cca24",
+      "price": 180.87,
+      "seller": "kpop-seoulcity",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_63_4e92627f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_63_4e92627f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|146924988524|445473472024",
+      "title": "[LE SSERAFIM] Spaghetti / Standard version Photocard PC set Chaewon",
+      "image_url": "https://i.ebayimg.com/images/g/0F8AAeSwA0BpAFs8/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "bf553abe9727fa299dc5bb684fa2e0ecee879e486213efe6d902a99a8a156034",
+      "price": 144.0,
+      "seller": "tauch_42",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_64_bf553abe.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_64_bf553abe.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|117345598135|417248002831",
+      "title": "LE SSERAFIM 2nd Studio PUREFLOW pt.1 MusicPlant Fan Sign Event Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/iV0AAeSwjZxqdW1M/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "ec322ee792790f911ebf33746baac204a1a610d7da3b4494a2133378155a200c",
+      "price": 15.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_65_ec322ee7.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_65_ec322ee7.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|188700636612|0",
+      "title": "Chaewon Le Sserafim Photocard - Iconic By Mistake Kpop Cute Sexy Girl Collab",
+      "image_url": "https://i.ebayimg.com/images/g/mToAAeSwjYdqZtL2/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "002f8d7635b2950e23f4706774a888031f82443544d06ff65690789df35c07d0",
+      "price": 6.99,
+      "seller": "bestbuyersteve",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_66_002f8d76.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_66_002f8d76.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|188601179995|0",
+      "title": "Yunjin Le Sserafim Photocard - Iconic By Mistake Kpop Cute Sexy Girl Collab",
+      "image_url": "https://i.ebayimg.com/images/g/GOcAAeSwOiBqScas/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "e43c88c752aca1cf8ae19abe6a7dba6b7b294d3427495658c3a4da6b75e04562",
+      "price": 6.99,
+      "seller": "bestbuyersteve",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_67_e43c88c7.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_67_e43c88c7.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|188700635097|0",
+      "title": "Yunjin Le Sserafim Photocard - Iconic By Mistake Kpop Cute Sexy Girl Collab",
+      "image_url": "https://i.ebayimg.com/images/g/XRQAAeSwDhxqZtJB/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "d66d97626218114a022206b618f8288d6e30dc6e43b60b6fed8426b8c1cc8c12",
+      "price": 6.99,
+      "seller": "bestbuyersteve",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_68_d66d9762.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_68_d66d9762.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|178400762388|0",
+      "title": "Le Sserafim Easy Yunjin Official Photocard Universal POB Music Kpop PC",
+      "image_url": "https://i.ebayimg.com/images/g/a3UAAeSwUp5qfOpj/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "d17fe149ac61351004d45a2c7c1e32790a90cb763ad77886566fc27b17215877",
+      "price": 11.95,
+      "seller": "h.h.imports",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_69_d17fe149.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_69_d17fe149.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "LE SSERAFIM",
+      "item_id": "v1|178401125106|0",
+      "title": "Le Sserafim Pureflow Chaewon Official Photocard 2026 Tour Kpop PC",
+      "image_url": "https://i.ebayimg.com/images/g/TrcAAeSwn1JqfRNF/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "b398f9381bfaea6d15e51cabeb39891b4ff6512ff3ef3bde301ce1f6a2452b16",
+      "price": 9.95,
+      "seller": "h.h.imports",
+      "collected_at": "2026-08-14T17:52:57",
+      "local_path": "/images/images/pilot_real_data/LE SSERAFIM/LE SSERAFIM_70_b398f938.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\LE SSERAFIM\\LE SSERAFIM_70_b398f938.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|206479824726|507169861111",
+      "title": "IVE The 2nd Album REVIVE+ Withmuu Last Fan Sign Event Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/e54AAeSwS4pqeSvP/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "8bf8883a3a131ed8c49c97b9a971b078e989e2d2ea3470fc079468c2b43c3931",
+      "price": 16.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_71_8bf8883a.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_71_8bf8883a.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|206488158775|507176387790",
+      "title": "[PreSale] IVE The 2nd Album REVIVE+ MakeStar Lucky Draw Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/~~wAAeSwfjZqfYL-/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "6f7ddd54db2e1da5f79344c4be335fe91346a49d769c73ba669e4d37a936675a",
+      "price": 104.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_72_6f7ddd54.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_72_6f7ddd54.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|307121816560|606965199133",
+      "title": "IVE WORLD TOUR [SHOW WHAT I AM] RANDOM PHOTOCARD PACK Official",
+      "image_url": "https://i.ebayimg.com/images/g/bAkAAeSwsqlqfAAL/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "327296334c3d2e150c2e60fa2ccbc28391d7f10dd197da6e686b48d5319ecc88",
+      "price": 18.56,
+      "seller": "kpop-seoulcity",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_73_32729633.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_73_32729633.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|800442555281|657453081882",
+      "title": "[ON HAND] IVE MINIVE OFFLINE POP-UP DIVE INTO MINIVE in SEOUL OFFICIAL MERCH MD",
+      "image_url": "https://i.ebayimg.com/images/g/sKgAAeSw~oJqcFDw/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "63c4e89535449e5812feef01b3ae41a65cbf33e3e18e281f50dc7182f3daa7a7",
+      "price": 27.99,
+      "seller": "kpopluckyshop",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_74_63c4e895.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_74_63c4e895.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|206454748091|507154388576",
+      "title": "IVE x MINIVE POP-UP DIVE INTO MINIVE in SEOUL Official MD Reward Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/Dz0AAeSwsehqb~r6/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a7f513ec53c7488adf17edeca0e22a03eeec46ef0f5be6a5f408290436b0a333",
+      "price": 21.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_75_a7f513ec.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_75_a7f513ec.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|398279314746|0",
+      "title": "Ive Empathy The First Album I Have Illit Bomb K-pop Album Photocard lot of 3",
+      "image_url": "https://i.ebayimg.com/images/g/EMYAAeSwA9FqfQpu/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "d34c471fce5e46032dcecfc248d389a0efd47f221d60042983f1e41d42651e8c",
+      "price": 20.0,
+      "seller": "sopcovi13",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_76_d34c471f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_76_d34c471f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|205698876193|506463633091",
+      "title": "IVE 4th EP Album IVE SECRET Loved IVE / Photobook ver. Official Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/jN0AAeSwqh9oy30c/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "38acbaa8bc9e77cdcb341bccd0da61ea2675a1f3b553a9731c3058969a7444f2",
+      "price": 16.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_77_38acbaa8.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_77_38acbaa8.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|117071067235|417121865542",
+      "title": "IVE 2nd Album REVIVE+ Photobook/Digipack/Loved/Spoiler ver. Photocard KPOP K-POP",
+      "image_url": "https://i.ebayimg.com/images/g/NxMAAeSwVpNpzG7p/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "3f5e659b94a88f75a9e89813124ef5aebcd5533cc7f354e85a5fa889f0f48f07",
+      "price": 10.99,
+      "seller": "amazingk_kr",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_78_3f5e659b.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_78_3f5e659b.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|137619082455|0",
+      "title": "Ive Liz Photocard  ",
+      "image_url": "https://i.ebayimg.com/images/g/fxYAAeSwqXxqfopZ/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "7460aaf3e1ee2d836272940ac719079d19857fbf226e2085bd1fdaa86679937f",
+      "price": 5.0,
+      "seller": "kairoo-32",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_79_7460aaf3.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_79_7460aaf3.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "IVE",
+      "item_id": "v1|800376687046|657458925508",
+      "title": "[ON HAND] IVE x MINIVE POP-UP STORE 'DIVE INTO MINIVE' in SEOUL OFFICIAL MERCH",
+      "image_url": "https://i.ebayimg.com/images/g/yj0AAeSw1bNqXsy6/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "91e2c3945a3c9ce2145156a2c24368fb7a06d4f09dfc36294d422d7c747ddf58",
+      "price": 89.99,
+      "seller": "kpop_youtoo",
+      "collected_at": "2026-08-14T17:52:47",
+      "local_path": "/images/images/pilot_real_data/IVE/IVE_80_91e2c394.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\IVE\\IVE_80_91e2c394.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|256833455249|557350411327",
+      "title": "[NEWJEANS] How Sweet / Bubble Gum / Aladin POB Hologram Photocard",
+      "image_url": "https://i.ebayimg.com/images/g/wy0AAOSwGN1nvucJ/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a84e7d602d45cdb9b5c8ee9a2d221695460ec97a138454c5474c183319c5eef4",
+      "price": 3.6,
+      "seller": "kpop_center",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_81_a84e7d60.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_81_a84e7d60.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|147459027270|0",
+      "title": "New Jeans Merch Haul (Stickers, Photocards, bookmark, Keychain)",
+      "image_url": "https://i.ebayimg.com/images/g/Ji0AAeSwjF1qY7i-/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "94d070fe97f927fc0d0e69ef4702a2a589a3220af3a2590504bf5e873fdcf142",
+      "price": 40.0,
+      "seller": "sablass-29",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_82_94d070fe.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_82_94d070fe.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|117073046679|0",
+      "title": "NewJeans 2025 Season's Greetings Official K-Pop Calendar Photobook Photocards",
+      "image_url": "https://i.ebayimg.com/images/g/~6cAAeSwePBpqtOT/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "2382b4ee5ecb9349ff0b11181a3526c7474449759d66b41a4a2d017b589e3696",
+      "price": 117.99,
+      "seller": "grambox_us",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_83_2382b4ee.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_83_2382b4ee.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|398047248528|0",
+      "title": "NEWJEANS HAERIN BRG 10 GEM MINT Photocard (Not PSA 10) POCA KPOP OFFICIAL",
+      "image_url": "https://i.ebayimg.com/images/g/uyEAAeSwijhqKNp1/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a77bd84be3230a83f9c9b6ab1ee1449d59142aba4c2275e8ce54c0d1c3aeebb0",
+      "price": 56.99,
+      "seller": "anyeonghaseyo.kor",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_84_a77bd84b.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_84_a77bd84b.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|318669278451|0",
+      "title": "NewJeans Photocard Lot!!",
+      "image_url": "https://i.ebayimg.com/images/g/D8MAAeSw9Hxqb8op/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "86ce2d2ba601cb497990b3721ea2c044e09343c0bdce4da76c63946c2b878510",
+      "price": 45.0,
+      "seller": "katiesells79",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_85_86ce2d2b.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_85_86ce2d2b.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|358773495428|0",
+      "title": "NewJeans Fan Meeting Admission Benefit Photocard Official Minji Hanni Danielle",
+      "image_url": "https://i.ebayimg.com/images/g/sHAAAeSwbvBqTtIQ/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "4f0edee485d1f762c216fed1a09d9b07db1d879fc664479b520bf9837038e0c6",
+      "price": 27.46,
+      "seller": "ccreamery",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_86_4f0edee4.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_86_4f0edee4.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|206381069264|0",
+      "title": "NewJeans Haerin Autographed Signed Photo card #0629",
+      "image_url": "https://i.ebayimg.com/images/g/o5UAAeSwtTNqQk1Z/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "2c4199ac05b0ddcfecbd74f71021b8d0b2f797213e8aca7da581ffc11a96e741",
+      "price": 50.0,
+      "seller": "k-idol",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_87_2c4199ac.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_87_2c4199ac.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|800503477953|0",
+      "title": "NewJeans Danielle Sleeved Photocard Get Up EP",
+      "image_url": "https://i.ebayimg.com/images/g/g6AAAeSwnu5qfhrU/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "7fcb0f5ec2917f386fae9874935fe9398d8e7012d24142a4a6b7155156d3b086",
+      "price": 5.0,
+      "seller": "ga_717597",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_88_7fcb0f5e.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_88_7fcb0f5e.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|305002466415|603975265850",
+      "title": "Newjeans Official Photocards | Bunnies Camp Set",
+      "image_url": "https://i.ebayimg.com/images/g/mtoAAOSwO3tkpcBD/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "eb9a5b28293a41a354ddbfd5b90ca94a37147c69ee432608df119c2805fcc85d",
+      "price": 6.0,
+      "seller": "socalmkshop",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_89_eb9a5b28.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_89_eb9a5b28.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "NewJeans",
+      "item_id": "v1|406590902644|0",
+      "title": "NewJeans NJZ COCA COLA Collaboration Special Rare Photocard 5 Members SET",
+      "image_url": "https://i.ebayimg.com/images/g/K5cAAeSwkthpZeQw/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "0e7457e2dc77834c47f6d98def7c0a76ea50ec5589d049434b431959763a10eb",
+      "price": 43.9,
+      "seller": "korea-hub",
+      "collected_at": "2026-08-14T17:52:43",
+      "local_path": "/images/images/pilot_real_data/NewJeans/NewJeans_90_0e7457e2.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\NewJeans\\NewJeans_90_0e7457e2.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|336717176770|0",
+      "title": "TOMORROW X TOGETHER Beomgyu Photocard MOA MEMBERSHIP KIT 2023 TXT",
+      "image_url": "https://i.ebayimg.com/images/g/qyAAAeSwVDJqa6LU/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "5cf8e628643fce35bb57b0e1f1f1fcc0f1e7a2b32c169da2b5a3c47f5b0d275f",
+      "price": 3.49,
+      "seller": "davicamarill0",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_91_5cf8e628.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_91_5cf8e628.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|358922256039|0",
+      "title": "TOMORROW X TOGETHER The Name Chapter: FREEFALL Non-Sport Photocard Lot",
+      "image_url": "https://i.ebayimg.com/images/g/Y1sAAeSw2RBqfdwT/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a5ab66ce9590e77f32b6bbc0eed5cf4f3029ad384245df103ba590a8bcbbdc9c",
+      "price": 45.0,
+      "seller": "chasing-8",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_92_a5ab66ce.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_92_a5ab66ce.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|358785299530|0",
+      "title": "TXT Tomorrow X Together Album Collection + Official Lightstick + Photocards",
+      "image_url": "https://i.ebayimg.com/images/g/6CkAAeSwcXdqUuUq/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "1f176348fab6d7c06eacaf736dadda0d0fe65d14e4ebd745ef46d3307fd7d675",
+      "price": 320.0,
+      "seller": "noeki_12",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_93_1f176348.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_93_1f176348.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|406251575450|0",
+      "title": "TOMORROW X TOGETHER TXT WITH LOVE YEONJUN Birthday Party Bracelet Photocard 2024",
+      "image_url": "https://i.ebayimg.com/images/g/kgkAAeSwgQZo2zqd/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "8f2d946c8bebe13194a477b190e0981145006fed63f20df9b060c30a849e8c55",
+      "price": 110.0,
+      "seller": "mmarkin",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_94_8f2d946c.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_94_8f2d946c.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|336717174426|0",
+      "title": "TXT Tomorrow x Together Thursday's Child Official Yeonjun Photocard Mess Ver.",
+      "image_url": "https://i.ebayimg.com/images/g/QUwAAeSwUr5qa6Jy/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "ca9dd4815922ab06693a7269bd1e8f0763ec6d9a54986f5f4270c23a3a25d578",
+      "price": 3.49,
+      "seller": "davicamarill0",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_95_ca9dd481.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_95_ca9dd481.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|365743336193|0",
+      "title": "Tomorrow X Together  Minisode 3 W/Photocard CD RANDOM COLOR",
+      "image_url": "https://i.ebayimg.com/images/g/C5cAAeSwJLhofA4J/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "93c90c3d63128abe246d0b22206a1cc17f9641129ab4370b3d4083f45b25d677",
+      "price": 9.89,
+      "seller": "pioneermediausa",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_96_93c90c3d.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_96_93c90c3d.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|336714231289|0",
+      "title": "TXT TOMORROW X TOGETHER MEMBERSHIP KIT 2023 PHOTOCARD OFFICIAL",
+      "image_url": "https://i.ebayimg.com/images/g/DuoAAeSwan9qaWg0/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "a8e73d4f935fc0ed379d532aebaed67e9c00c692a22df37ce0bead07691ec5a0",
+      "price": 3.99,
+      "seller": "davicamarill0",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_97_a8e73d4f.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_97_a8e73d4f.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|398253601038|666523551647",
+      "title": "TXT TOMORROW X TOGETHER 'LAYERS OF US\" MERCHANDISE POP-UP OFFICIAL CA04",
+      "image_url": "https://i.ebayimg.com/images/g/vwkAAeSwMttqc20p/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "905a595042ad61baa4bfd9b666b968d8d8a6c5a7351fd01b88b1c965a85f53b0",
+      "price": 32.99,
+      "seller": "photocardtoday",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_98_905a5950.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_98_905a5950.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|358918369657|0",
+      "title": "TOMORROW X TOGETHER Minisode 3: TOMORROW (Light) Album Yeonjun ver 2 Photocards",
+      "image_url": "https://i.ebayimg.com/images/g/QfgAAeSw5TlqfKid/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "5cab7d01a7b14fc6245452fb65a092641f390f3f2c0705a4d7d158fc849b0fc3",
+      "price": 13.0,
+      "seller": "boxdapple",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_99_5cab7d01.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_99_5cab7d01.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    },
+    {
+      "group": "TOMORROW X TOGETHER",
+      "item_id": "v1|158077637364|0",
+      "title": "Soobin Official Photocard TOMORROW X TOGETHER TXT Temptation Weverse",
+      "image_url": "https://i.ebayimg.com/images/g/azcAAeSwe4RqVBbA/s-l225.jpg",
+      "image_format": "jpeg",
+      "image_hash": "82fa5de5c140310e6817c5514ac494cef7613596165fb509402c81cb476f176a",
+      "price": 13.0,
+      "seller": "km4tmrw14",
+      "collected_at": "2026-08-14T17:52:39",
+      "local_path": "/images/images/pilot_real_data/TOMORROW X TOGETHER/TOMORROW X TOGETHER_100_82fa5de5.jpeg",
+      "full_path": "D:\\StanPC\\poca-exchange\\public\\images\\pilot_real_data\\TOMORROW X TOGETHER\\TOMORROW X TOGETHER_100_82fa5de5.jpeg",
+      "vision_analysis": {
+        "is_single_card": false,
+        "confidence_score": 0,
+        "reason": "analysis_error: OPENAI_API_KEY environment var",
+        "success": false
+      }
+    }
+  ]
+}
