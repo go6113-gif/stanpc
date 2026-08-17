@@ -1,0 +1,25 @@
+﻿🗑️  Cleaning up PhotoCards...
+✓ Deleted 3116 old PhotoCards
+
+📥 Loading eBay 10-core data...
+✓ Loaded 10 groups
+✓ 10 groups ready
+📸 Seeding BTS... (299 items)
+📸 Seeding SEVENTEEN... (300 items)
+📸 Seeding Stray Kids... (300 items)
+📸 Seeding ENHYPEN... (299 items)
+📸 Seeding TOMORROW X TOGETHER... (299 items)
+📸 Seeding NewJeans... (300 items)
+📸 Seeding IVE... (299 items)
+📸 Seeding aespa... (300 items)
+📸 Seeding LE SSERAFIM... (297 items)
+📸 Seeding TWICE... (298 items)
+
+✅ Fresh seeding complete!
+   Total PhotoCards created: 2991
+   Duration: 141.4s
+
+🔍 Verification:
+   Total in DB: 3021
+   Sample: BTS V Taehyung Layover Lay()ver Solo Album Official Photocard Weverse Kpop PC (BTS)
+   Image URL: https://i.ebayimg.com/images/g/fcsAAeSwwJdpeRyE/s-l225.jpg...

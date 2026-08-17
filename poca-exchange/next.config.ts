@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "**.pstatic.net",
       },
+      {
+        protocol: "https",
+        hostname: "**.ebayimg.com",
+      },
     ],
   },
   redirects: async () => [

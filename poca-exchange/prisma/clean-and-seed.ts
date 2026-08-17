@@ -8,7 +8,6 @@ import { slugify, dedupeSlug } from "../lib/slugify";
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL, max: 10 });
 const prisma = new PrismaClient({ adapter });
 
-// Load eBay 10-core groups data
 const DATA_FILE = path.resolve(__dirname, "..", "..", "data", "ebay_10core_groups.json");
 
 interface EbayItem {
@@ -34,16 +33,21 @@ async function main() {
   const startedAt = Date.now();
 
   try {
+    console.log("🗑️  Cleaning up PhotoCards...");
+    const deleted = await prisma.photoCard.deleteMany({
+      where: { group: { slug: { in: ["bts", "seventeen", "stray-kids", "enhypen", "tomorrow-x-together", "newjeans", "ive", "aespa", "le-sserafim", "twice"] } } },
+    });
+    console.log(`✓ Deleted ${deleted.count} old PhotoCards`);
+
     // Load JSON data
-    console.log("📥 Loading eBay 10-core data...");
+    console.log("\n📥 Loading eBay 10-core data...");
     const rawData = fs.readFileSync(DATA_FILE, "utf-8");
     const data: EbayData = JSON.parse(rawData);
-
     const itemsByGroup = data.items_by_group;
     console.log(`✓ Loaded ${Object.keys(itemsByGroup).length} groups`);
 
     // Get or create groups
-    const groupMap = new Map<string, string>(); // name -> id
+    const groupMap = new Map<string, string>();
 
     for (const groupName of Object.keys(itemsByGroup)) {
       let group = await prisma.group.findUnique({
@@ -51,7 +55,6 @@ async function main() {
       });
 
       if (!group) {
-        console.log(`Creating group: ${groupName}`);
         group = await prisma.group.create({
           data: {
             slug: slugify(groupName),
@@ -60,10 +63,8 @@ async function main() {
           },
         });
       }
-
       groupMap.set(groupName, group.id);
     }
-
     console.log(`✓ ${groupMap.size} groups ready`);
 
     // Seed PhotoCards
@@ -81,20 +82,13 @@ async function main() {
 
       for (const item of items) {
         try {
-          // Create slug: group-slug + item-id
           const baseSlug = `${slugify(groupName)}-${item.item_id.replace(/[|]/g, "-").toLowerCase()}`;
           const slug = dedupeSlug(baseSlug, cardSlugsUsed);
 
-          await prisma.photoCard.upsert({
-            where: { slug },
-            update: {
-              cardName: item.title.substring(0, 255),
-              imageUrl: item.image_url,
-              estimatedPrice: item.price,
-            },
-            create: {
+          await prisma.photoCard.create({
+            data: {
               slug,
-              cardName: item.title.substring(0, 255), // Truncate long titles
+              cardName: item.title.substring(0, 255),
               imageUrl: item.image_url,
               estimatedPrice: item.price,
               groupId,
@@ -103,14 +97,29 @@ async function main() {
 
           totalCreated++;
         } catch (err) {
-          console.error(`❌ Error seeding item ${item.item_id}:`, err instanceof Error ? err.message : err);
+          if ((err as any)?.code === "P2002") {
+            // Unique constraint violation, skip
+            continue;
+          }
+          console.error(`❌ Error on ${item.item_id}:`, err instanceof Error ? err.message : err);
         }
       }
     }
 
-    console.log(`\n✅ Seeding complete!`);
-    console.log(`   Total PhotoCards: ${totalCreated}`);
+    console.log(`\n✅ Fresh seeding complete!`);
+    console.log(`   Total PhotoCards created: ${totalCreated}`);
     console.log(`   Duration: ${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
+
+    // Verify
+    const count = await prisma.photoCard.count();
+    const sample = await prisma.photoCard.findFirst({
+      include: { group: { select: { nameEn: true } } },
+    });
+
+    console.log(`\n🔍 Verification:`);
+    console.log(`   Total in DB: ${count}`);
+    console.log(`   Sample: ${sample?.cardName} (${sample?.group?.nameEn})`);
+    console.log(`   Image URL: ${sample?.imageUrl?.substring(0, 80)}...`);
 
     process.exit(0);
   } catch (error) {
