@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import VaultAuthModal from "@/components/wiki/VaultAuthModal";
 import { FilterBar } from "@/components/filter/FilterBar";
 import { FilterDrawer } from "@/components/filter/FilterDrawer";
 import { ActiveFilters } from "@/components/filter/ActiveFilters";
@@ -31,7 +30,6 @@ export function GalleryFilters({ resultCount, loggedIn, facets }: GalleryFilters
         <ActiveFilters facets={facets} />
       </div>
       {isDrawerOpen && <FilterDrawer onClose={() => setDrawerOpen(false)} facets={facets} />}
-      <VaultAuthModal isOpen={showVaultModal} onClose={() => setShowVaultModal(false)} />
     </Suspense>
   );
 }
