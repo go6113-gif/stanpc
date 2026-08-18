@@ -4,7 +4,7 @@ import Twitter from "next-auth/providers/twitter";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@/app/generated/prisma";
 import { prisma } from "@/lib/prisma";
 
 // docs/AUTH_SPEC.md MVP phase: Google, X(Twitter), Kakao, Naver social login.

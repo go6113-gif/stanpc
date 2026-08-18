@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
-import { GUIDE_CARDS, TAG_LABELS, TAG_COLORS, type GuideCard } from "@/lib/data/guideContent";
+import { GUIDE_CARDS, TAG_LABELS, TAG_COLORS, type GuideCard } from "@/lib/catalog/guideContent";
 
 interface GuideCardModalProps {
   card: GuideCard | null;
@@ -86,7 +86,7 @@ function GuideCardModal({ card, isOpen, onClose }: GuideCardModalProps) {
                   핵심 기능
                 </h3>
                 <div className="space-y-2">
-                  {card.details.keyPoints.map((point, idx) => (
+                  {card.details.keyPoints.map((point: string, idx: number) => (
                     <div key={idx} className="flex gap-3 text-sm">
                       <div className="flex-shrink-0 w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-[#FF2A55] mt-0.5">
                         ✓
@@ -150,7 +150,7 @@ export function StanpcGuideCards() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {mainCards.map((card) => (
+          {mainCards.map((card: GuideCard) => (
             <motion.button
               key={card.id}
               onClick={() => setSelectedCard(card)}
