@@ -408,6 +408,22 @@ model PhotoCard {
   contributedBy   User?          @relation("ContributedBy", fields: [contributedById], references: [id], onDelete: SetNull)
   contributions   Contribution[] @relation("CardContributions")
 
+  // --- 4-Tier Architecture (K-pop Photocard Taxonomy) ---
+  // Layer 3: Source Type (Album/POB/Lucky Draw/Fansign/MD)
+  sourceType String? @map("source_type") // "ALBUM", "POB", "LUCKY_DRAW", "FANSIGN", "MD", etc.
+
+  // Layer 4: Detailed Attributes
+  retailer    String?   // Seller/distributor (e.g., "YES24", "eBay")
+  round       Int?      // POB round number or edition count
+  material    String?   // Card material (e.g., "Hologram", "Matte", "Glossy")
+  visualTags  String[]  @default([]) @map("visual_tags") // ["Standing", "Neon", "Holo", "Face-close"]
+  phash       String?   // Perceptual hash for duplicate detection
+
+  // --- SEO & UGC Indexing ---
+  // Used by robots.txt/noindex to filter low-quality catalog data during crawl phase
+  isIndexed   Boolean @default(true) @map("is_indexed") // Whether this card should appear in search/sitemap
+  qualityScore Float  @default(0.0) @map("quality_score") // Editorial quality (0-10); feed selects 7+
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -416,6 +432,8 @@ model PhotoCard {
   @@index([memberId])
   @@index([albumId])
   @@index([catalogVersionId])
+  @@index([sourceType, retailer]) // 4-Tier queries
+  @@index([isIndexed]) // Crawler filtering
   @@index([createdAt])
   @@map("photo_cards")
 }
@@ -500,6 +518,11 @@ model PriceReport {
   reportedPrice   Int
   sourceUrl       String?
   reporterComment String?
+
+  // UGC Indexing — Price tips filtered for quality/spam
+  isIndexed   Boolean @default(true) @map("is_indexed")
+  qualityScore Float  @default(0.0) @map("quality_score")
+
   createdAt       DateTime @default(now())
 
   cardId String
@@ -581,6 +604,10 @@ model ActivityLog {
   // Optional reference to related card
   cardId String?    @map("card_id")
   card   PhotoCard? @relation("ActivityLogs", fields: [cardId], references: [id], onDelete: SetNull)
+
+  // UGC Indexing — Activity logs filtered for public feed visibility
+  isIndexed   Boolean @default(true) @map("is_indexed")
+  qualityScore Float  @default(0.0) @map("quality_score")
 
   createdAt DateTime @default(now()) @map("created_at")
 
@@ -849,6 +876,10 @@ model Reaction {
   vaultCardId String?         @map("vault_card_id")
   vaultCard   UserBinderCard? @relation(fields: [vaultCardId], references: [id], onDelete: Cascade)
 
+  // UGC Indexing — Low-quality/spam reactions filtered by crawler
+  isIndexed   Boolean @default(true) @map("is_indexed")
+  qualityScore Float  @default(0.0) @map("quality_score")
+
   createdAt DateTime @default(now()) @map("created_at")
 
   // "유저별 중복 리액션 방지" — one row per (user, target, emotion). A user may
@@ -894,6 +925,9 @@ model Notification {
   isRead Boolean   @default(false) @map("is_read")
   readAt DateTime? @map("read_at")
 
+  // UGC Indexing — Private notifications stay internal (not indexed)
+  isIndexed Boolean @default(false) @map("is_indexed")
+
   createdAt DateTime @default(now()) @map("created_at")
 
   // Backs the unread badge and the reverse-chronological notification list.
@@ -932,6 +966,10 @@ model Contribution {
   imageUrl String @map("image_url")
   status   String @default("PENDING") // PENDING / APPROVED / REJECTED
   rewardXp Int    @default(0) @map("reward_xp") // XP awarded upon approval
+
+  // UGC Indexing — Only approved contributions are indexed
+  isIndexed   Boolean @default(false) @map("is_indexed")
+  qualityScore Float  @default(0.0) @map("quality_score")
 
   createdAt  DateTime  @default(now()) @map("created_at")
   approvedAt DateTime? @map("approved_at")

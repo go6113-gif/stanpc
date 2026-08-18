@@ -1,12 +1,28 @@
-# StanPC Robots.txt
-# Crawl rate and sitemap configuration
+# StanPC Robots.txt — Crawler Isolation & Thin Content Prevention
+# Prevents indexing of low-quality UGC, private routes, and thin catalog pages
 
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /.next/
-Disallow: /admin/
-Crawl-delay: 1
 
-# Sitemaps
-Sitemap: https://stanpc.com/api/sitemap/xml
+# --- System/Admin Routes ---
+Disallow: /api/                      # Server logic, WebHooks, internal endpoints
+Disallow: /.next/                    # Build cache
+Disallow: /admin/                    # Admin panel (if exists)
+
+# --- UGC Routes (Low-Quality Content Protection) ---
+Disallow: /community/                # Community forum/chat (temporary, phase 2)
+Disallow: /trade/chat/               # Direct messaging (Phase 2, future)
+Disallow: /feed/                     # User activity feed (Phase 2)
+Disallow: /vault/settings/           # Private user settings
+
+# --- Private/Auth Routes ---
+Disallow: /auth/                     # Login/signup flows
+Disallow: /profile/settings/         # Personal settings
+Disallow: /profile/billing/          # Payment history
+
+# --- Crawler Rate Control ---
+Crawl-delay: 1
+Request-rate: 30/1m
+
+# --- Sitemaps ---
+Sitemap: https://www.stanpc.com/sitemap.xml
