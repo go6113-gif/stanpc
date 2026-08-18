@@ -41,8 +41,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Prisma generated client — check in index.ts only for type re-export
-/app/generated/prisma/*
-!/app/generated/prisma/index.ts
+# Prisma generated client — fully generated at build time, not checked in
+/app/generated/prisma
 
 .vercel
