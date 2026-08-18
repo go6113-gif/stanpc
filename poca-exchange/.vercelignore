@@ -42,9 +42,11 @@ venv/
 env/
 
 # Data and test files
+# NOTE: never blanket-ignore *.mjs here — postcss.config.mjs lives at the root
+# and dropping it silently disables the Tailwind PostCSS plugin, shipping CSS
+# with zero utility classes.
 data/
 test-db.mjs
-*.mjs
 vision_pilot_output/
 vision_realdata_pilot_output/
 public/images/pilot_real_data/

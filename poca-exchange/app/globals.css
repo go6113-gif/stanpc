@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @import "./design-tokens.css";
 
+/* Declare the scan roots explicitly. Tailwind v4 auto-detection walks up to the
+   git root and reads .gitignore, but the deployment bundle ships without .git/
+   and .gitignore, so auto-detection resolves differently there than locally. */
+@source "../app";
+@source "../components";
+@source "../lib";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
