@@ -16,7 +16,7 @@ import {
   GROUP_MASTER_CATALOG,
   getGroupMasterData,
   getAlbumMasterData,
-} from "../data/masterData";
+} from "@/lib/data/masterData";
 
 /**
  * 완성도 계산 결과 타입
