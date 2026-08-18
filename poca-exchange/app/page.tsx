@@ -15,15 +15,6 @@ const FALLBACK_GROUPS: Array<{ slug: string; name: string; member: string }> = [
   { slug: "newjeans", name: "뉴진스", member: "해린" },
 ];
 
-const DEMO_IMAGES = [
-  'https://images.unsplash.com/photo-1516575334481-f410966ba289?w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1506703720897-c6b0b8ef6dba?w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=600&fit=crop',
-];
-
 const FALLBACK_CARDS: Awaited<ReturnType<typeof getTopPhotoCards>> = Array.from(
   { length: 12 },
   (_, i) => {
@@ -32,8 +23,8 @@ const FALLBACK_CARDS: Awaited<ReturnType<typeof getTopPhotoCards>> = Array.from(
       rank: i + 1,
       slug: `demo-${g.slug}-${i + 1}`,
       cardName: `${g.member} 포토카드`,
-      imageUrl: DEMO_IMAGES[i % DEMO_IMAGES.length],
-      thumbImagePath: DEMO_IMAGES[i % DEMO_IMAGES.length],
+      imageUrl: null,
+      thumbImagePath: null,
       version: null,
       groupSlug: g.slug,
       groupName: g.name,

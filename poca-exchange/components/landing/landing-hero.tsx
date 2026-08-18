@@ -37,7 +37,7 @@ export function LandingHero({ gridRef }: { gridRef?: React.RefObject<HTMLDivElem
     { titleKey: "explore.card_04_title", descKey: "explore.card_04_subtitle" },
   ] as const;
 
-  const actionRoutes = ["/gallery", "/wiki", "/vault", "/binder-export"];
+  const actionRoutes = ["/vault", "/wiki", "/gallery", "/binder-export"];
 
   const handleQuickBinder = () => {
     // Route to guest binder — no login required

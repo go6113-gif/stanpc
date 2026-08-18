@@ -4,18 +4,19 @@ import { redirect } from "next/navigation";
 function SupabaseSetupWarning() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 px-4">
-      <div className="w-full max-w-md rounded-lg border border-amber-300 bg-amber-50 p-8 shadow-lg dark:border-amber-700 dark:bg-amber-950">
-        <h1 className="text-xl font-bold text-amber-900 dark:text-amber-200 mb-2">
-          ⚠️ 데이터베이스(Supabase) 설정이 필요합니다
+      <div className="w-full max-w-md rounded-lg border border-slate-300 bg-slate-50 p-8 shadow-lg dark:border-slate-600 dark:bg-slate-800">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+          로그인 준비 중
         </h1>
-        <p className="text-sm text-amber-800 dark:text-amber-300">
-          로그인 기능을 사용하려면 <code className="rounded bg-amber-100 px-1 dark:bg-amber-900">.env.local</code>에
-          {" "}
-          <code className="rounded bg-amber-100 px-1 dark:bg-amber-900">NEXT_PUBLIC_SUPABASE_URL</code>
-          {" "}및{" "}
-          <code className="rounded bg-amber-100 px-1 dark:bg-amber-900">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>
-          {" "}값을 설정해주세요.
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+          현재 로그인 기능은 준비 중입니다. 잠시 후 다시 시도해주세요.
         </p>
+        <a
+          href="/"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 text-white px-4 py-2.5 font-medium hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors"
+        >
+          홈으로 돌아가기
+        </a>
       </div>
     </div>
   );

@@ -3,17 +3,23 @@
 import { useEffect, useState } from "react";
 import { BookmarkCheck, Heart } from "lucide-react";
 import { useBinderStore } from "@/store/useBinderStore";
+import { useAuthStore } from "@/lib/store/useAuthStore";
 
 export function BinderStats() {
   const [hydrated, setHydrated] = useState(false);
   const ownedCount = useBinderStore((state) => state.getOwnedCount());
   const wishedCount = useBinderStore((state) => state.getWishedCount());
+  const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
+    useAuthStore.persist.rehydrate();
     setHydrated(true);
   }, []);
 
   if (!hydrated) return null;
+
+  // 로그인 상태에서만 표시
+  if (!isAuthenticated) return null;
 
   return (
     <div className="flex gap-4 sm:gap-6">

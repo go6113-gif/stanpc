@@ -27,7 +27,7 @@ export function AuthNav() {
     return (
       <div className="flex items-center gap-3">
         <Link
-          href="/vault"
+          href="/vault?mode=guest"
           className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors"
         >
           <BookOpen size={16} />
