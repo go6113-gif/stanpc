@@ -1,0 +1,425 @@
+﻿
+> stanpc@0.1.0 build
+> next build
+
+▲ Next.js 16.3.0 (Turbopack)
+- Environments: .env.local, .env
+✓ Running next.config.js took 15ms
+
+node.exe : ⚠ The Edge Runtime is deprecated. You can use the "nodejs" runtime instead. Learn more: https://nextjs.org/d
+ocs/messages/edge-runtime-deprecated
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (⚠ The Edge Runt...time-deprecated:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.4s
+  Running TypeScript ...
+  Finished TypeScript in 6.1s ...
+  Collecting page data using 11 workers ...
+<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />
+<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />
+<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />
+⚠ Using edge runtime on a page currently disables static generation for that page
+Failed to generate static params for groups: Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.group.findMany()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+    at async g (lib\queries.ts:51:18)
+    at async n (app\groups\[groupName]\page.tsx:189:20)
+  49 | // group order is controlled from one place.
+  50 | export async function getMvpGroupDirectory() {
+> 51 |   const groups = await prisma.group.findMany({
+     |                  ^
+  52 |     where: { slug: { in: [...MVP_GROUP_SLUGS] } },
+  53 |     select: {
+  54 |       slug: true, {
+  code: 'P2021',
+  meta: {
+    modelName: 'Group',
+    driverAdapterError: Error [DriverAdapterError]: TableDoesNotExist
+        at ignore-listed frames {
+      [cause]: [Object]
+    }
+  },
+  clientVersion: '7.9.1'
+}
+generateStaticParams failed for /[group]/[member]: Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.member.findMany()` invocation:
+
+
+The table `public.members` does not exist in the current database.
+    at async i (lib\queries.ts:142:19)
+    at async l (app\[group]\[member]\page.tsx:21:21)
+  140 | // listing in the sitemap.
+  141 | export async function getAllMemberSlugs() {
+> 142 |   const members = await prisma.member.findMany({
+      |                   ^
+  143 |     where: {
+  144 |       group: { slug: { in: [...MVP_GROUP_SLUGS] } },
+  145 |       photoCards: { some: {} }, {
+  code: 'P2021',
+  meta: {
+    modelName: 'Member',
+    driverAdapterError: Error [DriverAdapterError]: TableDoesNotExist
+        at ignore-listed frames {
+      [cause]: [Object]
+    }
+  },
+  clientVersion: '7.9.1'
+}
+generateStaticParams failed for /[group]: Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.group.findMany()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+    at async l (app\[group]\page.tsx:17:20)
+  15 | export async function generateStaticParams() {
+  16 |   try {
+> 17 |     const groups = await getAllGroupSlugs();
+     |                    ^
+  18 |     return groups.map((group) => ({ group: group.slug }));
+  19 |   } catch (err) {
+  20 |     console.warn("generateStaticParams failed for /[group]:", err); {
+  code: 'P2021',
+  meta: {
+    modelName: 'Group',
+    driverAdapterError: Error [DriverAdapterError]: TableDoesNotExist
+        at ignore-listed frames {
+      [cause]: [Object]
+    }
+  },
+  clientVersion: '7.9.1'
+}
+  Generating static pages using 11 workers (0/109) ...
+✓ Member page: Loaded fallback data for stray-kids/hyunjin
+✓ Member page: Loaded fallback data for stray-kids/hyunjin
+  Generating static pages using 11 workers (27/109) 
+✓ Member page: Loaded fallback data for bts/rm
+✓ Member page: Loaded fallback data for bts/rm
+✓ Member page: Loaded fallback data for stray-kids/han
+✓ Member page: Loaded fallback data for stray-kids/han
+✓ Member page: Loaded fallback data for stray-kids/seungmin
+✓ Member page: Loaded fallback data for stray-kids/seungmin
+✓ Member page: Loaded fallback data for stray-kids/felix
+✓ Member page: Loaded fallback data for stray-kids/felix
+✓ Member page: Loaded fallback data for stray-kids/i-n
+✓ Member page: Loaded fallback data for stray-kids/i-n
+✓ Member page: Loaded fallback data for bts/jin
+✓ Member page: Loaded fallback data for bts/jin
+✓ Member page: Loaded fallback data for bts/suga
+✓ Member page: Loaded fallback data for bts/suga
+✓ Member page: Loaded fallback data for aespa/karina
+✓ Member page: Loaded fallback data for aespa/karina
+Failed to fetch group data for "enhypen": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "enhypen": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+✓ Member page: Loaded fallback data for bts/j-hope
+✓ Member page: Loaded fallback data for bts/j-hope
+✓ Member page: Loaded fallback data for bts/jungkook
+✓ Member page: Loaded fallback data for bts/jungkook
+✓ Member page: Loaded fallback data for bts/jimin
+✓ Member page: Loaded fallback data for bts/jimin
+✓ Member page: Loaded fallback data for bts/v
+✓ Member page: Loaded fallback data for bts/v
+✓ Member page: Loaded fallback data for aespa/winter
+✓ Member page: Loaded fallback data for aespa/winter
+✓ Member page: Loaded fallback data for aespa/giselle
+✓ Member page: Loaded fallback data for aespa/giselle
+✓ Member page: Loaded fallback data for aespa/ningning
+✓ Member page: Loaded fallback data for aespa/ningning
+Failed to fetch group data for "tomorrow-x-together": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "tomorrow-x-together": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "seventeen": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "seventeen": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "newjeans": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "newjeans": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "stray-kids": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "stray-kids": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+  Generating static pages using 11 workers (54/109) 
+✓ Member page: Loaded fallback data for seventeen/scoups
+✓ Member page: Loaded fallback data for seventeen/scoups
+✓ Member page: Loaded fallback data for newjeans/hanni
+✓ Member page: Loaded fallback data for newjeans/hanni
+✓ Member page: Loaded fallback data for seventeen/jeonghan
+✓ Member page: Loaded fallback data for seventeen/jeonghan
+✓ Member page: Loaded fallback data for newjeans/hybe
+✓ Member page: Loaded fallback data for newjeans/hybe
+✓ Member page: Loaded fallback data for seventeen/joshua
+✓ Member page: Loaded fallback data for seventeen/joshua
+✓ Member page: Loaded fallback data for seventeen/jun
+✓ Member page: Loaded fallback data for seventeen/jun
+✓ Member page: Loaded fallback data for seventeen/hoshi
+✓ Member page: Loaded fallback data for seventeen/hoshi
+✓ Member page: Loaded fallback data for seventeen/wonwoo
+✓ Member page: Loaded fallback data for seventeen/wonwoo
+✓ Member page: Loaded fallback data for seventeen/woozi
+✓ Member page: Loaded fallback data for seventeen/woozi
+✓ Member page: Loaded fallback data for seventeen/mingyu
+✓ Member page: Loaded fallback data for seventeen/mingyu
+Failed to fetch group data for "le-sserafim": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "le-sserafim": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "aespa": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "aespa": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "ive": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "ive": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+✓ Member page: Loaded fallback data for newjeans/danielle
+✓ Member page: Loaded fallback data for newjeans/danielle
+✓ Member page: Loaded fallback data for newjeans/haerita
+✓ Member page: Loaded fallback data for newjeans/haerita
+✓ Member page: Loaded fallback data for newjeans/jinin
+✓ Member page: Loaded fallback data for newjeans/jinin
+✓ Member page: Loaded fallback data for seventeen/vernon
+✓ Member page: Loaded fallback data for seventeen/vernon
+✓ Member page: Loaded fallback data for seventeen/seungkwan
+✓ Member page: Loaded fallback data for seventeen/seungkwan
+✓ Member page: Loaded fallback data for stray-kids/bang-chan
+✓ Member page: Loaded fallback data for stray-kids/bang-chan
+✓ Member page: Loaded fallback data for seventeen/dino
+✓ Member page: Loaded fallback data for seventeen/dino
+✓ Member page: Loaded fallback data for stray-kids/lee-know
+✓ Member page: Loaded fallback data for stray-kids/lee-know
+✓ Member page: Loaded fallback data for stray-kids/changbin
+✓ Member page: Loaded fallback data for stray-kids/changbin
+  Generating static pages using 11 workers (81/109) 
+[leaderboard] Error: Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.user.findMany()` invocation:
+
+
+The table `public.users` does not exist in the current database.
+    at async i (app\api\leaderboard\route.ts:19:22)
+  17 |   try {
+  18 |     // Query top 10 users by XP
+> 19 |     const topUsers = await prisma.user.findMany({
+     |                      ^
+  20 |       select: {
+  21 |         id: true,
+  22 |         name: true, {
+  code: 'P2021',
+  meta: {
+    modelName: 'User',
+    driverAdapterError: Error [DriverAdapterError]: TableDoesNotExist
+        at async i (app\api\leaderboard\route.ts:19:22)
+      17 |   try {
+      18 |     // Query top 10 users by XP
+    > 19 |     const topUsers = await prisma.user.findMany({
+         |                      ^
+      20 |       select: {
+      21 |         id: true,
+      22 |         name: true, {
+      [cause]: [Object]
+    }
+  },
+  clientVersion: '7.9.1'
+}
+Failed to fetch group data for "bts": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "bts": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch groups for sitemap: 
+Invalid `prisma.group.findMany()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+⚠️  Using fallback MVP_GROUP_SLUGS (10 groups)
+✓ Sitemap: Using fallback MVP members
+✓ Sitemap generated with 38 entries
+Failed to fetch group data for "twice": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch group data for "twice": 
+Invalid `prisma.group.findUnique()` invocation:
+
+
+The table `public.groups` does not exist in the current database.
+Failed to fetch cards (database unavailable): 
+Invalid `prisma.photoCard.findMany()` invocation:
+
+
+The table `public.photo_cards` does not exist in the current database.
+✓ Generating static pages using 11 workers (109/109) in 1564ms
+  Finalizing page optimization ...
+
+Route (app)                           Revalidate  Expire
+┌ ○ /                                         1h      1y
+├ ○ /_not-found
+├ ● /[group]
+├ ● /[group]/[member]
+├ ○ /admin/review-queue
+├ ƒ /api/activity/heatmap
+├ ƒ /api/admin/review-queue
+├ ƒ /api/auth/[...nextauth]
+├ ƒ /api/card-generator/user-data
+├ ƒ /api/cards/[cardSlug]/toggle
+├ ƒ /api/contributions
+├ ƒ /api/credits/deduct-renewal
+├ ƒ /api/credits/get-balance
+├ ƒ /api/credits/refund-rollback
+├ ƒ /api/ebay/search
+├ ƒ /api/gallery/count
+├ ƒ /api/leaderboard
+├ ƒ /api/leaderboard/ambassadors
+├ ƒ /api/notifications
+├ ƒ /api/notifications/[id]/read
+├ ƒ /api/og/binder
+├ ƒ /api/og/photocard
+├ ƒ /api/og/vault
+├ ƒ /api/photocards
+├ ƒ /api/photocards/[id]
+├ ƒ /api/price-history
+├ ƒ /api/profile/[userId]
+├ ƒ /api/profile/completion
+├ ƒ /api/proof/presigned-url
+├ ƒ /api/proof/verify
+├ ƒ /api/referral/award-credits
+├ ƒ /api/referral/get-code
+├ ƒ /api/referral/leaderboard
+├ ƒ /api/referral/my-referrals
+├ ƒ /api/referral/stats
+├ ƒ /api/referral/validate
+├ ƒ /api/reports/price
+├ ƒ /api/search
+├ ƒ /api/sitemap/albums.xml
+├ ƒ /api/sitemap/groups.xml
+├ ƒ /api/sitemap/static.xml
+├ ƒ /api/sitemap/xml
+├ ƒ /api/sku-mapping
+├ ƒ /api/stripe/checkout
+├ ƒ /api/stripe/webhook
+├ ƒ /api/tracking/outbound
+├ ƒ /api/trades
+├ ƒ /api/trades/match
+├ ƒ /api/user/card-want
+├ ƒ /api/user/vault
+├ ƒ /api/vault
+├ ƒ /api/vault/bulk-add
+├ ƒ /api/vault/card
+├ ƒ /api/vault/cards
+├ ƒ /api/vault/get-vault
+├ ƒ /api/vault/profile/[username]
+├ ƒ /api/waitlist
+├ ƒ /api/webhooks/stripe
+├ ƒ /api/wiki/album
+├ ƒ /api/wiki/featured
+├ ƒ /api/wiki/featured-cards
+├ ƒ /api/wiki/group
+├ ƒ /api/wiki/member
+├ ƒ /api/wiki/search
+├ ƒ /auth/callback
+├ ƒ /auth/login
+├ ○ /binder-export
+├ ƒ /card-generator
+├ ƒ /card/[cardSlug]
+├ ○ /export
+├ ƒ /gallery
+├ ƒ /gallery/[albumId]
+├   /groups/[groupName]
+│ ├ ● /groups/bts
+│ ├ ● /groups/seventeen
+│ ├ ● /groups/stray-kids
+│ └ ● [+7 more paths]
+├   /groups/[groupName]/[memberName]
+│ ├ ● /groups/seventeen/scoups
+│ ├ ● /groups/seventeen/jeonghan
+│ ├ ● /groups/seventeen/joshua
+│ └ ● [+32 more paths]
+├ ○ /icon.svg
+├ ƒ /inventory
+├ ƒ /opengraph-image
+├ ƒ /photocard/[id]
+├ ○ /profile
+├ ƒ /referrals
+├ ○ /robots.txt
+├ ○ /sitemap.xml                              1h      1y
+├ ○ /test/binder
+├ ○ /test/export-studio
+├ ○ /test/match-ui
+├ ○ /test/onboarding
+├ ƒ /vault
+├ ƒ /vault/[username]
+├ ○ /wiki
+├ ƒ /wiki/[group]
+├ ƒ /wiki/[group]/[member]
+└ ƒ /wiki/[group]/[member]/[album]
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
