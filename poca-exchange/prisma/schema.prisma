@@ -15,10 +15,6 @@ datasource db {
   provider = "postgresql"
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 // -----------------------------------------------------------------------------
 // User & Auth
 // Source: docs/AUTH_SPEC.md — MVP social auth (NextAuth/Auth.js), KYC fields
