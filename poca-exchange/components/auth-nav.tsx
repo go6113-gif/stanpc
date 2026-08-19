@@ -5,15 +5,54 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LogOut, User, BookOpen } from "lucide-react";
 import { useAuthStore } from "@/lib/store/useAuthStore";
+import { getSupabaseClient } from "@/lib/supabase/client";
 
 export function AuthNav() {
   const [hydrated, setHydrated] = useState(false);
   const router = useRouter();
-  const { user, isAuthenticated, logout } = useAuthStore();
+  const { user, isAuthenticated, logout, login } = useAuthStore();
 
   useEffect(() => {
     useAuthStore.persist.rehydrate();
-    setHydrated(true);
+
+    // Supabase 세션 확인 및 로컬 스토어 동기화
+    const checkSupabaseSession = async () => {
+      try {
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          setHydrated(true);
+          return;
+        }
+
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (session?.user) {
+          // Supabase 세션이 있으면 로컬 스토어 업데이트
+          const displayName =
+            session.user.user_metadata?.full_name ||
+            session.user.email?.split("@")[0] ||
+            "User";
+
+          useAuthStore.setState({
+            user: {
+              id: session.user.id,
+              email: session.user.email || "",
+              nickname: displayName,
+              tier: "basic",
+            },
+            isAuthenticated: true,
+          });
+        }
+      } catch (error) {
+        console.error("Session check error:", error);
+      } finally {
+        setHydrated(true);
+      }
+    };
+
+    checkSupabaseSession();
   }, []);
 
   if (!hydrated) {

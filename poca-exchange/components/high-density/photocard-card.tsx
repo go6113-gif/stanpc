@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { formatMultiCurrency } from "@/lib/format";
@@ -109,13 +108,16 @@ export function PhotoCardCard({
             } as any}
           >
             {card.thumbImagePath || card.imageUrl ? (
-              <Image
-                src={card.thumbImagePath || card.imageUrl || ""}
+              <img
+                src={
+                  card.thumbImagePath
+                    ? `/api/image?path=${encodeURIComponent(card.thumbImagePath)}`
+                    : card.imageUrl
+                    ? `/api/image?path=${encodeURIComponent(card.imageUrl)}`
+                    : ""
+                }
                 alt={card.cardName || ""}
-                fill
-                className="photocard-image absolute inset-0"
-                sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                priority={false}
+                className="photocard-image absolute inset-0 object-cover"
                 loading="lazy"
               />
             ) : (

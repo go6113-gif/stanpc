@@ -1,0 +1,79 @@
+﻿generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ReleaseType {
+  ALBUM
+  SINGLE
+  SPECIAL
+}
+
+enum SourceType {
+  ALBUM
+  POB
+  LUCKY_DRAW
+  EVENT
+  MERCH
+}
+
+model Group {
+  id         String      @id @default(cuid())
+  code       String      @unique
+  nameKr     String
+  nameEn     String
+  agency     String?
+  members    Member[]
+  photocards Photocard[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Member {
+  id         String      @id @default(cuid())
+  code       String
+  nameKr     String
+  nameEn     String
+  realName   String?
+  groupId    String
+  group      Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  photocards Photocard[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@unique([groupId, code])
+}
+
+model Release {
+  id          String      @id @default(cuid())
+  code        String      @unique
+  title       String
+  releaseYear Int?
+  type        ReleaseType @default(ALBUM)
+  photocards  Photocard[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Photocard {
+  id          String      @id @default(cuid())
+  groupId     String
+  group       Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  memberId    String
+  member      Member      @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  releaseId   String
+  release     Release     @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  sourceType  SourceType  @default(ALBUM)
+  cardSeq     Int         @default(1)
+  versionName String?
+  imagePath   String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@unique([memberId, releaseId, sourceType, cardSeq])
+}

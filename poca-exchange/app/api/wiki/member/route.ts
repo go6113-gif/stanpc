@@ -82,7 +82,17 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           ? { userBinders: { some: userBinderFilter } }
           : {}),
       },
-      include: {
+      select: {
+        id: true,
+        slug: true,
+        cardName: true,
+        version: true,
+        imageUrl: true,
+        thumbImagePath: true,
+        estimatedPrice: true,
+        ownedCount: true,
+        wishedCount: true,
+        viewCount: true,
         group: { select: { slug: true, nameEn: true } },
         member: { select: { nameEn: true } },
         album: { select: { slug: true, title: true } },
