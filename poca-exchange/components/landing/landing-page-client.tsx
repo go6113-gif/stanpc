@@ -33,14 +33,45 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
   const wttCards = useBinderStore((state) => state.wttCards);
   const wtsCards = useBinderStore((state) => state.wtsCards);
 
-  const groups = useMemo(() => {
-    const seen = new Map<string, string>();
+  // Extract groups and members with hierarchy: group -> members
+  const { groups, groupMembers } = useMemo(() => {
+    const groupsMap = new Map<string, { slug: string; name: string }>();
+    const membersMap = new Map<string, Set<{ slug: string; name: string }>>();
+
     for (const card of cards) {
-      if (card.groupSlug && !seen.has(card.groupSlug)) {
-        seen.set(card.groupSlug, card.groupName);
+      if (card.groupSlug && !groupsMap.has(card.groupSlug)) {
+        groupsMap.set(card.groupSlug, {
+          slug: card.groupSlug,
+          name: card.groupName,
+        });
+        membersMap.set(card.groupSlug, new Set());
+      }
+
+      // Add member to the group's member set (if available)
+      if (card.memberSlug && card.groupSlug && card.member) {
+        const members = membersMap.get(card.groupSlug);
+        if (members) {
+          members.add({
+            slug: card.memberSlug,
+            name: card.memberName || card.member.nameKr || card.member.nameEn || "",
+          });
+        }
       }
     }
-    return Array.from(seen, ([slug, name]) => ({ slug, name }));
+
+    // Convert Sets to sorted arrays
+    const membersByGroup = new Map<string, Array<{ slug: string; name: string }>>();
+    for (const [groupSlug, members] of membersMap) {
+      membersByGroup.set(
+        groupSlug,
+        Array.from(members).sort((a, b) => a.name.localeCompare(b.name))
+      );
+    }
+
+    return {
+      groups: Array.from(groupsMap.values()),
+      groupMembers: membersByGroup,
+    };
   }, [cards]);
 
   const collectionSet =
@@ -66,14 +97,9 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
         if (!Array.from(cardTypeFilters).some((f) => tags.has(f as CardTag))) return false;
       }
 
-      // Member filter (match by memberName — will map to actual IDs when data available)
-      if (memberFilters.size > 0 && card.memberName) {
-        const matchedMember = Array.from(memberFilters).some((memberId) => {
-          // TODO: Map memberId to actual memberName when real member data is available
-          // For now, members are filtered by mock data — this will need updates
-          return true; // Placeholder: all pass for now
-        });
-        if (!matchedMember) return false;
+      // Member filter (match by memberSlug)
+      if (memberFilters.size > 0 && card.memberSlug) {
+        if (!memberFilters.has(card.memberSlug)) return false;
       }
 
       // Collection/trade quick filter (wishlist/owned/wtt/wts)
@@ -114,6 +140,7 @@ export function LandingPageClient({ cards }: LandingPageClientProps) {
 
         <LandingFilterBar
           groups={groups}
+          groupMembers={groupMembers}
           selectedGroup={groupFilter}
           onSelectGroup={setGroupFilter}
           selectedCardTypes={cardTypeFilters}

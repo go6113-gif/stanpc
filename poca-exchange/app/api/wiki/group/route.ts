@@ -21,6 +21,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             photoCards: {
               select: {
                 id: true,
+                imageUrl: true,
+                thumbImagePath: true,
                 estimatedPrice: true,
                 ownedCount: true,
                 wishedCount: true,
@@ -31,6 +33,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         photoCards: {
           select: {
             id: true,
+            imageUrl: true,
+            thumbImagePath: true,
             estimatedPrice: true,
             ownedCount: true,
             wishedCount: true,

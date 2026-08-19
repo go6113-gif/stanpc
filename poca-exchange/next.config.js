@@ -1,4 +1,17 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    localPatterns: [
+      {
+        pathname: "/api/image.*",
+        search: ".*",
+      },
+      {
+        pathname: "/images/photocards/.*",
+        search: ".*",
+      },
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

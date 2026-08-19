@@ -8,6 +8,7 @@ import { useTranslations } from "@/lib/i18n";
 
 interface LandingFilterBarProps {
   groups: Array<{ slug: string; name: string }>;
+  groupMembers: Map<string, Array<{ slug: string; name: string }>>;
   selectedGroup: string | null;
   onSelectGroup: (slug: string | null) => void;
   selectedCardTypes: Set<string>;
@@ -20,6 +21,7 @@ interface LandingFilterBarProps {
 
 export function LandingFilterBar({
   groups,
+  groupMembers,
   selectedGroup,
   onSelectGroup,
   selectedCardTypes,
@@ -79,6 +81,7 @@ export function LandingFilterBar({
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         groups={groups}
+        groupMembers={groupMembers}
         selectedGroup={selectedGroup}
         onSelectGroup={onSelectGroup}
         selectedCardTypes={selectedCardTypes}

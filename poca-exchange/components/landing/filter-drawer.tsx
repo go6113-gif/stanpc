@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check } from "lucide-react";
+import { X } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
 import { CARD_TAG_LIST, CARD_TAG_LABELS } from "@/lib/photocard-tags";
 
@@ -10,6 +11,7 @@ interface FilterDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   groups: Array<{ slug: string; name: string }>;
+  groupMembers: Map<string, Array<{ slug: string; name: string }>>;
   selectedGroup: string | null;
   onSelectGroup: (slug: string | null) => void;
   selectedCardTypes: Set<string>;
@@ -19,20 +21,36 @@ interface FilterDrawerProps {
   onResetFilters: () => void;
 }
 
-// Mock filter data
-const MOCK_MEMBERS = [
-  { id: "member-1", name: "카리나" },
-  { id: "member-2", name: "지젤" },
-  { id: "member-3", name: "닝닝" },
-  { id: "member-4", name: "윈터" },
-];
-
 const CARD_TYPES = CARD_TAG_LIST.map((id) => ({ id, name: CARD_TAG_LABELS[id] }));
+
+// Reusable toggle chip component
+function ToggleChip({
+  label,
+  isSelected,
+  onClick,
+}: {
+  label: string;
+  isSelected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
+        isSelected
+          ? "bg-[#FF2A55] text-white"
+          : "bg-white/5 text-white/70 hover:bg-white/10"
+      }`}
+    />
+  );
+}
 
 export function FilterDrawer({
   isOpen,
   onClose,
   groups,
+  groupMembers,
   selectedGroup,
   onSelectGroup,
   selectedCardTypes,
@@ -41,8 +59,19 @@ export function FilterDrawer({
   onSelectMembers,
   onResetFilters,
 }: FilterDrawerProps) {
+  const router = useRouter();
   const { t } = useTranslations();
   const [localCardTypes, setLocalCardTypes] = useState<Set<string>>(new Set(selectedCardTypes));
+
+  // Get members for currently selected group
+  const visibleMembers = selectedGroup ? (groupMembers.get(selectedGroup) || []) : [];
+
+  // When group is deselected, automatically clear member selections
+  useEffect(() => {
+    if (!selectedGroup && selectedMembers.size > 0) {
+      onSelectMembers(new Set());
+    }
+  }, [selectedGroup, selectedMembers, onSelectMembers]);
 
   // Sync local state with selected card types when drawer opens
   useEffect(() => {
@@ -75,6 +104,17 @@ export function FilterDrawer({
 
   const handleApply = () => {
     onSelectCardTypes(localCardTypes);
+
+    // Build URL for pSEO routing if any core filter is selected
+    // Core filters: group, member, type (all required for /explore/[group]/[member]/[type])
+    if (selectedGroup) {
+      const memberSlug = selectedMembers.size > 0 ? Array.from(selectedMembers)[0] : "all";
+      const typeSlug = localCardTypes.size > 0 ? Array.from(localCardTypes)[0] : "all";
+
+      const url = `/explore/${selectedGroup}/${memberSlug}/${typeSlug}`;
+      router.push(url);
+    }
+
     onClose();
   };
 
@@ -97,13 +137,13 @@ export function FilterDrawer({
             className="fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm"
           />
 
-          {/* Drawer */}
+          {/* Drawer — use 100dvh for dynamic viewport height + safe-area padding for mobile */}
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed right-0 top-0 z-[1000] h-full w-full max-w-sm overflow-y-auto bg-[#1A1A1E] border-l border-white/10"
+            className="fixed bottom-0 left-0 right-0 z-[1000] max-h-[100dvh] w-full bg-[#1A1A1E] border-t border-white/10 rounded-t-2xl overflow-hidden flex flex-col sm:bottom-auto sm:right-0 sm:top-0 sm:left-auto sm:max-h-none sm:max-w-sm sm:rounded-t-none sm:border-t-0 sm:border-l"
           >
             {/* Header */}
             <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#1A1A1E]/95 backdrop-blur-sm px-4 py-4">
@@ -114,119 +154,104 @@ export function FilterDrawer({
                 type="button"
                 onClick={onClose}
                 className="rounded-full p-1.5 text-white hover:bg-white/10 transition-colors"
-                aria-label="닫기"
+                aria-label={t("filter.drawer.close") || "닫기"}
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Content */}
-            <div className="space-y-6 px-4 py-6">
-              {/* Groups Filter Section */}
-              <div>
-                <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
-                  {t("filter.drawer.groups") || "그룹"}
-                </h3>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={selectedGroup === null}
-                      onChange={() => onSelectGroup(null)}
-                      className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto px-4 py-6">
+              <div className="space-y-6">
+                {/* Groups Filter Section */}
+                <div>
+                  <h3 className="mb-3 text-xs font-bold text-white/50 uppercase tracking-widest">
+                    {t("filter.drawer.groups") || "그룹"}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    <ToggleChip
+                      label="전체"
+                      isSelected={selectedGroup === null}
+                      onClick={() => onSelectGroup(null)}
                     />
-                    <span className="text-sm text-white">전체</span>
-                  </label>
-                  {groups.map((group) => (
-                    <label
-                      key={group.slug}
-                      className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedGroup === group.slug}
-                        onChange={() => onSelectGroup(group.slug)}
-                        className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
+                    {groups.map((group) => (
+                      <ToggleChip
+                        key={group.slug}
+                        label={group.name}
+                        isSelected={selectedGroup === group.slug}
+                        onClick={() => onSelectGroup(group.slug)}
                       />
-                      <span className="text-sm text-white">{group.name}</span>
-                    </label>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Members Filter Section */}
-              <div>
-                <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
-                  {t("filter.drawer.members") || "멤버"}
-                </h3>
-                <div className="space-y-2">
-                  {MOCK_MEMBERS.map((member) => (
-                    <label
-                      key={member.id}
-                      className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedMembers.has(member.id)}
-                        onChange={() => {
-                          const updated = new Set(selectedMembers);
-                          if (updated.has(member.id)) {
-                            updated.delete(member.id);
-                          } else {
-                            updated.add(member.id);
-                          }
-                          onSelectMembers(updated);
-                        }}
-                        className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
+                {/* Members Filter Section — only show when a group is selected */}
+                {selectedGroup && visibleMembers.length > 0 && (
+                  <div>
+                    <h3 className="mb-3 text-xs font-bold text-white/50 uppercase tracking-widest">
+                      {t("filter.drawer.members") || "멤버"}
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {visibleMembers.map((member) => (
+                        <ToggleChip
+                          key={member.slug}
+                          label={member.name}
+                          isSelected={selectedMembers.has(member.slug)}
+                          onClick={() => {
+                            const updated = new Set(selectedMembers);
+                            if (updated.has(member.slug)) {
+                              updated.delete(member.slug);
+                            } else {
+                              updated.add(member.slug);
+                            }
+                            onSelectMembers(updated);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Card Type Filter Section */}
+                <div>
+                  <h3 className="mb-3 text-xs font-bold text-white/50 uppercase tracking-widest">
+                    {t("filter.drawer.cardTypes") || "카드 종류"}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {CARD_TYPES.map((type) => (
+                      <ToggleChip
+                        key={type.id}
+                        label={type.name}
+                        isSelected={localCardTypes.has(type.id)}
+                        onClick={() => handleCardTypeToggle(type.id)}
                       />
-                      <span className="text-sm text-white">{member.name}</span>
-                    </label>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Card Type Filter Section */}
-              <div>
-                <h3 className="mb-3 text-sm font-bold text-white uppercase tracking-wide text-white/70">
-                  {t("filter.drawer.cardTypes") || "카드 종류"}
-                </h3>
-                <div className="space-y-2">
-                  {CARD_TYPES.map((type) => (
-                    <label
-                      key={type.id}
-                      className="flex items-center gap-3 cursor-pointer rounded-lg p-2.5 hover:bg-white/5 transition-colors"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={localCardTypes.has(type.id)}
-                        onChange={() => handleCardTypeToggle(type.id)}
-                        className="h-4 w-4 rounded border border-white/30 bg-transparent checked:bg-[#FF2A55] checked:border-[#FF2A55] cursor-pointer"
-                      />
-                      <span className="text-sm text-white">{type.name}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Reset & Apply Buttons */}
-              <div className="sticky bottom-0 border-t border-white/10 bg-[#1A1A1E]/95 backdrop-blur-sm px-0 py-4 -mx-4">
-                <div className="space-y-2 px-4">
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="w-full rounded-lg border border-white/20 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
-                  >
-                    {t("filter.drawer.reset") || "초기화"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleApply}
-                    className="w-full rounded-lg bg-[#FF2A55] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
-                  >
-                    {t("filter.drawer.apply") || "적용"}
-                  </button>
-                </div>
-              </div>
+            {/* Fixed Footer with Safe Area Inset */}
+            <div
+              className="border-t border-white/10 bg-[#1A1A1E]/95 backdrop-blur-sm px-4 py-4 space-y-2"
+              style={{
+                paddingBottom: "calc(1rem + env(safe-area-inset-bottom))",
+              }}
+            >
+              <button
+                type="button"
+                onClick={handleReset}
+                className="w-full rounded-lg border border-white/20 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors active:bg-white/15"
+              >
+                {t("filter.drawer.reset") || "초기화"}
+              </button>
+              <button
+                type="button"
+                onClick={handleApply}
+                className="w-full rounded-lg bg-[#FF2A55] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 active:opacity-75 transition-opacity"
+              >
+                {t("filter.drawer.apply") || "필터 적용"}
+              </button>
             </div>
           </motion.div>
         </>
