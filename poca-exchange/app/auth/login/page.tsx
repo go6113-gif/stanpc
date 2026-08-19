@@ -12,7 +12,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { login } = useAuthStore();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,11 +47,16 @@ export default function LoginPage() {
           data.user.email?.split("@")[0] ||
           "User";
 
-        login({
-          id: data.user.id,
-          email: data.user.email || "",
-          nickname: displayName,
-          tier: "basic",
+        // The store's login() action fabricates a mock user id, so write the
+        // real Supabase identity straight into the store instead.
+        useAuthStore.setState({
+          user: {
+            id: data.user.id,
+            email: data.user.email || "",
+            nickname: displayName,
+            tier: "basic",
+          },
+          isAuthenticated: true,
         });
 
         router.push("/");
