@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { PlusCircle, Check, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Placeholder } from '@/components/PhotoCardImage';
+import { resolvePhotoCardImageSrc } from '@/lib/image-src';
 
 export interface PhotocardItem {
   id: string;
@@ -161,7 +162,7 @@ export default function AlbumGalleryClient({
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-3">
         {cards.map((card) => {
           const isSelected = selectedIds.includes(card.id);
-          const imageUrl = card.thumbImagePath || card.imageUrl;
+          const imageUrl = resolvePhotoCardImageSrc(card.thumbImagePath, card.imageUrl);
           const isCardNotOwned = card.isOwned === false;
 
           return (

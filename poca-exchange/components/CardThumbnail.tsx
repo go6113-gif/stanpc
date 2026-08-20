@@ -1,4 +1,6 @@
-import Image from "next/image";
+// Native <img>, not next/image: these paths are served by app/api/image/route.ts
+// from outside /public, which the Next image optimizer cannot reach.
+import { resolvePhotoCardImageSrc } from "@/lib/image-src";
 
 export type CardThumbnailItem = {
   slug: string;
@@ -25,7 +27,8 @@ const priceFormatter = new Intl.NumberFormat("en-US", {
 const wantFormatter = new Intl.NumberFormat("en-US");
 
 export function CardThumbnail({ card }: { card: CardThumbnailItem }) {
-  const src = card.thumbImagePath ?? card.imageUrl;
+  const src = resolvePhotoCardImageSrc(card.thumbImagePath, card.imageUrl);
+
   const subtitle = [card.memberName, card.albumTitle]
     .filter(Boolean)
     .join(" · ");
@@ -36,19 +39,16 @@ export function CardThumbnail({ card }: { card: CardThumbnailItem }) {
 
   return (
     <>
-      <div className="relative aspect-[5/7] w-full overflow-hidden">
+      <div className="relative aspect-[5/7] w-full overflow-hidden bg-neutral-900">
         {src ? (
-          <Image
+          <img
             src={src}
             alt={card.cardName ?? subtitle ?? card.groupName}
-            fill
-            className="photocard-image thumbnail absolute inset-0 transition-transform duration-300 ease-out group-hover:scale-105"
-            sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-            priority={false}
+            className="photocard-image thumbnail absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
             loading="lazy"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-xs text-neutral-400">
+          <div className="absolute inset-0 flex items-center justify-center text-xs text-neutral-400">
             No Image
           </div>
         )}

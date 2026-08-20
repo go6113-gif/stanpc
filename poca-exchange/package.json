@@ -10,7 +10,8 @@
     "lint": "eslint",
     "db:seed": "tsx prisma/import-csv.ts",
     "db:import-csv": "tsx prisma/import-csv.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "thumbs": "tsx scripts/generate-thumbnails.ts"
   },
   "prisma": {
     "seed": "tsx prisma/import-csv.ts"

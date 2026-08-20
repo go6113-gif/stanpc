@@ -1,10 +1,15 @@
 'use client';
 
-import Image from 'next/image';
+// Native <img>, not next/image: these paths are served by app/api/image/route.ts
+// from outside /public, which the Next image optimizer cannot reach.
 import { useState } from 'react';
+import { resolvePhotoCardImageSrc } from '@/lib/image-src';
 
 interface PhotoCardImageProps {
+  /** Full-size original (PhotoCard.imageUrl) — fallback only. */
   src: string | null | undefined;
+  /** Lightweight thumbnail (PhotoCard.thumbImagePath); preferred when present. */
+  thumbSrc?: string | null;
   alt: string;
   memberName?: string | null;
   albumTitle?: string | null;
@@ -18,6 +23,7 @@ interface PhotoCardImageProps {
 
 export function PhotoCardImage({
   src,
+  thumbSrc,
   alt,
   memberName = 'Unknown',
   albumTitle,
@@ -29,10 +35,11 @@ export function PhotoCardImage({
   priority = false,
 }: PhotoCardImageProps) {
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(!src);
+  const [hasError, setHasError] = useState(!src && !thumbSrc);
+  const resolvedSrc = resolvePhotoCardImageSrc(thumbSrc, src);
 
   // Show placeholder if no image or loading failed
-  if (!src || hasError) {
+  if (!resolvedSrc || hasError) {
     return (
       <Placeholder
         memberName={memberName}
@@ -44,13 +51,13 @@ export function PhotoCardImage({
 
   return (
     <div className="relative w-full h-full">
-      <Image
-        src={src}
+      <img
+        src={resolvedSrc!}
         alt={alt}
-        {...(fill ? { fill: true } : { width, height })}
+        {...(width && height && !fill ? { width, height } : {})}
         className={className}
-        priority={priority}
-        onLoadingComplete={() => setIsLoading(false)}
+        loading={priority ? "eager" : "lazy"}
+        onLoad={() => setIsLoading(false)}
         onError={() => {
           setIsLoading(false);
           setHasError(true);

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { formatMultiCurrency } from "@/lib/format";
 import { buildPhotocardGuide } from "@/lib/photocard-guide";
+import { resolvePhotoCardImageSrc } from "@/lib/image-src";
 
 export interface PhotoCardData {
   slug: string;
@@ -49,6 +50,8 @@ export function PhotoCardCard({
 }: PhotoCardCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [lastClickTime, setLastClickTime] = useState(0);
+
+  const imageSrc = resolvePhotoCardImageSrc(card.thumbImagePath, card.imageUrl);
 
   // 싱글 클릭: 카드 뒤집기 토글
   const handleSingleClick = (e: React.MouseEvent) => {
@@ -107,15 +110,9 @@ export function PhotoCardCard({
               WebkitBackfaceVisibility: "hidden",
             } as any}
           >
-            {card.thumbImagePath || card.imageUrl ? (
+            {imageSrc ? (
               <img
-                src={
-                  card.thumbImagePath
-                    ? `/api/image?path=${encodeURIComponent(card.thumbImagePath)}`
-                    : card.imageUrl
-                    ? `/api/image?path=${encodeURIComponent(card.imageUrl)}`
-                    : ""
-                }
+                src={imageSrc}
                 alt={card.cardName || ""}
                 className="photocard-image absolute inset-0 object-cover"
                 loading="lazy"

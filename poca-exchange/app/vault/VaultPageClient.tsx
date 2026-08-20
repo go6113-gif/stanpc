@@ -1005,6 +1005,7 @@ export default function VaultPageClient({
                     <>
                       <PhotoCardImage
                         src={card.imageUrl}
+                        thumbSrc={card.thumbImagePath}
                         alt={card.cardName || 'card'}
                         memberName={card.memberName}
                         albumTitle={card.albumTitle}
@@ -1062,6 +1063,7 @@ export default function VaultPageClient({
                 <div className="relative w-16 h-20 flex-shrink-0 rounded overflow-hidden">
                   <PhotoCardImage
                     src={card.imageUrl}
+                    thumbSrc={card.thumbImagePath}
                     alt={card.cardName || 'card'}
                     memberName={card.memberName}
                     albumTitle={card.albumTitle}
