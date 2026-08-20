@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { Breadcrumb } from '@/components/breadcrumb';
+import { getGroupBreadcrumbs } from '@/lib/breadcrumb-utils';
+import { createBreadcrumbSchema, createOrganizationSchema } from '@/lib/json-ld-utils';
 
 interface GroupWikiPageProps {
   params: Promise<{
@@ -91,9 +94,39 @@ export default async function GroupWikiPage(props: GroupWikiPageProps) {
 
   const { group, memberStats, groupStats } = data;
 
+  // Generate breadcrumb items for JSON-LD and UI
+  const breadcrumbs = getGroupBreadcrumbs(group.slug, group.nameEn);
+
+  // Generate JSON-LD structured data
+  const jsonLdScripts = [
+    createBreadcrumbSchema(
+      breadcrumbs.map((item, idx) => ({
+        name: item.name,
+        url: item.url ? `https://www.stanpc.com${item.url}` : `https://www.stanpc.com/wiki/${group.slug}`,
+        position: idx + 1,
+      }))
+    ),
+    createOrganizationSchema(),
+  ];
+
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950">
-      {/* Hero Section */}
+    <>
+      {/* JSON-LD Structured Data */}
+      {jsonLdScripts.map((jsonLd, idx) => (
+        <script
+          key={idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      ))}
+
+      <div className="min-h-screen bg-white dark:bg-neutral-950">
+        {/* Breadcrumb Navigation */}
+        <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6">
+          <Breadcrumb items={breadcrumbs} />
+        </div>
+
+        {/* Hero Section */}
       <div className="bg-gradient-to-b from-blue-50 to-white dark:from-neutral-900 dark:to-neutral-950">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
           <div className="flex flex-col items-center gap-6 md:flex-row md:items-start">
@@ -233,6 +266,7 @@ export default async function GroupWikiPage(props: GroupWikiPageProps) {
           </div>
         )}
       </main>
-    </div>
+      </div>
+    </>
   );
 }

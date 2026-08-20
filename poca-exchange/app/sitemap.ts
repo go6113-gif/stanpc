@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getMvpGroupDirectory } from "@/lib/queries";
+import { getMvpGroupDirectory, getAllMemberSlugs, getAllAlbumSlugs, getAllCardSlugs } from "@/lib/queries";
 import { MVP_GROUP_SLUGS } from "@/lib/mvp-scope";
 
 /**
@@ -118,26 +118,19 @@ async function generateGroupSitemapEntries(): Promise<MetadataRoute.Sitemap> {
 
 /**
  * Generate dynamic sitemap entries for MVP group members
- * Attempts to fetch from database, falls back to FALLBACK_MVP_MEMBERS on error
+ * Queries database for all members with photoCards
  */
 async function generateMemberSitemapEntries(): Promise<MetadataRoute.Sitemap> {
   try {
-    // TODO: Implement actual DB query for all members
-    // For now, use fallback member data
-    console.info(`✓ Sitemap: Using fallback MVP members`);
+    const members = await getAllMemberSlugs();
+    console.info(`✓ Sitemap: Loaded ${members.length} members from database`);
 
-    const entries: MetadataRoute.Sitemap = [];
-    for (const groupMember of FALLBACK_MVP_MEMBERS) {
-      for (const memberSlug of groupMember.members) {
-        entries.push({
-          url: `${SITE_URL}/groups/${groupMember.groupSlug}/${memberSlug}`,
-          lastModified: new Date(),
-          changeFrequency: "daily" as const,
-          priority: 0.85, // Slightly lower than group pages
-        });
-      }
-    }
-    return entries;
+    return members.map((m) => ({
+      url: `${SITE_URL}/wiki/${m.group}/${m.member}`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.85,
+    }));
   } catch (error) {
     // Log error for monitoring
     console.warn(
@@ -152,7 +145,7 @@ async function generateMemberSitemapEntries(): Promise<MetadataRoute.Sitemap> {
     for (const groupMember of FALLBACK_MVP_MEMBERS) {
       for (const memberSlug of groupMember.members) {
         entries.push({
-          url: `${SITE_URL}/groups/${groupMember.groupSlug}/${memberSlug}`,
+          url: `${SITE_URL}/wiki/${groupMember.groupSlug}/${memberSlug}`,
           lastModified: new Date(),
           changeFrequency: "daily" as const,
           priority: 0.85,
@@ -160,6 +153,63 @@ async function generateMemberSitemapEntries(): Promise<MetadataRoute.Sitemap> {
       }
     }
     return entries;
+  }
+}
+
+/**
+ * Generate dynamic sitemap entries for MVP group albums
+ * Queries database for all albums with photoCards
+ */
+async function generateAlbumSitemapEntries(): Promise<MetadataRoute.Sitemap> {
+  try {
+    const albums = await getAllAlbumSlugs();
+    console.info(`✓ Sitemap: Loaded ${albums.length} albums from database`);
+
+    return albums.map((a) => ({
+      url: `${SITE_URL}/wiki/${a.group}/${a.album}`, // Note: using album slug as last segment for simplicity
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }));
+  } catch (error) {
+    // Log error for monitoring
+    console.warn(
+      "Failed to fetch albums for sitemap:",
+      error instanceof Error ? error.message : error
+    );
+
+    // Return empty array on error - albums are secondary content
+    return [];
+  }
+}
+
+/**
+ * Generate dynamic sitemap entries for MVP photoCards
+ * Queries database for all cards with MVP groups (limited to top cards for performance)
+ */
+async function generateCardSitemapEntries(): Promise<MetadataRoute.Sitemap> {
+  try {
+    const cards = await getAllCardSlugs();
+
+    // Limit to prevent sitemap from becoming too large
+    const limitedCards = cards.slice(0, 5000);
+    console.info(`✓ Sitemap: Loaded ${limitedCards.length} cards from database (total: ${cards.length})`);
+
+    return limitedCards.map((c) => ({
+      url: `${SITE_URL}/card/${c.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+  } catch (error) {
+    // Log error for monitoring
+    console.warn(
+      "Failed to fetch cards for sitemap:",
+      error instanceof Error ? error.message : error
+    );
+
+    // Return empty array on error - cards are secondary content
+    return [];
   }
 }
 
@@ -174,7 +224,9 @@ async function generateMemberSitemapEntries(): Promise<MetadataRoute.Sitemap> {
  * Includes:
  * - Static pages (/, /auth/login, /vault, /search)
  * - Dynamic group pages (/groups/aespa, /groups/seventeen, etc.)
- * - Dynamic member pages (/groups/aespa/karina, /groups/aespa/giselle, etc.)
+ * - Dynamic member pages (/wiki/aespa/karina, /wiki/aespa/giselle, etc.)
+ * - Dynamic album pages (/wiki/aespa/karina/album-slug, etc.)
+ * - Dynamic card pages (/card/aespa-karina-album-001, etc.)
  *
  * Example output:
  * ```xml
@@ -194,11 +246,25 @@ async function generateMemberSitemapEntries(): Promise<MetadataRoute.Sitemap> {
  *     <changefreq>daily</changefreq>
  *   </url>
  *
- *   <!-- Member pages -->
+ *   <!-- Member pages (Wiki) -->
  *   <url>
- *     <loc>https://www.stanpc.com/groups/aespa/karina</loc>
+ *     <loc>https://www.stanpc.com/wiki/aespa/karina</loc>
  *     <priority>0.85</priority>
  *     <changefreq>daily</changefreq>
+ *   </url>
+ *
+ *   <!-- Album pages (Wiki) -->
+ *   <url>
+ *     <loc>https://www.stanpc.com/wiki/aespa/album-slug</loc>
+ *     <priority>0.8</priority>
+ *     <changefreq>weekly</changefreq>
+ *   </url>
+ *
+ *   <!-- Card pages -->
+ *   <url>
+ *     <loc>https://www.stanpc.com/card/aespa-karina-album-001</loc>
+ *     <priority>0.7</priority>
+ *     <changefreq>weekly</changefreq>
  *   </url>
  * </urlset>
  * ```
@@ -210,8 +276,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch dynamic member entries with fallback error handling
   const memberEntries = await generateMemberSitemapEntries();
 
-  // Combine static pages, dynamic group pages, and dynamic member pages
-  const allEntries = [...STATIC_PAGES, ...groupEntries, ...memberEntries];
+  // Fetch dynamic album entries
+  const albumEntries = await generateAlbumSitemapEntries();
+
+  // Fetch dynamic card entries
+  const cardEntries = await generateCardSitemapEntries();
+
+  // Combine all entries: static pages, groups, members, albums, and cards
+  const allEntries = [
+    ...STATIC_PAGES,
+    ...groupEntries,
+    ...memberEntries,
+    ...albumEntries,
+    ...cardEntries,
+  ];
 
   console.info(`✓ Sitemap generated with ${allEntries.length} entries`);
 

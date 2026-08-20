@@ -7,6 +7,9 @@ import { CardTabs } from "@/components/card-detail/card-tabs";
 import { CardWantButton } from "@/components/card-detail/card-want-button";
 import { GuideMarkdown } from "@/components/card-detail/guide-markdown";
 import { formatMultiCurrency } from "@/lib/format";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { getCardBreadcrumbs } from "@/lib/breadcrumb-utils";
+import { createBreadcrumbSchema, createOrganizationSchema } from "@/lib/json-ld-utils";
 
 interface CardDetailPageProps {
   params: Promise<{ cardSlug: string }>;
@@ -95,16 +98,50 @@ export default async function CardDetailPage({
     isWanted = userCard?.status === "WTB";
   }
 
+  // Generate breadcrumb items for JSON-LD and UI
+  const breadcrumbs = getCardBreadcrumbs(
+    card.group.nameEn,
+    card.group.slug,
+    card.member?.nameEn || null,
+    card.member?.slug || null,
+    card.cardName || "포토카드"
+  );
+
+  // Generate JSON-LD structured data
+  const jsonLdScripts = [
+    createBreadcrumbSchema(
+      breadcrumbs.map((item, idx) => ({
+        name: item.name,
+        url: item.url ? `https://www.stanpc.com${item.url}` : `https://www.stanpc.com/card/${card.slug}`,
+        position: idx + 1,
+      }))
+    ),
+    createOrganizationSchema(),
+  ];
+
   return (
-    <main className="w-full min-h-screen bg-neutral-950 text-neutral-100 px-4 md:px-8 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">{card.cardName || "포토카드"}</h1>
-        <p className="text-neutral-400 mt-2">
-          {card.group.nameKr || card.group.nameEn}
-          {card.member && ` · ${card.member.nameKr || card.member.nameEn}`}
-        </p>
-      </div>
+    <>
+      {/* JSON-LD Structured Data */}
+      {jsonLdScripts.map((jsonLd, idx) => (
+        <script
+          key={idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      ))}
+
+      <main className="w-full min-h-screen bg-neutral-950 text-neutral-100 px-4 md:px-8 py-8">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb items={breadcrumbs} className="mb-6" />
+
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold">{card.cardName || "포토카드"}</h1>
+          <p className="text-neutral-400 mt-2">
+            {card.group.nameKr || card.group.nameEn}
+            {card.member && ` · ${card.member.nameKr || card.member.nameEn}`}
+          </p>
+        </div>
 
       {/* Main Content - Responsive Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
@@ -246,5 +283,6 @@ export default async function CardDetailPage({
         </div>
       )}
     </main>
+    </>
   );
 }

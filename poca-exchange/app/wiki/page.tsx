@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { HallOfFameSection } from '@/components/wiki/HallOfFameSection';
 
 interface SearchResult {
   groups: Array<{
@@ -205,6 +206,9 @@ export default function WikiPage() {
           )}
         </div>
       </div>
+
+      {/* Hall of Fame */}
+      <HallOfFameSection />
 
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6">

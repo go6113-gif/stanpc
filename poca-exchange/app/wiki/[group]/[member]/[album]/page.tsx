@@ -3,6 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { seoFormulas } from '@/lib/seo-config';
+import { Breadcrumb } from '@/components/breadcrumb';
+import { getAlbumBreadcrumbs } from '@/lib/breadcrumb-utils';
+import { createBreadcrumbSchema, createOrganizationSchema } from '@/lib/json-ld-utils';
 
 interface AlbumWikiPageProps {
   params: Promise<{
@@ -128,9 +131,46 @@ export default async function AlbumWikiPage(props: AlbumWikiPageProps) {
 
   const { member, album, cards, stats } = data;
 
+  // Generate breadcrumb items for JSON-LD and UI
+  // Note: Using slug as name since normalization is applied
+  const breadcrumbs = getAlbumBreadcrumbs(
+    normalizedParams.group,
+    normalizedParams.group,
+    normalizedParams.member,
+    normalizedParams.member,
+    album.title
+  );
+
+  // Generate JSON-LD structured data
+  const jsonLdScripts = [
+    createBreadcrumbSchema(
+      breadcrumbs.map((item, idx) => ({
+        name: item.name,
+        url: item.url ? `https://www.stanpc.com${item.url}` : `https://www.stanpc.com/wiki/${normalizedParams.group}/${normalizedParams.member}/${normalizedParams.album}`,
+        position: idx + 1,
+      }))
+    ),
+    createOrganizationSchema(),
+  ];
+
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950">
-      {/* Hero Section */}
+    <>
+      {/* JSON-LD Structured Data */}
+      {jsonLdScripts.map((jsonLd, idx) => (
+        <script
+          key={idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      ))}
+
+      <div className="min-h-screen bg-white dark:bg-neutral-950">
+        {/* Breadcrumb Navigation */}
+        <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6">
+          <Breadcrumb items={breadcrumbs} />
+        </div>
+
+        {/* Hero Section */}
       <div className="bg-gradient-to-b from-blue-50 to-white dark:from-neutral-900 dark:to-neutral-950">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
           <div className="flex flex-col items-center gap-6 md:flex-row md:items-start">
@@ -250,6 +290,7 @@ export default async function AlbumWikiPage(props: AlbumWikiPageProps) {
           </div>
         )}
       </main>
-    </div>
+      </div>
+    </>
   );
 }

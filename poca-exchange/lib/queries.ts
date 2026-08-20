@@ -149,6 +149,28 @@ export async function getAllMemberSlugs() {
   return members.map((m) => ({ group: m.group.slug, member: m.slug }));
 }
 
+// Scoped to albums with at least one photo card — an album with none would
+// render an empty page, which is thin content not worth prerendering or
+// listing in the sitemap.
+export async function getAllAlbumSlugs() {
+  const albums = await prisma.album.findMany({
+    where: {
+      group: { slug: { in: [...MVP_GROUP_SLUGS] } },
+      photoCards: { some: {} },
+    },
+    select: {
+      slug: true,
+      group: { select: { slug: true } },
+      _count: { select: { photoCards: true } },
+    },
+  });
+  return albums.map((a) => ({
+    group: a.group.slug,
+    album: a.slug,
+    cardCount: a._count.photoCards,
+  }));
+}
+
 // -----------------------------------------------------------------------------
 // Gallery filter system (app/gallery/page.tsx)
 // -----------------------------------------------------------------------------
