@@ -59,11 +59,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Path out of bounds" }, { status: 403 });
     }
 
-    if (!fs.existsSync(fullPath)) {
+    if (!fs.existsSync(/*turbopackIgnore: true*/ fullPath)) {
       return NextResponse.json({ error: "File not found" }, { status: 404 });
     }
 
-    const fileBuffer = fs.readFileSync(fullPath);
+    const fileBuffer = fs.readFileSync(/*turbopackIgnore: true*/ fullPath);
     const contentType =
       CONTENT_TYPES[path.extname(fullPath).toLowerCase()] ??
       "application/octet-stream";
